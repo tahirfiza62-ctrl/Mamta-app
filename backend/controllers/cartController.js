@@ -1,40 +1,49 @@
 const Cart = require("../models/Cart");
 
-
-// =========================================================
-// GET CART
-// =========================================================
+/* =========================================================
+   GET CART
+========================================================= */
 
 const getCart = async (req, res) => {
   try {
+    const userId =
+      req.user._id ||
+      req.user.id ||
+      req.user.userId;
+
     let cart = await Cart.findOne({
-      userId: req.user.id,
+      userId,
     });
 
     if (!cart) {
       cart = await Cart.create({
-        userId: req.user.id,
+        userId,
         items: [],
       });
     }
 
-    res.json({
+    res.status(200).json({
       success: true,
       cart,
     });
   } catch (error) {
-    console.error("GET CART ERROR:", error);
+    console.error(
+      "GET CART ERROR:",
+      error
+    );
 
     res.status(500).json({
-      message: "Unable to load cart.",
+      success: false,
+      message:
+        "Unable to fetch cart.",
     });
   }
 };
 
 
-// =========================================================
-// ADD TO CART
-// =========================================================
+/* =========================================================
+   ADD TO CART
+========================================================= */
 
 const addToCart = async (req, res) => {
   try {
@@ -43,57 +52,179 @@ const addToCart = async (req, res) => {
       name,
       image,
       price,
-      quantity = 1,
+      quantity,
+      color,
+      colorCode,
+      colorImage,
     } = req.body;
 
-    if (!productId || !name || price === undefined) {
+    /* =====================================================
+       VALIDATION
+    ===================================================== */
+
+    if (!productId) {
       return res.status(400).json({
-        message: "Product information is incomplete.",
+        success: false,
+        message:
+          "Product ID is required.",
       });
     }
 
-    const numericPrice = Number(price);
-    const numericQuantity = Number(quantity);
-
-    if (Number.isNaN(numericPrice) || numericPrice < 0) {
+    if (!name) {
       return res.status(400).json({
-        message: "Invalid product price.",
+        success: false,
+        message:
+          "Product name is required.",
       });
     }
 
     if (
-      Number.isNaN(numericQuantity) ||
-      numericQuantity < 1
+      price === undefined ||
+      price === null ||
+      Number.isNaN(Number(price))
     ) {
       return res.status(400).json({
-        message: "Invalid quantity.",
+        success: false,
+        message:
+          "Valid product price is required.",
       });
     }
 
+    const requestedQuantity =
+      Number(quantity || 1);
+
+    if (
+      Number.isNaN(
+        requestedQuantity
+      ) ||
+      requestedQuantity < 1
+    ) {
+      return res.status(400).json({
+        success: false,
+        message:
+          "Quantity must be at least 1.",
+      });
+    }
+
+    /* =====================================================
+       COLOR
+    ===================================================== */
+
+    const selectedColor =
+      typeof color === "string"
+        ? color.trim()
+        : "";
+
+    const selectedColorCode =
+      typeof colorCode === "string"
+        ? colorCode.trim()
+        : "";
+
+    const selectedColorImage =
+      typeof colorImage === "string"
+        ? colorImage.trim()
+        : "";
+
+    /* =====================================================
+       USER
+    ===================================================== */
+
+    const userId =
+      req.user._id ||
+      req.user.id ||
+      req.user.userId;
+
+    /* =====================================================
+       FIND CART
+    ===================================================== */
+
     let cart = await Cart.findOne({
-      userId: req.user.id,
+      userId,
     });
 
     if (!cart) {
-      cart = new Cart({
-        userId: req.user.id,
+      cart = await Cart.create({
+        userId,
         items: [],
       });
     }
 
-    const existingItem = cart.items.find(
-      (item) => item.productId === String(productId)
-    );
+    /* =====================================================
+       SAME PRODUCT + SAME COLOR
+    ===================================================== */
+
+    const existingItem =
+      cart.items.find(
+        (item) =>
+          String(
+            item.productId
+          ) ===
+            String(productId) &&
+          String(
+            item.color || ""
+          ).trim() ===
+            selectedColor
+      );
+
+    /* =====================================================
+       EXISTING ITEM
+    ===================================================== */
 
     if (existingItem) {
-      existingItem.quantity += numericQuantity;
-    } else {
+      existingItem.quantity +=
+        requestedQuantity;
+
+      if (selectedColorImage) {
+        existingItem.image =
+          selectedColorImage;
+
+        existingItem.colorImage =
+          selectedColorImage;
+      } else if (image) {
+        existingItem.image =
+          image;
+      }
+
+      if (selectedColorCode) {
+        existingItem.colorCode =
+          selectedColorCode;
+      }
+
+      existingItem.color =
+        selectedColor;
+    }
+
+    /* =====================================================
+       NEW ITEM
+    ===================================================== */
+
+    else {
       cart.items.push({
-        productId: String(productId),
-        name,
-        image: image || "",
-        price: numericPrice,
-        quantity: numericQuantity,
+        productId:
+          String(productId),
+
+        name:
+          String(name).trim(),
+
+        image:
+          selectedColorImage ||
+          image ||
+          "",
+
+        price:
+          Number(price),
+
+        quantity:
+          requestedQuantity,
+
+        color:
+          selectedColor,
+
+        colorCode:
+          selectedColorCode,
+
+        colorImage:
+          selectedColorImage,
       });
     }
 
@@ -101,131 +232,407 @@ const addToCart = async (req, res) => {
 
     res.status(200).json({
       success: true,
-      message: "Product added to cart.",
+      message:
+        "Product added to cart.",
       cart,
     });
+
   } catch (error) {
-    console.error("ADD TO CART ERROR:", error);
+    console.error(
+      "ADD TO CART ERROR:",
+      error
+    );
 
     res.status(500).json({
-      message: "Unable to add product to cart.",
+      success: false,
+      message:
+        "Unable to add product to cart.",
     });
   }
 };
 
 
-// =========================================================
-// UPDATE QUANTITY
-// =========================================================
+/* =========================================================
+   UPDATE CART ITEM
+========================================================= */
 
-const updateCartItem = async (req, res) => {
+const updateCartItem = async (
+  req,
+  res
+) => {
   try {
-    const { productId } = req.params;
-    const { quantity } = req.body;
 
-    const numericQuantity = Number(quantity);
+    /* =====================================================
+       IMPORTANT FIX
+
+       Product ID comes from:
+
+       /update/:productId
+
+       Therefore use req.params.productId
+    ===================================================== */
+
+    const productId =
+      req.params.productId;
+
+    const {
+      quantity,
+      color,
+    } = req.body;
+
+    console.log(
+      "===================================="
+    );
+
+    console.log(
+      "🛒 UPDATE CART ITEM"
+    );
+
+    console.log(
+      "PRODUCT ID:",
+      productId
+    );
+
+    console.log(
+      "QUANTITY:",
+      quantity
+    );
+
+    console.log(
+      "COLOR:",
+      color
+    );
+
+    console.log(
+      "===================================="
+    );
+
+    /* =====================================================
+       VALIDATION
+    ===================================================== */
+
+    if (!productId) {
+      return res.status(400).json({
+        success: false,
+        message:
+          "Product ID is required.",
+      });
+    }
+
+    const requestedQuantity =
+      Number(quantity);
 
     if (
-      Number.isNaN(numericQuantity) ||
-      numericQuantity < 1
+      Number.isNaN(
+        requestedQuantity
+      ) ||
+      requestedQuantity < 1
     ) {
       return res.status(400).json({
-        message: "Quantity must be at least 1.",
+        success: false,
+        message:
+          "Quantity must be at least 1.",
       });
     }
 
-    const cart = await Cart.findOne({
-      userId: req.user.id,
-    });
+    /* =====================================================
+       COLOR
+
+       The cart page sends the color
+       so different colors of the same
+       product remain separate.
+    ===================================================== */
+
+    const selectedColor =
+      typeof color === "string"
+        ? color.trim()
+        : "";
+
+    /* =====================================================
+       USER
+    ===================================================== */
+
+    const userId =
+      req.user._id ||
+      req.user.id ||
+      req.user.userId;
+
+    /* =====================================================
+       FIND CART
+    ===================================================== */
+
+    const cart =
+      await Cart.findOne({
+        userId,
+      });
 
     if (!cart) {
       return res.status(404).json({
-        message: "Cart not found.",
+        success: false,
+        message:
+          "Cart not found.",
       });
     }
 
-    const item = cart.items.find(
-      (item) => item.productId === String(productId)
-    );
+    /* =====================================================
+       FIND EXACT ITEM
+
+       PRODUCT + COLOR
+    ===================================================== */
+
+    const item =
+      cart.items.find(
+        (cartItem) =>
+          String(
+            cartItem.productId
+          ) ===
+            String(productId) &&
+          String(
+            cartItem.color || ""
+          ).trim() ===
+            selectedColor
+      );
 
     if (!item) {
+      console.error(
+        "❌ CART ITEM NOT FOUND",
+        {
+          productId,
+          color:
+            selectedColor,
+        }
+      );
+
       return res.status(404).json({
-        message: "Product not found in cart.",
+        success: false,
+        message:
+          "Cart item not found.",
       });
     }
 
-    item.quantity = numericQuantity;
+    /* =====================================================
+       UPDATE QUANTITY
+    ===================================================== */
+
+    item.quantity =
+      requestedQuantity;
 
     await cart.save();
 
-    res.json({
-      success: true,
-      message: "Cart updated.",
-      cart,
-    });
-  } catch (error) {
-    console.error("UPDATE CART ERROR:", error);
-
-    res.status(500).json({
-      message: "Unable to update cart.",
-    });
-  }
-};
-
-
-// =========================================================
-// REMOVE FROM CART
-// =========================================================
-
-const removeFromCart = async (req, res) => {
-  try {
-    const { productId } = req.params;
-
-    const cart = await Cart.findOne({
-      userId: req.user.id,
-    });
-
-    if (!cart) {
-      return res.status(404).json({
-        message: "Cart not found.",
-      });
-    }
-
-    cart.items = cart.items.filter(
-      (item) => item.productId !== String(productId)
+    console.log(
+      "✅ QUANTITY UPDATED:",
+      item.quantity
     );
 
-    await cart.save();
-
-    res.json({
+    res.status(200).json({
       success: true,
-      message: "Product removed from cart.",
+      message:
+        "Cart updated.",
       cart,
     });
+
   } catch (error) {
-    console.error("REMOVE CART ITEM ERROR:", error);
+    console.error(
+      "UPDATE CART ITEM ERROR:",
+      error
+    );
 
     res.status(500).json({
-      message: "Unable to remove product.",
+      success: false,
+      message:
+        "Unable to update cart.",
     });
   }
 };
 
 
-// =========================================================
-// CLEAR CART
-// =========================================================
+/* =========================================================
+   REMOVE FROM CART
+========================================================= */
 
-const clearCart = async (req, res) => {
+const removeFromCart = async (
+  req,
+  res
+) => {
   try {
-    const cart = await Cart.findOne({
-      userId: req.user.id,
-    });
+
+    /* =====================================================
+       IMPORTANT FIX
+
+       Product ID comes from:
+
+       /remove/:productId
+    ===================================================== */
+
+    const productId =
+      req.params.productId;
+
+    const {
+      color,
+    } = req.body || {};
+
+    console.log(
+      "===================================="
+    );
+
+    console.log(
+      "🗑️ REMOVE CART ITEM"
+    );
+
+    console.log(
+      "PRODUCT ID:",
+      productId
+    );
+
+    console.log(
+      "COLOR:",
+      color
+    );
+
+    console.log(
+      "===================================="
+    );
+
+    /* =====================================================
+       VALIDATION
+    ===================================================== */
+
+    if (!productId) {
+      return res.status(400).json({
+        success: false,
+        message:
+          "Product ID is required.",
+      });
+    }
+
+    const selectedColor =
+      typeof color === "string"
+        ? color.trim()
+        : "";
+
+    /* =====================================================
+       USER
+    ===================================================== */
+
+    const userId =
+      req.user._id ||
+      req.user.id ||
+      req.user.userId;
+
+    /* =====================================================
+       FIND CART
+    ===================================================== */
+
+    const cart =
+      await Cart.findOne({
+        userId,
+      });
 
     if (!cart) {
-      return res.json({
+      return res.status(404).json({
+        success: false,
+        message:
+          "Cart not found.",
+      });
+    }
+
+    /* =====================================================
+       REMOVE EXACT PRODUCT + COLOR
+    ===================================================== */
+
+    const oldLength =
+      cart.items.length;
+
+    cart.items =
+      cart.items.filter(
+        (item) =>
+          !(
+            String(
+              item.productId
+            ) ===
+              String(productId) &&
+            String(
+              item.color || ""
+            ).trim() ===
+              selectedColor
+          )
+      );
+
+    /* =====================================================
+       CHECK WHETHER ITEM EXISTED
+    ===================================================== */
+
+    if (
+      cart.items.length ===
+      oldLength
+    ) {
+      return res.status(404).json({
+        success: false,
+        message:
+          "Cart item not found.",
+      });
+    }
+
+    /* =====================================================
+       SAVE
+    ===================================================== */
+
+    await cart.save();
+
+    console.log(
+      "✅ CART ITEM REMOVED"
+    );
+
+    res.status(200).json({
+      success: true,
+      message:
+        "Product removed from cart.",
+      cart,
+    });
+
+  } catch (error) {
+    console.error(
+      "REMOVE FROM CART ERROR:",
+      error
+    );
+
+    res.status(500).json({
+      success: false,
+      message:
+        "Unable to remove product from cart.",
+    });
+  }
+};
+
+
+/* =========================================================
+   CLEAR CART
+========================================================= */
+
+const clearCart = async (
+  req,
+  res
+) => {
+  try {
+
+    const userId =
+      req.user._id ||
+      req.user.id ||
+      req.user.userId;
+
+    const cart =
+      await Cart.findOne({
+        userId,
+      });
+
+    if (!cart) {
+      return res.status(200).json({
         success: true,
-        message: "Cart already empty.",
+        message:
+          "Cart already empty.",
+        cart: {
+          items: [],
+        },
       });
     }
 
@@ -233,20 +640,31 @@ const clearCart = async (req, res) => {
 
     await cart.save();
 
-    res.json({
+    res.status(200).json({
       success: true,
-      message: "Cart cleared.",
+      message:
+        "Cart cleared.",
       cart,
     });
+
   } catch (error) {
-    console.error("CLEAR CART ERROR:", error);
+    console.error(
+      "CLEAR CART ERROR:",
+      error
+    );
 
     res.status(500).json({
-      message: "Unable to clear cart.",
+      success: false,
+      message:
+        "Unable to clear cart.",
     });
   }
 };
 
+
+/* =========================================================
+   EXPORT
+========================================================= */
 
 module.exports = {
   getCart,

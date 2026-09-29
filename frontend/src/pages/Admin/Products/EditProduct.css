@@ -871,3 +871,113 @@
 
 }
 
+/* =========================================================
+   EDIT PRODUCT — COLORS
+========================================================= */
+
+.admin-color-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(145px, 1fr));
+  gap: 12px;
+  margin-top: 20px;
+}
+
+.admin-color-option {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  width: 100%;
+  padding: 12px 14px;
+  border: 1px solid #eadfe1;
+  border-radius: 12px;
+  background: #ffffff;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  text-align: left;
+}
+
+.admin-color-option:hover {
+  border-color: #d8b8bd;
+  transform: translateY(-1px);
+}
+
+.admin-color-option.selected {
+  border-color: #8f5961;
+  background: #fff8f9;
+}
+
+.admin-color-checkbox {
+  width: 20px;
+  height: 20px;
+  min-width: 20px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border: 1px solid #d7c7ca;
+  border-radius: 6px;
+  color: #ffffff;
+  background: #ffffff;
+}
+
+.admin-color-option.selected .admin-color-checkbox {
+  background: #8f5961;
+  border-color: #8f5961;
+}
+
+.admin-color-circle {
+  width: 28px;
+  height: 28px;
+  min-width: 28px;
+  border-radius: 50%;
+  border: 1px solid #ddd;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.08);
+}
+
+.admin-color-name {
+  font-size: 14px;
+  font-weight: 600;
+  color: #4a3032;
+}
+
+.admin-selected-colors {
+  display: flex;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 8px;
+  margin-top: 20px;
+  padding-top: 18px;
+  border-top: 1px solid #eee5e6;
+}
+
+.admin-selected-label {
+  font-size: 14px;
+  font-weight: 600;
+  color: #6f5a5d;
+}
+
+.admin-selected-color-tag {
+  display: inline-flex;
+  align-items: center;
+  gap: 7px;
+  padding: 7px 10px;
+  border-radius: 20px;
+  background: #f8edef;
+  color: #5a3c40;
+  font-size: 13px;
+  font-weight: 600;
+}
+
+.admin-selected-color-tag button {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 2px;
+  border: none;
+  background: transparent;
+  color: #8f5961;
+  cursor: pointer;
+}
+
+.admin-selected-color-tag button:hover {
+  color: #b33a48;
+}

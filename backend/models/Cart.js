@@ -5,6 +5,7 @@ const cartItemSchema = new mongoose.Schema(
     productId: {
       type: String,
       required: true,
+      trim: true,
     },
 
     name: {
@@ -29,6 +30,27 @@ const cartItemSchema = new mongoose.Schema(
       required: true,
       min: 1,
       default: 1,
+    },
+
+    // Selected color name
+    color: {
+      type: String,
+      default: "",
+      trim: true,
+    },
+
+    // Exact color hex/code
+    colorCode: {
+      type: String,
+      default: "",
+      trim: true,
+    },
+
+    // Exact image belonging to selected color
+    colorImage: {
+      type: String,
+      default: "",
+      trim: true,
     },
   },
   {

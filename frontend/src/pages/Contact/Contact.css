@@ -51,7 +51,7 @@ background: radial-gradient(circle at 15% 25%, rgba(217, 143, 154, 0.14), transp
 
   color: #b9925a;
 
-  font-size: 9px;
+  font-size: 15px;
   font-weight: 800;
 
   letter-spacing: 2.5px;
@@ -88,7 +88,7 @@ background: radial-gradient(circle at 15% 25%, rgba(217, 143, 154, 0.14), transp
 
   color: #bd6f7c;
 
-  font-style: italic;
+
   font-weight: 400;
 }
 
@@ -99,7 +99,7 @@ background: radial-gradient(circle at 15% 25%, rgba(217, 143, 154, 0.14), transp
 
   color: #806d6f;
 
-  font-size: 13px;
+  font-size: 18px;
   line-height: 1.9;
 }
 
@@ -116,7 +116,7 @@ background: radial-gradient(circle at 15% 25%, rgba(217, 143, 154, 0.14), transp
 
   text-decoration: none;
 
-  font-size: 10px;
+  font-size: 15px;
   font-weight: 700;
 
   letter-spacing: 1px;
@@ -350,7 +350,7 @@ background: radial-gradient(circle at 15% 25%, rgba(217, 143, 154, 0.14), transp
 
   color: #bd6f7c;
 
-  font-style: italic;
+
   font-weight: 400;
 }
 
@@ -362,7 +362,7 @@ background: radial-gradient(circle at 15% 25%, rgba(217, 143, 154, 0.14), transp
 
   color: #806d6f;
 
-  font-size: 12px;
+  font-size: 18px;
 
   line-height: 1.9;
 }
@@ -436,7 +436,7 @@ background: radial-gradient(circle at 15% 25%, rgba(217, 143, 154, 0.14), transp
 
   color: #b9925a;
 
-  font-size: 8px;
+  font-size: 15px;
   font-weight: 800;
 
   letter-spacing: 1.8px;
@@ -450,7 +450,7 @@ background: radial-gradient(circle at 15% 25%, rgba(217, 143, 154, 0.14), transp
     Georgia,
     serif;
 
-  font-size: 18px;
+  font-size: 22px;
   font-weight: 500;
 }
 
@@ -459,7 +459,7 @@ background: radial-gradient(circle at 15% 25%, rgba(217, 143, 154, 0.14), transp
 
   color: #8c7072;
 
-  font-size: 9px;
+  font-size: 15px;
 
   line-height: 1.7;
 }
@@ -530,7 +530,7 @@ background: radial-gradient(circle at 15% 25%, rgba(217, 143, 154, 0.14), transp
     Georgia,
     serif;
 
-  font-size: 16px;
+  font-size: 15px;
   font-weight: 500;
 }
 
@@ -541,7 +541,7 @@ background: radial-gradient(circle at 15% 25%, rgba(217, 143, 154, 0.14), transp
 
   color: #806d6f;
 
-  font-size: 9px;
+  font-size: 20px;
 }
 
 
@@ -581,7 +581,7 @@ background: radial-gradient(circle at 15% 25%, rgba(217, 143, 154, 0.14), transp
 
   color: #b9925a;
 
-  font-size: 8px;
+  font-size: 15px;
   font-weight: 800;
 
   letter-spacing: 1.6px;
@@ -623,6 +623,7 @@ background: radial-gradient(circle at 15% 25%, rgba(217, 143, 154, 0.14), transp
 .form-group input::placeholder,
 .form-group textarea::placeholder {
   color: #ad9a9b;
+  font-size: 13px;
 }
 
 .form-group input:focus,
@@ -659,7 +660,7 @@ background: radial-gradient(circle at 15% 25%, rgba(217, 143, 154, 0.14), transp
     "Segoe UI",
     sans-serif;
 
-  font-size: 10px;
+  font-size: 15px;
   font-weight: 700;
 
   letter-spacing: 1px;
@@ -697,8 +698,7 @@ background: radial-gradient(circle at 15% 25%, rgba(217, 143, 154, 0.14), transp
 .contact-final-content > span {
   color: #d9b878;
 
-  font-size: 9px;
-  font-weight: 800;
+  font-size: 20px;
 
   letter-spacing: 3px;
 }
@@ -724,7 +724,7 @@ background: radial-gradient(circle at 15% 25%, rgba(217, 143, 154, 0.14), transp
 
   color: #e6aab2;
 
-  font-style: italic;
+
   font-weight: 400;
 }
 
@@ -735,7 +735,7 @@ background: radial-gradient(circle at 15% 25%, rgba(217, 143, 154, 0.14), transp
 
   color: rgba(255, 255, 255, 0.68);
 
-  font-size: 12px;
+  font-size: 18px;
 
   line-height: 1.9;
 }
@@ -757,7 +757,7 @@ background: radial-gradient(circle at 15% 25%, rgba(217, 143, 154, 0.14), transp
 
   text-decoration: none;
 
-  font-size: 10px;
+  font-size: 15px;
   font-weight: 700;
 
   letter-spacing: 1px;

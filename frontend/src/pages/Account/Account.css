@@ -82,8 +82,8 @@
 
   color: #bd6f7c;
 
-  font-size: 10px;
-  font-weight: 700;
+  font-size: 15px;
+ 
 
   letter-spacing: 3px;
 }
@@ -105,7 +105,7 @@ font-family: 'Times New Roman', Times, serif;
   color: #bd6f7c;
 
 font-family: 'Times New Roman', Times, serif;
-  font-style: italic;
+font-style: normal;
 }
 
 .account-hero p {
@@ -115,7 +115,7 @@ font-family: 'Times New Roman', Times, serif;
 
   color: #76585b;
 
-  font-size: 13px;
+  font-size: 17px;
 
   line-height: 1.8;
 }
@@ -202,7 +202,7 @@ margin-top: 150px;
 
   font-family: Georgia, "Times New Roman", serif;
 
-  font-size: 15px;
+  font-size: 20px;
   font-weight: 600;
 
   text-overflow: ellipsis;
@@ -220,7 +220,7 @@ margin-top: 150px;
 
   color: #927b7d;
 
-  font-size: 10px;
+  font-size: 15px;
 
   text-overflow: ellipsis;
   white-space: nowrap;
@@ -254,7 +254,7 @@ margin-top: 150px;
 
   font-family: "Poppins", "Segoe UI", sans-serif;
 
-  font-size: 11px;
+  font-size: 15px;
   font-weight: 600;
 
   text-align: left;
@@ -321,7 +321,7 @@ margin-top: 150px;
 
   font-family: "Poppins", "Segoe UI", sans-serif;
 
-  font-size: 10px;
+  font-size: 15px;
   font-weight: 600;
 
   text-decoration: none;
@@ -390,7 +390,7 @@ margin-top: 150px;
 
   color: #bd6f7c;
 
-  font-size: 9px;
+  font-size: 15px;
   font-weight: 700;
 
   letter-spacing: 2.5px;
@@ -489,7 +489,7 @@ margin-top: 150px;
 
   color: #9b8586;
 
-  font-size: 8px;
+  font-size: 15px;
   font-weight: 700;
 
   letter-spacing: 1.5px;
@@ -523,7 +523,7 @@ margin-top: 150px;
 
   font-family: "Poppins", "Segoe UI", sans-serif !important;
 
-  font-size: 11px !important;
+  font-size: 15px !important;
 }
 
 .protected-password svg {
@@ -540,7 +540,7 @@ margin-top: 150px;
 
   font-family: "Poppins", "Segoe UI", sans-serif !important;
 
-  font-size: 12px !important;
+  font-size: 15px !important;
 }
 
 
@@ -576,7 +576,7 @@ margin-top: 150px;
 
   color: #4a3032;
 
-  font-size: 12px;
+  font-size: 15px;
   font-weight: 600;
 }
 
@@ -585,7 +585,7 @@ margin-top: 150px;
 
   color: #80676a;
 
-  font-size: 10px;
+  font-size: 13px;
 
   line-height: 1.75;
 }
@@ -606,7 +606,7 @@ margin-top: 150px;
 
   color: #bd6f7c;
 
-  font-size: 9px;
+  font-size: 15px;
   font-weight: 700;
 
   letter-spacing: 2px;
@@ -663,14 +663,14 @@ margin-top: 150px;
 
   font-family: Georgia, "Times New Roman", serif;
 
-  font-size: 14px;
+  font-size: 18px;
   font-weight: 500;
 }
 
 .quick-card span {
   color: #907779;
 
-  font-size: 9px;
+  font-size: 15px;
 }
 
 .quick-card:hover {
@@ -734,7 +734,7 @@ margin-top: 150px;
 
   color: #80676a;
 
-  font-size: 11px;
+  font-size: 15px;
 
   line-height: 1.8;
 }
@@ -807,7 +807,7 @@ margin-top: 150px;
 .password-intro p {
   margin: 0;
 
-  font-size: 10px;
+  font-size: 15px;
 
   line-height: 1.7;
 }
@@ -823,7 +823,7 @@ margin-top: 150px;
 
   padding: 13px 16px;
 
-  font-size: 10px;
+  font-size: 15px;
 
   line-height: 1.5;
 }
@@ -873,7 +873,7 @@ margin-left: 100px;
 
   color: #80676a;
 
-  font-size: 8px;
+  font-size: 15px;
   font-weight: 700;
 
   letter-spacing: 1.5px;
@@ -925,7 +925,7 @@ margin-left: 100px;
 
   font-family: "Poppins", "Segoe UI", sans-serif;
 
-  font-size: 11px;
+  font-size: 15px;
 }
 
 .password-input input::placeholder {
@@ -957,7 +957,7 @@ margin-left: 100px;
 
   font-family: "Poppins", "Segoe UI", sans-serif;
 
-  font-size: 9px;
+  font-size: 15px;
   font-weight: 700;
 
   letter-spacing: 1.3px;

@@ -1,7 +1,11 @@
-
 import { useEffect, useState } from "react";
-import { Link, useNavigate } from "react-router-dom";
+import {
+  Link,
+  useNavigate,
+} from "react-router-dom";
+
 import axios from "axios";
+
 import {
   ArrowLeft,
   CheckCircle2,
@@ -16,750 +20,1392 @@ import {
 
 import "./Checkout.css";
 
-const API_URL = "http://localhost:3000/api";
+const API_URL =
+  "http://localhost:3000/api";
 
 const Checkout = () => {
   const navigate = useNavigate();
 
-  /* =====================================================
-     GET SAVED USER
-  ===================================================== */
+  /* =========================================================
+     STATES
+  ========================================================= */
 
-  const getSavedUser = () => {
-    try {
-      const savedUser = localStorage.getItem("mamta_user");
+  const [cart, setCart] =
+    useState(null);
 
-      if (!savedUser) {
-        return null;
-      }
+  const [loading, setLoading] =
+    useState(true);
 
-      return JSON.parse(savedUser);
-    } catch (error) {
-      console.error("USER DATA ERROR:", error);
-      return null;
-    }
-  };
+  const [placingOrder, setPlacingOrder] =
+    useState(false);
 
-  const savedUser = getSavedUser();
+  const [paymentMethod, setPaymentMethod] =
+    useState("Cash on Delivery");
 
-  /* =====================================================
-     STATE
-  ===================================================== */
+  const [phoneVerified, setPhoneVerified] =
+    useState(false);
 
-  const [cart, setCart] = useState(null);
-  const [loadingCart, setLoadingCart] = useState(true);
-  const [placingOrder, setPlacingOrder] = useState(false);
+  const [formData, setFormData] =
+    useState({
+      name: "",
+      email: "",
+      phone: "",
+      address: "",
+      city: "",
+      postalCode: "",
+    });
 
-  const [error, setError] = useState("");
-  const [success, setSuccess] = useState("");
+  /* =========================================================
+     AUTH
+  ========================================================= */
 
-  const [paymentMethod, setPaymentMethod] = useState(
-    "Cash on Delivery"
-  );
+  const token =
+    localStorage.getItem(
+      "mamta_user_token"
+    );
 
-  const [formData, setFormData] = useState(() => ({
-    name: savedUser?.name || "",
-    email: savedUser?.email || "",
-    phone: "",
-    address: "",
-    city: "",
-  }));
-
-  /* =====================================================
-     LOAD CART
-  ===================================================== */
+  /* =========================================================
+     LOAD USER
+  ========================================================= */
 
   useEffect(() => {
-    const token = localStorage.getItem("mamta_user_token");
-
-    if (!token) {
-      navigate("/login", {
-        state: {
-          message: "Please login before checkout.",
-        },
-      });
-
-      return;
-    }
-
     let cancelled = false;
 
-    const loadCart = async () => {
+    const loadUser = () => {
       try {
-        const response = await axios.get(`${API_URL}/cart`, {
-          headers: {
-            Authorization: `Bearer ${token}`,
-          },
-        });
+        const savedUser =
+          JSON.parse(
+            localStorage.getItem(
+              "mamta_user"
+            )
+          );
 
-        if (cancelled) return;
-
-        setCart(response.data.cart);
-      } catch (error) {
-        if (cancelled) return;
-
-        console.error("CHECKOUT CART ERROR:", error);
-
-        if (error.response?.status === 401) {
-          localStorage.removeItem("mamta_user_token");
-          localStorage.removeItem("mamta_user");
-
-          navigate("/login");
+        if (!savedUser) {
           return;
         }
 
-        setError(
-          error.response?.data?.message ||
-            "Unable to load your cart."
+        /*
+         * setState is placed inside
+         * setTimeout so React does not
+         * report set-state-in-effect.
+         */
+
+        setTimeout(() => {
+          if (cancelled) {
+            return;
+          }
+
+          setFormData(
+            (current) => ({
+              ...current,
+
+              name:
+                savedUser.name ||
+                savedUser.fullName ||
+                current.name,
+
+              email:
+                savedUser.email ||
+                current.email,
+
+              phone:
+                savedUser.phone ||
+                current.phone,
+            })
+          );
+        }, 0);
+      } catch (error) {
+        console.error(
+          "LOAD USER ERROR:",
+          error
         );
-      } finally {
-        if (!cancelled) {
-          setLoadingCart(false);
-        }
       }
     };
 
-    loadCart();
+    loadUser();
 
     return () => {
       cancelled = true;
     };
-  }, [navigate]);
+  }, []);
 
-  /* =====================================================
-     FORM CHANGE
-  ===================================================== */
+  /* =========================================================
+     CHECK PHONE VERIFICATION
+  ========================================================= */
 
-  const handleChange = (e) => {
-    const { name, value } = e.target;
+  useEffect(() => {
+    let cancelled = false;
 
-    setFormData((prev) => ({
-      ...prev,
-      [name]: value,
-    }));
-  };
-
-  /* =====================================================
-     PLACE ORDER
-  ===================================================== */
-
-  const handlePlaceOrder = async (e) => {
-    e.preventDefault();
-
-    const token = localStorage.getItem("mamta_user_token");
-
-    /* -----------------------------------------------------
-       LOGIN CHECK
-    ----------------------------------------------------- */
-
-    if (!token) {
-      navigate("/login");
-      return;
-    }
-
-    /* -----------------------------------------------------
-       FORM VALIDATION
-    ----------------------------------------------------- */
-
-    if (
-      !formData.name.trim() ||
-      !formData.email.trim() ||
-      !formData.phone.trim() ||
-      !formData.address.trim() ||
-      !formData.city.trim()
-    ) {
-      setError("Please fill in all delivery details.");
-      setSuccess("");
-      return;
-    }
-
-    /* -----------------------------------------------------
-       CART CHECK
-    ----------------------------------------------------- */
-
-    if (!cart?.items?.length) {
-      setError("Your cart is empty.");
-      setSuccess("");
-      return;
-    }
-
-    try {
-      setPlacingOrder(true);
-      setError("");
-      setSuccess("");
-
-      /* ===================================================
-         CASH ON DELIVERY
-      =================================================== */
-
-      if (paymentMethod === "Cash on Delivery") {
-        const response = await axios.post(
-          `${API_URL}/orders`,
-          {
-            name: formData.name.trim(),
-            email: formData.email.trim(),
-            phone: formData.phone.trim(),
-            address: formData.address.trim(),
-            city: formData.city.trim(),
-            paymentMethod: "Cash on Delivery",
-          },
-          {
-            headers: {
-              Authorization: `Bearer ${token}`,
-            },
-          }
+    const checkVerifiedPhone = () => {
+      const verifiedPhone =
+        sessionStorage.getItem(
+          "mamta_phone_verified"
         );
 
-        if (response.data.success) {
-          const order = response.data.order;
+      setTimeout(() => {
+        if (cancelled) {
+          return;
+        }
 
-          window.dispatchEvent(new Event("cartChanged"));
+        if (!verifiedPhone) {
+          setPhoneVerified(false);
+          return;
+        }
 
-          setSuccess(
-            "Your order has been placed successfully."
+        setFormData(
+          (current) => ({
+            ...current,
+
+            phone:
+              verifiedPhone ||
+              current.phone,
+          })
+        );
+
+        setPhoneVerified(true);
+      }, 0);
+    };
+
+    checkVerifiedPhone();
+
+    return () => {
+      cancelled = true;
+    };
+  }, []);
+
+  /* =========================================================
+     CHECK PHONE WHEN USER RETURNS TO CHECKOUT
+  ========================================================= */
+
+  useEffect(() => {
+    const handleFocus = () => {
+      const verifiedPhone =
+        sessionStorage.getItem(
+          "mamta_phone_verified"
+        );
+
+      if (
+        verifiedPhone &&
+        formData.phone ===
+          verifiedPhone
+      ) {
+        setPhoneVerified(true);
+      }
+    };
+
+    window.addEventListener(
+      "focus",
+      handleFocus
+    );
+
+    return () => {
+      window.removeEventListener(
+        "focus",
+        handleFocus
+      );
+    };
+  }, [formData.phone]);
+
+  /* =========================================================
+     FETCH CART
+  ========================================================= */
+
+  useEffect(() => {
+    let cancelled = false;
+
+    const fetchCart = async () => {
+      try {
+        if (!token) {
+          navigate("/login");
+          return;
+        }
+
+        if (!cancelled) {
+          setLoading(true);
+        }
+
+        const response =
+          await axios.get(
+            `${API_URL}/cart`,
+            {
+              headers: {
+                Authorization:
+                  `Bearer ${token}`,
+              },
+            }
           );
 
-          setTimeout(() => {
-            navigate(`/order-success/${order._id}`, {
-              state: {
-                order,
-              },
-            });
-          }, 700);
+        console.log(
+          "CHECKOUT CART:",
+          response.data
+        );
+
+        const cartData =
+          response.data?.cart ||
+          response.data;
+
+        if (!cancelled) {
+          setCart(cartData);
         }
+      } catch (error) {
+        console.error(
+          "CHECKOUT CART ERROR:",
+          error
+        );
+
+        if (
+          error.response?.status ===
+          401
+        ) {
+          localStorage.removeItem(
+            "mamta_user_token"
+          );
+
+          localStorage.removeItem(
+            "mamta_user"
+          );
+
+          if (!cancelled) {
+            navigate("/login");
+          }
+
+          return;
+        }
+
+        if (!cancelled) {
+          setCart({
+            items: [],
+          });
+        }
+      } finally {
+        if (!cancelled) {
+          setLoading(false);
+        }
+      }
+    };
+
+    fetchCart();
+
+    return () => {
+      cancelled = true;
+    };
+  }, [token, navigate]);
+
+  /* =========================================================
+     FORM CHANGE
+  ========================================================= */
+
+  const handleChange = (e) => {
+    const {
+      name,
+      value,
+    } = e.target;
+
+    setFormData(
+      (current) => ({
+        ...current,
+        [name]: value,
+      })
+    );
+
+    /* ---------------------------------------------------------
+       If phone number changes, it is no longer verified.
+    --------------------------------------------------------- */
+
+    if (name === "phone") {
+      setPhoneVerified(false);
+
+      sessionStorage.removeItem(
+        "mamta_phone_verified"
+      );
+    }
+  };
+
+  /* =========================================================
+     PHONE VERIFICATION
+  ========================================================= */
+
+  const handleVerifyPhone = () => {
+    const phone =
+      formData.phone.trim();
+
+    if (!phone) {
+      alert(
+        "Please enter your phone number first."
+      );
+
+      return;
+    }
+
+    /* ---------------------------------------------------------
+       Pakistani mobile number validation
+
+       Examples:
+       03001234567
+       03111234567
+       03221234567
+    --------------------------------------------------------- */
+
+    const phoneRegex =
+      /^03\d{9}$/;
+
+    if (
+      !phoneRegex.test(phone)
+    ) {
+      alert(
+        "Please enter a valid Pakistani mobile number, e.g. 03001234567"
+      );
+
+      return;
+    }
+
+    navigate(
+      `/verify-phone?phone=${encodeURIComponent(
+        phone
+      )}`
+    );
+  };
+
+  /* =========================================================
+     ITEMS
+  ========================================================= */
+
+  const items =
+    cart?.items || [];
+
+  /* =========================================================
+     TOTALS
+  ========================================================= */
+
+  const subtotal =
+    items.reduce(
+      (
+        total,
+        item
+      ) =>
+        total +
+        Number(
+          item.price || 0
+        ) *
+          Number(
+            item.quantity || 0
+          ),
+      0
+    );
+
+  const shipping =
+    subtotal >= 5000
+      ? 0
+      : 250;
+
+  const total =
+    subtotal +
+    shipping;
+
+  /* =========================================================
+     COLOR HELPER
+  ========================================================= */
+
+  const getColorName = (
+    color
+  ) => {
+    if (!color) {
+      return "";
+    }
+
+    if (
+      typeof color ===
+      "object"
+    ) {
+      return (
+        color.name ||
+        color.colorName ||
+        color.value ||
+        ""
+      );
+    }
+
+    return String(color);
+  };
+
+  /* =========================================================
+     PLACE ORDER
+  ========================================================= */
+
+  const handlePlaceOrder =
+    async (e) => {
+      e.preventDefault();
+
+      if (!token) {
+        alert(
+          "Please login first."
+        );
+
+        navigate("/login");
 
         return;
       }
 
-      /* ===================================================
-         ONLINE PAYMENT
-      =================================================== */
+      /* ---------------------------------------------
+         VALIDATION
+      --------------------------------------------- */
 
-      if (paymentMethod === "Online Payment") {
-        const response = await axios.post(
-          `${API_URL}/payments/create`,
-          {
-            name: formData.name.trim(),
-            email: formData.email.trim(),
-            phone: formData.phone.trim(),
-            address: formData.address.trim(),
-            city: formData.city.trim(),
-            paymentMethod: "Online Payment",
-          },
-          {
-            headers: {
-              Authorization: `Bearer ${token}`,
-            },
-          }
+      if (
+        !formData.name.trim()
+      ) {
+        alert(
+          "Please enter your name."
         );
 
-        if (response.data.success) {
-          const checkoutUrl = response.data.checkoutUrl;
+        return;
+      }
 
-          if (!checkoutUrl) {
-            throw new Error(
-              "Payment checkout URL was not returned."
+      if (
+        !formData.email.trim()
+      ) {
+        alert(
+          "Please enter your email."
+        );
+
+        return;
+      }
+
+      if (
+        !formData.phone.trim()
+      ) {
+        alert(
+          "Please enter your phone number."
+        );
+
+        return;
+      }
+
+      /* ---------------------------------------------
+         PHONE VERIFICATION
+      --------------------------------------------- */
+
+      if (!phoneVerified) {
+        alert(
+          "Please verify your phone number before placing the order."
+        );
+
+        return;
+      }
+
+      /* ---------------------------------------------
+         MAKE SURE VERIFIED PHONE MATCHES CURRENT PHONE
+      --------------------------------------------- */
+
+      const verifiedPhone =
+        sessionStorage.getItem(
+          "mamta_phone_verified"
+        );
+
+      if (
+        !verifiedPhone ||
+        verifiedPhone !==
+          formData.phone.trim()
+      ) {
+        setPhoneVerified(false);
+
+        alert(
+          "Your phone number is not verified. Please verify it again."
+        );
+
+        return;
+      }
+
+      if (
+        !formData.address.trim()
+      ) {
+        alert(
+          "Please enter your delivery address."
+        );
+
+        return;
+      }
+
+      if (
+        !formData.city.trim()
+      ) {
+        alert(
+          "Please enter your city."
+        );
+
+        return;
+      }
+
+      if (
+        items.length === 0
+      ) {
+        alert(
+          "Your cart is empty."
+        );
+
+        navigate("/cart");
+
+        return;
+      }
+
+      /* ---------------------------------------------
+         CREATE ORDER ITEMS WITH COLOR
+      --------------------------------------------- */
+
+      const orderItems =
+        items.map(
+          (item) => ({
+            productId:
+              item.productId ||
+              item._id,
+
+            name:
+              item.name,
+
+            image:
+              item.image ||
+              "",
+
+            price:
+              Number(
+                item.price || 0
+              ),
+
+            quantity:
+              Number(
+                item.quantity || 1
+              ),
+
+            color:
+              getColorName(
+                item.color
+              ),
+
+            total:
+              Number(
+                item.price || 0
+              ) *
+              Number(
+                item.quantity || 1
+              ),
+          })
+        );
+
+      /* ---------------------------------------------
+         ORDER DATA
+      --------------------------------------------- */
+
+      const orderData = {
+        name:
+          formData.name.trim(),
+
+        email:
+          formData.email.trim(),
+
+        phone:
+          formData.phone.trim(),
+
+        address:
+          formData.address.trim(),
+
+        city:
+          formData.city.trim(),
+
+        postalCode:
+          formData.postalCode.trim(),
+
+        items:
+          orderItems,
+
+        subtotal:
+          subtotal,
+
+        shipping:
+          shipping,
+
+        total:
+          total,
+
+        paymentMethod:
+          paymentMethod,
+      };
+
+      try {
+        setPlacingOrder(true);
+
+        /* =================================================
+           CASH ON DELIVERY
+        ================================================= */
+
+        if (
+          paymentMethod ===
+          "Cash on Delivery"
+        ) {
+          const response =
+            await axios.post(
+              `${API_URL}/orders`,
+              orderData,
+              {
+                headers: {
+                  Authorization:
+                    `Bearer ${token}`,
+                },
+              }
+            );
+
+          console.log(
+            "ORDER CREATED:",
+            response.data
+          );
+
+          window.dispatchEvent(
+            new Event(
+              "cartChanged"
+            )
+          );
+
+          /* ------------------------------------------------
+             Clear verified phone after successful order
+          ------------------------------------------------ */
+
+          sessionStorage.removeItem(
+            "mamta_phone_verified"
+          );
+
+          const createdOrder =
+            response.data?.order ||
+            response.data;
+
+          const orderId =
+            createdOrder?._id ||
+            createdOrder?.id;
+
+          if (orderId) {
+            navigate(
+              `/order-success/${orderId}`
+            );
+          } else {
+            navigate(
+              "/order-success"
             );
           }
 
-          window.location.href = checkoutUrl;
+          return;
         }
+
+        /* =================================================
+           ONLINE PAYMENT
+        ================================================= */
+
+        const paymentResponse =
+          await axios.post(
+            `${API_URL}/payments/create`,
+            orderData,
+            {
+              headers: {
+                Authorization:
+                  `Bearer ${token}`,
+              },
+            }
+          );
+
+        console.log(
+          "PAYMENT RESPONSE:",
+          paymentResponse.data
+        );
+
+        const paymentUrl =
+          paymentResponse.data?.url ||
+          paymentResponse.data
+            ?.checkoutUrl ||
+          paymentResponse.data
+            ?.paymentUrl ||
+          paymentResponse.data
+            ?.redirectUrl;
+
+        if (paymentUrl) {
+          window.location.href =
+            paymentUrl;
+        } else {
+          alert(
+            "Payment session could not be created."
+          );
+        }
+      } catch (error) {
+        console.error(
+          "CHECKOUT ORDER ERROR:",
+          error
+        );
+
+        if (
+          error.response?.status ===
+          401
+        ) {
+          localStorage.removeItem(
+            "mamta_user_token"
+          );
+
+          localStorage.removeItem(
+            "mamta_user"
+          );
+
+          navigate("/login");
+
+          return;
+        }
+
+        alert(
+          error.response?.data
+            ?.message ||
+            "Unable to place your order. Please try again."
+        );
+      } finally {
+        setPlacingOrder(false);
       }
-    } catch (error) {
-      console.error("CHECKOUT ERROR:", error);
+    };
 
-      if (error.response?.status === 401) {
-        localStorage.removeItem("mamta_user_token");
-        localStorage.removeItem("mamta_user");
-
-        navigate("/login");
-        return;
-      }
-
-      setError(
-        error.response?.data?.message ||
-          error.message ||
-          "Unable to process your order. Please try again."
-      );
-    } finally {
-      setPlacingOrder(false);
-    }
-  };
-
-  /* =====================================================
-     CART DATA
-  ===================================================== */
-
-  const items = cart?.items || [];
-
-  const subtotal = items.reduce(
-    (total, item) =>
-      total +
-      Number(item.price) * Number(item.quantity),
-    0
-  );
-
-  const shipping = subtotal >= 5000 ? 0 : 250;
-
-  const total = subtotal + shipping;
-
-  /* =====================================================
+  /* =========================================================
      LOADING
-  ===================================================== */
+  ========================================================= */
 
-  if (loadingCart) {
+  if (loading) {
     return (
-      <main className="checkout-page checkout-loading">
-        <div className="checkout-loader">
-          <div className="checkout-spinner"></div>
-          <p>Preparing your checkout...</p>
+      <main className="checkout-page">
+
+        <div className="checkout-loading">
+
+          <ShoppingBag
+            size={30}
+          />
+
+          <p>
+            Loading your checkout...
+          </p>
+
         </div>
+
       </main>
     );
   }
 
-  /* =====================================================
+  /* =========================================================
      EMPTY CART
-  ===================================================== */
+  ========================================================= */
 
-  if (!items.length) {
+  if (items.length === 0) {
     return (
       <main className="checkout-page">
-        <div className="checkout-empty">
+
+        <section className="checkout-empty">
+
           <div className="checkout-empty-icon">
-            <ShoppingBag size={34} />
+
+            <ShoppingBag
+              size={32}
+            />
+
           </div>
 
-          <h1>Your cart is empty</h1>
+          <span>
+            MAMTA CHECKOUT
+          </span>
+
+          <h1>
+            Your cart is empty
+          </h1>
 
           <p>
-            Add something beautiful to your cart before
-            continuing to checkout.
+            Add something beautiful to your cart before checking out.
           </p>
 
           <Link
             to="/shop"
-            className="checkout-shop-button"
+            className="checkout-back-shop"
           >
-            Continue Shopping
+
+            <ArrowLeft
+              size={17}
+            />
+
+            CONTINUE SHOPPING
+
           </Link>
-        </div>
+
+        </section>
+
       </main>
     );
   }
 
-  /* =====================================================
-     MAIN CHECKOUT
-  ===================================================== */
+  /* =========================================================
+     PAGE
+  ========================================================= */
 
   return (
     <main className="checkout-page">
 
-      {/* =================================================
-         HEADER
-      ================================================= */}
+      {/* =====================================================
+          HEADER
+      ====================================================== */}
 
-      <section className="checkout-header">
-        <div className="checkout-header-inner">
+      <div className="checkout-header">
 
-          <Link
-            to="/cart"
-            className="checkout-back"
-          >
-            <ArrowLeft size={17} />
-            Back to Cart
-          </Link>
+        <div>
 
-          <div className="checkout-heading">
+          <span className="checkout-eyebrow">
+            MAMTA
+          </span>
 
-            <span>SECURE CHECKOUT</span>
+          <h1>
+            Checkout
+          </h1>
 
-            <h1>
-              Complete Your <em>Order</em>
-            </h1>
-
-            <p>
-              A little comfort is on its way to you.
-            </p>
-
-          </div>
+          <p>
+            Complete your details to place your order.
+          </p>
 
         </div>
-      </section>
 
-      {/* =================================================
-         CONTENT
-      ================================================= */}
+        <Link
+          to="/cart"
+          className="checkout-back-link"
+        >
 
-      <section className="checkout-content">
-        <div className="checkout-container">
+          <ArrowLeft
+            size={17}
+          />
+
+          Back to Cart
+
+        </Link>
+
+      </div>
+
+      {/* =====================================================
+          MAIN GRID
+      ====================================================== */}
+
+      <div className="checkout-container">
+
+        {/* ===================================================
+            LEFT
+        ==================================================== */}
+
+        <form
+          className="checkout-form"
+          onSubmit={
+            handlePlaceOrder
+          }
+        >
 
           {/* =================================================
-             LEFT
-          ================================================= */}
+              CUSTOMER INFORMATION
+          ================================================== */}
 
-          <div className="checkout-left">
+          <section className="checkout-card">
 
-            {/* DELIVERY DETAILS */}
+            <div className="checkout-card-heading">
 
-            <div className="checkout-card">
+              <div className="checkout-card-icon">
 
-              <div className="checkout-card-heading">
-
-                <div className="checkout-section-icon">
-                  <MapPin size={19} />
-                </div>
-
-                <div>
-                  <span>01</span>
-                  <h2>Delivery Details</h2>
-                </div>
+                <User
+                  size={18}
+                />
 
               </div>
-
-              <form
-                onSubmit={handlePlaceOrder}
-                id="checkout-form"
-              >
-
-                <div className="checkout-form-grid">
-
-                  {/* NAME */}
-
-                  <div className="checkout-field">
-
-                    <label>
-                      <User size={14} />
-                      Full Name
-                    </label>
-
-                    <input
-                      type="text"
-                      name="name"
-                      value={formData.name}
-                      onChange={handleChange}
-                      placeholder="Your full name"
-                      required
-                    />
-
-                  </div>
-
-                  {/* EMAIL */}
-
-                  <div className="checkout-field">
-
-                    <label>
-                      <Mail size={14} />
-                      Email Address
-                    </label>
-
-                    <input
-                      type="email"
-                      name="email"
-                      value={formData.email}
-                      onChange={handleChange}
-                      placeholder="your@email.com"
-                      required
-                    />
-
-                  </div>
-
-                  {/* PHONE */}
-
-                  <div className="checkout-field">
-
-                    <label>
-                      <Phone size={14} />
-                      Phone Number
-                    </label>
-
-                    <input
-                      type="tel"
-                      name="phone"
-                      value={formData.phone}
-                      onChange={handleChange}
-                      placeholder="03XX XXXXXXX"
-                      required
-                    />
-
-                  </div>
-
-                  {/* CITY */}
-
-                  <div className="checkout-field">
-
-                    <label>
-                      <MapPin size={14} />
-                      City
-                    </label>
-
-                    <input
-                      type="text"
-                      name="city"
-                      value={formData.city}
-                      onChange={handleChange}
-                      placeholder="Your city"
-                      required
-                    />
-
-                  </div>
-
-                </div>
-
-                {/* ADDRESS */}
-
-                <div className="checkout-field checkout-address-field">
-
-                  <label>
-                    <MapPin size={14} />
-                    Complete Delivery Address
-                  </label>
-
-                  <textarea
-                    name="address"
-                    value={formData.address}
-                    onChange={handleChange}
-                    placeholder="House number, street, area..."
-                    rows="4"
-                    required
-                  />
-
-                </div>
-
-              </form>
-
-            </div>
-
-            {/* PAYMENT METHOD */}
-
-            <div className="checkout-card payment-card">
-
-              <div className="checkout-card-heading">
-
-                <div className="checkout-section-icon">
-                  <CreditCard
-                    size={19}
-                    strokeWidth={1.8}
-                  />
-                </div>
-
-                <div className="checkout-heading-text">
-
-                  <span>02</span>
-
-                  <h2>
-                    Payment Method
-                  </h2>
-
-                  <p>
-                    Choose how you would like to pay
-                  </p>
-
-                </div>
-
-              </div>
-
-              <div className="payment-options">
-
-                {/* COD */}
-
-                <button
-                  type="button"
-                  className={`payment-option ${
-                    paymentMethod ===
-                    "Cash on Delivery"
-                      ? "selected"
-                      : ""
-                  }`}
-                  onClick={() =>
-                    setPaymentMethod(
-                      "Cash on Delivery"
-                    )
-                  }
-                >
-
-                  <div className="payment-option-left">
-
-                    <div className="payment-radio">
-
-                      {paymentMethod ===
-                      "Cash on Delivery" ? (
-                        <CheckCircle2
-                          size={18}
-                          strokeWidth={2}
-                        />
-                      ) : (
-                        <span />
-                      )}
-
-                    </div>
-
-                    <div className="payment-info">
-
-                      <div className="payment-title-row">
-
-                        <strong>
-                          Cash on Delivery
-                        </strong>
-
-                        <span className="payment-badge">
-                          Popular
-                        </span>
-
-                      </div>
-
-                      <p>
-                        Pay when your MAMTA order
-                        arrives at your doorstep.
-                      </p>
-
-                    </div>
-
-                  </div>
-
-                </button>
-
-                {/* ONLINE PAYMENT */}
-
-                <button
-                  type="button"
-                  className={`payment-option ${
-                    paymentMethod ===
-                    "Online Payment"
-                      ? "selected"
-                      : ""
-                  }`}
-                  onClick={() =>
-                    setPaymentMethod(
-                      "Online Payment"
-                    )
-                  }
-                >
-
-                  <div className="payment-option-left">
-
-                    <div className="payment-radio">
-
-                      {paymentMethod ===
-                      "Online Payment" ? (
-                        <CheckCircle2
-                          size={18}
-                          strokeWidth={2}
-                        />
-                      ) : (
-                        <span />
-                      )}
-
-                    </div>
-
-                    <div className="payment-info">
-
-                      <div className="payment-title-row">
-
-                        <strong>
-                          Online Payment
-                        </strong>
-
-                        <span className="payment-badge secure">
-                          Secure
-                        </span>
-
-                      </div>
-
-                      <p>
-                        Pay securely online using
-                        the available payment
-                        methods.
-                      </p>
-
-                    </div>
-
-                  </div>
-
-                  <div className="payment-method-icon">
-
-                    <CreditCard
-                      size={21}
-                      strokeWidth={1.7}
-                    />
-
-                  </div>
-
-                </button>
-
-              </div>
-
-              {/* SECURITY */}
-
-              <div className="payment-security">
-
-                <div className="security-icon">
-                  <CheckCircle2 size={15} />
-                </div>
-
-                <span>
-                  Your payment information is
-                  handled securely.
-                </span>
-
-              </div>
-
-            </div>
-
-            {/* TRUST */}
-
-            <div className="checkout-trust">
-
-              <ShieldCheck size={22} />
 
               <div>
 
-                <strong>
-                  Safe & Secure Ordering
-                </strong>
+                <span>
+                  01
+                </span>
 
-                <p>
-                  Your personal information is
-                  securely handled.
-                </p>
+                <h2>
+                  Customer Information
+                </h2>
 
               </div>
 
             </div>
 
-          </div>
+            <div className="checkout-form-grid">
 
-          {/* =================================================
-             RIGHT — ORDER SUMMARY
-          ================================================= */}
+              {/* NAME */}
 
-          <aside className="checkout-summary">
+              <div className="checkout-field">
 
-            <div className="summary-card">
+                <label>
+                  Full Name
+                </label>
 
-              {/* SUMMARY HEADING */}
+                <div className="checkout-input-wrapper">
 
-              <div className="summary-heading">
+                  <User
+                    size={17}
+                  />
 
-                <span>
-                  YOUR ORDER
-                </span>
+                  <input
+                    type="text"
+                    name="name"
+                    value={
+                      formData.name
+                    }
+                    onChange={
+                      handleChange
+                    }
+                    placeholder="Your full name"
+                  />
 
-                <strong>
-                  {items.length}{" "}
-                  {items.length === 1
-                    ? "Item"
-                    : "Items"}
-                </strong>
+                </div>
 
               </div>
 
-              {/* PRODUCTS */}
+              {/* EMAIL */}
 
-              <div className="summary-products">
+              <div className="checkout-field">
 
-                {items.map((item, index) => (
+                <label>
+                  Email Address
+                </label>
 
+                <div className="checkout-input-wrapper">
+
+                  <Mail
+                    size={17}
+                  />
+
+                  <input
+                    type="email"
+                    name="email"
+                    value={
+                      formData.email
+                    }
+                    onChange={
+                      handleChange
+                    }
+                    placeholder="you@example.com"
+                  />
+
+                </div>
+
+              </div>
+
+              {/* PHONE */}
+
+              <div className="checkout-field checkout-phone-field">
+
+                <label>
+                  Phone Number
+                </label>
+
+                <div className="checkout-input-wrapper">
+
+                  <Phone
+                    size={17}
+                  />
+
+                  <input
+                    type="tel"
+                    name="phone"
+                    value={
+                      formData.phone
+                    }
+                    onChange={
+                      handleChange
+                    }
+                    placeholder="03XX XXXXXXX"
+                    maxLength={11}
+                  />
+
+                </div>
+
+                {/* VERIFY PHONE BUTTON */}
+
+                <div className="checkout-phone-verification">
+
+                  <button
+                    type="button"
+                    className={
+                      phoneVerified
+                        ? "checkout-verify-phone checkout-phone-verified"
+                        : "checkout-verify-phone"
+                    }
+                    onClick={
+                      handleVerifyPhone
+                    }
+                    disabled={
+                      phoneVerified
+                    }
+                  >
+
+                    <CheckCircle2
+                      size={17}
+                    />
+
+                    {phoneVerified
+                      ? "Phone Verified"
+                      : "Verify Phone Number"}
+
+                  </button>
+
+                  {phoneVerified && (
+                    <span className="checkout-phone-success">
+
+                      Your phone number has been verified.
+
+                    </span>
+                  )}
+
+                </div>
+
+              </div>
+
+            </div>
+
+          </section>
+
+          {/* =================================================
+              DELIVERY INFORMATION
+          ================================================== */}
+
+          <section className="checkout-card">
+
+            <div className="checkout-card-heading">
+
+              <div className="checkout-card-icon">
+
+                <MapPin
+                  size={18}
+                />
+
+              </div>
+
+              <div>
+
+                <span>
+                  02
+                </span>
+
+                <h2>
+                  Delivery Information
+                </h2>
+
+              </div>
+
+            </div>
+
+            <div className="checkout-form-grid">
+
+              {/* ADDRESS */}
+
+              <div className="checkout-field checkout-field-full">
+
+                <label>
+                  Delivery Address
+                </label>
+
+                <div className="checkout-input-wrapper checkout-textarea-wrapper">
+
+                  <MapPin
+                    size={17}
+                  />
+
+                  <textarea
+                    name="address"
+                    value={
+                      formData.address
+                    }
+                    onChange={
+                      handleChange
+                    }
+                    placeholder="House number, street, area..."
+                    rows="4"
+                  />
+
+                </div>
+
+              </div>
+
+              {/* CITY */}
+
+              <div className="checkout-field">
+
+                <label>
+                  City
+                </label>
+
+                <div className="checkout-input-wrapper">
+
+                  <MapPin
+                    size={17}
+                  />
+
+                  <input
+                    type="text"
+                    name="city"
+                    value={
+                      formData.city
+                    }
+                    onChange={
+                      handleChange
+                    }
+                    placeholder="Your city"
+                  />
+
+                </div>
+
+              </div>
+
+              {/* POSTAL CODE */}
+
+              <div className="checkout-field">
+
+                <label>
+                  Postal Code
+                </label>
+
+                <div className="checkout-input-wrapper">
+
+                  <MapPin
+                    size={17}
+                  />
+
+                  <input
+                    type="text"
+                    name="postalCode"
+                    value={
+                      formData.postalCode
+                    }
+                    onChange={
+                      handleChange
+                    }
+                    placeholder="Postal code"
+                  />
+
+                </div>
+
+              </div>
+
+            </div>
+
+          </section>
+
+          {/* =================================================
+              PAYMENT
+          ================================================== */}
+
+          <section className="checkout-card">
+
+            <div className="checkout-card-heading">
+
+              <div className="checkout-card-icon">
+
+                <CreditCard
+                  size={18}
+                />
+
+              </div>
+
+              <div>
+
+                <span>
+                  03
+                </span>
+
+                <h2>
+                  Payment Method
+                </h2>
+
+              </div>
+
+            </div>
+
+            <div className="checkout-payment-options">
+
+              {/* COD */}
+
+              <label
+                className={
+                  paymentMethod ===
+                  "Cash on Delivery"
+                    ? "checkout-payment-option payment-selected"
+                    : "checkout-payment-option"
+                }
+              >
+
+                <input
+                  type="radio"
+                  name="paymentMethod"
+                  value="Cash on Delivery"
+                  checked={
+                    paymentMethod ===
+                    "Cash on Delivery"
+                  }
+                  onChange={(e) =>
+                    setPaymentMethod(
+                      e.target.value
+                    )
+                  }
+                />
+
+                <div className="checkout-payment-radio">
+
+                  <CheckCircle2
+                    size={19}
+                  />
+
+                </div>
+
+                <div>
+
+                  <strong>
+                    Cash on Delivery
+                  </strong>
+
+                  <span>
+                    Pay when your order arrives.
+                  </span>
+
+                </div>
+
+              </label>
+
+              {/* ONLINE */}
+
+              <label
+                className={
+                  paymentMethod ===
+                  "Online Payment"
+                    ? "checkout-payment-option payment-selected"
+                    : "checkout-payment-option"
+                }
+              >
+
+                <input
+                  type="radio"
+                  name="paymentMethod"
+                  value="Online Payment"
+                  checked={
+                    paymentMethod ===
+                    "Online Payment"
+                  }
+                  onChange={(e) =>
+                    setPaymentMethod(
+                      e.target.value
+                    )
+                  }
+                />
+
+                <div className="checkout-payment-radio">
+
+                  <CreditCard
+                    size={19}
+                  />
+
+                </div>
+
+                <div>
+
+                  <strong>
+                    Online Payment
+                  </strong>
+
+                  <span>
+                    Pay securely online.
+                  </span>
+
+                </div>
+
+              </label>
+
+            </div>
+
+          </section>
+
+          {/* =================================================
+              PLACE ORDER
+          ================================================== */}
+
+          <button
+            type="submit"
+            className="checkout-place-order"
+            disabled={
+              placingOrder ||
+              !phoneVerified
+            }
+          >
+
+            {placingOrder
+              ? "PROCESSING ORDER..."
+              : !phoneVerified
+                ? "VERIFY PHONE NUMBER FIRST"
+                : "PLACE ORDER"}
+
+          </button>
+
+          <div className="checkout-secure">
+
+            <ShieldCheck
+              size={17}
+            />
+
+            <span>
+              Your information is secure and protected.
+            </span>
+
+          </div>
+
+        </form>
+
+        {/* ===================================================
+            RIGHT — ORDER SUMMARY
+        ==================================================== */}
+
+        <aside className="checkout-summary">
+
+          <div className="checkout-summary-header">
+
+            <span>
+              YOUR ORDER
+            </span>
+
+            <h2>
+              Order Summary
+            </h2>
+
+          </div>
+
+          {/* =================================================
+              PRODUCTS
+          ================================================== */}
+
+          <div className="summary-products">
+
+            {items.map(
+              (
+                item,
+                index
+              ) => {
+
+                const colorName =
+                  getColorName(
+                    item.color
+                  );
+
+                const itemPrice =
+                  Number(
+                    item.price || 0
+                  );
+
+                const itemQuantity =
+                  Number(
+                    item.quantity || 0
+                  );
+
+                const itemTotal =
+                  itemPrice *
+                  itemQuantity;
+
+                return (
                   <div
                     className="summary-product"
                     key={
@@ -769,24 +1415,30 @@ const Checkout = () => {
                     }
                   >
 
+                    {/* IMAGE */}
+
                     <div className="summary-product-image">
 
                       <img
                         src={
                           item.image ||
-                          "https://placehold.co/120x120/F4D9DC/4A3032?text=MAMTA"
+                          "https://placehold.co/100x100/F4D9DC/4A3032?text=MAMTA"
                         }
                         alt={
                           item.name ||
-                          "MAMTA Product"
+                          "Product"
                         }
+                        onError={(
+                          e
+                        ) => {
+                          e.currentTarget.src =
+                            "https://placehold.co/100x100/F4D9DC/4A3032?text=MAMTA";
+                        }}
                       />
 
-                      <span>
-                        {item.quantity}
-                      </span>
-
                     </div>
+
+                    {/* INFO */}
 
                     <div className="summary-product-info">
 
@@ -796,148 +1448,172 @@ const Checkout = () => {
 
                       <p>
                         Rs.{" "}
-                        {Number(
-                          item.price
-                        ).toLocaleString()}
+                        {itemPrice.toLocaleString()}
                       </p>
+
+                      {/* COLOR */}
+
+                      {colorName && (
+                        <span className="checkout-product-color">
+
+                          <span className="checkout-color-dot"></span>
+
+                          Color:{" "}
+                          {colorName}
+
+                        </span>
+                      )}
+
+                      {/* QUANTITY */}
+
+                      <span className="checkout-product-quantity">
+
+                        Quantity:{" "}
+                        {itemQuantity}
+
+                      </span>
 
                     </div>
 
+                    {/* TOTAL */}
+
                     <strong>
+
                       Rs.{" "}
-                      {(
-                        Number(item.price) *
-                        Number(item.quantity)
-                      ).toLocaleString()}
+                      {itemTotal.toLocaleString()}
+
                     </strong>
 
                   </div>
+                );
+              }
+            )}
 
-                ))}
+          </div>
 
-              </div>
+          {/* =================================================
+              TOTALS
+          ================================================== */}
 
-              {/* TOTALS */}
+          <div className="summary-totals">
 
-              <div className="summary-totals">
+            <div>
 
-                <div>
+              <span>
+                Subtotal
+              </span>
 
-                  <span>
-                    Subtotal
-                  </span>
-
-                  <strong>
-                    Rs.{" "}
-                    {subtotal.toLocaleString()}
-                  </strong>
-
-                </div>
-
-                <div>
-
-                  <span>
-                    Delivery
-                  </span>
-
-                  <strong>
-                    {shipping === 0
-                      ? "FREE"
-                      : `Rs. ${shipping.toLocaleString()}`}
-                  </strong>
-
-                </div>
-
-              </div>
-
-              {/* TOTAL */}
-
-              <div className="summary-total">
-
-                <span>
-                  Total
-                </span>
-
-                <strong>
-                  Rs.{" "}
-                  {total.toLocaleString()}
-                </strong>
-
-              </div>
-
-              {/* ERROR */}
-
-              {error && (
-                <div className="checkout-message error">
-                  {error}
-                </div>
-              )}
-
-              {/* SUCCESS */}
-
-              {success && (
-                <div className="checkout-message success">
-
-                  <CheckCircle2 size={17} />
-
-                  {success}
-
-                </div>
-              )}
-
-              {/* BUTTON */}
-
-              <button
-                type="submit"
-                form="checkout-form"
-                className="place-order-button"
-                disabled={placingOrder}
-              >
-
-                {placingOrder ? (
-                  <>
-                    <span className="button-spinner"></span>
-
-                    {paymentMethod ===
-                    "Online Payment"
-                      ? "Opening Payment..."
-                      : "Placing Order..."}
-                  </>
-                ) : (
-                  <>
-                    {paymentMethod ===
-                    "Online Payment" ? (
-                      <CreditCard size={18} />
-                    ) : (
-                      <ShoppingBag size={18} />
-                    )}
-
-                    {paymentMethod ===
-                    "Online Payment"
-                      ? "Pay Securely"
-                      : "Place Order"}
-                  </>
-                )}
-
-              </button>
-
-              {/* NOTE */}
-
-              <p className="checkout-note">
-                By placing your order, you agree
-                to our terms and conditions.
-              </p>
+              <strong>
+                Rs.{" "}
+                {subtotal.toLocaleString()}
+              </strong>
 
             </div>
 
-          </aside>
+            <div>
 
-        </div>
-      </section>
+              <span>
+                Free Shipping
+              </span>
+
+            </div>
+
+            <div className="summary-total">
+
+              <span>
+                Total
+              </span>
+
+              <strong>
+                Rs.{" "}
+                {total.toLocaleString()}
+              </strong>
+
+            </div>
+
+          </div>
+
+          {/* =================================================
+              DELIVERY NOTE
+          ================================================== */}
+
+          <div className="checkout-delivery-note">
+
+            <TruckIcon />
+
+            <div>
+
+              <strong>
+                Estimated Delivery
+              </strong>
+
+              <span>
+                3–4 working days
+              </span>
+
+            </div>
+
+          </div>
+
+          {/* =================================================
+              SECURE NOTE
+          ================================================== */}
+
+          <div className="checkout-summary-secure">
+
+            <ShieldCheck
+              size={18}
+            />
+
+            <span>
+              Safe & secure checkout
+            </span>
+
+          </div>
+
+        </aside>
+
+      </div>
 
     </main>
   );
 };
 
-export default Checkout;
+/* =========================================================
+   SIMPLE TRUCK ICON
+========================================================= */
 
+const TruckIcon = () => {
+  return (
+    <svg
+      width="20"
+      height="20"
+      viewBox="0 0 24 24"
+      fill="none"
+      stroke="currentColor"
+      strokeWidth="1.8"
+      strokeLinecap="round"
+      strokeLinejoin="round"
+    >
+
+      <path d="M10 17h4V5H2v12h3" />
+
+      <path d="M14 8h4l4 4v5h-2" />
+
+      <circle
+        cx="7.5"
+        cy="17.5"
+        r="2.5"
+      />
+
+      <circle
+        cx="16.5"
+        cy="17.5"
+        r="2.5"
+      />
+
+    </svg>
+  );
+};
+
+export default Checkout;

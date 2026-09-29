@@ -325,7 +325,7 @@ const Header = () => {
           <div className="top-line-content">
 
             <span>
-              Made with Love for Mothers & Little Ones
+              Shipping All Over Pakistan
             </span>
 
             <span className="top-line-divider">
@@ -333,7 +333,7 @@ const Header = () => {
             </span>
 
             <span>
-              Softness for Every Beautiful Moment
+               Free Delivery on Every Order
             </span>
 
             <span className="top-line-divider">
@@ -341,7 +341,7 @@ const Header = () => {
             </span>
 
             <span>
-              Premium Comfort for Motherhood
+                 15% Off on Every Order
             </span>
 
             <span className="top-line-divider">
@@ -349,7 +349,7 @@ const Header = () => {
             </span>
 
             <span>
-              Gentle Support. Beautifully Made.
+              Shipping All Over Pakistan
             </span>
 
             <span className="top-line-divider">
@@ -357,7 +357,7 @@ const Header = () => {
             </span>
 
             <span>
-              Comfort Designed for Every Little One
+               Free Delivery on Every Order
             </span>
 
             <span className="top-line-divider">
@@ -365,12 +365,13 @@ const Header = () => {
             </span>
 
             <span>
-              Thoughtfully Made for Your Beautiful Journey
+                 15% Off on Every Order
             </span>
 
             <span className="top-line-divider">
               ✦
             </span>
+           
 
           </div>
 
@@ -388,7 +389,7 @@ const Header = () => {
             </span>
 
             <span>
-              Softness for Every Beautiful Moment
+              15% Off on Every Order
             </span>
 
             <span className="top-line-divider">
@@ -396,7 +397,7 @@ const Header = () => {
             </span>
 
             <span>
-              Premium Comfort for Motherhood
+              Shipping All Over Pakistan
             </span>
 
             <span className="top-line-divider">
@@ -404,28 +405,18 @@ const Header = () => {
             </span>
 
             <span>
-              Gentle Support. Beautifully Made.
+              Free Delivery on Every Order
             </span>
+
+           
+            
 
             <span className="top-line-divider">
               ✦
             </span>
 
-            <span>
-              Comfort Designed for Every Little One
-            </span>
+           
 
-            <span className="top-line-divider">
-              ✦
-            </span>
-
-            <span>
-              Thoughtfully Made for Your Beautiful Journey
-            </span>
-
-            <span className="top-line-divider">
-              ✦
-            </span>
 
           </div>
 
@@ -522,13 +513,15 @@ const Header = () => {
 
           {/* WISHLIST */}
 
-          <Link
-            to="/wishlist"
-            className="header-icon wishlist-header-icon"
-            aria-label="Wishlist"
-            title="Wishlist"
-          >
-
+         
+<Link
+  to="/wishlist"
+  className="header-wishlist"
+  data-wishlist-target
+  title="Wishlist"
+  aria-label="Wishlist"
+>
+ 
             <Heart
               size={20}
               strokeWidth={1.7}
@@ -572,17 +565,15 @@ const Header = () => {
 
 
           {/* CART */}
-
-          <Link
-            to="/cart"
-            className={`cart-action ${
-              cartBounce
-                ? "cart-bounce"
-                : ""
-            }`}
-            aria-label="Cart"
-            title="Cart"
-          >
+<Link
+  to="/cart"
+  className={`cart-action ${
+    cartBounce ? "cart-bounce" : ""
+  }`}
+  data-cart-target="true"
+  aria-label="Cart"
+  title="Cart"
+>
 
             <span className="action-icon">
               🛍

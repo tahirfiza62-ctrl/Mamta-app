@@ -1,0 +1,431 @@
+/* =========================================================
+   MAMTA — TERMS OF SALE
+   Premium • Soft • Elegant • Modern
+========================================================= */
+
+.terms-page {
+  position: relative;
+
+  width: 100%;
+  min-height: 100vh;
+
+  padding: 120px 6% 130px;
+
+  background:
+    radial-gradient(
+      circle at 8% 10%,
+      rgba(244, 216, 204, 0.38),
+      transparent 30%
+    ),
+    radial-gradient(
+      circle at 92% 88%,
+      rgba(248, 231, 226, 0.55),
+      transparent 32%
+    ),
+    #fff9f4;
+
+  color: #4a3032;
+
+  overflow: hidden;
+}
+
+.terms-page::before {
+  content: "";
+
+  position: absolute;
+
+  width: 420px;
+  height: 420px;
+
+  top: -220px;
+  right: -150px;
+
+  border: 1px solid rgba(185, 121, 120, 0.12);
+
+  border-radius: 50%;
+
+  pointer-events: none;
+}
+
+.terms-page::after {
+  content: "";
+
+  position: absolute;
+
+  width: 300px;
+  height: 300px;
+
+  bottom: -170px;
+  left: -130px;
+
+  border-radius: 50%;
+
+  background: rgba(244, 216, 204, 0.18);
+
+  filter: blur(5px);
+
+  pointer-events: none;
+}
+
+/* =========================================================
+   CONTAINER
+========================================================= */
+
+.terms-container {
+  position: relative;
+  z-index: 2;
+
+  width: min(900px, 100%);
+
+  margin: 0 auto;
+
+  padding: 68px 78px 72px;
+
+  background: rgba(255, 255, 255, 0.86);
+
+  border: 1px solid #eadbd5;
+
+  border-radius: 26px;
+
+  box-shadow:
+    0 25px 70px rgba(74, 48, 50, 0.075);
+
+  backdrop-filter: blur(10px);
+}
+
+.terms-container::before {
+  content: "";
+
+  position: absolute;
+
+  top: 0;
+  left: 50%;
+
+  width: 78px;
+  height: 3px;
+
+  transform: translateX(-50%);
+
+  background: #b87978;
+
+  border-radius: 0 0 5px 5px;
+}
+
+/* =========================================================
+   EYEBROW
+========================================================= */
+
+.terms-eyebrow {
+  display: block;
+
+  margin-bottom: 18px;
+
+  color: #a97872;
+
+  text-align: center;
+
+  font-size: 15px;
+
+  font-weight: 800;
+
+  letter-spacing: 3px;
+
+  text-transform: uppercase;
+}
+
+/* =========================================================
+   TITLE
+========================================================= */
+
+.terms-container h1 {
+  margin: 0;
+
+  color: #4a3032;
+
+  text-align: center;
+
+  font-family:
+    "Playfair Display",
+    "Cormorant Garamond",
+    Georgia,
+    serif;
+
+  font-size: clamp(48px, 6vw, 70px);
+
+  font-weight: 500;
+
+  line-height: 1.03;
+
+  letter-spacing: -2px;
+}
+
+/* =========================================================
+   INTRO
+========================================================= */
+
+.terms-intro {
+  width: min(680px, 100%);
+
+  margin: 27px auto 56px;
+
+  color: #806a6e;
+
+  text-align: center;
+
+  font-size: 20px;
+
+  line-height: 1.9;
+}
+
+/* =========================================================
+   SECTIONS
+========================================================= */
+
+.terms-container section {
+  padding: 28px 0;
+
+  border-top: 1px solid #eadbd5;
+}
+
+.terms-container section:last-of-type {
+  border-bottom: 1px solid #eadbd5;
+}
+
+/* =========================================================
+   SECTION TITLE
+========================================================= */
+
+.terms-container section h2 {
+  display: flex;
+  align-items: center;
+
+  margin: 0 0 11px;
+
+  color: #4a3032;
+
+  font-family:
+    "Playfair Display",
+    "Cormorant Garamond",
+    Georgia,
+    serif;
+
+  font-size: 25px;
+
+  font-weight: 600;
+
+  line-height: 1.25;
+}
+
+.terms-container section h2::before {
+  content: "";
+
+  flex-shrink: 0;
+
+  width: 7px;
+  height: 7px;
+
+  margin-right: 12px;
+
+  background: #d39a76;
+
+  border-radius: 50%;
+}
+
+/* =========================================================
+   TEXT
+========================================================= */
+
+.terms-container section p {
+  max-width: 740px;
+
+  margin: 0;
+
+  color: #806a6e;
+
+  font-size: 14px;
+
+  line-height: 1.9;
+}
+
+/* =========================================================
+   BUTTON
+========================================================= */
+
+.terms-back {
+  display: flex;
+
+  width: fit-content;
+
+  align-items: center;
+  justify-content: center;
+
+  margin: 45px auto 0;
+
+  padding: 14px 27px;
+
+  border: 1px solid #4a3032;
+
+  border-radius: 999px;
+
+  background: #4a3032;
+
+  color: #ffffff;
+
+  text-decoration: none;
+
+  font-size: 15px;
+
+  font-weight: 700;
+
+  letter-spacing: 0.45px;
+
+  transition:
+    transform 0.3s ease,
+    background 0.3s ease,
+    box-shadow 0.3s ease;
+}
+
+.terms-back::after {
+  content: "↗";
+
+  margin-left: 8px;
+
+  font-size: 13px;
+
+  transition: transform 0.3s ease;
+}
+
+.terms-back:hover {
+  transform: translateY(-3px);
+
+  background: #684448;
+
+  box-shadow:
+    0 13px 30px rgba(74, 48, 50, 0.18);
+}
+
+.terms-back:hover::after {
+  transform: translate(3px, -2px);
+}
+
+/* =========================================================
+   TABLET
+========================================================= */
+
+@media (max-width: 850px) {
+
+  .terms-page {
+    padding: 90px 5% 100px;
+  }
+
+  .terms-container {
+    padding: 58px 48px 62px;
+
+    border-radius: 22px;
+  }
+
+  .terms-container h1 {
+    font-size: 55px;
+  }
+}
+
+/* =========================================================
+   MOBILE
+========================================================= */
+
+@media (max-width: 600px) {
+
+  .terms-page {
+    padding: 65px 5% 75px;
+  }
+
+  .terms-container {
+    padding: 50px 24px 52px;
+
+    border-radius: 19px;
+  }
+
+  .terms-container::before {
+    width: 58px;
+  }
+
+  .terms-eyebrow {
+    font-size: 9px;
+
+    letter-spacing: 2.3px;
+  }
+
+  .terms-container h1 {
+    font-size: 43px;
+
+    letter-spacing: -1px;
+  }
+
+  .terms-intro {
+    margin-top: 22px;
+    margin-bottom: 35px;
+
+    font-size: 12.5px;
+
+    line-height: 1.85;
+  }
+
+  .terms-container section {
+    padding: 23px 0;
+  }
+
+  .terms-container section h2 {
+    font-size: 21px;
+
+    margin-bottom: 9px;
+  }
+
+  .terms-container section h2::before {
+    width: 6px;
+    height: 6px;
+
+    margin-right: 9px;
+  }
+
+  .terms-container section p {
+    font-size: 12.5px;
+
+    line-height: 1.85;
+  }
+
+  .terms-back {
+    width: 100%;
+
+    margin-top: 35px;
+
+    font-size: 10.5px;
+  }
+}
+
+/* =========================================================
+   SMALL MOBILE
+========================================================= */
+
+@media (max-width: 400px) {
+
+  .terms-page {
+    padding-left: 4%;
+    padding-right: 4%;
+  }
+
+  .terms-container {
+    padding: 44px 20px 46px;
+  }
+
+  .terms-container h1 {
+    font-size: 38px;
+  }
+
+  .terms-container section h2 {
+    font-size: 19px;
+  }
+
+  .terms-container section p {
+    font-size: 12px;
+  }
+}

@@ -1,11 +1,86 @@
-import { ArrowUpRight, Mail, Sparkles } from "lucide-react";
+import { useState } from "react";
+import {
+  ArrowUpRight,
+  Mail,
+  Sparkles,
+  CheckCircle2,
+} from "lucide-react";
+import axios from "axios";
+
 import ScrollReveal from "../ScrollReveal/ScrollReveal";
 import "./Newsletter.css";
 
+const API_URL = "http://localhost:3000/api";
+
 const Newsletter = () => {
-  const handleSubmit = (e) => {
+  const [email, setEmail] = useState("");
+  const [loading, setLoading] = useState(false);
+
+  const [message, setMessage] = useState("");
+  const [error, setError] = useState("");
+  const [subscribed, setSubscribed] = useState(false);
+
+  /* =========================================================
+     SUBSCRIBE
+  ========================================================= */
+
+  const handleSubscribe = async (e) => {
     e.preventDefault();
+
+    const cleanEmail = email.trim().toLowerCase();
+
+    if (!cleanEmail) {
+      setError("Please enter your email address.");
+      return;
+    }
+
+    setLoading(true);
+    setMessage("");
+    setError("");
+
+    try {
+      const response = await axios.post(
+        `${API_URL}/newsletter/subscribe`,
+        {
+          email: cleanEmail,
+        }
+      );
+
+      if (response.data.success) {
+        setEmail("");
+        setSubscribed(true);
+
+        setMessage(
+          response.data.message ||
+            "You have successfully joined the MAMTA Circle!"
+        );
+      }
+    } catch (err) {
+      console.error("NEWSLETTER SUBSCRIBE ERROR:", err);
+
+      setError(
+        err.response?.data?.message ||
+          "Unable to subscribe right now. Please try again."
+      );
+    } finally {
+      setLoading(false);
+    }
   };
+
+  /* =========================================================
+     RESET
+  ========================================================= */
+
+  const handleSubscribeAgain = () => {
+    setSubscribed(false);
+    setMessage("");
+    setError("");
+    setEmail("");
+  };
+
+  /* =========================================================
+     RENDER
+  ========================================================= */
 
   return (
     <section className="mamta-newsletter-section">
@@ -16,11 +91,16 @@ const Newsletter = () => {
 
       <div className="newsletter-inner">
 
-        {/* LEFT CONTENT */}
+        {/* =====================================================
+            LEFT CONTENT
+        ===================================================== */}
+
         <ScrollReveal direction="up">
+
           <div className="newsletter-content">
 
             <div className="newsletter-label">
+
               <span className="newsletter-line"></span>
 
               <Sparkles size={14} />
@@ -28,6 +108,7 @@ const Newsletter = () => {
               <span>THE MAMTA CIRCLE</span>
 
               <span className="newsletter-line"></span>
+
             </div>
 
             <h2>
@@ -43,57 +124,159 @@ const Newsletter = () => {
             </p>
 
           </div>
+
         </ScrollReveal>
 
 
-        {/* RIGHT FORM */}
+        {/* =====================================================
+            RIGHT FORM
+        ===================================================== */}
+
         <ScrollReveal
           direction="up"
           className="newsletter-form-reveal"
         >
+
           <div className="newsletter-form-wrapper">
 
-            <div className="newsletter-form-heading">
+            {/* =================================================
+                SUCCESS STATE
+            ================================================= */}
 
-              <div className="mail-icon">
-                <Mail size={20} />
+            {subscribed ? (
+
+              <div className="newsletter-success-state">
+
+                <div className="newsletter-success-icon">
+                  <CheckCircle2 size={34} />
+                </div>
+
+                <span className="newsletter-success-label">
+                  WELCOME TO THE MAMTA CIRCLE
+                </span>
+
+                <h3>
+                  You're officially
+                  <br />
+                  <em>part of the circle.</em>
+                </h3>
+
+                <p>
+                  Thank you for joining MAMTA. We'll send you
+                  thoughtful updates, new collections and
+                  special moments straight to your inbox.
+                </p>
+
+                <button
+                  type="button"
+                  className="newsletter-subscribe-again"
+                  onClick={handleSubscribeAgain}
+                >
+                  Subscribe another email
+                  <ArrowUpRight size={17} />
+                </button>
+
               </div>
 
-              <div>
-                <span>STAY CONNECTED</span>
-                <p>Receive MAMTA in your inbox.</p>
-              </div>
+            ) : (
 
-            </div>
+              <>
+                {/* =============================================
+                    FORM HEADING
+                ============================================= */}
 
+                <div className="newsletter-form-heading">
 
-            <form
-              className="mamta-newsletter-form"
-              onSubmit={handleSubmit}
-            >
+                  <div className="mail-icon">
+                    <Mail size={20} />
+                  </div>
 
-              <div className="newsletter-input-wrapper">
-                <input
-                  type="email"
-                  placeholder="Enter your email address"
-                  aria-label="Email address"
-                  required
-                />
-              </div>
+                  <div>
+                    <span>STAY CONNECTED</span>
 
-              <button type="submit">
-                <span>Join the circle</span>
-                <ArrowUpRight size={18} />
-              </button>
+                    <p>
+                      Receive MAMTA in your inbox.
+                    </p>
+                  </div>
 
-            </form>
+                </div>
 
 
-            <p className="newsletter-note">
-              No clutter. Just thoughtful updates from MAMTA.
-            </p>
+                {/* =============================================
+                    EMAIL FORM
+                ============================================= */}
+
+                <form
+                  className="mamta-newsletter-form"
+                  onSubmit={handleSubscribe}
+                >
+
+                  <div className="newsletter-input-wrapper">
+
+                    <input
+                      type="email"
+                      placeholder="Enter your email address"
+                      aria-label="Email address"
+                      value={email}
+                      onChange={(e) => {
+                        setEmail(e.target.value);
+                        setError("");
+                        setMessage("");
+                      }}
+                      required
+                      disabled={loading}
+                    />
+
+                  </div>
+
+
+                  <button
+                    type="submit"
+                    disabled={loading}
+                  >
+
+                    <span>
+                      {loading
+                        ? "Joining..."
+                        : "Join the circle"}
+                    </span>
+
+                    {!loading && (
+                      <ArrowUpRight size={18} />
+                    )}
+
+                  </button>
+
+                </form>
+
+
+                {/* =============================================
+                    MESSAGE
+                ============================================= */}
+
+                {error && (
+                  <p className="newsletter-error">
+                    {error}
+                  </p>
+                )}
+
+                {message && !error && (
+                  <p className="newsletter-success">
+                    {message}
+                  </p>
+                )}
+
+                {!error && !message && (
+                  <p className="newsletter-note">
+                    No clutter. Just thoughtful updates from MAMTA.
+                  </p>
+                )}
+
+              </>
+            )}
 
           </div>
+
         </ScrollReveal>
 
       </div>

@@ -1,0 +1,393 @@
+/* =========================================================
+   MAMTA — RETURN POLICY
+   Premium • Soft • Elegant • Minimal
+========================================================= */
+
+.policy-page {
+  width: 100%;
+  min-height: 100vh;
+
+  padding: 120px 6% 130px;
+
+  background:
+    radial-gradient(
+      circle at 10% 10%,
+      rgba(244, 216, 204, 0.35),
+      transparent 32%
+    ),
+    radial-gradient(
+      circle at 90% 85%,
+      rgba(248, 231, 226, 0.5),
+      transparent 30%
+    ),
+    #fff9f4;
+
+  color: #4a3032;
+}
+
+/* =========================================================
+   CONTAINER
+========================================================= */
+
+.policy-container {
+  position: relative;
+
+  width: min(850px, 100%);
+  margin: 0 auto;
+
+  padding: 65px 75px 70px;
+
+  background: rgba(255, 255, 255, 0.78);
+
+  border: 1px solid #eadbd5;
+  border-radius: 24px;
+
+  box-shadow:
+    0 25px 70px rgba(74, 48, 50, 0.07);
+
+  backdrop-filter: blur(8px);
+}
+
+/* =========================================================
+   DECORATIVE TOP LINE
+========================================================= */
+
+.policy-container::before {
+  content: "";
+
+  position: absolute;
+
+  top: 0;
+  left: 50%;
+
+  width: 75px;
+  height: 3px;
+
+  transform: translateX(-50%);
+
+  background: #b87978;
+
+  border-radius: 0 0 5px 5px;
+}
+
+/* =========================================================
+   EYEBROW
+========================================================= */
+
+.policy-eyebrow {
+  display: block;
+
+  margin-bottom: 17px;
+
+  color: #a97872;
+
+  text-align: center;
+
+  font-size: 15px;
+  font-weight: 800;
+
+  letter-spacing: 3px;
+  text-transform: uppercase;
+}
+
+/* =========================================================
+   MAIN TITLE
+========================================================= */
+
+.policy-container h1 {
+  margin: 0;
+
+  color: #4a3032;
+
+  text-align: center;
+
+  font-family:
+    "Playfair Display",
+    "Cormorant Garamond",
+    Georgia,
+    serif;
+
+  font-size: clamp(46px, 6vw, 68px);
+
+  font-weight: 500;
+
+  line-height: 1.05;
+
+  letter-spacing: -1.8px;
+}
+
+/* =========================================================
+   INTRO
+========================================================= */
+
+.policy-intro {
+  max-width: 680px;
+
+  margin: 27px auto 55px;
+
+  color: #806a6e;
+
+  text-align: center;
+
+  font-size: 20px;
+
+  line-height: 1.9;
+}
+
+/* =========================================================
+   POLICY SECTIONS
+========================================================= */
+
+.policy-container section {
+  position: relative;
+
+  padding: 28px 0;
+
+  border-top: 1px solid #eadbd5;
+}
+
+.policy-container section:last-of-type {
+  border-bottom: 1px solid #eadbd5;
+}
+
+/* =========================================================
+   SECTION HEADINGS
+========================================================= */
+
+.policy-container section h2 {
+  margin: 0 0 11px;
+
+  color: #4a3032;
+
+  font-family:
+    "Playfair Display",
+    "Cormorant Garamond",
+    Georgia,
+    serif;
+
+  font-size: 25px;
+
+  font-weight: 600;
+
+  line-height: 1.2;
+
+  letter-spacing: -0.3px;
+}
+
+/* =========================================================
+   SECTION TEXT
+========================================================= */
+
+.policy-container section p {
+  max-width: 720px;
+
+  margin: 0;
+
+  color: #806a6e;
+
+  font-size: 17px;
+
+  line-height: 1.85;
+}
+
+/* =========================================================
+   SMALL DECORATIVE DOT
+========================================================= */
+
+.policy-container section h2::before {
+  content: "";
+
+  display: inline-block;
+
+  width: 7px;
+  height: 7px;
+
+  margin-right: 11px;
+
+  vertical-align: middle;
+
+  background: #d39a76;
+
+  border-radius: 50%;
+}
+
+/* =========================================================
+   BACK / SHOPPING BUTTON
+========================================================= */
+
+.policy-back {
+  display: flex;
+
+  width: fit-content;
+
+  align-items: center;
+  justify-content: center;
+
+  margin: 45px auto 0;
+
+  padding: 14px 25px;
+
+  border: 1px solid #4a3032;
+  border-radius: 999px;
+
+  background: #4a3032;
+
+  color: #ffffff;
+
+  text-decoration: none;
+
+  font-size: 11px;
+
+  font-weight: 700;
+
+  letter-spacing: 0.4px;
+
+  transition:
+    transform 0.3s ease,
+    background 0.3s ease,
+    box-shadow 0.3s ease;
+}
+
+/* =========================================================
+   BUTTON HOVER
+========================================================= */
+
+.policy-back:hover {
+  transform: translateY(-3px);
+
+  background: #684448;
+
+  box-shadow:
+    0 12px 28px rgba(74, 48, 50, 0.18);
+}
+
+/* =========================================================
+   TABLET
+========================================================= */
+
+@media (max-width: 800px) {
+
+  .policy-page {
+    padding: 90px 5% 100px;
+  }
+
+  .policy-container {
+    padding: 55px 45px 60px;
+
+    border-radius: 21px;
+  }
+
+  .policy-container h1 {
+    font-size: 52px;
+  }
+
+  .policy-intro {
+    margin-bottom: 45px;
+  }
+}
+
+/* =========================================================
+   MOBILE
+========================================================= */
+
+@media (max-width: 600px) {
+
+  .policy-page {
+    padding: 65px 5% 75px;
+  }
+
+  .policy-container {
+    width: 100%;
+
+    padding: 48px 24px 50px;
+
+    border-radius: 18px;
+  }
+
+  .policy-container::before {
+    width: 55px;
+  }
+
+  .policy-eyebrow {
+    font-size: 9px;
+    letter-spacing: 2.3px;
+  }
+
+  .policy-container h1 {
+    font-size: 43px;
+    letter-spacing: -1px;
+  }
+
+  .policy-intro {
+    margin-top: 22px;
+    margin-bottom: 35px;
+
+    font-size: 12.5px;
+
+    line-height: 1.8;
+  }
+
+  .policy-container section {
+    padding: 23px 0;
+  }
+
+  .policy-container section h2 {
+    font-size: 21px;
+
+    margin-bottom: 9px;
+  }
+
+  .policy-container section h2::before {
+    width: 6px;
+    height: 6px;
+
+    margin-right: 8px;
+  }
+
+  .policy-container section p {
+    font-size: 12.5px;
+    line-height: 1.8;
+  }
+
+  .policy-back {
+    width: 100%;
+
+    margin-top: 35px;
+
+    padding: 14px 20px;
+
+    font-size: 10.5px;
+  }
+}
+
+/* =========================================================
+   SMALL MOBILE
+========================================================= */
+
+@media (max-width: 400px) {
+
+  .policy-page {
+    padding-left: 4%;
+    padding-right: 4%;
+  }
+
+  .policy-container {
+    padding: 42px 20px 45px;
+  }
+
+  .policy-container h1 {
+    font-size: 38px;
+  }
+
+  .policy-intro {
+    font-size: 12px;
+  }
+
+  .policy-container section h2 {
+    font-size: 19px;
+  }
+
+  .policy-container section p {
+    font-size: 12px;
+  }
+}

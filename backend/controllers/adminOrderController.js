@@ -1,4 +1,3 @@
-
 const Order = require("../models/Order");
 
 
@@ -9,29 +8,29 @@ const Order = require("../models/Order");
 
 const getAllOrders = async (req, res) => {
   try {
-    const orders = await Order.find()
-      .sort({ createdAt: -1 })
-      .populate(
-        "userId",
-        "name email"
-      )
-      .lean();
+    const orders =
+      await Order.find({})
+        .sort({
+          createdAt: -1,
+        })
+        .lean();
 
-    res.status(200).json({
+    return res.status(200).json({
       success: true,
       orders,
     });
-
   } catch (error) {
     console.error(
       "GET ALL ORDERS ERROR:",
       error
     );
 
-    res.status(500).json({
+    return res.status(500).json({
       success: false,
-      message: "Failed to load orders.",
-      error: error.message,
+      message:
+        "Failed to load orders.",
+      error:
+        error.message,
     });
   }
 };
@@ -42,42 +41,39 @@ const getAllOrders = async (req, res) => {
    GET /api/admin/orders/:id
 ========================================================= */
 
-const getAdminOrderById = async (
-  req,
-  res
-) => {
+const getOrderById = async (req, res) => {
   try {
-    const { id } = req.params;
+    const {
+      id,
+    } = req.params;
 
-    const order = await Order.findById(id)
-      .populate(
-        "userId",
-        "name email"
-      )
-      .lean();
+    const order =
+      await Order.findById(id).lean();
 
     if (!order) {
       return res.status(404).json({
         success: false,
-        message: "Order not found.",
+        message:
+          "Order not found.",
       });
     }
 
-    res.status(200).json({
+    return res.status(200).json({
       success: true,
       order,
     });
-
   } catch (error) {
     console.error(
-      "GET ORDER ERROR:",
+      "GET ADMIN ORDER ERROR:",
       error
     );
 
-    res.status(500).json({
+    return res.status(500).json({
       success: false,
-      message: "Failed to load order.",
-      error: error.message,
+      message:
+        "Failed to load order.",
+      error:
+        error.message,
     });
   }
 };
@@ -93,52 +89,133 @@ const updateOrderStatus = async (
   res
 ) => {
   try {
-    const { id } = req.params;
+    const {
+      id,
+    } = req.params;
 
-    const { orderStatus } =
-      req.body;
+    const {
+      status,
+    } = req.body;
 
-    const allowedStatuses = [
-      "Pending",
-      "Confirmed",
-      "Processing",
-      "Shipped",
-      "Delivered",
-      "Cancelled",
-    ];
+    console.log(
+      "ADMIN STATUS UPDATE"
+    );
 
-    if (
-      !orderStatus ||
-      !allowedStatuses.includes(
-        orderStatus
-      )
-    ) {
+    console.log(
+      "Order ID:",
+      id
+    );
+
+    console.log(
+      "Received status:",
+      status
+    );
+
+
+    /* -----------------------------------------------------
+       VALIDATION
+    ----------------------------------------------------- */
+
+    if (!status) {
       return res.status(400).json({
         success: false,
         message:
-          "Invalid order status.",
+          "Order status is required.",
       });
     }
 
+
+    /* -----------------------------------------------------
+       ALLOWED STATUSES
+    ----------------------------------------------------- */
+
+    const statusMap = {
+      pending: "Pending",
+      confirmed: "Confirmed",
+      processing: "Processing",
+      shipped: "Shipped",
+      delivered: "Delivered",
+      cancelled: "Cancelled",
+    };
+
+
+    const normalizedStatus =
+      String(status)
+        .trim()
+        .toLowerCase();
+
+
+    const finalStatus =
+      statusMap[
+        normalizedStatus
+      ];
+
+
+    if (!finalStatus) {
+      return res.status(400).json({
+        success: false,
+
+        message:
+          "Invalid order status.",
+
+        receivedStatus:
+          status,
+
+        allowedStatuses: [
+          "Pending",
+          "Confirmed",
+          "Processing",
+          "Shipped",
+          "Delivered",
+          "Cancelled",
+        ],
+      });
+    }
+
+
+    /* -----------------------------------------------------
+       UPDATE orderStatus
+    ----------------------------------------------------- */
+
     const order =
-      await Order.findById(id);
+      await Order.findByIdAndUpdate(
+        id,
+
+        {
+          $set: {
+            orderStatus:
+              finalStatus,
+          },
+        },
+
+        {
+          new: true,
+          runValidators: true,
+        }
+      );
+
 
     if (!order) {
       return res.status(404).json({
         success: false,
-        message: "Order not found.",
+        message:
+          "Order not found.",
       });
     }
 
-    order.orderStatus =
-      orderStatus;
 
-    await order.save();
+    console.log(
+      "STATUS UPDATED:",
+      order.orderStatus
+    );
 
-    res.status(200).json({
+
+    return res.status(200).json({
       success: true,
+
       message:
         "Order status updated successfully.",
+
       order,
     });
 
@@ -148,19 +225,25 @@ const updateOrderStatus = async (
       error
     );
 
-    res.status(500).json({
+    return res.status(500).json({
       success: false,
+
       message:
         "Failed to update order status.",
-      error: error.message,
+
+      error:
+        error.message,
     });
   }
 };
 
 
+/* =========================================================
+   EXPORTS
+========================================================= */
+
 module.exports = {
   getAllOrders,
-  getAdminOrderById,
+  getOrderById,
   updateOrderStatus,
 };
-

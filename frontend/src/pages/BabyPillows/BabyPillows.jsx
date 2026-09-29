@@ -1,7 +1,10 @@
-
 import { useEffect, useState } from "react";
-import { useNavigate } from "react-router-dom";
+import {
+  useNavigate,
+  Link,
+} from "react-router-dom";
 import axios from "axios";
+import toast from "react-hot-toast";
 
 import {
   Heart,
@@ -14,8 +17,6 @@ import {
   Check,
 } from "lucide-react";
 
-import { Link } from "react-router-dom";
-
 import ScrollReveal from "../../components/ScrollReveal/ScrollReveal";
 
 import "./BabyPillows.css";
@@ -27,65 +28,62 @@ import "./BabyPillows.css";
 const API_URL = "http://localhost:3000/api";
 
 /* =========================================================
-   BABY PRODUCTS
-========================================================= */
-
-const products = [
-  {
-    id: 1,
-    name: "Soft Nest Baby Pillow",
-    price: 2490,
-    oldPrice: 2990,
-    rating: "4.9",
-    reviews: 38,
-    tag: "BESTSELLER",
-    image:
-      "https://res.cloudinary.com/iysbraru/image/upload/v1790354535/image8.jpg",
-  },
-  {
-    id: 2,
-    name: "Little Cloud Baby Pillow",
-    price: 2190,
-    oldPrice: 2690,
-    rating: "4.8",
-    reviews: 31,
-    tag: "NEW",
-    image:
-      "https://res.cloudinary.com/iysbraru/image/upload/v1790352591/image2.jpg",
-  },
-  {
-    id: 3,
-    name: "Gentle Sleep Baby Pillow",
-    price: 2690,
-    oldPrice: 3190,
-    rating: "4.9",
-    reviews: 42,
-    tag: "POPULAR",
-    image:
-      "https://res.cloudinary.com/iysbraru/image/upload/v1790354535/image8.jpg",
-  },
-  {
-    id: 4,
-    name: "Baby Comfort Pillow",
-    price: 2390,
-    oldPrice: 2890,
-    rating: "4.8",
-    reviews: 27,
-    tag: "ESSENTIAL",
-    image:
-      "https://res.cloudinary.com/iysbraru/image/upload/v1790352591/image2.jpg",
-  },
-];
-
-/* =========================================================
    COMPONENT
 ========================================================= */
 
 const BabyPillows = () => {
   const navigate = useNavigate();
 
+  /* =======================================================
+     PRODUCTS
+  ======================================================== */
+
+  const [products, setProducts] = useState([]);
+
   const [wishlist, setWishlist] = useState([]);
-  const [addingProductId, setAddingProductId] = useState(null);
+
+  const [addingProductId, setAddingProductId] =
+    useState(null);
+
+  /* =======================================================
+     LOAD BABY PRODUCTS FROM DATABASE
+  ======================================================== */
+
+  useEffect(() => {
+    const loadBabyProducts = async () => {
+      try {
+        const response = await axios.get(
+          `${API_URL}/products`
+        );
+
+        const allProducts =
+          response.data?.products || [];
+
+        /*
+          Only show products whose category
+          contains "baby".
+        */
+
+        const babyProducts =
+          allProducts.filter((product) =>
+            String(product.category || "")
+              .toLowerCase()
+              .includes("baby")
+          );
+
+        setProducts(babyProducts);
+      } catch (error) {
+        console.error(
+          "BABY PRODUCTS LOAD ERROR:",
+          error
+        );
+
+        setProducts([]);
+      }
+    };
+
+    loadBabyProducts();
+  }, []);
 
   /* =======================================================
      LOAD WISHLIST
@@ -95,13 +93,23 @@ const BabyPillows = () => {
     const loadWishlist = () => {
       try {
         const savedWishlist =
-          JSON.parse(localStorage.getItem("mamta_wishlist")) || [];
+          JSON.parse(
+            localStorage.getItem(
+              "mamta_wishlist"
+            )
+          ) || [];
 
         setWishlist(
-          Array.isArray(savedWishlist) ? savedWishlist : []
+          Array.isArray(savedWishlist)
+            ? savedWishlist
+            : []
         );
       } catch (error) {
-        console.error("WISHLIST LOAD ERROR:", error);
+        console.error(
+          "WISHLIST LOAD ERROR:",
+          error
+        );
+
         setWishlist([]);
       }
     };
@@ -125,9 +133,13 @@ const BabyPillows = () => {
      CHECK WISHLIST
   ======================================================== */
 
-  const isProductInWishlist = (productId) => {
+  const isProductInWishlist = (
+    productId
+  ) => {
     return wishlist.some(
-      (item) => (item._id || item.id) === productId
+      (item) =>
+        (item._id || item.id) ===
+        productId
     );
   };
 
@@ -136,28 +148,40 @@ const BabyPillows = () => {
   ======================================================== */
 
   const toggleWishlist = (product) => {
-    const productId = product._id || product.id;
+    const productId =
+      product._id || product.id;
 
     try {
       const savedWishlist =
-        JSON.parse(localStorage.getItem("mamta_wishlist")) || [];
+        JSON.parse(
+          localStorage.getItem(
+            "mamta_wishlist"
+          )
+        ) || [];
 
-      const currentWishlist = Array.isArray(savedWishlist)
-        ? savedWishlist
-        : [];
+      const currentWishlist =
+        Array.isArray(savedWishlist)
+          ? savedWishlist
+          : [];
 
-      const alreadyExists = currentWishlist.some(
-        (item) => (item._id || item.id) === productId
-      );
+      const alreadyExists =
+        currentWishlist.some(
+          (item) =>
+            (item._id || item.id) ===
+            productId
+        );
 
       let updatedWishlist;
 
       if (alreadyExists) {
         /* REMOVE */
 
-        updatedWishlist = currentWishlist.filter(
-          (item) => (item._id || item.id) !== productId
-        );
+        updatedWishlist =
+          currentWishlist.filter(
+            (item) =>
+              (item._id || item.id) !==
+              productId
+          );
       } else {
         /* ADD */
 
@@ -169,7 +193,9 @@ const BabyPillows = () => {
 
       localStorage.setItem(
         "mamta_wishlist",
-        JSON.stringify(updatedWishlist)
+        JSON.stringify(
+          updatedWishlist
+        )
       );
 
       setWishlist(updatedWishlist);
@@ -179,6 +205,7 @@ const BabyPillows = () => {
       window.dispatchEvent(
         new Event("wishlistUpdated")
       );
+
     } catch (error) {
       console.error(
         "WISHLIST ERROR:",
@@ -188,32 +215,220 @@ const BabyPillows = () => {
   };
 
   /* =======================================================
+     FLY TO CART ANIMATION
+  ======================================================== */
+
+  const animateToCart = (
+    buttonElement
+  ) => {
+    const cartTarget =
+      document.querySelector(
+        '[data-cart-target="true"]'
+      );
+
+    if (
+      !buttonElement ||
+      !cartTarget
+    ) {
+      return;
+    }
+
+    /* ---------------------------------------------
+       GET BUTTON POSITION
+    --------------------------------------------- */
+
+    const buttonRect =
+      buttonElement.getBoundingClientRect();
+
+    /* ---------------------------------------------
+       GET CART POSITION
+    --------------------------------------------- */
+
+    const cartRect =
+      cartTarget.getBoundingClientRect();
+
+    /* ---------------------------------------------
+       SOURCE CENTER
+    --------------------------------------------- */
+
+    const startX =
+      buttonRect.left +
+      buttonRect.width / 2;
+
+    const startY =
+      buttonRect.top +
+      buttonRect.height / 2;
+
+    /* ---------------------------------------------
+       CART CENTER
+    --------------------------------------------- */
+
+    const endX =
+      cartRect.left +
+      cartRect.width / 2;
+
+    const endY =
+      cartRect.top +
+      cartRect.height / 2;
+
+    /* ---------------------------------------------
+       CREATE FLYING M
+    --------------------------------------------- */
+
+    const flyingItem =
+      document.createElement(
+        "div"
+      );
+
+    flyingItem.className =
+      "mamta-flying-cart-item";
+
+    flyingItem.innerHTML = `
+      <span>M</span>
+    `;
+
+    /*
+      Position exactly at the center
+      of the clicked cart button.
+    */
+
+    flyingItem.style.left =
+      `${startX - 29}px`;
+
+    flyingItem.style.top =
+      `${startY - 29}px`;
+
+    document.body.appendChild(
+      flyingItem
+    );
+
+    /* ---------------------------------------------
+       CALCULATE EXACT MOVEMENT
+    --------------------------------------------- */
+
+    const deltaX =
+      endX - startX;
+
+    const deltaY =
+      endY - startY;
+
+    /* ---------------------------------------------
+       SMOOTH FLIGHT
+    --------------------------------------------- */
+
+    const animation =
+      flyingItem.animate(
+        [
+          {
+            transform:
+              "translate3d(0, 0, 0) scale(1)",
+            opacity: 1,
+          },
+
+          {
+            transform:
+              `translate3d(
+                ${deltaX * 0.35}px,
+                ${deltaY * 0.2}px,
+                0
+              ) scale(0.88)`,
+            opacity: 1,
+          },
+
+          {
+            transform:
+              `translate3d(
+                ${deltaX * 0.75}px,
+                ${deltaY * 0.72}px,
+                0
+              ) scale(0.58)`,
+            opacity: 0.9,
+          },
+
+          {
+            transform:
+              `translate3d(
+                ${deltaX}px,
+                ${deltaY}px,
+                0
+              ) scale(0.2)`,
+            opacity: 0,
+          },
+        ],
+        {
+          duration: 900,
+
+          easing:
+            "cubic-bezier(0.16, 1, 0.3, 1)",
+
+          fill: "forwards",
+        }
+      );
+
+    /* ---------------------------------------------
+       WHEN ANIMATION FINISHES
+    --------------------------------------------- */
+
+    animation.onfinish = () => {
+      flyingItem.remove();
+
+      cartTarget.classList.add(
+        "cart-flying-pop"
+      );
+
+      setTimeout(() => {
+        cartTarget.classList.remove(
+          "cart-flying-pop"
+        );
+      }, 450);
+    };
+  };
+
+  /* =======================================================
      ADD TO CART
   ======================================================== */
 
-  const addToCart = async (product) => {
+  const addToCart = async (
+    product,
+    buttonElement
+  ) => {
     /* ---------------------------------------------
        CHECK LOGIN
     --------------------------------------------- */
 
     const token =
-      localStorage.getItem("mamta_user_token");
+      localStorage.getItem(
+        "mamta_user_token"
+      );
 
     if (!token) {
+      toast.error(
+        "Please login before adding items to your cart."
+      );
+
       navigate("/login");
+
       return;
     }
+
+    const productId =
+      product._id || product.id;
 
     /* ---------------------------------------------
        PREVENT DOUBLE CLICK
     --------------------------------------------- */
 
-    if (addingProductId === product.id) {
+    if (
+      addingProductId ===
+      productId
+    ) {
       return;
     }
 
     try {
-      setAddingProductId(product.id);
+      setAddingProductId(
+        productId
+      );
 
       /* -------------------------------------------
          SEND PRODUCT TO BACKEND
@@ -223,14 +438,16 @@ const BabyPillows = () => {
         `${API_URL}/cart/add`,
         {
           productId:
-            product.id ||
-            product._id,
+            productId,
 
-          name: product.name,
+          name:
+            product.name,
 
-          image: product.image,
+          image:
+            product.image,
 
-          price: product.price,
+          price:
+            product.price,
 
           quantity: 1,
         },
@@ -243,6 +460,14 @@ const BabyPillows = () => {
       );
 
       /* -------------------------------------------
+         FLY TO CART
+      ------------------------------------------- */
+
+      animateToCart(
+        buttonElement
+      );
+
+      /* -------------------------------------------
          UPDATE HEADER CART COUNT
       ------------------------------------------- */
 
@@ -251,12 +476,13 @@ const BabyPillows = () => {
       );
 
       /* -------------------------------------------
-         SUCCESS MESSAGE
+         SUCCESS TOAST
       ------------------------------------------- */
 
-      alert(
-        `${product.name} added to cart`
+      toast.success(
+        `${product.name} added to cart.`
       );
+
     } catch (error) {
       console.error(
         "ADD TO CART ERROR:",
@@ -290,6 +516,10 @@ const BabyPillows = () => {
           new Event("authChanged")
         );
 
+        toast.error(
+          "Your session has expired. Please login again."
+        );
+
         navigate("/login");
 
         return;
@@ -299,12 +529,15 @@ const BabyPillows = () => {
          OTHER BACKEND ERROR
       ------------------------------------------- */
 
-      alert(
+      toast.error(
         error.response?.data?.message ||
           "Unable to add product to cart."
       );
+
     } finally {
-      setAddingProductId(null);
+      setAddingProductId(
+        null
+      );
     }
   };
 
@@ -356,7 +589,9 @@ const BabyPillows = () => {
                     Explore Collection
                   </span>
 
-                  <ArrowUpRight size={17} />
+                  <ArrowUpRight
+                    size={17}
+                  />
                 </a>
 
                 <span className="baby-hero-note">
@@ -404,7 +639,9 @@ const BabyPillows = () => {
 
                 <div className="floating-check">
 
-                  <Check size={13} />
+                  <Check
+                    size={13}
+                  />
 
                   <span>
                     Soft & thoughtfully designed
@@ -500,7 +737,9 @@ const BabyPillows = () => {
             <div className="baby-feature">
 
               <div className="baby-feature-icon">
-                <Feather size={20} />
+                <Feather
+                  size={20}
+                />
               </div>
 
               <div>
@@ -534,7 +773,9 @@ const BabyPillows = () => {
             <div className="baby-feature">
 
               <div className="baby-feature-icon">
-                <Sparkles size={20} />
+                <Sparkles
+                  size={20}
+                />
               </div>
 
               <div>
@@ -568,7 +809,9 @@ const BabyPillows = () => {
             <div className="baby-feature">
 
               <div className="baby-feature-icon">
-                <ShieldCheck size={20} />
+                <ShieldCheck
+                  size={20}
+                />
               </div>
 
               <div>
@@ -644,14 +887,18 @@ const BabyPillows = () => {
             {products.map(
               (product, index) => {
 
+                const productId =
+                  product._id ||
+                  product.id;
+
                 const productInWishlist =
                   isProductInWishlist(
-                    product.id
+                    productId
                   );
 
                 return (
                   <ScrollReveal
-                    key={product.id}
+                    key={productId}
                     direction="up"
                     className={`stagger-${
                       (index % 6) + 1
@@ -665,8 +912,12 @@ const BabyPillows = () => {
                       <div className="baby-product-image">
 
                         <img
-                          src={product.image}
-                          alt={product.name}
+                          src={
+                            product.image
+                          }
+                          alt={
+                            product.name
+                          }
                           onError={(e) => {
                             e.currentTarget.src =
                               "https://placehold.co/700x700/F4D9DC/4A3032?text=MAMTA";
@@ -675,9 +926,11 @@ const BabyPillows = () => {
 
                         {/* PRODUCT TAG */}
 
-                        <span className="baby-product-tag">
-                          {product.tag}
-                        </span>
+                        {product.tag && (
+                          <span className="baby-product-tag">
+                            {product.tag}
+                          </span>
+                        )}
 
                         {/* WISHLIST */}
 
@@ -712,10 +965,12 @@ const BabyPillows = () => {
 
                         </button>
 
-                        {/* VIEW DETAILS */}
+                        {/* =================================================
+                            VIEW DETAILS
+                        ================================================== */}
 
                         <Link
-                          to={`/product/${product.id}`}
+                          to={`/product/${productId}`}
                           className="baby-details-button"
                         >
 
@@ -763,9 +1018,11 @@ const BabyPillows = () => {
                           </div>
 
                           <span>
-                            {product.rating}
+                            {product.rating ||
+                              "4.9"}
                             {" · "}
-                            {product.reviews}
+                            {product.reviews ||
+                              0}
                             {" reviews"}
                           </span>
 
@@ -779,13 +1036,20 @@ const BabyPillows = () => {
 
                             <strong>
                               Rs.{" "}
-                              {product.price.toLocaleString()}
+                              {Number(
+                                product.price ||
+                                  0
+                              ).toLocaleString()}
                             </strong>
 
-                            <del>
-                              Rs.{" "}
-                              {product.oldPrice.toLocaleString()}
-                            </del>
+                            {product.oldPrice && (
+                              <del>
+                                Rs.{" "}
+                                {Number(
+                                  product.oldPrice
+                                ).toLocaleString()}
+                              </del>
+                            )}
 
                           </div>
 
@@ -795,20 +1059,21 @@ const BabyPillows = () => {
                             type="button"
                             className={`baby-cart ${
                               addingProductId ===
-                              product.id
+                              productId
                                 ? "adding"
                                 : ""
                             }`}
-                            onClick={() =>
-                              addToCart(product)
+                            onClick={(e) =>
+                              addToCart(
+                                product,
+                                e.currentTarget
+                              )
                             }
                             disabled={
                               addingProductId ===
-                              product.id
+                              productId
                             }
-                            aria-label={
-                              `Add ${product.name} to cart`
-                            }
+                            aria-label={`Add ${product.name} to cart`}
                           >
 
                             <ShoppingBag
@@ -869,7 +1134,9 @@ const BabyPillows = () => {
                 Shop All Products
               </span>
 
-              <ArrowUpRight size={17} />
+              <ArrowUpRight
+                size={17}
+              />
 
             </Link>
 

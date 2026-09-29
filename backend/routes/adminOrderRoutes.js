@@ -1,21 +1,16 @@
-
 const express = require("express");
 
 const {
   getAllOrders,
-  getAdminOrderById,
+  getOrderById,
   updateOrderStatus,
-} = require(
-  "../controllers/adminOrderController"
-);
+} = require("../controllers/adminOrderController");
 
-const router =
-  express.Router();
+const router = express.Router();
 
 
 /* =========================================================
-   ALL ORDERS
-   GET /api/admin/orders
+   GET ALL ORDERS
 ========================================================= */
 
 router.get(
@@ -25,19 +20,17 @@ router.get(
 
 
 /* =========================================================
-   SINGLE ORDER
-   GET /api/admin/orders/:id
+   GET SINGLE ORDER
 ========================================================= */
 
 router.get(
   "/:id",
-  getAdminOrderById
+  getOrderById
 );
 
 
 /* =========================================================
    UPDATE ORDER STATUS
-   PUT /api/admin/orders/:id/status
 ========================================================= */
 
 router.put(
@@ -47,4 +40,3 @@ router.put(
 
 
 module.exports = router;
-

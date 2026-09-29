@@ -1,8 +1,8 @@
-
 import { useEffect, useMemo, useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import axios from "axios";
 import toast from "react-hot-toast";
+
 import {
   Search,
   ShoppingBag,
@@ -13,6 +13,11 @@ import {
 
 import ScrollReveal from "../../components/ScrollReveal/ScrollReveal";
 
+import {
+  animateToWishlist,
+  playWishlistSound,
+} from "../../utils/wishlistAnimation";
+
 import "./Shop.css";
 
 /* =========================================================
@@ -20,6 +25,8 @@ import "./Shop.css";
 ========================================================= */
 
 const API_URL = "http://localhost:3000/api";
+
+const WISHLIST_KEY = "mamta_wishlist";
 
 /* =========================================================
    CATEGORIES
@@ -44,9 +51,7 @@ const Shop = () => {
   ======================================================== */
 
   const [products, setProducts] = useState([]);
-
-  const [loadingProducts, setLoadingProducts] =
-    useState(true);
+  const [loadingProducts, setLoadingProducts] = useState(true);
 
   const [activeCategory, setActiveCategory] =
     useState("All");
@@ -57,6 +62,69 @@ const Shop = () => {
   const [sortBy, setSortBy] =
     useState("featured");
 
+  const [wishlist, setWishlist] =
+    useState([]);
+
+  /* =======================================================
+     LOAD WISHLIST
+  ======================================================== */
+
+  useEffect(() => {
+    const loadWishlist = () => {
+      try {
+        const savedWishlist =
+          localStorage.getItem(
+            WISHLIST_KEY
+          );
+
+        if (!savedWishlist) {
+          setWishlist([]);
+          return;
+        }
+
+        const parsedWishlist =
+          JSON.parse(savedWishlist);
+
+        setWishlist(
+          Array.isArray(parsedWishlist)
+            ? parsedWishlist
+            : []
+        );
+      } catch (error) {
+        console.error(
+          "LOAD WISHLIST ERROR:",
+          error
+        );
+
+        setWishlist([]);
+      }
+    };
+
+    loadWishlist();
+
+    window.addEventListener(
+      "wishlistUpdated",
+      loadWishlist
+    );
+
+    window.addEventListener(
+      "storage",
+      loadWishlist
+    );
+
+    return () => {
+      window.removeEventListener(
+        "wishlistUpdated",
+        loadWishlist
+      );
+
+      window.removeEventListener(
+        "storage",
+        loadWishlist
+      );
+    };
+  }, []);
+
   /* =======================================================
      FETCH PRODUCTS
   ======================================================== */
@@ -66,7 +134,8 @@ const Shop = () => {
       try {
         setLoadingProducts(true);
 
-        const endpoint = `${API_URL}/products`;
+        const endpoint =
+          `${API_URL}/products`;
 
         console.log(
           "===================================="
@@ -81,24 +150,28 @@ const Shop = () => {
           "===================================="
         );
 
-        const response = await axios.get(endpoint, {
-          timeout: 10000,
-        });
+        const response =
+          await axios.get(
+            endpoint,
+            {
+              timeout: 10000,
+            }
+          );
 
         console.log(
           "PRODUCT API RESPONSE:",
           response.data
         );
 
-        /* ---------------------------------------------
-           VALIDATE RESPONSE
-        --------------------------------------------- */
-
         if (
           response.data &&
-          Array.isArray(response.data.products)
+          Array.isArray(
+            response.data.products
+          )
         ) {
-          setProducts(response.data.products);
+          setProducts(
+            response.data.products
+          );
         } else {
           console.error(
             "INVALID PRODUCTS RESPONSE:",
@@ -111,7 +184,6 @@ const Shop = () => {
             "Invalid product data received from server."
           );
         }
-
       } catch (error) {
         console.error(
           "===================================="
@@ -141,39 +213,22 @@ const Shop = () => {
           "===================================="
         );
 
-        /* ---------------------------------------------
-           SERVER RESPONSE ERROR
-        --------------------------------------------- */
-
         if (error.response) {
           toast.error(
             error.response.data?.message ||
-            `Server error: ${error.response.status}`
+              `Server error: ${error.response.status}`
           );
-        }
-
-        /* ---------------------------------------------
-           NETWORK ERROR
-        --------------------------------------------- */
-
-        else if (error.request) {
+        } else if (error.request) {
           toast.error(
             "Unable to connect to the server. Make sure the backend is running on port 3000."
           );
-        }
-
-        /* ---------------------------------------------
-           OTHER ERROR
-        --------------------------------------------- */
-
-        else {
+        } else {
           toast.error(
             "Unable to load products."
           );
         }
 
         setProducts([]);
-
       } finally {
         setLoadingProducts(false);
       }
@@ -189,58 +244,54 @@ const Shop = () => {
   const filteredProducts = useMemo(() => {
     let result = [...products];
 
-    /* ---------------------------------------------
-       CATEGORY
-    --------------------------------------------- */
-
-    if (activeCategory !== "All") {
-      result = result.filter(
-        (product) =>
-          product.category === activeCategory
-      );
+    if (
+      activeCategory !== "All"
+    ) {
+      result =
+        result.filter(
+          (product) =>
+            product.category ===
+            activeCategory
+        );
     }
-
-    /* ---------------------------------------------
-       SEARCH
-    --------------------------------------------- */
 
     if (searchTerm.trim()) {
-      const search = searchTerm
-        .toLowerCase()
-        .trim();
+      const search =
+        searchTerm
+          .toLowerCase()
+          .trim();
 
-      result = result.filter(
-        (product) =>
-          product.name
-            ?.toLowerCase()
-            .includes(search) ||
-          product.category
-            ?.toLowerCase()
-            .includes(search)
-      );
+      result =
+        result.filter(
+          (product) =>
+            product.name
+              ?.toLowerCase()
+              .includes(search) ||
+            product.category
+              ?.toLowerCase()
+              .includes(search)
+        );
     }
 
-    /* ---------------------------------------------
-       SORT
-    --------------------------------------------- */
-
-    if (sortBy === "low-high") {
+    if (
+      sortBy === "low-high"
+    ) {
       result.sort(
         (a, b) =>
           Number(a.price || 0) -
           Number(b.price || 0)
       );
-    }
-
-    else if (sortBy === "high-low") {
+    } else if (
+      sortBy === "high-low"
+    ) {
       result.sort(
         (a, b) =>
           Number(b.price || 0) -
           Number(a.price || 0)
       );
-    }
-
-    else if (sortBy === "name") {
+    } else if (
+      sortBy === "name"
+    ) {
       result.sort(
         (a, b) =>
           (a.name || "").localeCompare(
@@ -250,7 +301,6 @@ const Shop = () => {
     }
 
     return result;
-
   }, [
     products,
     activeCategory,
@@ -262,44 +312,44 @@ const Shop = () => {
      PRICE FORMAT
   ======================================================== */
 
-  const formatPrice = (price) => {
+  const formatPrice = (
+    price
+  ) => {
     return `Rs. ${Number(
       price || 0
     ).toLocaleString()}`;
   };
 
   /* =======================================================
-     WISHLIST
+     CHECK WISHLIST
   ======================================================== */
 
-  const getWishlist = () => {
-    try {
-      const savedWishlist =
-        JSON.parse(
-          localStorage.getItem(
-            "mamta_wishlist"
-          )
-        ) || [];
-
-      return Array.isArray(savedWishlist)
-        ? savedWishlist
-        : [];
-
-    } catch (error) {
-      console.error(
-        "GET WISHLIST ERROR:",
-        error
-      );
-
-      return [];
+  const isInWishlist = (
+    productId
+  ) => {
+    if (!productId) {
+      return false;
     }
+
+    return wishlist.some(
+      (item) =>
+        String(
+          item?._id ||
+          item?.id ||
+          ""
+        ) ===
+        String(productId)
+    );
   };
 
   /* =======================================================
      HANDLE WISHLIST
   ======================================================== */
 
-  const handleWishlist = (product) => {
+  const handleWishlist = (
+    product,
+    event
+  ) => {
     if (!product?._id) {
       toast.error(
         "Product information is missing."
@@ -308,84 +358,319 @@ const Shop = () => {
       return;
     }
 
-    const currentWishlist =
-      getWishlist();
+    try {
+      const currentWishlist =
+        Array.isArray(wishlist)
+          ? wishlist
+          : [];
 
-    const alreadyExists =
-      currentWishlist.some(
-        (item) =>
-          (item._id || item.id) ===
-          product._id
-      );
+      const productId =
+        String(product._id);
 
-    /* ---------------------------------------------
-       REMOVE
-    --------------------------------------------- */
-
-    if (alreadyExists) {
-      const updatedWishlist =
-        currentWishlist.filter(
+      const alreadyExists =
+        currentWishlist.some(
           (item) =>
-            (item._id || item.id) !==
-            product._id
+            String(
+              item?._id ||
+              item?.id ||
+              ""
+            ) === productId
         );
 
+      /* ===================================================
+         REMOVE
+      =================================================== */
+
+      if (alreadyExists) {
+        const updatedWishlist =
+          currentWishlist.filter(
+            (item) =>
+              String(
+                item?._id ||
+                item?.id ||
+                ""
+              ) !== productId
+          );
+
+        setWishlist(
+          updatedWishlist
+        );
+
+        localStorage.setItem(
+          WISHLIST_KEY,
+          JSON.stringify(
+            updatedWishlist
+          )
+        );
+
+        window.dispatchEvent(
+          new Event(
+            "wishlistUpdated"
+          )
+        );
+
+        toast.success(
+          `${product.name} removed from wishlist.`
+        );
+
+        return;
+      }
+
+      /* ===================================================
+         ADD FULL PRODUCT
+      =================================================== */
+
+      const wishlistProduct = {
+        ...product,
+        _id: product._id,
+      };
+
+      const updatedWishlist = [
+        ...currentWishlist,
+        wishlistProduct,
+      ];
+
+      /* ===================================================
+         SAVE
+      =================================================== */
+
+      setWishlist(
+        updatedWishlist
+      );
+
       localStorage.setItem(
-        "mamta_wishlist",
+        WISHLIST_KEY,
         JSON.stringify(
           updatedWishlist
         )
       );
 
+      /* ===================================================
+         SOUND
+      =================================================== */
+
+      playWishlistSound();
+
+      /* ===================================================
+         ANIMATION
+      =================================================== */
+
+      if (
+        event?.currentTarget
+      ) {
+        const buttonRect =
+          event.currentTarget.getBoundingClientRect();
+
+        const image =
+          product.image ||
+          product.images?.[0] ||
+          "https://placehold.co/700x700/F4D9DC/4A3032?text=MAMTA";
+
+        animateToWishlist({
+          image,
+
+          startX:
+            buttonRect.left +
+            buttonRect.width / 2,
+
+          startY:
+            buttonRect.top +
+            buttonRect.height / 2,
+        });
+      }
+
+      /* ===================================================
+         UPDATE OTHER COMPONENTS
+      =================================================== */
+
       window.dispatchEvent(
-        new Event("wishlistUpdated")
+        new Event(
+          "wishlistUpdated"
+        )
       );
 
       toast.success(
-        `${product.name} removed from wishlist.`
+        `${product.name} added to wishlist.`
+      );
+    } catch (error) {
+      console.error(
+        "HANDLE WISHLIST ERROR:",
+        error
+      );
+
+      toast.error(
+        "Unable to update wishlist."
+      );
+    }
+  };
+
+  /* =======================================================
+     FLY TO CART
+  ======================================================== */
+
+  const animateToCart = (
+    buttonElement,
+    product
+  ) => {
+    if (!buttonElement) {
+      return;
+    }
+
+    const cartTarget =
+      document.querySelector(
+        '[data-cart-target="true"]'
+      );
+
+    if (!cartTarget) {
+      console.warn(
+        "MAMTA: Cart target not found."
       );
 
       return;
     }
 
-    /* ---------------------------------------------
-       ADD
-    --------------------------------------------- */
+    const buttonRect =
+      buttonElement.getBoundingClientRect();
 
-    const updatedWishlist = [
-      ...currentWishlist,
-      product,
-    ];
+    const cartRect =
+      cartTarget.getBoundingClientRect();
 
-    localStorage.setItem(
-      "mamta_wishlist",
-      JSON.stringify(
-        updatedWishlist
-      )
+    const itemSize = 58;
+
+    const startX =
+      buttonRect.left +
+      buttonRect.width / 2 -
+      itemSize / 2;
+
+    const startY =
+      buttonRect.top +
+      buttonRect.height / 2 -
+      itemSize / 2;
+
+    const endX =
+      cartRect.left +
+      cartRect.width / 2 -
+      itemSize / 2;
+
+    const endY =
+      cartRect.top +
+      cartRect.height / 2 -
+      itemSize / 2;
+
+    const flying =
+      document.createElement(
+        "div"
+      );
+
+    flying.className =
+      "mamta-flying-cart-item";
+
+    /* Use product image instead of M */
+
+    const image =
+      product?.image ||
+      product?.images?.[0];
+
+    if (image) {
+      flying.innerHTML = `
+        <img
+          src="${image}"
+          alt=""
+        />
+      `;
+    } else {
+      flying.innerHTML = `
+        <span>M</span>
+      `;
+    }
+
+    flying.style.left =
+      `${startX}px`;
+
+    flying.style.top =
+      `${startY}px`;
+
+    document.body.appendChild(
+      flying
     );
 
-    window.dispatchEvent(
-      new Event("wishlistUpdated")
-    );
+    const deltaX =
+      endX - startX;
 
-    toast.success(
-      `${product.name} added to wishlist.`
-    );
-  };
+    const deltaY =
+      endY - startY;
 
-  /* =======================================================
-     CHECK WISHLIST
-  ======================================================== */
+    const animation =
+      flying.animate(
+        [
+          {
+            transform:
+              "translate3d(0, 0, 0) scale(1)",
+            opacity: 1,
+          },
 
-  const isInWishlist = (productId) => {
-    const currentWishlist =
-      getWishlist();
+          {
+            transform:
+              "translate3d(0, -38px, 0) scale(0.96)",
+            opacity: 1,
+            offset: 0.22,
+          },
 
-    return currentWishlist.some(
-      (item) =>
-        (item._id || item.id) ===
-        productId
-    );
+          {
+            transform:
+              `translate3d(
+                ${deltaX * 0.45}px,
+                ${deltaY * 0.45 - 35}px,
+                0
+              ) scale(0.82)`,
+            opacity: 0.98,
+            offset: 0.52,
+          },
+
+          {
+            transform:
+              `translate3d(
+                ${deltaX * 0.78}px,
+                ${deltaY * 0.78 - 18}px,
+                0
+              ) scale(0.62)`,
+            opacity: 0.72,
+            offset: 0.76,
+          },
+
+          {
+            transform:
+              `translate3d(
+                ${deltaX}px,
+                ${deltaY}px,
+                0
+              ) scale(0.32)`,
+            opacity: 0,
+          },
+        ],
+        {
+          duration: 900,
+
+          easing:
+            "cubic-bezier(0.16, 1, 0.3, 1)",
+
+          fill: "forwards",
+        }
+      );
+
+    animation.onfinish = () => {
+      flying.remove();
+
+      cartTarget.classList.add(
+        "cart-pop-animation"
+      );
+
+      setTimeout(() => {
+        cartTarget.classList.remove(
+          "cart-pop-animation"
+        );
+      }, 450);
+    };
   };
 
   /* =======================================================
@@ -393,17 +678,13 @@ const Shop = () => {
   ======================================================== */
 
   const handleAddToCart = async (
-    product
+    product,
+    buttonElement
   ) => {
-
     const token =
       localStorage.getItem(
         "mamta_user_token"
       );
-
-    /* ---------------------------------------------
-       LOGIN CHECK
-    --------------------------------------------- */
 
     if (!token) {
       toast.error(
@@ -415,10 +696,6 @@ const Shop = () => {
       return;
     }
 
-    /* ---------------------------------------------
-       PRODUCT CHECK
-    --------------------------------------------- */
-
     if (!product?._id) {
       toast.error(
         "Product information is missing."
@@ -427,15 +704,9 @@ const Shop = () => {
       return;
     }
 
-    /* ---------------------------------------------
-       ADD TO CART
-    --------------------------------------------- */
-
     try {
-
       await axios.post(
         `${API_URL}/cart/add`,
-
         {
           productId:
             product._id,
@@ -451,7 +722,6 @@ const Shop = () => {
 
           quantity: 1,
         },
-
         {
           headers: {
             Authorization:
@@ -460,37 +730,30 @@ const Shop = () => {
         }
       );
 
-      /* -------------------------------------------
-         CART UPDATE EVENT
-      ------------------------------------------- */
-
       window.dispatchEvent(
-        new Event("cartChanged")
+        new Event(
+          "cartChanged"
+        )
       );
 
-      /* -------------------------------------------
-         SUCCESS
-      ------------------------------------------- */
+      animateToCart(
+        buttonElement,
+        product
+      );
 
       toast.success(
         `${product.name} added to cart.`
       );
-
     } catch (error) {
-
       console.error(
         "ADD TO CART ERROR:",
         error
       );
 
-      /* -------------------------------------------
-         TOKEN EXPIRED
-      ------------------------------------------- */
-
       if (
-        error.response?.status === 401
+        error.response?.status ===
+        401
       ) {
-
         localStorage.removeItem(
           "mamta_user_token"
         );
@@ -500,7 +763,9 @@ const Shop = () => {
         );
 
         window.dispatchEvent(
-          new Event("authChanged")
+          new Event(
+            "authChanged"
+          )
         );
 
         toast.error(
@@ -512,13 +777,9 @@ const Shop = () => {
         return;
       }
 
-      /* -------------------------------------------
-         OTHER ERROR
-      ------------------------------------------- */
-
       toast.error(
         error.response?.data?.message ||
-        "Unable to add product to cart."
+          "Unable to add product to cart."
       );
     }
   };
@@ -580,41 +841,28 @@ const Shop = () => {
 
         <div className="shop-hero-inner">
 
-          {/* =================================================
-              LEFT CONTENT
-          ================================================== */}
-
           <ScrollReveal direction="left">
 
             <div className="shop-hero-content">
 
               <div className="shop-hero-label">
-
                 <span></span>
-
                 THE MAMTA COLLECTION
-
               </div>
 
               <h1>
-
                 Comfort made
-
                 <br />
-
                 <em>
                   with love.
                 </em>
-
               </h1>
 
               <p>
-
-                Discover thoughtfully crafted pillows
-                designed for mothers, little ones,
-                and every generation that deserves
-                a little more comfort.
-
+                Discover thoughtfully crafted
+                pillows designed for mothers,
+                little ones, and every generation
+                that deserves a little more comfort.
               </p>
 
               <div className="shop-hero-actions">
@@ -623,19 +871,15 @@ const Shop = () => {
                   href="#shop-products"
                   className="shop-hero-btn"
                 >
-
                   Explore Collection
 
                   <ArrowUpRight
                     size={17}
                   />
-
                 </a>
 
                 <span className="shop-hero-note">
-
                   Softness • Support • Care
-
                 </span>
 
               </div>
@@ -643,10 +887,6 @@ const Shop = () => {
             </div>
 
           </ScrollReveal>
-
-          {/* =================================================
-              RIGHT VISUAL
-          ================================================== */}
 
           <ScrollReveal direction="right">
 
@@ -664,31 +904,21 @@ const Shop = () => {
               <div className="hero-floating-card">
 
                 <span className="floating-card-small">
-
                   MAMTA
-
                 </span>
 
                 <strong>
-
                   Made for
-
                   <br />
-
                   gentle moments.
-
                 </strong>
 
               </div>
 
               <div className="hero-round-text">
-
                 <span>
-
                   COMFORT • CARE • MAMTA •
-
                 </span>
-
               </div>
 
               <div className="hero-decor-circle"></div>
@@ -698,10 +928,6 @@ const Shop = () => {
           </ScrollReveal>
 
         </div>
-
-        {/* =================================================
-            HERO BOTTOM
-        ================================================== */}
 
         <div className="shop-hero-bottom">
 
@@ -725,10 +951,6 @@ const Shop = () => {
 
       <section className="shop-container">
 
-        {/* =================================================
-            CATEGORY SECTION
-        ================================================== */}
-
         <div className="shop-category-section">
 
           <ScrollReveal direction="down">
@@ -738,33 +960,23 @@ const Shop = () => {
               <div>
 
                 <span className="section-eyebrow">
-
                   EXPLORE COLLECTIONS
-
                 </span>
 
                 <h2>
-
                   Shop by category
-
                 </h2>
 
               </div>
 
               <p>
-
                 Find the comfort made
                 especially for you.
-
               </p>
 
             </div>
 
           </ScrollReveal>
-
-          {/* =================================================
-              CATEGORY TABS
-          ================================================== */}
 
           <ScrollReveal direction="up">
 
@@ -772,7 +984,6 @@ const Shop = () => {
 
               {categories.map(
                 (category) => (
-
                   <button
                     key={category}
                     type="button"
@@ -788,18 +999,13 @@ const Shop = () => {
                       )
                     }
                   >
-
                     {category}
 
                     {activeCategory ===
                       category && (
-
                       <span className="active-dot"></span>
-
                     )}
-
                   </button>
-
                 )
               )}
 
@@ -817,8 +1023,6 @@ const Shop = () => {
 
           <div className="shop-toolbar">
 
-            {/* RESULTS */}
-
             <div className="results-count">
 
               <SlidersHorizontal
@@ -826,19 +1030,13 @@ const Shop = () => {
               />
 
               <span>
-
                 {filteredProducts.length}{" "}
-
-                {filteredProducts.length ===
-                1
+                {filteredProducts.length === 1
                   ? "product"
                   : "products"}
-
               </span>
 
             </div>
-
-            {/* SEARCH */}
 
             <div className="shop-search">
 
@@ -858,8 +1056,6 @@ const Shop = () => {
               />
 
             </div>
-
-            {/* SORT */}
 
             <div className="shop-sort">
 
@@ -929,7 +1125,13 @@ const Shop = () => {
                 >
 
                   <article
-                    className="shop-product-card"
+                    className={`shop-product-card ${
+                      isInWishlist(
+                        product._id
+                      )
+                        ? "has-wishlist"
+                        : ""
+                    }`}
                   >
 
                     {/* =================================================
@@ -941,6 +1143,7 @@ const Shop = () => {
                       <Link
                         to={`/product/${product._id}`}
                         className="product-image-link"
+                        aria-label={`View ${product.name}`}
                       >
 
                         <img
@@ -952,17 +1155,18 @@ const Shop = () => {
                             product.name ||
                             "MAMTA product"
                           }
+                          loading="lazy"
                           onError={(e) => {
-
                             e.currentTarget.src =
                               "https://placehold.co/700x700/F4D9DC/4A3032?text=MAMTA";
-
                           }}
                         />
 
                       </Link>
 
-                      {/* WISHLIST */}
+                      {/* =================================================
+                          WISHLIST
+                      ================================================== */}
 
                       <button
                         type="button"
@@ -980,15 +1184,17 @@ const Shop = () => {
                             ? `Remove ${product.name} from wishlist`
                             : `Add ${product.name} to wishlist`
                         }
-                        onClick={() =>
+                        onClick={(event) =>
                           handleWishlist(
-                            product
+                            product,
+                            event
                           )
                         }
                       >
 
                         <Heart
                           size={17}
+                          strokeWidth={1.7}
                           fill={
                             isInWishlist(
                               product._id
@@ -1000,13 +1206,31 @@ const Shop = () => {
 
                       </button>
 
-                      {/* CATEGORY */}
+                      {/* =================================================
+                          CATEGORY
+                      ================================================== */}
 
-                      <span className="product-category">
+                      {product.category && (
+                        <span className="product-category">
+                          {product.category}
+                        </span>
+                      )}
 
-                        {product.category}
+                      {/* =================================================
+                          IMAGE OVERLAY
+                      ================================================== */}
 
-                      </span>
+                      <Link
+                        to={`/product/${product._id}`}
+                        className="product-image-overlay"
+                        aria-label={`View ${product.name}`}
+                      >
+
+                        <span>
+                          View Product
+                        </span>
+
+                      </Link>
 
                     </div>
 
@@ -1018,17 +1242,19 @@ const Shop = () => {
 
                       <div className="product-info-top">
 
-                        <div>
+                        <div className="product-title-area">
 
                           <span className="product-small-label">
-
                             MAMTA
-
                           </span>
 
                           <h3>
 
-                            {product.name}
+                            <Link
+                              to={`/product/${product._id}`}
+                            >
+                              {product.name}
+                            </Link>
 
                           </h3>
 
@@ -1042,47 +1268,58 @@ const Shop = () => {
 
                       <div className="product-bottom">
 
-                        <strong>
+                        <div className="product-price">
 
-                          {formatPrice(
-                            product.price
-                          )}
+                          <strong>
+                            {formatPrice(
+                              product.price
+                            )}
+                          </strong>
 
-                        </strong>
+                          {product.oldPrice &&
+                            Number(
+                              product.oldPrice
+                            ) >
+                              Number(
+                                product.price
+                              ) && (
+                              <del>
+                                {formatPrice(
+                                  product.oldPrice
+                                )}
+                              </del>
+                            )}
 
-                        <div className="product-card-actions">
+                        </div>
 
-                          {/* DETAILS */}
+                        <div className="product-actions">
 
-                          <Link
-                            to={`/product/${product._id}`}
-                            className="view-details-button"
+                          <button
+                            type="button"
+                            className="details-button"
+                            onClick={() =>
+                              navigate(
+                                `/product/${product._id}`
+                              )
+                            }
                           >
-
-                            <span>
-                              Details
-                            </span>
-
-                            <ArrowUpRight
-                              size={15}
-                            />
-
-                          </Link>
-
-                          {/* ADD TO CART */}
+                            Details
+                          </button>
 
                           <button
                             type="button"
                             className="add-cart-button"
-                            onClick={() =>
+                            onClick={(e) =>
                               handleAddToCart(
-                                product
+                                product,
+                                e.currentTarget
                               )
                             }
                           >
 
                             <ShoppingBag
                               size={16}
+                              strokeWidth={1.7}
                             />
 
                             <span>
@@ -1108,10 +1345,6 @@ const Shop = () => {
 
         ) : (
 
-          /* =================================================
-             NO PRODUCTS
-          ================================================== */
-
           <ScrollReveal direction="up">
 
             <div className="no-products">
@@ -1125,21 +1358,19 @@ const Shop = () => {
               </div>
 
               <h3>
-
                 No products found
-
               </h3>
 
               <p>
-
-                Try another search or
-                choose a different category.
-
+                Try another search or choose
+                a different category.
               </p>
 
               <button
                 type="button"
-                onClick={resetFilters}
+                onClick={
+                  resetFilters
+                }
               >
 
                 View all products

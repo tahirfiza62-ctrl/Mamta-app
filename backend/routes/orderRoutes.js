@@ -11,32 +11,53 @@ const authMiddleware = require("../middleware/authMiddleware");
 
 const router = express.Router();
 
-// Create new order
+
+/* =========================================================
+   CREATE NEW ORDER
+   POST /api/orders
+========================================================= */
+
 router.post(
   "/",
   authMiddleware,
   createOrder
 );
 
-// Get logged-in customer's orders
+
+/* =========================================================
+   GET LOGGED-IN CUSTOMER ORDERS
+   GET /api/orders
+========================================================= */
+
 router.get(
   "/",
   authMiddleware,
   getMyOrders
 );
 
-// Get single order
+
+/* =========================================================
+   GET SINGLE ORDER
+   GET /api/orders/:id
+========================================================= */
+
 router.get(
   "/:id",
   authMiddleware,
   getOrderById
 );
 
-// Cancel order
+
+/* =========================================================
+   CANCEL ORDER
+   PUT /api/orders/:id/cancel
+========================================================= */
+
 router.put(
   "/:id/cancel",
   authMiddleware,
   cancelOrder
 );
+
 
 module.exports = router;

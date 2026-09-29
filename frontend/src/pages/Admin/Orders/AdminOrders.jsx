@@ -1,12 +1,4 @@
-
-import {
-  useEffect,
-  useMemo,
-  useState,
-} from "react";
-
-import axios from "axios";
-
+import { useEffect, useState } from "react";
 import {
   Search,
   RefreshCw,
@@ -14,309 +6,392 @@ import {
   Eye,
   Filter,
 } from "lucide-react";
-
 import { useNavigate } from "react-router-dom";
-
 import "./AdminOrders.css";
-
-
-/* =========================================================
-   API
-========================================================= */
 
 const API_URL =
   "http://localhost:3000/api/admin/orders";
 
-
 const AdminOrders = () => {
+  const navigate = useNavigate();
 
-  const navigate =
-    useNavigate();
+  const [orders, setOrders] = useState([]);
+  const [loading, setLoading] = useState(true);
+  const [refreshing, setRefreshing] = useState(false);
 
-
-  /* =======================================================
-     STATE
-  ======================================================= */
-
-  const [orders, setOrders] =
-    useState([]);
-
-  const [search, setSearch] =
-    useState("");
-
-  const [status, setStatus] =
+  const [search, setSearch] = useState("");
+  const [statusFilter, setStatusFilter] =
     useState("All");
 
-  const [loading, setLoading] =
-    useState(true);
+  /* =========================================================
+     INITIAL FETCH
+  ========================================================= */
 
-  const [error, setError] =
-    useState("");
+  useEffect(() => {
+    let cancelled = false;
 
-
-  /* =======================================================
-     TOKEN
-  ======================================================= */
-
-  const getToken = () => {
-    return localStorage.getItem(
-      "mamta_admin_token"
-    );
-  };
-
-
-  /* =======================================================
-     FETCH ORDERS
-  ======================================================= */
-
-  const fetchOrders =
-    async () => {
-
+    const fetchOrders = async () => {
       try {
-
-        setLoading(true);
-        setError("");
+        if (!cancelled) {
+          setLoading(true);
+        }
 
         const token =
-          getToken();
-
+          localStorage.getItem(
+            "mamta_admin_token"
+          );
 
         if (!token) {
-          navigate("/admin");
+          if (!cancelled) {
+            navigate("/admin/login");
+          }
+
           return;
         }
 
+        const response = await fetch(
+          API_URL,
+          {
+            method: "GET",
 
-        const response =
-          await axios.get(
-            API_URL,
-            {
-              headers: {
-                Authorization:
-                  `Bearer ${token}`,
-              },
-            }
-          );
-
-
-        if (
-          Array.isArray(
-            response.data?.orders
-          )
-        ) {
-
-          setOrders(
-            response.data.orders
-          );
-
-        } else {
-
-          setOrders([]);
-
-        }
-
-      } catch (err) {
-
-        console.error(
-          "ADMIN ORDERS ERROR:",
-          err
+            headers: {
+              Authorization:
+                `Bearer ${token}`,
+              "Content-Type":
+                "application/json",
+            },
+          }
         );
 
+        /*
+         * TOKEN EXPIRED / UNAUTHORIZED
+         */
 
         if (
-          err.response?.status ===
-            401 ||
-          err.response?.status ===
-            403
+          response.status === 401
         ) {
-
           localStorage.removeItem(
             "mamta_admin_token"
           );
 
-          navigate("/admin");
+          if (!cancelled) {
+            navigate("/admin/login");
+          }
 
           return;
         }
 
+        /*
+         * OTHER API ERROR
+         */
 
-        setError(
-          err.response?.data?.message ||
-          "Unable to load orders."
+        if (!response.ok) {
+          throw new Error(
+            "Unable to fetch orders."
+          );
+        }
+
+        const data =
+          await response.json();
+
+        console.log(
+          "ADMIN ORDERS:",
+          data
         );
 
+        /*
+         * API MAY RETURN:
+         *
+         * [
+         *   ...
+         * ]
+         *
+         * OR
+         *
+         * {
+         *   orders: [...]
+         * }
+         */
+
+        let fetchedOrders = [];
+
+        if (
+          Array.isArray(data)
+        ) {
+          fetchedOrders = data;
+        } else if (
+          Array.isArray(
+            data?.orders
+          )
+        ) {
+          fetchedOrders =
+            data.orders;
+        }
+
+        if (!cancelled) {
+          setOrders(
+            fetchedOrders
+          );
+        }
+      } catch (error) {
+        console.error(
+          "ADMIN ORDERS ERROR:",
+          error
+        );
+
+        if (!cancelled) {
+          setOrders([]);
+        }
       } finally {
-
-        setLoading(false);
-
+        if (!cancelled) {
+          setLoading(false);
+        }
       }
     };
 
+    /*
+     * Run initial fetch.
+     *
+     * The function is declared inside
+     * the effect, so there is no:
+     *
+     * react-hooks/exhaustive-deps
+     *
+     * warning.
+     */
 
-  /* =======================================================
-     INITIAL LOAD
-  ======================================================= */
+    fetchOrders();
 
-/* =======================================================
-   INITIAL LOAD
-======================================================= */
+    return () => {
+      cancelled = true;
+    };
+  }, [navigate]);
 
-useEffect(() => {
-  let cancelled = false;
+  /* =========================================================
+     REFRESH
+  ========================================================= */
 
-  const loadInitialOrders = async () => {
+  const handleRefresh = async () => {
     try {
-      const token = getToken();
+      setRefreshing(true);
+
+      const token =
+        localStorage.getItem(
+          "mamta_admin_token"
+        );
 
       if (!token) {
-        navigate("/admin");
+        navigate("/admin/login");
         return;
       }
 
-      const response = await axios.get(API_URL, {
-        headers: {
-          Authorization: `Bearer ${token}`,
-        },
-      });
+      const response = await fetch(
+        API_URL,
+        {
+          method: "GET",
 
-      if (cancelled) return;
-
-      if (Array.isArray(response.data?.orders)) {
-        setOrders(response.data.orders);
-      } else {
-        setOrders([]);
-      }
-
-      setError("");
-    } catch (err) {
-      if (cancelled) return;
-
-      console.error("ADMIN ORDERS ERROR:", err);
-
-      if (
-        err.response?.status === 401 ||
-        err.response?.status === 403
-      ) {
-        localStorage.removeItem("mamta_admin_token");
-        navigate("/admin");
-        return;
-      }
-
-      setError(
-        err.response?.data?.message ||
-          "Unable to load orders."
-      );
-    } finally {
-      if (!cancelled) {
-        setLoading(false);
-      }
-    }
-  };
-
-  loadInitialOrders();
-
-  return () => {
-    cancelled = true;
-  };
-}, [navigate]);
-  /* =======================================================
-     FILTERED ORDERS
-  ======================================================= */
-
-  const filteredOrders =
-    useMemo(() => {
-
-      const searchValue =
-        search
-          .toLowerCase()
-          .trim();
-
-
-      return orders.filter(
-        (order) => {
-
-          const orderNumber =
-            order.orderNumber
-              ?.toLowerCase() ||
-            "";
-
-
-          const customerName =
-            order.customer?.name
-              ?.toLowerCase() ||
-            order.userId?.name
-              ?.toLowerCase() ||
-            "";
-
-
-          const customerEmail =
-            order.customer?.email
-              ?.toLowerCase() ||
-            order.userId?.email
-              ?.toLowerCase() ||
-            "";
-
-
-          const matchesSearch =
-            !searchValue ||
-            orderNumber.includes(
-              searchValue
-            ) ||
-            customerName.includes(
-              searchValue
-            ) ||
-            customerEmail.includes(
-              searchValue
-            );
-
-
-          const matchesStatus =
-            status === "All" ||
-            order.orderStatus ===
-              status;
-
-
-          return (
-            matchesSearch &&
-            matchesStatus
-          );
-
+          headers: {
+            Authorization:
+              `Bearer ${token}`,
+            "Content-Type":
+              "application/json",
+          },
         }
       );
 
-    }, [
-      orders,
-      search,
-      status,
-    ]);
+      /*
+       * UNAUTHORIZED
+       */
 
+      if (
+        response.status === 401
+      ) {
+        localStorage.removeItem(
+          "mamta_admin_token"
+        );
 
-  /* =======================================================
-     STATUS
-  ======================================================= */
+        navigate("/admin/login");
 
-  const statuses = [
-    "All",
-    "Pending",
-    "Confirmed",
-    "Processing",
-    "Shipped",
-    "Delivered",
-    "Cancelled",
-  ];
-
-
-  /* =======================================================
-     DATE
-  ======================================================= */
-
-  const formatDate =
-    (date) => {
-
-      if (!date) {
-        return "-";
+        return;
       }
 
+      /*
+       * API ERROR
+       */
+
+      if (!response.ok) {
+        throw new Error(
+          "Unable to refresh orders."
+        );
+      }
+
+      const data =
+        await response.json();
+
+      console.log(
+        "REFRESHED ADMIN ORDERS:",
+        data
+      );
+
+      let refreshedOrders = [];
+
+      if (
+        Array.isArray(data)
+      ) {
+        refreshedOrders = data;
+      } else if (
+        Array.isArray(
+          data?.orders
+        )
+      ) {
+        refreshedOrders =
+          data.orders;
+      }
+
+      setOrders(
+        refreshedOrders
+      );
+    } catch (error) {
+      console.error(
+        "REFRESH ORDERS ERROR:",
+        error
+      );
+    } finally {
+      setRefreshing(false);
+    }
+  };
+
+  /* =========================================================
+     FILTER ORDERS
+  ========================================================= */
+
+  const filteredOrders =
+    orders.filter(
+      (order) => {
+        const searchValue =
+          search
+            .trim()
+            .toLowerCase();
+
+        const customerName =
+          order.customer?.name ||
+          order.name ||
+          order.customerName ||
+          "";
+
+        const customerEmail =
+          order.customer?.email ||
+          order.email ||
+          "";
+
+        const orderId =
+          order._id ||
+          order.id ||
+          "";
+
+        const matchesSearch =
+          !searchValue ||
+          String(
+            customerName
+          )
+            .toLowerCase()
+            .includes(
+              searchValue
+            ) ||
+          String(
+            customerEmail
+          )
+            .toLowerCase()
+            .includes(
+              searchValue
+            ) ||
+          String(
+            orderId
+          )
+            .toLowerCase()
+            .includes(
+              searchValue
+            );
+
+        const orderStatus =
+          order.status ||
+          "Pending";
+
+        const matchesStatus =
+          statusFilter ===
+            "All" ||
+          orderStatus ===
+            statusFilter;
+
+        return (
+          matchesSearch &&
+          matchesStatus
+        );
+      }
+    );
+
+  /* =========================================================
+     HELPERS
+  ========================================================= */
+
+  const getCustomerName = (
+    order
+  ) => {
+    return (
+      order.customer?.name ||
+      order.name ||
+      order.customerName ||
+      "Guest Customer"
+    );
+  };
+
+  const getCustomerEmail = (
+    order
+  ) => {
+    return (
+      order.customer?.email ||
+      order.email ||
+      "—"
+    );
+  };
+
+  const getTotal = (order) => {
+    return Number(
+      order.total ||
+        order.grandTotal ||
+        order.amount ||
+        0
+    );
+  };
+
+  const getPaymentMethod = (
+    order
+  ) => {
+    return (
+      order.paymentMethod ||
+      order.payment?.method ||
+      "—"
+    );
+  };
+
+  const getStatus = (order) => {
+    return (
+      order.status ||
+      "Pending"
+    );
+  };
+
+  const getDate = (order) => {
+    const date =
+      order.createdAt ||
+      order.date ||
+      order.created_on;
+
+    if (!date) {
+      return "—";
+    }
+
+    try {
       return new Date(
         date
       ).toLocaleDateString(
@@ -327,113 +402,180 @@ useEffect(() => {
           year: "numeric",
         }
       );
-    };
+    } catch {
+      return "—";
+    }
+  };
 
+  const getItemCount = (
+    order
+  ) => {
+    if (
+      !Array.isArray(
+        order.items
+      )
+    ) {
+      return 0;
+    }
 
-  /* =======================================================
-     PAYMENT STATUS CLASS
-  ======================================================= */
+    return order.items.reduce(
+      (total, item) =>
+        total +
+        Number(
+          item.quantity || 0
+        ),
+      0
+    );
+  };
 
-  const getPaymentClass =
-    (paymentStatus) => {
+  /* =========================================================
+     GET COLORS
+  ========================================================= */
 
-      switch (
-        paymentStatus
-      ) {
+  const getOrderColors = (
+    order
+  ) => {
+    if (
+      !Array.isArray(
+        order.items
+      )
+    ) {
+      return [];
+    }
 
-        case "Paid":
-          return "paid";
+    return order.items
+      .map((item) => {
+        if (!item.color) {
+          return null;
+        }
 
-        case "Failed":
-          return "failed";
+        return String(
+          item.color
+        );
+      })
+      .filter(Boolean);
+  };
 
-        case "Cancelled":
-          return "cancelled";
+  /* =========================================================
+     STATUS CLASS
+  ========================================================= */
 
-        default:
-          return "pending";
+  const getStatusClass = (
+    status
+  ) => {
+    return String(status)
+      .toLowerCase()
+      .replace(
+        /\s+/g,
+        "-"
+      );
+  };
 
-      }
-    };
+  /* =========================================================
+     OPEN ORDER
+  ========================================================= */
 
+  const handleViewOrder = (
+    orderId
+  ) => {
+    if (!orderId) {
+      return;
+    }
 
-  /* =======================================================
-     ORDER STATUS CLASS
-  ======================================================= */
+    navigate(
+      `/admin/orders/${orderId}`
+    );
+  };
 
-  const getOrderClass =
-    (orderStatus) => {
+  /* =========================================================
+     LOADING
+  ========================================================= */
 
-      switch (
-        orderStatus
-      ) {
+  if (loading) {
+    return (
+      <div className="admin-orders-page">
 
-        case "Confirmed":
-          return "confirmed";
+        <div className="admin-orders-loading">
 
-        case "Processing":
-          return "processing";
+          <RefreshCw
+            size={28}
+            className="admin-orders-spinner"
+          />
 
-        case "Shipped":
-          return "shipped";
-
-        case "Delivered":
-          return "delivered";
-
-        case "Cancelled":
-          return "cancelled";
-
-        default:
-          return "pending";
-
-      }
-    };
-
-
-  /* =======================================================
-     RENDER
-  ======================================================= */
-
-  return (
-    <section className="admin-orders-page">
-
-
-      {/* =================================================
-          HEADER
-      ================================================= */}
-
-      <div className="admin-orders-header">
-
-        <div className="admin-orders-title-row">
-
-          <div className="admin-orders-icon">
-            <ShoppingBag size={22} />
-          </div>
-
-
-          <div>
-
-            <h1>
-              Orders
-            </h1>
-
-            <p>
-              Manage and track all MAMTA customer orders.
-            </p>
-
-          </div>
+          <p>
+            Loading orders...
+          </p>
 
         </div>
 
       </div>
+    );
+  }
+
+  /* =========================================================
+     PAGE
+  ========================================================= */
+
+  return (
+    <div className="admin-orders-page">
+
+      {/* =====================================================
+          HEADER
+      ====================================================== */}
+
+      <div className="admin-orders-header">
+
+        <div>
+
+          <span className="admin-orders-eyebrow">
+            MAMTA ADMIN
+          </span>
+
+          <h1>
+            Orders
+          </h1>
+
+          <p>
+            Manage and review customer orders.
+          </p>
+
+        </div>
 
 
-      {/* =================================================
-          TOOLBAR
-      ================================================= */}
+        <button
+          type="button"
+          className="admin-refresh-button"
+          onClick={
+            handleRefresh
+          }
+          disabled={
+            refreshing
+          }
+        >
+
+          <RefreshCw
+            size={17}
+            className={
+              refreshing
+                ? "admin-orders-spinner"
+                : ""
+            }
+          />
+
+          {refreshing
+            ? "Refreshing..."
+            : "Refresh"}
+
+        </button>
+
+      </div>
+
+
+      {/* =====================================================
+          FILTER BAR
+      ====================================================== */}
 
       <div className="admin-orders-toolbar">
-
 
         {/* SEARCH */}
 
@@ -443,11 +585,11 @@ useEffect(() => {
 
           <input
             type="text"
-            placeholder="Search order or customer..."
+            placeholder="Search orders, customer name or email..."
             value={search}
-            onChange={(e) =>
+            onChange={(event) =>
               setSearch(
-                e.target.value
+                event.target.value
               )
             }
           />
@@ -462,63 +604,52 @@ useEffect(() => {
           <Filter size={17} />
 
           <select
-            value={status}
-            onChange={(e) =>
-              setStatus(
-                e.target.value
+            value={
+              statusFilter
+            }
+            onChange={(event) =>
+              setStatusFilter(
+                event.target.value
               )
             }
           >
 
-            {statuses.map(
-              (item) => (
+            <option value="All">
+              All Status
+            </option>
 
-                <option
-                  key={item}
-                  value={item}
-                >
-                  {item}
-                </option>
+            <option value="Pending">
+              Pending
+            </option>
 
-              )
-            )}
+            <option value="Processing">
+              Processing
+            </option>
+
+            <option value="Shipped">
+              Shipped
+            </option>
+
+            <option value="Delivered">
+              Delivered
+            </option>
+
+            <option value="Cancelled">
+              Cancelled
+            </option>
 
           </select>
 
         </div>
 
-
-        {/* REFRESH */}
-
-        <button
-          className="admin-orders-refresh"
-          onClick={
-            fetchOrders
-          }
-          disabled={loading}
-        >
-
-          <RefreshCw
-            size={17}
-            className={
-              loading
-                ? "admin-orders-spin"
-                : ""
-            }
-          />
-
-          Refresh
-
-        </button>
-
       </div>
 
 
-      {/* =================================================
-          RESULT
-      ================================================= */}
+      {/* =====================================================
+          ORDER COUNT
+      ====================================================== */}
 
-      <div className="admin-orders-results">
+      <div className="admin-orders-count">
 
         Showing{" "}
 
@@ -539,65 +670,36 @@ useEffect(() => {
       </div>
 
 
-      {/* =================================================
-          ERROR
-      ================================================= */}
+      {/* =====================================================
+          TABLE
+      ====================================================== */}
 
-      {error && (
+      <div className="admin-orders-table-wrapper">
 
-        <div className="admin-orders-error">
-          {error}
-        </div>
+        {filteredOrders.length ===
+        0 ? (
 
-      )}
+          <div className="admin-orders-empty">
 
+            <div className="admin-orders-empty-icon">
 
-      {/* =================================================
-          LOADING
-      ================================================= */}
+              <ShoppingBag
+                size={28}
+              />
 
-      {loading ? (
+            </div>
 
-        <div className="admin-orders-loading">
+            <h2>
+              No orders found
+            </h2>
 
-          <RefreshCw
-            size={28}
-            className="admin-orders-spin"
-          />
+            <p>
+              There are no orders matching your current filters.
+            </p>
 
-          <p>
-            Loading orders...
-          </p>
-
-        </div>
-
-      ) : filteredOrders.length === 0 ? (
-
-        <div className="admin-orders-empty">
-
-          <div className="admin-orders-empty-icon">
-            <ShoppingBag size={36} />
           </div>
 
-          <h3>
-            No orders found
-          </h3>
-
-          <p>
-            {orders.length === 0
-              ? "There are no customer orders yet."
-              : "Try changing your search or status filter."}
-          </p>
-
-        </div>
-
-      ) : (
-
-        /* =================================================
-           TABLE
-        ================================================= */
-
-        <div className="admin-orders-table-wrapper">
+        ) : (
 
           <table className="admin-orders-table">
 
@@ -606,35 +708,35 @@ useEffect(() => {
               <tr>
 
                 <th>
-                  Order
+                  ORDER
                 </th>
 
                 <th>
-                  Customer
+                  CUSTOMER
                 </th>
 
                 <th>
-                  Items
+                  ITEMS
                 </th>
 
                 <th>
-                  Total
+                  TOTAL
                 </th>
 
                 <th>
-                  Payment
+                  PAYMENT
                 </th>
 
                 <th>
-                  Status
+                  STATUS
                 </th>
 
                 <th>
-                  Date
+                  DATE
                 </th>
 
                 <th>
-                  Action
+                  ACTION
                 </th>
 
               </tr>
@@ -645,44 +747,37 @@ useEffect(() => {
             <tbody>
 
               {filteredOrders.map(
-                (order) => {
+                (
+                  order,
+                  index
+                ) => {
 
-                  const customerName =
-                    order.customer?.name ||
-                    order.userId?.name ||
-                    "Guest";
+                  const orderId =
+                    order._id ||
+                    order.id ||
+                    "";
 
-
-                  const customerEmail =
-                    order.customer?.email ||
-                    order.userId?.email ||
-                    "-";
-
+                  const colors =
+                    getOrderColors(
+                      order
+                    );
 
                   const itemCount =
-                    Array.isArray(
-                      order.items
-                    )
-                      ? order.items.reduce(
-                          (
-                            total,
-                            item
-                          ) =>
-                            total +
-                            Number(
-                              item.quantity ||
-                                0
-                            ),
-                          0
-                        )
-                      : 0;
+                    getItemCount(
+                      order
+                    );
 
+                  const status =
+                    getStatus(
+                      order
+                    );
 
                   return (
 
                     <tr
                       key={
-                        order._id
+                        orderId ||
+                        index
                       }
                     >
 
@@ -690,24 +785,15 @@ useEffect(() => {
 
                       <td>
 
-                        <div className="admin-order-number">
-
-                          <strong>
-                            #
-                            {
-                              order.orderNumber ||
-                              String(
-                                order._id
-                              ).slice(-8)
-                            }
-                          </strong>
+                        <div className="admin-order-id">
 
                           <span>
-                            ID:{" "}
-                            {String(
-                              order._id
-                            ).slice(-8)}
+                            #
                           </span>
+
+                          {String(
+                            orderId
+                          ).slice(-8)}
 
                         </div>
 
@@ -721,11 +807,19 @@ useEffect(() => {
                         <div className="admin-order-customer">
 
                           <strong>
-                            {customerName}
+                            {
+                              getCustomerName(
+                                order
+                              )
+                            }
                           </strong>
 
                           <span>
-                            {customerEmail}
+                            {
+                              getCustomerEmail(
+                                order
+                              )
+                            }
                           </span>
 
                         </div>
@@ -737,14 +831,76 @@ useEffect(() => {
 
                       <td>
 
-                        <span className="admin-order-items">
+                        <div className="admin-order-items-cell">
 
-                          {itemCount}{" "}
-                          {itemCount === 1
-                            ? "item"
-                            : "items"}
+                          <strong>
+                            {
+                              itemCount
+                            }{" "}
+                            {
+                              itemCount ===
+                              1
+                                ? "item"
+                                : "items"
+                            }
+                          </strong>
 
-                        </span>
+
+                          {/* COLOR PREVIEW */}
+
+                          {colors.length >
+                            0 && (
+
+                            <div className="admin-order-colors-preview">
+
+                              {colors
+                                .slice(
+                                  0,
+                                  2
+                                )
+                                .map(
+                                  (
+                                    color,
+                                    colorIndex
+                                  ) => (
+
+                                    <span
+                                      key={`${color}-${colorIndex}`}
+                                      className="admin-order-color-preview"
+                                    >
+
+                                      <span className="admin-order-color-dot"></span>
+
+                                      {
+                                        color
+                                      }
+
+                                    </span>
+
+                                  )
+                                )}
+
+
+                              {colors.length >
+                                2 && (
+
+                                <span className="admin-order-more-colors">
+
+                                  +
+                                  {
+                                    colors.length -
+                                    2
+                                  }
+
+                                </span>
+
+                              )}
+
+                            </div>
+
+                          )}
+
+                        </div>
 
                       </td>
 
@@ -757,9 +913,11 @@ useEffect(() => {
 
                           Rs.{" "}
 
-                          {Number(
-                            order.total || 0
-                          ).toLocaleString()}
+                          {
+                            getTotal(
+                              order
+                            ).toLocaleString()
+                          }
 
                         </strong>
 
@@ -770,30 +928,15 @@ useEffect(() => {
 
                       <td>
 
-                        <div className="admin-order-payment">
+                        <span className="admin-payment-method">
 
-                          <span
-                            className={`
-                              admin-payment-status
-                              ${getPaymentClass(
-                                order.paymentStatus
-                              )}
-                            `}
-                          >
+                          {
+                            getPaymentMethod(
+                              order
+                            )
+                          }
 
-                            {order.paymentStatus ||
-                              "Pending"}
-
-                          </span>
-
-                          <small>
-                            {
-                              order.paymentMethod ||
-                              "-"
-                            }
-                          </small>
-
-                        </div>
+                        </span>
 
                       </td>
 
@@ -803,20 +946,12 @@ useEffect(() => {
                       <td>
 
                         <span
-                          className={`
-                            admin-order-status
-                            ${getOrderClass(
-                              order.orderStatus
-                            )}
-                          `}
+                          className={`admin-order-status ${getStatusClass(
+                            status
+                          )}`}
                         >
 
-                          <span></span>
-
-                          {
-                            order.orderStatus ||
-                            "Pending"
-                          }
+                          {status}
 
                         </span>
 
@@ -829,9 +964,11 @@ useEffect(() => {
 
                         <span className="admin-order-date">
 
-                          {formatDate(
-                            order.createdAt
-                          )}
+                          {
+                            getDate(
+                              order
+                            )
+                          }
 
                         </span>
 
@@ -843,16 +980,20 @@ useEffect(() => {
                       <td>
 
                         <button
-                          className="admin-order-view"
-                          title="View Order"
+                          type="button"
+                          className="admin-view-order-button"
                           onClick={() =>
-                            navigate(
-                              `/admin/orders/${order._id}`
+                            handleViewOrder(
+                              orderId
                             )
                           }
                         >
 
-                          <Eye size={17} />
+                          <Eye
+                            size={16}
+                          />
+
+                          View
 
                         </button>
 
@@ -861,7 +1002,6 @@ useEffect(() => {
                     </tr>
 
                   );
-
                 }
               )}
 
@@ -869,14 +1009,12 @@ useEffect(() => {
 
           </table>
 
-        </div>
+        )}
 
-      )}
+      </div>
 
-    </section>
+    </div>
   );
 };
 
-
 export default AdminOrders;
-

@@ -1,5 +1,6 @@
 import { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
+
 import {
   ArrowRight,
   Eye,
@@ -9,6 +10,7 @@ import {
   Mail,
   UserRound,
 } from "lucide-react";
+
 import axios from "axios";
 import "./Register.css";
 
@@ -25,78 +27,121 @@ const Register = () => {
   });
 
   const [showPassword, setShowPassword] = useState(false);
-  const [showConfirmPassword, setShowConfirmPassword] =
-    useState(false);
+  const [showConfirmPassword, setShowConfirmPassword] = useState(false);
 
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState("");
 
+  /* =========================================================
+     HANDLE INPUT CHANGE
+  ========================================================= */
+
   const handleChange = (e) => {
-    setFormData({
-      ...formData,
-      [e.target.name]: e.target.value,
-    });
+    const { name, value } = e.target;
+
+    setFormData((prev) => ({
+      ...prev,
+      [name]: value,
+    }));
 
     setError("");
   };
 
+  /* =========================================================
+     HANDLE REGISTER
+  ========================================================= */
+
   const handleSubmit = async (e) => {
     e.preventDefault();
 
-    if (
-      !formData.name ||
-      !formData.email ||
-      !formData.password ||
-      !formData.confirmPassword
-    ) {
+    setError("");
+
+    const name = formData.name.trim();
+    const email = formData.email.trim().toLowerCase();
+    const password = formData.password;
+    const confirmPassword = formData.confirmPassword;
+
+    /* =======================================================
+       REQUIRED FIELDS
+    ======================================================= */
+
+    if (!name || !email || !password || !confirmPassword) {
       setError("Please complete all fields.");
       return;
     }
 
-    if (formData.password !== formData.confirmPassword) {
-      setError("Passwords do not match.");
+    /* =======================================================
+       EMAIL FORMAT
+    ======================================================= */
+
+    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+
+    if (!emailRegex.test(email)) {
+      setError("Please enter a valid email address.");
       return;
     }
 
-    if (formData.password.length < 6) {
+    /* =======================================================
+       PASSWORD LENGTH
+    ======================================================= */
+
+    if (password.length < 6) {
       setError("Password must be at least 6 characters.");
+      return;
+    }
+
+    /* =======================================================
+       PASSWORD MATCH
+    ======================================================= */
+
+    if (password !== confirmPassword) {
+      setError("Passwords do not match.");
       return;
     }
 
     try {
       setLoading(true);
-      setError("");
+
+      /* =====================================================
+         REGISTER CUSTOMER
+      ===================================================== */
 
       const response = await axios.post(
         `${API_URL}/auth/register`,
         {
-          name: formData.name,
-          email: formData.email,
-          password: formData.password,
+          name,
+          email,
+          password,
+        },
+        {
+          headers: {
+            "Content-Type": "application/json",
+          },
         }
       );
 
-      const { token, user } = response.data;
+      console.log("REGISTER SUCCESS:", response.data);
 
-      // Customer session
-      localStorage.setItem("mamta_user_token", token);
-      localStorage.setItem(
-        "mamta_user",
-        JSON.stringify(user)
-      );
+      /*
+        IMPORTANT:
 
-      // Compatibility with existing frontend
-      localStorage.setItem("mamta_token", token);
-      localStorage.setItem(
-        "mamta_user_data",
-        JSON.stringify(user)
-      );
+        We do NOT save a JWT here.
 
-      window.dispatchEvent(new Event("authChanged"));
+        The customer must verify their email first.
+      */
 
-      navigate("/login");
+      /* =====================================================
+         GO TO EMAIL SENT PAGE
+      ===================================================== */
+
+      navigate("/email-sent", {
+        state: {
+          email,
+        },
+      });
     } catch (error) {
       console.error("REGISTER ERROR:", error);
+      console.error("SERVER RESPONSE:", error.response?.data);
 
       setError(
         error.response?.data?.message ||
@@ -110,12 +155,20 @@ const Register = () => {
   return (
     <main className="mamta-register-page">
 
+      {/* =====================================================
+          BACKGROUND DECORATION
+      ===================================================== */}
+
       <div className="register-bg-circle register-bg-one"></div>
+
       <div className="register-bg-circle register-bg-two"></div>
 
       <div className="mamta-register-container">
 
-        {/* LEFT VISUAL */}
+        {/* ===================================================
+            LEFT VISUAL
+        =================================================== */}
+
         <section className="register-visual">
 
           <div className="register-visual-inner">
@@ -132,6 +185,7 @@ const Register = () => {
             </div>
 
             <div className="register-visual-copy">
+
               <span>MADE FOR LITTLE MOMENTS</span>
 
               <h1>
@@ -144,6 +198,7 @@ const Register = () => {
                 Create your MAMTA account and keep your
                 favourite comfort essentials close.
               </p>
+
             </div>
 
             <div className="register-orbit"></div>
@@ -152,12 +207,20 @@ const Register = () => {
 
         </section>
 
-        {/* FORM */}
+        {/* ===================================================
+            REGISTER FORM
+        =================================================== */}
+
         <section className="register-form-panel">
 
           <div className="register-form-wrapper">
 
+            {/* =================================================
+                HEADING
+            ================================================= */}
+
             <div className="register-heading">
+
               <span>CREATE ACCOUNT</span>
 
               <h2>
@@ -168,26 +231,43 @@ const Register = () => {
                 Join us for thoughtful comfort made for
                 mothers, babies and growing families.
               </p>
+
             </div>
 
+            {/* =================================================
+                ERROR
+            ================================================= */}
+
             {error && (
-              <div className="register-error">
+              <div
+                className="register-error"
+                role="alert"
+              >
                 {error}
               </div>
             )}
+
+            {/* =================================================
+                FORM
+            ================================================= */}
 
             <form
               className="mamta-register-form"
               onSubmit={handleSubmit}
             >
 
-              {/* NAME */}
+              {/* =================================================
+                  NAME
+              ================================================= */}
+
               <div className="register-field">
+
                 <label htmlFor="name">
                   FULL NAME
                 </label>
 
                 <div className="register-input">
+
                   <UserRound size={17} />
 
                   <input
@@ -198,17 +278,25 @@ const Register = () => {
                     value={formData.name}
                     onChange={handleChange}
                     autoComplete="name"
+                    disabled={loading}
                   />
+
                 </div>
+
               </div>
 
-              {/* EMAIL */}
+              {/* =================================================
+                  EMAIL
+              ================================================= */}
+
               <div className="register-field">
+
                 <label htmlFor="email">
                   EMAIL ADDRESS
                 </label>
 
                 <div className="register-input">
+
                   <Mail size={17} />
 
                   <input
@@ -219,19 +307,29 @@ const Register = () => {
                     value={formData.email}
                     onChange={handleChange}
                     autoComplete="email"
+                    disabled={loading}
                   />
+
                 </div>
+
               </div>
 
-              {/* PASSWORDS */}
+              {/* =================================================
+                  PASSWORD ROW
+              ================================================= */}
+
               <div className="register-password-row">
 
+                {/* PASSWORD */}
+
                 <div className="register-field">
+
                   <label htmlFor="password">
                     PASSWORD
                   </label>
 
                   <div className="register-input">
+
                     <LockKeyhole size={17} />
 
                     <input
@@ -246,13 +344,22 @@ const Register = () => {
                       value={formData.password}
                       onChange={handleChange}
                       autoComplete="new-password"
+                      disabled={loading}
                     />
 
                     <button
                       type="button"
                       className="register-eye"
                       onClick={() =>
-                        setShowPassword(!showPassword)
+                        setShowPassword(
+                          (prev) => !prev
+                        )
+                      }
+                      disabled={loading}
+                      aria-label={
+                        showPassword
+                          ? "Hide password"
+                          : "Show password"
                       }
                     >
                       {showPassword ? (
@@ -261,15 +368,21 @@ const Register = () => {
                         <Eye size={16} />
                       )}
                     </button>
+
                   </div>
+
                 </div>
 
+                {/* CONFIRM PASSWORD */}
+
                 <div className="register-field">
+
                   <label htmlFor="confirmPassword">
                     CONFIRM PASSWORD
                   </label>
 
                   <div className="register-input">
+
                     <LockKeyhole size={17} />
 
                     <input
@@ -284,6 +397,7 @@ const Register = () => {
                       value={formData.confirmPassword}
                       onChange={handleChange}
                       autoComplete="new-password"
+                      disabled={loading}
                     />
 
                     <button
@@ -291,8 +405,14 @@ const Register = () => {
                       className="register-eye"
                       onClick={() =>
                         setShowConfirmPassword(
-                          !showConfirmPassword
+                          (prev) => !prev
                         )
+                      }
+                      disabled={loading}
+                      aria-label={
+                        showConfirmPassword
+                          ? "Hide password"
+                          : "Show password"
                       }
                     >
                       {showConfirmPassword ? (
@@ -301,34 +421,52 @@ const Register = () => {
                         <Eye size={16} />
                       )}
                     </button>
+
                   </div>
+
                 </div>
 
               </div>
 
-              {/* SUBMIT */}
+              {/* =================================================
+                  SUBMIT
+              ================================================= */}
+
               <button
                 type="submit"
                 className="register-submit"
                 disabled={loading}
               >
+
                 <span>
                   {loading
                     ? "CREATING ACCOUNT..."
                     : "CREATE ACCOUNT"}
                 </span>
 
-                {!loading && <ArrowRight size={18} />}
+                {!loading && (
+                  <ArrowRight size={18} />
+                )}
+
               </button>
 
             </form>
 
+            {/* =================================================
+                LOGIN LINK
+            ================================================= */}
+
             <p className="register-switch">
               Already have an account?
+
               <Link to="/login">
                 Sign in
               </Link>
             </p>
+
+            {/* =================================================
+                BACK HOME
+            ================================================= */}
 
             <Link
               to="/"

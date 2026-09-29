@@ -183,7 +183,7 @@ const Contact = () => {
               <span>EMAIL</span>
 
               <h3>
-                hello@mamta.pk
+                maamtacircle@gmail.com
               </h3>
 
               <p>
@@ -194,7 +194,7 @@ const Contact = () => {
             </a>
 
             <a
-              href="tel:+923001234567"
+              href="tel:+923431516875"
               className="contact-info-card"
             >
               <div className="contact-icon">
@@ -204,7 +204,7 @@ const Contact = () => {
               <span>PHONE</span>
 
               <h3>
-                +92 300 1234567
+                +92 3431516875
               </h3>
 
               <p>
@@ -222,7 +222,7 @@ const Contact = () => {
               <span>LOCATION</span>
 
               <h3>
-                Pakistan
+                Rawalpindi,Pakistan
               </h3>
 
               <p>

@@ -1,80 +1,243 @@
 const Product = require("../models/Product");
 
+
+/* =========================================================
+   NORMALIZE COLORS
+========================================================= */
+
+const normalizeColors = (colors) => {
+
+  if (!Array.isArray(colors)) {
+    return [];
+  }
+
+  const normalized = [];
+
+  colors.forEach((item) => {
+
+    /* ---------------------------------------------
+       NEW COLOR OBJECT
+    --------------------------------------------- */
+
+    if (
+      item &&
+      typeof item === "object" &&
+      !Array.isArray(item)
+    ) {
+
+      const name =
+        typeof item.name === "string"
+          ? item.name.trim()
+          : "";
+
+      const value =
+        typeof item.value === "string"
+          ? item.value.trim()
+          : "";
+
+      const code =
+        typeof item.code === "string"
+          ? item.code.trim()
+          : "";
+
+      const image =
+        typeof item.image === "string"
+          ? item.image.trim()
+          : "";
+
+      if (
+        name &&
+        value &&
+        code
+      ) {
+
+        normalized.push({
+          name,
+          value,
+          code,
+          image,
+        });
+      }
+
+      return;
+    }
+
+
+    /* ---------------------------------------------
+       OLD STRING COLOR
+    --------------------------------------------- */
+
+    if (
+      typeof item === "string" &&
+      item.trim() !== ""
+    ) {
+
+      const name =
+        item.trim();
+
+      normalized.push({
+        name,
+
+        value:
+          name
+            .toLowerCase()
+            .replace(/\s+/g, "-"),
+
+        code:
+          "#D8C3A5",
+
+        image:
+          "",
+      });
+    }
+
+  });
+
+
+  /* ---------------------------------------------
+     REMOVE DUPLICATES
+  --------------------------------------------- */
+
+  const unique = [];
+
+  const usedValues =
+    new Set();
+
+  normalized.forEach(
+    (color) => {
+
+      if (
+        !usedValues.has(
+          color.value
+        )
+      ) {
+
+        usedValues.add(
+          color.value
+        );
+
+        unique.push(
+          color
+        );
+      }
+
+    }
+  );
+
+  return unique;
+};
+
+
 /* =========================================================
    GET ALL ACTIVE PRODUCTS
    PUBLIC
    GET /api/products
 ========================================================= */
 
-const getProducts = async (req, res) => {
+const getProducts = async (
+  req,
+  res
+) => {
+
   try {
-    const products = await Product.find({
-      active: true,
-    }).sort({
-      createdAt: -1,
-    });
+
+    const products =
+      await Product.find({
+        active: true,
+      }).sort({
+        createdAt: -1,
+      });
 
     res.status(200).json({
       success: true,
       products,
     });
+
   } catch (error) {
-    console.error("GET PRODUCTS ERROR:", error);
+
+    console.error(
+      "GET PRODUCTS ERROR:",
+      error
+    );
 
     res.status(500).json({
       success: false,
-      message: "Unable to fetch products.",
+      message:
+        "Unable to fetch products.",
       error: error.message,
     });
   }
 };
+
 
 /* =========================================================
    GET ALL PRODUCTS
    ADMIN
-   GET /api/products/admin/all
 ========================================================= */
 
-const getAdminProducts = async (req, res) => {
+const getAdminProducts = async (
+  req,
+  res
+) => {
+
   try {
-    const products = await Product.find().sort({
-      createdAt: -1,
-    });
+
+    const products =
+      await Product.find()
+        .sort({
+          createdAt: -1,
+        });
 
     res.status(200).json({
       success: true,
       products,
     });
+
   } catch (error) {
-    console.error("GET ADMIN PRODUCTS ERROR:", error);
+
+    console.error(
+      "GET ADMIN PRODUCTS ERROR:",
+      error
+    );
 
     res.status(500).json({
       success: false,
-      message: "Unable to fetch admin products.",
+      message:
+        "Unable to fetch admin products.",
       error: error.message,
     });
   }
 };
 
+
 /* =========================================================
    GET SINGLE PRODUCT
    PUBLIC
-   GET /api/products/:id
 ========================================================= */
 
-const getProductById = async (req, res) => {
-  try {
-    const { id } = req.params;
+const getProductById = async (
+  req,
+  res
+) => {
 
-    const product = await Product.findOne({
-      _id: id,
-      active: true,
-    });
+  try {
+
+    const {
+      id,
+    } = req.params;
+
+    const product =
+      await Product.findOne({
+        _id: id,
+        active: true,
+      });
 
     if (!product) {
+
       return res.status(404).json({
         success: false,
-        message: "Product not found.",
+        message:
+          "Product not found.",
       });
     }
 
@@ -82,25 +245,35 @@ const getProductById = async (req, res) => {
       success: true,
       product,
     });
+
   } catch (error) {
-    console.error("GET PRODUCT BY ID ERROR:", error);
+
+    console.error(
+      "GET PRODUCT BY ID ERROR:",
+      error
+    );
 
     res.status(500).json({
       success: false,
-      message: "Unable to fetch product.",
+      message:
+        "Unable to fetch product.",
       error: error.message,
     });
   }
 };
 
+
 /* =========================================================
    CREATE PRODUCT
-   ADMIN
-   POST /api/products
 ========================================================= */
 
-const createProduct = async (req, res) => {
+const createProduct = async (
+  req,
+  res
+) => {
+
   try {
+
     const {
       name,
       description,
@@ -112,189 +285,289 @@ const createProduct = async (req, res) => {
       stock,
       active,
       features,
+      colors,
     } = req.body;
 
+
     /* ---------------------------------------------
-       REQUIRED FIELDS
+       REQUIRED
     --------------------------------------------- */
 
-    if (!name || !name.trim()) {
+    if (
+      !name ||
+      !name.trim()
+    ) {
+
       return res.status(400).json({
         success: false,
-        message: "Product name is required.",
+        message:
+          "Product name is required.",
       });
     }
 
-    if (!category || !category.trim()) {
+
+    if (
+      !category ||
+      !category.trim()
+    ) {
+
       return res.status(400).json({
         success: false,
-        message: "Product category is required.",
+        message:
+          "Product category is required.",
       });
     }
+
 
     if (
       price === undefined ||
       price === null ||
       price === ""
     ) {
+
       return res.status(400).json({
         success: false,
-        message: "Product price is required.",
+        message:
+          "Product price is required.",
       });
     }
+
 
     /* ---------------------------------------------
-       PRICE VALIDATION
+       PRICE
     --------------------------------------------- */
 
-    const numericPrice = Number(price);
+    const numericPrice =
+      Number(price);
 
     if (
-      Number.isNaN(numericPrice) ||
+      Number.isNaN(
+        numericPrice
+      ) ||
       numericPrice < 0
     ) {
+
       return res.status(400).json({
         success: false,
-        message: "Product price must be a valid number.",
+        message:
+          "Product price must be a valid number.",
       });
     }
+
 
     /* ---------------------------------------------
        OLD PRICE
     --------------------------------------------- */
 
-    let numericOldPrice = null;
+    let numericOldPrice =
+      null;
 
     if (
       oldPrice !== undefined &&
       oldPrice !== null &&
       oldPrice !== ""
     ) {
-      numericOldPrice = Number(oldPrice);
+
+      numericOldPrice =
+        Number(oldPrice);
 
       if (
-        Number.isNaN(numericOldPrice) ||
+        Number.isNaN(
+          numericOldPrice
+        ) ||
         numericOldPrice < 0
       ) {
+
         return res.status(400).json({
           success: false,
-          message: "Old price must be a valid number.",
+          message:
+            "Old price must be a valid number.",
         });
       }
     }
+
 
     /* ---------------------------------------------
        STOCK
     --------------------------------------------- */
 
-    let numericStock = 0;
+    let numericStock =
+      0;
 
     if (
       stock !== undefined &&
       stock !== null &&
       stock !== ""
     ) {
-      numericStock = Number(stock);
+
+      numericStock =
+        Number(stock);
 
       if (
-        Number.isNaN(numericStock) ||
+        Number.isNaN(
+          numericStock
+        ) ||
         numericStock < 0
       ) {
+
         return res.status(400).json({
           success: false,
-          message: "Stock must be a valid number.",
+          message:
+            "Stock must be a valid number.",
         });
       }
     }
+
 
     /* ---------------------------------------------
        IMAGES
     --------------------------------------------- */
 
-    let productImages = [];
+    let productImages =
+      [];
 
-    if (Array.isArray(images)) {
-      productImages = images.filter(
-        (item) =>
-          typeof item === "string" &&
-          item.trim() !== ""
-      );
+    if (
+      Array.isArray(images)
+    ) {
+
+      productImages =
+        images
+          .filter(
+            (item) =>
+              typeof item === "string" &&
+              item.trim() !== ""
+          )
+          .map(
+            (item) =>
+              item.trim()
+          );
     }
+
 
     /* ---------------------------------------------
        FEATURES
     --------------------------------------------- */
 
-    let productFeatures = [];
+    let productFeatures =
+      [];
 
-    if (Array.isArray(features)) {
-      productFeatures = features.filter(
-        (item) =>
-          typeof item === "string" &&
-          item.trim() !== ""
-      );
+    if (
+      Array.isArray(features)
+    ) {
+
+      productFeatures =
+        features
+          .filter(
+            (item) =>
+              typeof item === "string" &&
+              item.trim() !== ""
+          )
+          .map(
+            (item) =>
+              item.trim()
+          );
     }
 
+
     /* ---------------------------------------------
-       CREATE PRODUCT
+       COLORS
     --------------------------------------------- */
 
-    const product = await Product.create({
-      name: name.trim(),
+    const productColors =
+      normalizeColors(
+        colors
+      );
 
-      description:
-        typeof description === "string"
-          ? description.trim()
-          : "",
 
-      price: numericPrice,
+    /* ---------------------------------------------
+       CREATE
+    --------------------------------------------- */
 
-      oldPrice: numericOldPrice,
+    const product =
+      await Product.create({
 
-      category: category.trim(),
+        name:
+          name.trim(),
 
-      image:
-        typeof image === "string"
-          ? image.trim()
-          : "",
+        description:
+          typeof description === "string"
+            ? description.trim()
+            : "",
 
-      images: productImages,
+        price:
+          numericPrice,
 
-      stock: numericStock,
+        oldPrice:
+          numericOldPrice,
 
-      active:
-        active === undefined
-          ? true
-          : Boolean(active),
+        category:
+          category.trim(),
 
-      features: productFeatures,
-    });
+        image:
+          typeof image === "string"
+            ? image.trim()
+            : "",
+
+        images:
+          productImages,
+
+        stock:
+          numericStock,
+
+        active:
+          active === undefined
+            ? true
+            : Boolean(active),
+
+        features:
+          productFeatures,
+
+        colors:
+          productColors,
+      });
+
 
     res.status(201).json({
+
       success: true,
-      message: "Product created successfully.",
+
+      message:
+        "Product created successfully.",
+
       product,
     });
+
   } catch (error) {
-    console.error("CREATE PRODUCT ERROR:", error);
+
+    console.error(
+      "CREATE PRODUCT ERROR:",
+      error
+    );
 
     res.status(500).json({
       success: false,
-      message: "Unable to create product.",
+      message:
+        "Unable to create product.",
       error: error.message,
     });
   }
 };
 
+
 /* =========================================================
    UPDATE PRODUCT
-   ADMIN
-   PUT /api/products/:id
 ========================================================= */
 
-const updateProduct = async (req, res) => {
+const updateProduct = async (
+  req,
+  res
+) => {
+
   try {
-    const { id } = req.params;
+
+    const {
+      id,
+    } = req.params;
 
     const {
       name,
@@ -307,49 +580,66 @@ const updateProduct = async (req, res) => {
       stock,
       active,
       features,
+      colors,
     } = req.body;
+
 
     /* ---------------------------------------------
        FIND PRODUCT
     --------------------------------------------- */
 
-    const product = await Product.findById(id);
+    const product =
+      await Product.findById(id);
 
     if (!product) {
+
       return res.status(404).json({
         success: false,
-        message: "Product not found.",
+        message:
+          "Product not found.",
       });
     }
+
 
     /* ---------------------------------------------
        NAME
     --------------------------------------------- */
 
-    if (name !== undefined) {
+    if (
+      name !== undefined
+    ) {
+
       if (
         typeof name !== "string" ||
         !name.trim()
       ) {
+
         return res.status(400).json({
           success: false,
-          message: "Product name cannot be empty.",
+          message:
+            "Product name cannot be empty.",
         });
       }
 
-      product.name = name.trim();
+      product.name =
+        name.trim();
     }
+
 
     /* ---------------------------------------------
        DESCRIPTION
     --------------------------------------------- */
 
-    if (description !== undefined) {
+    if (
+      description !== undefined
+    ) {
+
       product.description =
         typeof description === "string"
           ? description.trim()
           : "";
     }
+
 
     /* ---------------------------------------------
        PRICE
@@ -360,20 +650,28 @@ const updateProduct = async (req, res) => {
       price !== null &&
       price !== ""
     ) {
-      const numericPrice = Number(price);
+
+      const numericPrice =
+        Number(price);
 
       if (
-        Number.isNaN(numericPrice) ||
+        Number.isNaN(
+          numericPrice
+        ) ||
         numericPrice < 0
       ) {
+
         return res.status(400).json({
           success: false,
-          message: "Price must be a valid number.",
+          message:
+            "Price must be a valid number.",
         });
       }
 
-      product.price = numericPrice;
+      product.price =
+        numericPrice;
     }
+
 
     /* ---------------------------------------------
        OLD PRICE
@@ -382,19 +680,27 @@ const updateProduct = async (req, res) => {
     if (
       oldPrice !== undefined
     ) {
+
       if (
         oldPrice === null ||
         oldPrice === ""
       ) {
-        product.oldPrice = null;
+
+        product.oldPrice =
+          null;
+
       } else {
+
         const numericOldPrice =
           Number(oldPrice);
 
         if (
-          Number.isNaN(numericOldPrice) ||
+          Number.isNaN(
+            numericOldPrice
+          ) ||
           numericOldPrice < 0
         ) {
+
           return res.status(400).json({
             success: false,
             message:
@@ -407,15 +713,20 @@ const updateProduct = async (req, res) => {
       }
     }
 
+
     /* ---------------------------------------------
        CATEGORY
     --------------------------------------------- */
 
-    if (category !== undefined) {
+    if (
+      category !== undefined
+    ) {
+
       if (
         typeof category !== "string" ||
         !category.trim()
       ) {
+
         return res.status(400).json({
           success: false,
           message:
@@ -427,36 +738,54 @@ const updateProduct = async (req, res) => {
         category.trim();
     }
 
+
     /* ---------------------------------------------
        MAIN IMAGE
     --------------------------------------------- */
 
-    if (image !== undefined) {
+    if (
+      image !== undefined
+    ) {
+
       product.image =
         typeof image === "string"
           ? image.trim()
           : "";
     }
 
+
     /* ---------------------------------------------
        MULTIPLE IMAGES
     --------------------------------------------- */
 
-    if (images !== undefined) {
-      if (!Array.isArray(images)) {
+    if (
+      images !== undefined
+    ) {
+
+      if (
+        !Array.isArray(images)
+      ) {
+
         return res.status(400).json({
           success: false,
-          message: "Images must be an array.",
+          message:
+            "Images must be an array.",
         });
       }
 
       product.images =
-        images.filter(
-          (item) =>
-            typeof item === "string" &&
-            item.trim() !== ""
-        );
+        images
+          .filter(
+            (item) =>
+              typeof item === "string" &&
+              item.trim() !== ""
+          )
+          .map(
+            (item) =>
+              item.trim()
+          );
     }
+
 
     /* ---------------------------------------------
        STOCK
@@ -467,13 +796,17 @@ const updateProduct = async (req, res) => {
       stock !== null &&
       stock !== ""
     ) {
+
       const numericStock =
         Number(stock);
 
       if (
-        Number.isNaN(numericStock) ||
+        Number.isNaN(
+          numericStock
+        ) ||
         numericStock < 0
       ) {
+
         return res.status(400).json({
           success: false,
           message:
@@ -485,21 +818,32 @@ const updateProduct = async (req, res) => {
         numericStock;
     }
 
+
     /* ---------------------------------------------
-       ACTIVE STATUS
+       ACTIVE
     --------------------------------------------- */
 
-    if (active !== undefined) {
+    if (
+      active !== undefined
+    ) {
+
       product.active =
         Boolean(active);
     }
+
 
     /* ---------------------------------------------
        FEATURES
     --------------------------------------------- */
 
-    if (features !== undefined) {
-      if (!Array.isArray(features)) {
+    if (
+      features !== undefined
+    ) {
+
+      if (
+        !Array.isArray(features)
+      ) {
+
         return res.status(400).json({
           success: false,
           message:
@@ -508,12 +852,44 @@ const updateProduct = async (req, res) => {
       }
 
       product.features =
-        features.filter(
-          (item) =>
-            typeof item === "string" &&
-            item.trim() !== ""
+        features
+          .filter(
+            (item) =>
+              typeof item === "string" &&
+              item.trim() !== ""
+          )
+          .map(
+            (item) =>
+              item.trim()
+          );
+    }
+
+
+    /* ---------------------------------------------
+       COLORS
+    --------------------------------------------- */
+
+    if (
+      colors !== undefined
+    ) {
+
+      if (
+        !Array.isArray(colors)
+      ) {
+
+        return res.status(400).json({
+          success: false,
+          message:
+            "Colors must be an array.",
+        });
+      }
+
+      product.colors =
+        normalizeColors(
+          colors
         );
     }
+
 
     /* ---------------------------------------------
        SAVE
@@ -521,58 +897,87 @@ const updateProduct = async (req, res) => {
 
     await product.save();
 
+
     res.status(200).json({
+
       success: true,
-      message: "Product updated successfully.",
+
+      message:
+        "Product updated successfully.",
+
       product,
     });
+
   } catch (error) {
-    console.error("UPDATE PRODUCT ERROR:", error);
+
+    console.error(
+      "UPDATE PRODUCT ERROR:",
+      error
+    );
 
     res.status(500).json({
       success: false,
-      message: "Unable to update product.",
+      message:
+        "Unable to update product.",
       error: error.message,
     });
   }
 };
 
+
 /* =========================================================
    DELETE PRODUCT
-   ADMIN
-   DELETE /api/products/:id
 ========================================================= */
 
-const deleteProduct = async (req, res) => {
+const deleteProduct = async (
+  req,
+  res
+) => {
+
   try {
-    const { id } = req.params;
+
+    const {
+      id,
+    } = req.params;
 
     const product =
       await Product.findById(id);
 
     if (!product) {
+
       return res.status(404).json({
         success: false,
-        message: "Product not found.",
+        message:
+          "Product not found.",
       });
     }
 
-    await Product.findByIdAndDelete(id);
+    await Product.findByIdAndDelete(
+      id
+    );
 
     res.status(200).json({
       success: true,
-      message: "Product deleted successfully.",
+      message:
+        "Product deleted successfully.",
     });
+
   } catch (error) {
-    console.error("DELETE PRODUCT ERROR:", error);
+
+    console.error(
+      "DELETE PRODUCT ERROR:",
+      error
+    );
 
     res.status(500).json({
       success: false,
-      message: "Unable to delete product.",
+      message:
+        "Unable to delete product.",
       error: error.message,
     });
   }
 };
+
 
 /* =========================================================
    EXPORTS

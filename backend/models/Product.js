@@ -1,4 +1,3 @@
-
 const mongoose = require("mongoose");
 
 const productSchema = new mongoose.Schema(
@@ -58,6 +57,42 @@ const productSchema = new mongoose.Schema(
       type: [String],
       default: [],
     },
+
+    /* =====================================================
+       PRODUCT COLORS
+    ===================================================== */
+
+    colors: {
+      type: [
+        {
+          name: {
+            type: String,
+            required: true,
+            trim: true,
+          },
+
+          value: {
+            type: String,
+            required: true,
+            trim: true,
+          },
+
+          code: {
+            type: String,
+            required: true,
+            trim: true,
+          },
+
+          image: {
+            type: String,
+            default: "",
+            trim: true,
+          },
+        },
+      ],
+
+      default: [],
+    },
   },
   {
     timestamps: true,
@@ -65,4 +100,3 @@ const productSchema = new mongoose.Schema(
 );
 
 module.exports = mongoose.model("Product", productSchema);
-

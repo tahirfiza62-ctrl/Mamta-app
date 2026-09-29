@@ -1,21 +1,361 @@
-
 import { useEffect, useState } from "react";
 import axios from "axios";
+
 import {
   ArrowLeft,
   Save,
   Plus,
   X,
+  Check,
+  ImagePlus,
 } from "lucide-react";
-import { useNavigate, useParams } from "react-router-dom";
+
+import {
+  useNavigate,
+  useParams,
+} from "react-router-dom";
 
 import "./EditProduct.css";
 
 const API_URL =
   "http://localhost:3000/api/admin/products";
 
+/* =========================================================
+   ALL AVAILABLE PRODUCT COLORS
+   SAME COLORS AS ADD PRODUCT
+========================================================= */
+
+const AVAILABLE_COLORS = [
+  {
+    name: "Pink",
+    value: "pink",
+    hex: "#F4A6B8",
+  },
+  {
+    name: "Blush Pink",
+    value: "blush-pink",
+    hex: "#E8A0A8",
+  },
+  {
+    name: "Dusty Rose",
+    value: "dusty-rose",
+    hex: "#C98B91",
+  },
+  {
+    name: "Rose",
+    value: "rose",
+    hex: "#D96C7B",
+  },
+  {
+    name: "Mauve",
+    value: "mauve",
+    hex: "#B7848C",
+  },
+
+  {
+    name: "Lavender",
+    value: "lavender",
+    hex: "#B8A1D9",
+  },
+  {
+    name: "Purple",
+    value: "purple",
+    hex: "#8B5CF6",
+  },
+  {
+    name: "Lilac",
+    value: "lilac",
+    hex: "#C8A2E8",
+  },
+
+  {
+    name: "Blue",
+    value: "blue",
+    hex: "#6FA8DC",
+  },
+  {
+    name: "Baby Blue",
+    value: "baby-blue",
+    hex: "#A7D8F0",
+  },
+  {
+    name: "Sky Blue",
+    value: "sky-blue",
+    hex: "#87CEEB",
+  },
+  {
+    name: "Navy Blue",
+    value: "navy-blue",
+    hex: "#243B53",
+  },
+  {
+    name: "Royal Blue",
+    value: "royal-blue",
+    hex: "#4169E1",
+  },
+
+  {
+    name: "Teal",
+    value: "teal",
+    hex: "#4DB6AC",
+  },
+  {
+    name: "Mint",
+    value: "mint",
+    hex: "#A8D5BA",
+  },
+  {
+    name: "Green",
+    value: "green",
+    hex: "#6FAF7B",
+  },
+  {
+    name: "Sage Green",
+    value: "sage-green",
+    hex: "#A3B18A",
+  },
+  {
+    name: "Olive",
+    value: "olive",
+    hex: "#808000",
+  },
+
+  {
+    name: "Cream",
+    value: "cream",
+    hex: "#FFF1D0",
+  },
+  {
+    name: "Ivory",
+    value: "ivory",
+    hex: "#FFFFF0",
+  },
+  {
+    name: "White",
+    value: "white",
+    hex: "#FFFFFF",
+  },
+  {
+    name: "Off White",
+    value: "off-white",
+    hex: "#F8F5F0",
+  },
+
+  {
+    name: "Beige",
+    value: "beige",
+    hex: "#D8C3A5",
+  },
+  {
+    name: "Nude",
+    value: "nude",
+    hex: "#D8A98B",
+  },
+  {
+    name: "Camel",
+    value: "camel",
+    hex: "#C19A6B",
+  },
+
+  {
+    name: "Brown",
+    value: "brown",
+    hex: "#8B5E3C",
+  },
+  {
+    name: "Chocolate",
+    value: "chocolate",
+    hex: "#5C4033",
+  },
+
+  {
+    name: "Grey",
+    value: "grey",
+    hex: "#9E9E9E",
+  },
+  {
+    name: "Light Grey",
+    value: "light-grey",
+    hex: "#D3D3D3",
+  },
+  {
+    name: "Charcoal",
+    value: "charcoal",
+    hex: "#36454F",
+  },
+  {
+    name: "Black",
+    value: "black",
+    hex: "#111111",
+  },
+
+  {
+    name: "Yellow",
+    value: "yellow",
+    hex: "#F4D35E",
+  },
+  {
+    name: "Mustard",
+    value: "mustard",
+    hex: "#D4A017",
+  },
+  {
+    name: "Orange",
+    value: "orange",
+    hex: "#F28C28",
+  },
+  {
+    name: "Peach",
+    value: "peach",
+    hex: "#FFCBA4",
+  },
+  {
+    name: "Coral",
+    value: "coral",
+    hex: "#FF7F7F",
+  },
+
+  {
+    name: "Red",
+    value: "red",
+    hex: "#D71920",
+  },
+  {
+    name: "Maroon",
+    value: "maroon",
+    hex: "#800000",
+  },
+  {
+    name: "Wine",
+    value: "wine",
+    hex: "#722F37",
+  },
+  {
+    name: "Burgundy",
+    value: "burgundy",
+    hex: "#800020",
+  },
+
+  {
+    name: "Turquoise",
+    value: "turquoise",
+    hex: "#40E0D0",
+  },
+  {
+    name: "Sea Green",
+    value: "sea-green",
+    hex: "#2E8B57",
+  },
+  {
+    name: "Peacock Blue",
+    value: "peacock-blue",
+    hex: "#007C91",
+  },
+  {
+    name: "Denim",
+    value: "denim",
+    hex: "#1560BD",
+  },
+
+  {
+    name: "Terracotta",
+    value: "terracotta",
+    hex: "#C76B4A",
+  },
+  {
+    name: "Khaki",
+    value: "khaki",
+    hex: "#C3B091",
+  },
+];
+
+/* =========================================================
+   FIND COLOR FROM VALUE / NAME
+========================================================= */
+
+const findAvailableColor = (value) => {
+  if (!value) return null;
+
+  return (
+    AVAILABLE_COLORS.find(
+      (color) =>
+        color.value === value
+    ) ||
+    AVAILABLE_COLORS.find(
+      (color) =>
+        color.name.toLowerCase() ===
+        String(value).toLowerCase()
+    ) ||
+    null
+  );
+};
+
+/* =========================================================
+   NORMALIZE PRODUCT COLOR
+   Supports:
+   1. New object format
+   2. Old string format
+========================================================= */
+
+const normalizeColor = (color) => {
+  /* New object format */
+
+  if (
+    color &&
+    typeof color === "object"
+  ) {
+    const available =
+      findAvailableColor(
+        color.value ||
+          color.name
+      );
+
+    return {
+      name:
+        color.name ||
+        available?.name ||
+        "",
+
+      value:
+        color.value ||
+        available?.value ||
+        "",
+
+      code:
+        color.code ||
+        color.hex ||
+        available?.hex ||
+        "#CCCCCC",
+
+      image:
+        color.image || "",
+    };
+  }
+
+  /* Old string format */
+
+  const available =
+    findAvailableColor(color);
+
+  if (available) {
+    return {
+      name: available.name,
+      value: available.value,
+      code: available.hex,
+      image: "",
+    };
+  }
+
+  return null;
+};
+
+/* =========================================================
+   EDIT PRODUCT
+========================================================= */
+
 const EditProduct = () => {
   const navigate = useNavigate();
+
   const { id } = useParams();
 
   const [loading, setLoading] =
@@ -33,6 +373,10 @@ const EditProduct = () => {
   const [featureInput, setFeatureInput] =
     useState("");
 
+  /* =======================================================
+     FORM DATA
+  ======================================================= */
+
   const [formData, setFormData] =
     useState({
       name: "",
@@ -43,6 +387,7 @@ const EditProduct = () => {
       image: "",
       stock: "",
       active: true,
+      colors: [],
     });
 
   /* =======================================================
@@ -90,6 +435,25 @@ const EditProduct = () => {
           return;
         }
 
+        /* =================================================
+           NORMALIZE COLORS
+        ================================================= */
+
+        const normalizedColors =
+          Array.isArray(
+            product.colors
+          )
+            ? product.colors
+                .map(
+                  normalizeColor
+                )
+                .filter(Boolean)
+            : [];
+
+        /* =================================================
+           LOAD PRODUCT DATA
+        ================================================= */
+
         setFormData({
           name:
             product.name || "",
@@ -114,10 +478,19 @@ const EditProduct = () => {
 
           active:
             product.active !== false,
+
+          colors:
+            normalizedColors,
         });
 
+        /* =================================================
+           LOAD FEATURES
+        ================================================= */
+
         setFeatures(
-          Array.isArray(product.features)
+          Array.isArray(
+            product.features
+          )
             ? product.features
             : []
         );
@@ -131,8 +504,10 @@ const EditProduct = () => {
         );
 
         if (
-          error.response?.status === 401 ||
-          error.response?.status === 403
+          error.response?.status ===
+            401 ||
+          error.response?.status ===
+            403
         ) {
           localStorage.removeItem(
             "mamta_admin_token"
@@ -143,7 +518,8 @@ const EditProduct = () => {
         }
 
         setError(
-          error.response?.data?.message ||
+          error.response?.data
+            ?.message ||
             "Failed to load product."
         );
 
@@ -184,6 +560,93 @@ const EditProduct = () => {
   };
 
   /* =======================================================
+     TOGGLE COLOR
+  ======================================================= */
+
+  const toggleColor = (color) => {
+    setFormData((prev) => {
+      const alreadySelected =
+        prev.colors.some(
+          (item) =>
+            item.value ===
+            color.value
+        );
+
+      if (alreadySelected) {
+        return {
+          ...prev,
+
+          colors:
+            prev.colors.filter(
+              (item) =>
+                item.value !==
+                color.value
+            ),
+        };
+      }
+
+      return {
+        ...prev,
+
+        colors: [
+          ...prev.colors,
+          {
+            name: color.name,
+            value: color.value,
+            code: color.hex,
+            image: "",
+          },
+        ],
+      };
+    });
+  };
+
+  /* =======================================================
+     UPDATE COLOR IMAGE
+  ======================================================= */
+
+  const updateColorImage = (
+    colorValue,
+    imageValue
+  ) => {
+    setFormData((prev) => ({
+      ...prev,
+
+      colors:
+        prev.colors.map(
+          (color) =>
+            color.value ===
+            colorValue
+              ? {
+                  ...color,
+                  image:
+                    imageValue,
+                }
+              : color
+        ),
+    }));
+  };
+
+  /* =======================================================
+     REMOVE COLOR
+  ======================================================= */
+
+  const removeColor = (
+    colorValue
+  ) => {
+    setFormData((prev) => ({
+      ...prev,
+
+      colors:
+        prev.colors.filter(
+          (color) =>
+            color.value !==
+            colorValue
+        ),
+    }));
+  };
+
+  /* =======================================================
      ADD FEATURE
   ======================================================= */
 
@@ -205,10 +668,13 @@ const EditProduct = () => {
      REMOVE FEATURE
   ======================================================= */
 
-  const removeFeature = (index) => {
+  const removeFeature = (
+    index
+  ) => {
     setFeatures((prev) =>
       prev.filter(
-        (_, i) => i !== index
+        (_, i) =>
+          i !== index
       )
     );
   };
@@ -217,7 +683,9 @@ const EditProduct = () => {
      SUBMIT
   ======================================================= */
 
-  const handleSubmit = async (e) => {
+  const handleSubmit = async (
+    e
+  ) => {
     e.preventDefault();
 
     try {
@@ -234,16 +702,65 @@ const EditProduct = () => {
         return;
       }
 
+      /* =================================================
+         VALIDATE COLOR IMAGES
+      ================================================= */
+
+      for (const color of formData.colors) {
+        if (
+          !color.image ||
+          !color.image.trim()
+        ) {
+          setError(
+            `Please add an image for ${color.name}.`
+          );
+
+          setSaving(false);
+
+          return;
+        }
+      }
+
+      /* =================================================
+         CLEAN COLORS
+      ================================================= */
+
+      const cleanedColors =
+        formData.colors.map(
+          (color) => ({
+            name:
+              color.name,
+
+            value:
+              color.value,
+
+            code:
+              color.code,
+
+            image:
+              color.image.trim(),
+          })
+        );
+
+      /* =================================================
+         PRODUCT DATA
+      ================================================= */
+
       const data = {
         ...formData,
 
         price:
-          Number(formData.price),
+          Number(
+            formData.price
+          ),
 
         oldPrice:
-          formData.oldPrice === ""
+          formData.oldPrice ===
+          ""
             ? null
-            : Number(formData.oldPrice),
+            : Number(
+                formData.oldPrice
+              ),
 
         stock:
           Number(
@@ -251,7 +768,19 @@ const EditProduct = () => {
           ),
 
         features,
+
+        colors:
+          cleanedColors,
       };
+
+      console.log(
+        "UPDATING PRODUCT:",
+        data
+      );
+
+      /* =================================================
+         UPDATE PRODUCT
+      ================================================= */
 
       await axios.put(
         `${API_URL}/${id}`,
@@ -279,8 +808,10 @@ const EditProduct = () => {
       );
 
       if (
-        error.response?.status === 401 ||
-        error.response?.status === 403
+        error.response?.status ===
+          401 ||
+        error.response?.status ===
+          403
       ) {
         localStorage.removeItem(
           "mamta_admin_token"
@@ -291,7 +822,8 @@ const EditProduct = () => {
       }
 
       setError(
-        error.response?.data?.message ||
+        error.response?.data
+          ?.message ||
           "Failed to update product."
       );
 
@@ -320,7 +852,10 @@ const EditProduct = () => {
      ERROR
   ======================================================= */
 
-  if (error && !formData.name) {
+  if (
+    error &&
+    !formData.name
+  ) {
     return (
       <div className="add-product-page">
 
@@ -337,6 +872,7 @@ const EditProduct = () => {
           }
         >
           <ArrowLeft size={18} />
+
           Back to Products
         </button>
 
@@ -353,12 +889,13 @@ const EditProduct = () => {
 
       {/* =================================================
           TOP
-      ================================================= */}
+      ================================================== */}
 
       <div className="add-product-top">
 
         <button
           className="add-product-back-btn"
+          type="button"
           onClick={() =>
             navigate(
               "/admin/products"
@@ -366,10 +903,12 @@ const EditProduct = () => {
           }
         >
           <ArrowLeft size={18} />
+
           Back to Products
         </button>
 
         <div>
+
           <p className="add-product-eyebrow">
             MAMTA ADMIN
           </p>
@@ -381,13 +920,14 @@ const EditProduct = () => {
           <p>
             Update product information
           </p>
+
         </div>
 
       </div>
 
       {/* =================================================
           ERROR
-      ================================================= */}
+      ================================================== */}
 
       {error && (
         <div className="add-product-error">
@@ -397,20 +937,25 @@ const EditProduct = () => {
 
       {/* =================================================
           FORM
-      ================================================= */}
+      ================================================== */}
 
       <form
         className="add-product-form"
-        onSubmit={handleSubmit}
+        onSubmit={
+          handleSubmit
+        }
       >
 
-        {/* BASIC INFORMATION */}
+        {/* =================================================
+            BASIC INFORMATION
+        ================================================== */}
 
         <section className="add-product-card">
 
           <div className="add-product-card-heading">
 
             <div>
+
               <h2>
                 Basic Information
               </h2>
@@ -418,6 +963,7 @@ const EditProduct = () => {
               <p>
                 Update the main product details.
               </p>
+
             </div>
 
           </div>
@@ -433,8 +979,12 @@ const EditProduct = () => {
             <input
               type="text"
               name="name"
-              value={formData.name}
-              onChange={handleChange}
+              value={
+                formData.name
+              }
+              onChange={
+                handleChange
+              }
               placeholder="Enter product name"
               required
             />
@@ -451,8 +1001,12 @@ const EditProduct = () => {
 
             <textarea
               name="description"
-              value={formData.description}
-              onChange={handleChange}
+              value={
+                formData.description
+              }
+              onChange={
+                handleChange
+              }
               placeholder="Enter product description"
               rows="5"
             />
@@ -469,10 +1023,15 @@ const EditProduct = () => {
 
             <select
               name="category"
-              value={formData.category}
-              onChange={handleChange}
+              value={
+                formData.category
+              }
+              onChange={
+                handleChange
+              }
               required
             >
+
               <option value="">
                 Select category
               </option>
@@ -484,19 +1043,35 @@ const EditProduct = () => {
               <option value="Baby Pillows">
                 Baby Pillows
               </option>
+
+              <option value="Newborn & Kids">
+                Newborn & Kids
+              </option>
+
+              <option value="Elders Pillows">
+                Elders Pillows
+              </option>
+
+              <option value="Accessories">
+                Accessories
+              </option>
+
             </select>
 
           </div>
 
         </section>
 
-        {/* PRICE */}
+        {/* =================================================
+            PRICE
+        ================================================== */}
 
         <section className="add-product-card">
 
           <div className="add-product-card-heading">
 
             <div>
+
               <h2>
                 Pricing & Stock
               </h2>
@@ -504,6 +1079,7 @@ const EditProduct = () => {
               <p>
                 Update pricing and inventory.
               </p>
+
             </div>
 
           </div>
@@ -521,8 +1097,12 @@ const EditProduct = () => {
               <input
                 type="number"
                 name="price"
-                value={formData.price}
-                onChange={handleChange}
+                value={
+                  formData.price
+                }
+                onChange={
+                  handleChange
+                }
                 min="0"
                 required
               />
@@ -540,8 +1120,12 @@ const EditProduct = () => {
               <input
                 type="number"
                 name="oldPrice"
-                value={formData.oldPrice}
-                onChange={handleChange}
+                value={
+                  formData.oldPrice
+                }
+                onChange={
+                  handleChange
+                }
                 min="0"
                 placeholder="Optional"
               />
@@ -559,8 +1143,12 @@ const EditProduct = () => {
               <input
                 type="number"
                 name="stock"
-                value={formData.stock}
-                onChange={handleChange}
+                value={
+                  formData.stock
+                }
+                onChange={
+                  handleChange
+                }
                 min="0"
               />
 
@@ -570,20 +1158,24 @@ const EditProduct = () => {
 
         </section>
 
-        {/* IMAGE */}
+        {/* =================================================
+            PRODUCT IMAGE
+        ================================================== */}
 
         <section className="add-product-card">
 
           <div className="add-product-card-heading">
 
             <div>
+
               <h2>
                 Product Image
               </h2>
 
               <p>
-                Update the product image URL.
+                Update the main product image URL.
               </p>
+
             </div>
 
           </div>
@@ -597,8 +1189,12 @@ const EditProduct = () => {
             <input
               type="text"
               name="image"
-              value={formData.image}
-              onChange={handleChange}
+              value={
+                formData.image
+              }
+              onChange={
+                handleChange
+              }
               placeholder="https://example.com/image.jpg"
             />
 
@@ -608,8 +1204,16 @@ const EditProduct = () => {
             <div className="add-product-image-preview">
 
               <img
-                src={formData.image}
-                alt={formData.name}
+                src={
+                  formData.image
+                }
+                alt={
+                  formData.name
+                }
+                onError={(e) => {
+                  e.currentTarget.style.opacity =
+                    "0.35";
+                }}
               />
 
             </div>
@@ -617,13 +1221,298 @@ const EditProduct = () => {
 
         </section>
 
-        {/* FEATURES */}
+        {/* =================================================
+            AVAILABLE COLORS
+        ================================================== */}
 
         <section className="add-product-card">
 
           <div className="add-product-card-heading">
 
             <div>
+
+              <h2>
+                Available Colors
+              </h2>
+
+              <p>
+                Select the colors available for this product.
+              </p>
+
+            </div>
+
+          </div>
+
+          {/* =================================================
+              COLOR GRID
+          ================================================== */}
+
+          <div className="admin-color-grid">
+
+            {AVAILABLE_COLORS.map(
+              (color) => {
+
+                const selected =
+                  formData.colors.some(
+                    (item) =>
+                      item.value ===
+                      color.value
+                  );
+
+                return (
+                  <button
+                    key={
+                      color.value
+                    }
+                    type="button"
+                    className={`admin-color-option ${
+                      selected
+                        ? "selected"
+                        : ""
+                    }`}
+                    onClick={() =>
+                      toggleColor(
+                        color
+                      )
+                    }
+                  >
+
+                    <span className="admin-color-checkbox">
+
+                      {selected && (
+                        <Check
+                          size={14}
+                        />
+                      )}
+
+                    </span>
+
+                    <span
+                      className="admin-color-circle"
+                      style={{
+                        backgroundColor:
+                          color.hex,
+                      }}
+                    />
+
+                    <span className="admin-color-name">
+                      {color.name}
+                    </span>
+
+                  </button>
+                );
+              }
+            )}
+
+          </div>
+
+          {/* =================================================
+              SELECTED COLOR IMAGES
+          ================================================== */}
+
+          {formData.colors.length >
+            0 && (
+
+            <div className="admin-color-images-container">
+
+              <div className="admin-color-images-heading">
+
+                <h3>
+                  Color Images
+                </h3>
+
+                <p>
+                  Add one product image for each selected color.
+                </p>
+
+              </div>
+
+              {formData.colors.map(
+                (color) => (
+
+                  <div
+                    className="admin-color-image-row"
+                    key={
+                      color.value
+                    }
+                  >
+
+                    {/* COLOR */}
+
+                    <div className="admin-color-image-color">
+
+                      <span
+                        className="admin-color-circle"
+                        style={{
+                          backgroundColor:
+                            color.code,
+                        }}
+                      />
+
+                      <strong>
+                        {color.name}
+                      </strong>
+
+                    </div>
+
+                    {/* IMAGE INPUT */}
+
+                    <div className="admin-color-image-input">
+
+                      <div className="admin-color-image-input-top">
+
+                        <ImagePlus
+                          size={17}
+                        />
+
+                        <span>
+                          {color.name} Image
+                        </span>
+
+                      </div>
+
+                      <input
+                        type="text"
+                        value={
+                          color.image
+                        }
+                        onChange={(
+                          e
+                        ) =>
+                          updateColorImage(
+                            color.value,
+                            e.target
+                              .value
+                          )
+                        }
+                        placeholder={`Enter ${color.name} product image URL`}
+                      />
+
+                    </div>
+
+                    {/* IMAGE PREVIEW */}
+
+                    <div
+                      className="admin-color-single-preview"
+                      style={{
+                        display:
+                          color.image
+                            ? "block"
+                            : "none",
+                      }}
+                    >
+
+                      {color.image && (
+                        <img
+                          src={
+                            color.image
+                          }
+                          alt={`${color.name} product`}
+                          onError={(
+                            e
+                          ) => {
+                            e.currentTarget.style.opacity =
+                              "0.3";
+                          }}
+                        />
+                      )}
+
+                    </div>
+
+                    {/* REMOVE */}
+
+                    <button
+                      type="button"
+                      className="admin-remove-color-btn"
+                      onClick={() =>
+                        removeColor(
+                          color.value
+                        )
+                      }
+                      title={`Remove ${color.name}`}
+                    >
+                      <X
+                        size={17}
+                      />
+                    </button>
+
+                  </div>
+
+                )
+              )}
+
+            </div>
+
+          )}
+
+          {/* =================================================
+              SELECTED COLOR TAGS
+          ================================================== */}
+
+          {formData.colors.length >
+            0 && (
+
+            <div className="admin-selected-colors">
+
+              <span className="admin-selected-label">
+                Selected Colors
+              </span>
+
+              {formData.colors.map(
+                (color) => (
+
+                  <span
+                    className="admin-selected-color-tag"
+                    key={
+                      color.value
+                    }
+                  >
+
+                    <span
+                      className="admin-selected-color-dot"
+                      style={{
+                        backgroundColor:
+                          color.code,
+                      }}
+                    />
+
+                    {color.name}
+
+                    <button
+                      type="button"
+                      onClick={() =>
+                        removeColor(
+                          color.value
+                        )
+                      }
+                      title={`Remove ${color.name}`}
+                    >
+                      <X
+                        size={13}
+                      />
+                    </button>
+
+                  </span>
+
+                )
+              )}
+
+            </div>
+
+          )}
+
+        </section>
+
+        {/* =================================================
+            FEATURES
+        ================================================== */}
+
+        <section className="add-product-card">
+
+          <div className="add-product-card-heading">
+
+            <div>
+
               <h2>
                 Product Features
               </h2>
@@ -631,6 +1520,7 @@ const EditProduct = () => {
               <p>
                 Add important product features.
               </p>
+
             </div>
 
           </div>
@@ -639,7 +1529,9 @@ const EditProduct = () => {
 
             <input
               type="text"
-              value={featureInput}
+              value={
+                featureInput
+              }
               onChange={(e) =>
                 setFeatureInput(
                   e.target.value
@@ -647,56 +1539,79 @@ const EditProduct = () => {
               }
               placeholder="Enter a feature"
               onKeyDown={(e) => {
+
                 if (
-                  e.key === "Enter"
+                  e.key ===
+                  "Enter"
                 ) {
                   e.preventDefault();
+
                   addFeature();
                 }
+
               }}
             />
 
             <button
               type="button"
-              onClick={addFeature}
+              onClick={
+                addFeature
+              }
             >
               <Plus size={17} />
+
               Add
             </button>
 
           </div>
 
-          <div className="add-product-features">
+          {features.length >
+            0 && (
 
-            {features.map(
-              (feature, index) => (
-                <div
-                  className="add-product-feature"
-                  key={index}
-                >
+            <div className="add-product-features">
 
-                  <span>
-                    {feature}
-                  </span>
+              {features.map(
+                (
+                  feature,
+                  index
+                ) => (
 
-                  <button
-                    type="button"
-                    onClick={() =>
-                      removeFeature(index)
-                    }
+                  <div
+                    className="add-product-feature"
+                    key={`${feature}-${index}`}
                   >
-                    <X size={15} />
-                  </button>
 
-                </div>
-              )
-            )}
+                    <span>
+                      {feature}
+                    </span>
 
-          </div>
+                    <button
+                      type="button"
+                      onClick={() =>
+                        removeFeature(
+                          index
+                        )
+                      }
+                    >
+                      <X
+                        size={15}
+                      />
+                    </button>
+
+                  </div>
+
+                )
+              )}
+
+            </div>
+
+          )}
 
         </section>
 
-        {/* STATUS */}
+        {/* =================================================
+            STATUS
+        ================================================== */}
 
         <section className="add-product-card">
 
@@ -720,8 +1635,12 @@ const EditProduct = () => {
               <input
                 type="checkbox"
                 name="active"
-                checked={formData.active}
-                onChange={handleChange}
+                checked={
+                  formData.active
+                }
+                onChange={
+                  handleChange
+                }
               />
 
               <span></span>
@@ -732,7 +1651,9 @@ const EditProduct = () => {
 
         </section>
 
-        {/* ACTIONS */}
+        {/* =================================================
+            ACTIONS
+        ================================================== */}
 
         <div className="add-product-actions">
 
@@ -753,11 +1674,15 @@ const EditProduct = () => {
             className="add-product-submit"
             disabled={saving}
           >
-            <Save size={18} />
+
+            <Save
+              size={18}
+            />
 
             {saving
               ? "Saving..."
               : "Save Changes"}
+
           </button>
 
         </div>
@@ -769,4 +1694,3 @@ const EditProduct = () => {
 };
 
 export default EditProduct;
-

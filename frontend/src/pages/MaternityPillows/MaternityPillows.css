@@ -11,7 +11,6 @@
   overflow: hidden;
 }
 
-
 /* =========================================================
    HERO
 ========================================================= */
@@ -23,9 +22,18 @@
 
   overflow: hidden;
 
-background: radial-gradient(circle at 15% 25%, rgba(217, 143, 154, 0.14), transparent 30%), radial-gradient(circle at 85% 75%, rgba(239, 197, 181, 0.18), transparent 30%), #f6e0e2;
-
-
+  background:
+    radial-gradient(
+      circle at 15% 25%,
+      rgba(217, 143, 154, 0.14),
+      transparent 30%
+    ),
+    radial-gradient(
+      circle at 85% 75%,
+      rgba(239, 197, 181, 0.18),
+      transparent 30%
+    ),
+    #f6e0e2;
 }
 
 .maternity-hero-inner {
@@ -65,7 +73,7 @@ background: radial-gradient(circle at 15% 25%, rgba(217, 143, 154, 0.14), transp
 
   color: #b9925a;
 
-  font-size: 9px;
+  font-size: 15px;
   font-weight: 800;
 
   letter-spacing: 2.8px;
@@ -78,7 +86,6 @@ background: radial-gradient(circle at 15% 25%, rgba(217, 143, 154, 0.14), transp
   background: #b9925a;
 }
 
-
 /* =========================================================
    HERO TITLE
 ========================================================= */
@@ -88,12 +95,9 @@ background: radial-gradient(circle at 15% 25%, rgba(217, 143, 154, 0.14), transp
 
   color: #4a3032;
 
-  font-family:
-    "Playfair Display",
-    Georgia,
-    serif;
+  font-family: "Playfair Display", Georgia, serif;
 
- font-size: clamp(76px, 5vw, 70px);
+  font-size: clamp(76px, 5vw, 70px);
   line-height: 0.98;
 
   font-weight: 400;
@@ -101,13 +105,12 @@ background: radial-gradient(circle at 15% 25%, rgba(217, 143, 154, 0.14), transp
 }
 
 .maternity-hero-content h1 em {
-   display: block;
+  display: block;
 
   margin-top: 4px;
-font-style: normal;
+  font-style: normal;
   color: #d98f9a;
 }
-
 
 /* =========================================================
    HERO DESCRIPTION
@@ -120,10 +123,9 @@ font-style: normal;
 
   color: #806a6c;
 
-  font-size: 14px;
+  font-size: 20px;
   line-height: 1.9;
 }
-
 
 /* =========================================================
    HERO BUTTON
@@ -148,7 +150,6 @@ font-style: normal;
   gap: 9px;
 }
 
-
 /* =========================================================
    VIEW DETAILS
 ========================================================= */
@@ -167,7 +168,7 @@ font-style: normal;
 
   color: #4a3032;
 
-  font-size: 10px;
+  font-size: 15px;
   font-weight: 700;
   letter-spacing: 1.2px;
   text-transform: uppercase;
@@ -187,7 +188,6 @@ font-style: normal;
   transform: translateY(-2px);
 }
 
-
 /* =========================================================
    ADD TO CART
 ========================================================= */
@@ -206,7 +206,7 @@ font-style: normal;
 
   color: #ffffff;
 
-  font-size: 10px;
+  font-size: 15px;
   font-weight: 700;
   letter-spacing: 1.2px;
   text-transform: uppercase;
@@ -232,13 +232,11 @@ font-style: normal;
   transform: none;
 }
 
-
 /* =========================================================
    MOBILE
 ========================================================= */
 
 @media (max-width: 600px) {
-
   .maternity-product-overlay {
     gap: 7px;
   }
@@ -248,7 +246,6 @@ font-style: normal;
     min-height: 40px;
     font-size: 9px;
   }
-
 }
 .maternity-primary-btn {
   display: inline-flex;
@@ -271,8 +268,7 @@ font-style: normal;
   font-weight: 700;
   letter-spacing: 0.3px;
 
-  box-shadow:
-    0 12px 30px rgba(189, 111, 124, 0.18);
+  box-shadow: 0 12px 30px rgba(189, 111, 124, 0.18);
 
   transition:
     transform 0.3s ease,
@@ -286,8 +282,7 @@ font-style: normal;
 
   transform: translateY(-3px);
 
-  box-shadow:
-    0 17px 38px rgba(189, 111, 124, 0.25);
+  box-shadow: 0 17px 38px rgba(189, 111, 124, 0.25);
 }
 
 .maternity-hero-note {
@@ -299,7 +294,6 @@ font-style: normal;
   letter-spacing: 1.5px;
   text-transform: uppercase;
 }
-
 
 /* =========================================================
    HERO VISUAL
@@ -314,7 +308,6 @@ font-style: normal;
   align-items: center;
   justify-content: center;
 }
-
 
 /* =========================================================
    HERO CIRCLE
@@ -342,8 +335,7 @@ font-style: normal;
 
   border-radius: 50%;
 
-  border:
-    1px solid rgba(189, 111, 124, 0.25);
+  border: 1px solid rgba(189, 111, 124, 0.25);
 }
 
 .maternity-hero-circle::after {
@@ -355,10 +347,8 @@ font-style: normal;
 
   border-radius: 50%;
 
-  border:
-    1px solid rgba(185, 146, 90, 0.18);
+  border: 1px solid rgba(185, 146, 90, 0.18);
 }
-
 
 /* =========================================================
    MAIN IMAGE
@@ -373,18 +363,13 @@ font-style: normal;
 
   overflow: hidden;
 
-  border-radius:
-    190px
-    190px
-    12px
-    12px;
+  border-radius: 190px 190px 12px 12px;
 
   border: 7px solid rgba(255, 255, 255, 0.9);
 
   background: #f4d9dc;
 
-  box-shadow:
-    0 30px 70px rgba(74, 48, 50, 0.14);
+  box-shadow: 0 30px 70px rgba(74, 48, 50, 0.14);
 }
 
 .maternity-main-image img {
@@ -395,15 +380,12 @@ font-style: normal;
 
   object-fit: cover;
 
-  transition:
-    transform 0.7s ease;
+  transition: transform 0.7s ease;
 }
 
-.maternity-hero:hover
-.maternity-main-image img {
+.maternity-hero:hover .maternity-main-image img {
   transform: scale(1.04);
 }
-
 
 /* =========================================================
    FLOATING CARD
@@ -420,14 +402,11 @@ font-style: normal;
 
   padding: 20px;
 
-  background:
-    rgba(255, 255, 255, 0.94);
+  background: rgba(255, 255, 255, 0.94);
 
-  border:
-    1px solid rgba(189, 111, 124, 0.12);
+  border: 1px solid rgba(189, 111, 124, 0.12);
 
-  box-shadow:
-    0 18px 45px rgba(74, 48, 50, 0.11);
+  box-shadow: 0 18px 45px rgba(74, 48, 50, 0.11);
 
   backdrop-filter: blur(10px);
 }
@@ -450,10 +429,7 @@ font-style: normal;
 
   color: #4a3032;
 
-  font-family:
-    "Playfair Display",
-    Georgia,
-    serif;
+  font-family: "Playfair Display", Georgia, serif;
 
   font-size: 20px;
   font-weight: 500;
@@ -477,7 +453,6 @@ font-style: normal;
 .floating-check svg {
   color: #bd6f7c;
 }
-
 
 /* =========================================================
    ROUND BADGE
@@ -503,11 +478,9 @@ font-style: normal;
 
   color: #ffffff;
 
-  box-shadow:
-    0 15px 35px rgba(189, 111, 124, 0.22);
+  box-shadow: 0 15px 35px rgba(189, 111, 124, 0.22);
 
-  animation:
-    maternityRotate 18s linear infinite;
+  animation: maternityRotate 18s linear infinite;
 }
 
 .maternity-round-badge span {
@@ -515,7 +488,7 @@ font-style: normal;
 
   text-align: center;
 
-  font-size: 7px;
+  font-size: 15px;
   font-weight: 800;
 
   line-height: 1.6;
@@ -531,7 +504,6 @@ font-style: normal;
     transform: rotate(360deg);
   }
 }
-
 
 /* =========================================================
    HERO GLOWS
@@ -571,7 +543,6 @@ font-style: normal;
   opacity: 0.3;
 }
 
-
 /* =========================================================
    HERO BOTTOM
 ========================================================= */
@@ -606,10 +577,8 @@ font-style: normal;
 .maternity-hero-bottom div {
   height: 1px;
 
-  background:
-    rgba(74, 48, 50, 0.1);
+  background: rgba(74, 48, 50, 0.1);
 }
-
 
 /* =========================================================
    INTRO
@@ -630,7 +599,7 @@ font-style: normal;
 
   color: #b9925a;
 
-  font-size: 9px;
+  font-size: 15px;
   font-weight: 800;
 
   letter-spacing: 2.8px;
@@ -641,10 +610,7 @@ font-style: normal;
 
   color: #4a3032;
 
-  font-family:
-    "Playfair Display",
-    Georgia,
-    serif;
+  font-family: "Playfair Display", Georgia, serif;
 
   font-size: clamp(38px, 4vw, 54px);
 
@@ -656,7 +622,7 @@ font-style: normal;
 .maternity-intro h2 em {
   color: #bd6f7c;
 
-  font-style: italic;
+  font-style: normal;
   font-weight: 400;
 }
 
@@ -667,11 +633,10 @@ font-style: normal;
 
   color: #806a6c;
 
-  font-size: 13px;
+  font-size: 17px;
 
   line-height: 1.9;
 }
-
 
 /* =========================================================
    BENEFITS
@@ -684,14 +649,11 @@ font-style: normal;
 
   display: grid;
 
-  grid-template-columns:
-    repeat(3, 1fr);
+  grid-template-columns: repeat(3, 1fr);
 
-  border-top:
-    1px solid rgba(74, 48, 50, 0.09);
+  border-top: 1px solid rgba(74, 48, 50, 0.09);
 
-  border-bottom:
-    1px solid rgba(74, 48, 50, 0.09);
+  border-bottom: 1px solid rgba(74, 48, 50, 0.09);
 }
 
 .maternity-benefit {
@@ -703,8 +665,7 @@ font-style: normal;
 
   padding: 38px 30px;
 
-  border-right:
-    1px solid rgba(74, 48, 50, 0.09);
+  border-right: 1px solid rgba(74, 48, 50, 0.09);
 }
 
 .maternity-benefit:last-child {
@@ -714,10 +675,7 @@ font-style: normal;
 .benefit-number {
   color: #d98f9a;
 
-  font-family:
-    "Playfair Display",
-    Georgia,
-    serif;
+  font-family: "Playfair Display", Georgia, serif;
 
   font-size: 18px;
 }
@@ -727,12 +685,9 @@ font-style: normal;
 
   color: #4a3032;
 
-  font-family:
-    "Playfair Display",
-    Georgia,
-    serif;
+  font-family: "Playfair Display", Georgia, serif;
 
-  font-size: 19px;
+  font-size: 23px;
   font-weight: 500;
 }
 
@@ -741,11 +696,10 @@ font-style: normal;
 
   color: #806a6c;
 
-  font-size: 11px;
+  font-size: 17px;
 
   line-height: 1.75;
 }
-
 
 /* =========================================================
    PRODUCTS SECTION
@@ -781,7 +735,7 @@ font-style: normal;
 
   color: #b9925a;
 
-  font-size: 9px;
+  font-size: 15px;
   font-weight: 800;
 
   letter-spacing: 2.6px;
@@ -801,36 +755,32 @@ font-style: normal;
 
   color: #4a3032;
 
-  font-family:
-    "Playfair Display",
-    Georgia,
-    serif;
+  font-family: "Playfair Display", Georgia, serif;
 
-  font-size: 45px;
+  font-size: 50px;
   font-weight: 500;
 }
 
 .maternity-section-heading h2 em {
   color: #bd6f7c;
 
-  font-style: italic;
+  font-style: normal;
   font-weight: 400;
 }
 
 .maternity-section-heading > p {
-  max-width: 260px;
+  max-width: 300px;
 
   margin: 0 0 4px;
 
   color: #806a6c;
 
-  font-size: 12px;
+  font-size: 16px;
 
   line-height: 1.8;
 
   text-align: right;
 }
-
 
 /* =========================================================
    PRODUCT GRID
@@ -839,12 +789,10 @@ font-style: normal;
 .maternity-products-grid {
   display: grid;
 
-  grid-template-columns:
-    repeat(4, 1fr);
+  grid-template-columns: repeat(4, 1fr);
 
   gap: 22px;
 }
-
 
 /* =========================================================
    PRODUCT CARD
@@ -853,14 +801,12 @@ font-style: normal;
 .maternity-product-card {
   min-width: 0;
 
-  transition:
-    transform 0.35s ease;
+  transition: transform 0.35s ease;
 }
 
 .maternity-product-card:hover {
   transform: translateY(-5px);
 }
-
 
 /* =========================================================
    PRODUCT IMAGE
@@ -885,12 +831,7 @@ font-style: normal;
 
   inset: 0;
 
-  background:
-    linear-gradient(
-      to top,
-      rgba(74, 48, 50, 0.12),
-      transparent 35%
-    );
+  background: linear-gradient(to top, rgba(74, 48, 50, 0.12), transparent 35%);
 
   pointer-events: none;
 }
@@ -903,15 +844,12 @@ font-style: normal;
 
   object-fit: cover;
 
-  transition:
-    transform 0.6s ease;
+  transition: transform 0.6s ease;
 }
 
-.maternity-product-card:hover
-.maternity-product-image img {
+.maternity-product-card:hover .maternity-product-image img {
   transform: scale(1.05);
 }
-
 
 /* =========================================================
    PRODUCT TAG
@@ -926,19 +864,17 @@ font-style: normal;
 
   padding: 7px 10px;
 
-  background:
-    rgba(255, 255, 255, 0.92);
+  background: rgba(255, 255, 255, 0.92);
 
   color: #4a3032;
 
   border-radius: 2px;
 
-  font-size: 7px;
+  font-size: 15px;
   font-weight: 800;
 
   letter-spacing: 1.4px;
 }
-
 
 /* =========================================================
    WISHLIST
@@ -961,8 +897,7 @@ font-style: normal;
   border: none;
   border-radius: 50%;
 
-  background:
-    rgba(255, 255, 255, 0.93);
+  background: rgba(255, 255, 255, 0.93);
 
   color: #806a6c;
 
@@ -986,7 +921,6 @@ font-style: normal;
   color: #ffffff;
 }
 
-
 /* =========================================================
    PRODUCT OVERLAY
 ========================================================= */
@@ -1003,12 +937,10 @@ font-style: normal;
 
   transform: translateY(100%);
 
-  transition:
-    transform 0.35s ease;
+  transition: transform 0.35s ease;
 }
 
-.maternity-product-card:hover
-.maternity-product-overlay {
+.maternity-product-card:hover .maternity-product-overlay {
   transform: translateY(0);
 }
 
@@ -1032,13 +964,12 @@ font-style: normal;
 
   font-family: inherit;
 
-  font-size: 10px;
+  font-size: 15px;
   font-weight: 700;
 
   cursor: pointer;
 
-  box-shadow:
-    0 8px 25px rgba(74, 48, 50, 0.13);
+  box-shadow: 0 8px 25px rgba(74, 48, 50, 0.13);
 
   transition:
     background 0.25s ease,
@@ -1050,7 +981,6 @@ font-style: normal;
 
   color: #ffffff;
 }
-
 
 /* =========================================================
    PRODUCT INFO
@@ -1070,7 +1000,7 @@ font-style: normal;
 
   color: #b9925a;
 
-  font-size: 9px;
+  font-size: 15px;
   font-weight: 700;
 }
 
@@ -1079,12 +1009,9 @@ font-style: normal;
 
   color: #4a3032;
 
-  font-family:
-    "Playfair Display",
-    Georgia,
-    serif;
+  font-family: "Playfair Display", Georgia, serif;
 
-  font-size: 17px;
+  font-size: 20px;
   font-weight: 500;
 
   line-height: 1.35;
@@ -1102,18 +1029,17 @@ font-style: normal;
 .maternity-price strong {
   color: #4a3032;
 
-  font-size: 12px;
+  font-size: 20px;
   font-weight: 700;
 }
 
 .maternity-price span {
   color: #ad9899;
 
-  font-size: 10px;
+  font-size: 20px;
 
   text-decoration: line-through;
 }
-
 
 /* =========================================================
    CLOSING BANNER
@@ -1124,13 +1050,7 @@ font-style: normal;
 
   overflow: hidden;
 
-  background:
-    linear-gradient(
-      135deg,
-      #f4d9dc 0%,
-      #f8e6e2 50%,
-      #efc5b5 100%
-    );
+  background: linear-gradient(135deg, #f4d9dc 0%, #f8e6e2 50%, #efc5b5 100%);
 }
 
 .maternity-closing::before {
@@ -1146,9 +1066,7 @@ font-style: normal;
 
   border-radius: 50%;
 
-  border:
-    1px solid
-    rgba(189, 111, 124, 0.22);
+  border: 1px solid rgba(189, 111, 124, 0.22);
 }
 
 .maternity-closing::after {
@@ -1164,9 +1082,7 @@ font-style: normal;
 
   border-radius: 50%;
 
-  border:
-    1px solid
-    rgba(185, 146, 90, 0.2);
+  border: 1px solid rgba(185, 146, 90, 0.2);
 }
 
 .maternity-closing-inner {
@@ -1185,7 +1101,7 @@ font-style: normal;
 
   color: #b9925a;
 
-  font-size: 9px;
+  font-size: 15px;
   font-weight: 800;
 
   letter-spacing: 2.8px;
@@ -1196,10 +1112,7 @@ font-style: normal;
 
   color: #4a3032;
 
-  font-family:
-    "Playfair Display",
-    Georgia,
-    serif;
+  font-family: "Playfair Display", Georgia, serif;
 
   font-size: clamp(42px, 5vw, 65px);
 
@@ -1213,7 +1126,7 @@ font-style: normal;
 .maternity-closing-inner h2 em {
   color: #bd6f7c;
 
-  font-style: italic;
+  font-style: normal;
 
   font-weight: 400;
 }
@@ -1237,7 +1150,7 @@ font-style: normal;
 
   text-decoration: none;
 
-  font-size: 10px;
+  font-size: 15px;
   font-weight: 700;
 
   transition:
@@ -1254,13 +1167,11 @@ font-style: normal;
   transform: translateY(-2px);
 }
 
-
 /* =========================================================
    TABLET
 ========================================================= */
 
 @media (max-width: 1050px) {
-
   .maternity-hero-inner {
     grid-template-columns: 1fr 0.85fr;
 
@@ -1282,8 +1193,7 @@ font-style: normal;
   }
 
   .maternity-products-grid {
-    grid-template-columns:
-      repeat(2, 1fr);
+    grid-template-columns: repeat(2, 1fr);
 
     gap: 30px 22px;
   }
@@ -1293,13 +1203,11 @@ font-style: normal;
   }
 }
 
-
 /* =========================================================
    TABLET / SMALL
 ========================================================= */
 
 @media (max-width: 780px) {
-
   .maternity-hero {
     min-height: auto;
 
@@ -1352,8 +1260,7 @@ font-style: normal;
   .maternity-benefit {
     border-right: none;
 
-    border-bottom:
-      1px solid rgba(74, 48, 50, 0.09);
+    border-bottom: 1px solid rgba(74, 48, 50, 0.09);
   }
 
   .maternity-benefit:last-child {
@@ -1377,13 +1284,11 @@ font-style: normal;
   }
 }
 
-
 /* =========================================================
    MOBILE
 ========================================================= */
 
 @media (max-width: 560px) {
-
   .maternity-hero-inner {
     width: 90%;
 
@@ -1420,11 +1325,7 @@ font-style: normal;
     width: 270px;
     height: 350px;
 
-    border-radius:
-      145px
-      145px
-      10px
-      10px;
+    border-radius: 145px 145px 10px 10px;
   }
 
   .maternity-hero-circle {
@@ -1520,13 +1421,11 @@ font-style: normal;
   }
 }
 
-
 /* =========================================================
    VERY SMALL MOBILE
 ========================================================= */
 
 @media (max-width: 380px) {
-
   .maternity-hero-content h1 {
     font-size: 45px;
   }
@@ -1576,7 +1475,6 @@ font-style: normal;
     transform 0.9s cubic-bezier(0.16, 1, 0.3, 1);
 }
 
-
 /* BOTTOM → TOP */
 
 .reveal-up {
@@ -1587,7 +1485,6 @@ font-style: normal;
   opacity: 1;
   transform: translate3d(0, 0, 0);
 }
-
 
 /* TOP → BOTTOM */
 
@@ -1600,7 +1497,6 @@ font-style: normal;
   transform: translate3d(0, 0, 0);
 }
 
-
 /* LEFT → RIGHT */
 
 .reveal-left {
@@ -1612,7 +1508,6 @@ font-style: normal;
   transform: translate3d(0, 0, 0);
 }
 
-
 /* RIGHT → LEFT */
 
 .reveal-right {
@@ -1623,7 +1518,6 @@ font-style: normal;
   opacity: 1;
   transform: translate3d(0, 0, 0);
 }
-
 
 /* =========================================================
    STAGGER
@@ -1650,9 +1544,8 @@ font-style: normal;
 }
 
 .scroll-reveal.stagger-6 {
-  transition-delay: 0.40s;
+  transition-delay: 0.4s;
 }
-
 
 /* =========================================================
    REDUCED MOTION
@@ -1663,5 +1556,99 @@ font-style: normal;
     opacity: 1 !important;
     transform: none !important;
     transition: none !important;
+  }
+}
+/* ========================================================= MAMTA — FLYING M TO CART Same animation as Shop.jsx ========================================================= */
+.mamta-flying-cart-item {
+  position: fixed;
+  width: 58px;
+  height: 58px;
+  left: 0;
+  top: 0;
+  z-index: 2147483647;
+  pointer-events: none;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 16px;
+  background: linear-gradient(145deg, #f7b8c4, #ed91a4);
+  border: 1px solid rgba(255, 255, 255, 0.8);
+  box-shadow:
+    0 18px 40px rgba(193, 91, 113, 0.28),
+    0 6px 16px rgba(193, 91, 113, 0.18),
+    inset 0 1px 0 rgba(255, 255, 255, 0.85);
+  overflow: hidden;
+  will-change: transform, opacity;
+  transform-origin: center center;
+} /* ========================================================= M LETTER ========================================================= */
+.mamta-flying-cart-item span {
+  position: relative;
+  z-index: 3;
+  display: flex;
+  width: 100%;
+  height: 100%;
+  align-items: center;
+  justify-content: center;
+  color: #ffffff;
+  font-family: Georgia, "Times New Roman", serif;
+  font-size: 27px;
+  font-weight: 700;
+  line-height: 1;
+  letter-spacing: -1px;
+  text-shadow: 0 2px 8px rgba(100, 40, 55, 0.18);
+} /* ========================================================= SOFT SHINE ========================================================= */
+.mamta-flying-cart-item::before {
+  content: "";
+  position: absolute;
+  width: 28px;
+  height: 28px;
+  top: -10px;
+  left: -10px;
+  border-radius: 50%;
+  background: rgba(255, 255, 255, 0.55);
+  filter: blur(7px);
+  pointer-events: none;
+} /* ========================================================= INNER GLOW ========================================================= */
+.mamta-flying-cart-item::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  border-radius: inherit;
+  background: radial-gradient(
+    circle at 30% 25%,
+    rgba(255, 255, 255, 0.42),
+    transparent 42%
+  );
+  pointer-events: none;
+} /* ========================================================= CART POP ========================================================= */
+.cart-flying-pop {
+  animation: mamta-cart-pop 450ms cubic-bezier(0.16, 1, 0.3, 1);
+}
+@keyframes mamta-cart-pop {
+  0% {
+    transform: scale(1);
+  }
+  25% {
+    transform: scale(1.24) rotate(-5deg);
+  }
+  45% {
+    transform: scale(0.91) rotate(3deg);
+  }
+  65% {
+    transform: scale(1.1) rotate(-2deg);
+  }
+  82% {
+    transform: scale(0.98);
+  }
+  100% {
+    transform: scale(1);
+  }
+} /* ========================================================= REDUCED MOTION ========================================================= */
+@media (prefers-reduced-motion: reduce) {
+  .mamta-flying-cart-item {
+    animation: none !important;
+  }
+  .cart-flying-pop {
+    animation: none !important;
   }
 }

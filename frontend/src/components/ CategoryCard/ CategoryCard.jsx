@@ -27,11 +27,11 @@ const categories = [
     link: "/nursing-pillows",
   },
   {
-    title: "Wedge Pillows",
+    title: "Elders Pillows",
     text: "Sweet, soft companions for elders.",
     image:
       "https://res.cloudinary.com/iysbraru/image/upload/v1790352591/iamge4.jpg",
-    link: "/shop",
+    link: "/elder-pillows",
   },
 ];
 

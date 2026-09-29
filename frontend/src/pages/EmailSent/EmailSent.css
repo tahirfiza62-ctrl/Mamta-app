@@ -1,0 +1,195 @@
+.email-sent-page {
+  min-height: 100vh;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  padding: 30px;
+
+  background: #fff9f4;
+
+  font-family:
+    "Poppins",
+    "DM Sans",
+    sans-serif;
+}
+
+.email-sent-card {
+  width: 100%;
+  max-width: 520px;
+
+  padding: 55px 45px;
+
+  text-align: center;
+
+  background: #ffffff;
+
+  border: 1px solid rgba(74, 48, 50, 0.08);
+
+  border-radius: 24px;
+
+  box-shadow:
+    0 25px 70px rgba(74, 48, 50, 0.1);
+}
+
+.email-sent-icon {
+  width: 68px;
+  height: 68px;
+
+  margin: 0 auto 25px;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  border-radius: 50%;
+
+  background: #fff3ec;
+
+  color: #d39a76;
+}
+
+.email-sent-label {
+  display: block;
+
+  margin-bottom: 12px;
+
+  color: #9b7b7d;
+
+  font-size: 11px;
+
+  font-weight: 700;
+
+  letter-spacing: 2.5px;
+}
+
+.email-sent-card h1 {
+  margin: 0 0 18px;
+
+  color: #4a3032;
+
+  font-family: Georgia, serif;
+
+  font-size: 38px;
+
+  font-weight: 500;
+}
+
+.email-sent-card h1 em {
+  color: #d39a76;
+
+  font-style: italic;
+}
+
+.email-sent-card p {
+  margin: 0;
+
+  color: #806a6e;
+
+  font-size: 14px;
+
+  line-height: 1.8;
+}
+
+.email-sent-address {
+  display: block;
+
+  margin: 8px 0 18px;
+
+  color: #4a3032;
+
+  font-size: 15px;
+}
+
+.email-sent-description {
+  max-width: 390px;
+
+  margin: 0 auto !important;
+}
+
+.email-sent-note {
+  margin: 28px 0;
+
+  padding: 13px 18px;
+
+  border-radius: 10px;
+
+  background: #fff9f4;
+
+  color: #806a6e;
+
+  font-size: 12px;
+}
+
+.email-sent-note strong {
+  color: #4a3032;
+}
+
+.email-sent-button {
+  display: inline-flex;
+
+  align-items: center;
+  justify-content: center;
+
+  min-height: 48px;
+
+  padding: 0 28px;
+
+  border-radius: 10px;
+
+  background: #4a3032;
+
+  color: #ffffff;
+
+  text-decoration: none;
+
+  font-size: 11px;
+
+  font-weight: 700;
+
+  letter-spacing: 1.5px;
+
+  transition: 0.25s ease;
+}
+
+.email-sent-button:hover {
+  background: #392326;
+
+  transform: translateY(-2px);
+}
+
+.email-sent-back {
+  display: flex;
+
+  align-items: center;
+  justify-content: center;
+
+  gap: 6px;
+
+  margin-top: 22px;
+
+  color: #806a6e;
+
+  font-size: 12px;
+
+  text-decoration: none;
+}
+
+.email-sent-back:hover {
+  color: #4a3032;
+}
+
+@media (max-width: 600px) {
+  .email-sent-page {
+    padding: 20px;
+  }
+
+  .email-sent-card {
+    padding: 40px 25px;
+  }
+
+  .email-sent-card h1 {
+    font-size: 30px;
+  }
+}

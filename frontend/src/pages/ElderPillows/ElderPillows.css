@@ -1,0 +1,793 @@
+/* =========================================================
+   MAMTA — ELDER PILLOWS
+========================================================= */
+
+.elder-page {
+  width: 100%;
+  min-height: 100vh;
+
+  background: #fcfaf8;
+  color: #44383a;
+}
+
+/* =========================================================
+   HERO
+========================================================= */
+
+.elder-hero {
+  position: relative;
+
+  min-height: 480px;
+
+  display: flex;
+  align-items: center;
+
+  padding: 70px 8%;
+
+  overflow: hidden;
+
+  background:
+    linear-gradient(
+      120deg,
+      #f3eee9 0%,
+      #fcfaf8 55%,
+      #ebe3dc 100%
+    );
+}
+
+.elder-hero-content {
+  position: relative;
+  z-index: 2;
+
+  max-width: 650px;
+}
+
+.elder-eyebrow,
+.elder-section-label {
+  display: inline-block;
+
+  font-size: 11px;
+  font-weight: 800;
+  letter-spacing: 2.2px;
+
+  color: #8f766b;
+}
+
+.elder-hero h1 {
+  margin: 14px 0 18px;
+
+  font-size: clamp(48px, 6vw, 82px);
+  line-height: 0.98;
+
+  letter-spacing: -3px;
+
+  font-weight: 700;
+
+  color: #44383a;
+}
+
+.elder-hero h1 span {
+  display: block;
+
+  color: #80665b;
+}
+
+.elder-hero p {
+  max-width: 520px;
+
+  margin: 0;
+
+  font-size: 16px;
+  line-height: 1.8;
+
+  color: #756865;
+}
+
+.elder-hero-actions {
+  margin-top: 30px;
+}
+
+.elder-primary-button {
+  display: inline-flex;
+  align-items: center;
+  gap: 9px;
+
+  padding: 13px 20px;
+
+  border-radius: 10px;
+
+  background: #80665b;
+  color: #ffffff;
+
+  text-decoration: none;
+
+  font-size: 13px;
+  font-weight: 700;
+
+  transition:
+    transform 0.25s ease,
+    background 0.25s ease,
+    box-shadow 0.25s ease;
+}
+
+.elder-primary-button:hover {
+  background: #6c554b;
+
+  transform: translateY(-2px);
+
+  box-shadow:
+    0 10px 25px rgba(128, 102, 91, 0.22);
+}
+
+/* =========================================================
+   HERO DECORATION
+========================================================= */
+
+.elder-hero-decoration {
+  position: absolute;
+
+  right: 3%;
+  top: 0;
+
+  width: 48%;
+  height: 100%;
+
+  pointer-events: none;
+}
+
+.elder-circle {
+  position: absolute;
+
+  border-radius: 50%;
+}
+
+.elder-circle-one {
+  width: 370px;
+  height: 370px;
+
+  right: 80px;
+  top: 55px;
+
+  background: #ded2c8;
+  opacity: 0.6;
+}
+
+.elder-circle-two {
+  width: 220px;
+  height: 220px;
+
+  right: 310px;
+  bottom: 35px;
+
+  background: #d2c2b7;
+  opacity: 0.5;
+}
+
+.elder-soft-shape {
+  position: absolute;
+
+  width: 340px;
+  height: 195px;
+
+  right: 110px;
+  bottom: 35px;
+
+  border-radius: 50%;
+
+  background: #ffffff;
+
+  opacity: 0.55;
+
+  transform: rotate(-17deg);
+}
+
+/* =========================================================
+   INTRO
+========================================================= */
+
+.elder-intro {
+  display: grid;
+
+  grid-template-columns: 1fr 1fr;
+
+  gap: 70px;
+
+  padding: 80px 8%;
+
+  background: #ffffff;
+}
+
+.elder-intro h2 {
+  margin: 12px 0 0;
+
+  font-size: clamp(28px, 3vw, 43px);
+  line-height: 1.15;
+
+  letter-spacing: -1px;
+
+  color: #44383a;
+}
+
+.elder-intro > p {
+  align-self: end;
+
+  max-width: 520px;
+
+  margin: 0;
+
+  font-size: 15px;
+  line-height: 1.9;
+
+  color: #786d69;
+}
+
+/* =========================================================
+   PRODUCTS
+========================================================= */
+
+.elder-products-section {
+  padding: 80px 8%;
+}
+
+.elder-products-header {
+  display: flex;
+  align-items: flex-end;
+  justify-content: space-between;
+
+  gap: 20px;
+
+  margin-bottom: 35px;
+}
+
+.elder-products-header h2 {
+  margin: 10px 0 0;
+
+  font-size: clamp(27px, 3vw, 40px);
+  letter-spacing: -1px;
+
+  color: #44383a;
+}
+
+.elder-product-count {
+  padding: 7px 13px;
+
+  border: 1px solid #ded2cb;
+  border-radius: 999px;
+
+  background: #f6f0eb;
+
+  color: #806c62;
+
+  font-size: 12px;
+  font-weight: 700;
+}
+
+/* =========================================================
+   PRODUCT GRID
+========================================================= */
+
+.elder-product-grid {
+  display: grid;
+
+  grid-template-columns:
+    repeat(4, minmax(0, 1fr));
+
+  gap: 20px;
+}
+
+/* =========================================================
+   PRODUCT CARD
+========================================================= */
+
+.elder-product-card {
+  overflow: hidden;
+
+  border: 1px solid #e9e1dc;
+  border-radius: 16px;
+
+  background: #ffffff;
+
+  box-shadow:
+    0 8px 25px rgba(68, 56, 58, 0.045);
+
+  transition:
+    transform 0.3s ease,
+    box-shadow 0.3s ease;
+}
+
+.elder-product-card:hover {
+  transform: translateY(-5px);
+
+  box-shadow:
+    0 16px 35px rgba(68, 56, 58, 0.09);
+}
+
+/* =========================================================
+   PRODUCT IMAGE
+========================================================= */
+
+.elder-product-image {
+  position: relative;
+
+  height: 285px;
+
+  overflow: hidden;
+
+  background: #f3eee9;
+}
+
+.elder-product-image a {
+  display: block;
+
+  width: 100%;
+  height: 100%;
+}
+
+.elder-product-image img {
+  width: 100%;
+  height: 100%;
+
+  display: block;
+
+  object-fit: cover;
+
+  transition: transform 0.5s ease;
+}
+
+.elder-product-card:hover
+.elder-product-image img {
+  transform: scale(1.045);
+}
+
+.elder-no-image {
+  width: 100%;
+  height: 100%;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  color: #a49187;
+}
+
+/* =========================================================
+   WISHLIST
+========================================================= */
+
+.elder-wishlist {
+  position: absolute;
+
+  top: 13px;
+  right: 13px;
+
+  width: 38px;
+  height: 38px;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  border: 1px solid rgba(255, 255, 255, 0.75);
+  border-radius: 50%;
+
+  background: rgba(255, 255, 255, 0.9);
+
+  color: #6d5a55;
+
+  backdrop-filter: blur(8px);
+
+  cursor: pointer;
+
+  transition:
+    transform 0.2s ease,
+    color 0.2s ease,
+    background 0.2s ease;
+}
+
+.elder-wishlist:hover {
+  transform: scale(1.08);
+}
+
+.elder-wishlist.active {
+  color: #80665b;
+  background: #f4ebe5;
+}
+
+/* =========================================================
+   PRODUCT CONTENT
+========================================================= */
+
+.elder-product-content {
+  padding: 18px;
+}
+
+.elder-product-category {
+  display: block;
+
+  margin-bottom: 7px;
+
+  font-size: 10px;
+  font-weight: 800;
+
+  letter-spacing: 1.3px;
+  text-transform: uppercase;
+
+  color: #927a6e;
+}
+
+.elder-product-name {
+  display: block;
+
+  min-height: 42px;
+
+  color: #44383a;
+
+  text-decoration: none;
+
+  font-size: 15px;
+  line-height: 1.4;
+
+  font-weight: 700;
+
+  transition: color 0.2s ease;
+}
+
+.elder-product-name:hover {
+  color: #80665b;
+}
+
+/* =========================================================
+   RATING
+========================================================= */
+
+.elder-product-rating {
+  display: flex;
+  align-items: center;
+
+  gap: 7px;
+
+  margin-top: 12px;
+
+  color: #9a8b85;
+
+  font-size: 10px;
+}
+
+.elder-stars {
+  display: flex;
+  gap: 1px;
+
+  color: #c19b57;
+}
+
+/* =========================================================
+   PRODUCT BOTTOM
+========================================================= */
+
+.elder-product-bottom {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+
+  gap: 10px;
+
+  margin-top: 17px;
+  padding-top: 14px;
+
+  border-top: 1px solid #eee8e4;
+}
+
+.elder-price {
+  display: flex;
+  flex-direction: column;
+  gap: 3px;
+}
+
+.elder-price strong {
+  font-size: 15px;
+
+  color: #44383a;
+}
+
+.elder-price del {
+  font-size: 11px;
+
+  color: #aa9e99;
+}
+
+.elder-view-button {
+  width: 37px;
+  height: 37px;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  border-radius: 50%;
+
+  background: #eee5df;
+  color: #766057;
+
+  text-decoration: none;
+
+  transition:
+    background 0.2s ease,
+    color 0.2s ease,
+    transform 0.2s ease;
+}
+
+.elder-view-button:hover {
+  background: #80665b;
+  color: #ffffff;
+
+  transform: rotate(4deg);
+}
+
+/* =========================================================
+   LOADING
+========================================================= */
+
+.elder-loading {
+  min-height: 300px;
+
+  display: flex;
+  flex-direction: column;
+
+  align-items: center;
+  justify-content: center;
+
+  gap: 13px;
+
+  color: #8b7c76;
+}
+
+.elder-loading p {
+  margin: 0;
+
+  font-size: 13px;
+}
+
+.elder-spinner {
+  animation: elderSpin 1s linear infinite;
+}
+
+@keyframes elderSpin {
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+/* =========================================================
+   EMPTY
+========================================================= */
+
+.elder-empty {
+  min-height: 320px;
+
+  display: flex;
+  flex-direction: column;
+
+  align-items: center;
+  justify-content: center;
+
+  padding: 40px;
+
+  text-align: center;
+
+  border: 1px dashed #d9ccc5;
+  border-radius: 16px;
+
+  background: #fffdfb;
+}
+
+.elder-empty-icon {
+  width: 58px;
+  height: 58px;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  border-radius: 50%;
+
+  background: #eee4de;
+  color: #80685d;
+}
+
+.elder-empty h3 {
+  margin: 18px 0 7px;
+
+  color: #44383a;
+
+  font-size: 19px;
+}
+
+.elder-empty p {
+  max-width: 400px;
+
+  margin: 0;
+
+  color: #8b7c76;
+
+  font-size: 13px;
+  line-height: 1.7;
+}
+
+.elder-empty-button {
+  margin-top: 20px;
+
+  padding: 10px 17px;
+
+  border-radius: 9px;
+
+  background: #80665b;
+  color: #ffffff;
+
+  text-decoration: none;
+
+  font-size: 12px;
+  font-weight: 700;
+}
+
+/* =========================================================
+   BOTTOM BANNER
+========================================================= */
+
+.elder-bottom-banner {
+  display: grid;
+
+  grid-template-columns: 1fr 0.7fr;
+
+  align-items: center;
+
+  gap: 60px;
+
+  margin: 20px 8% 80px;
+
+  padding: 55px;
+
+  border-radius: 20px;
+
+  background: #eee5de;
+}
+
+.elder-bottom-banner h2 {
+  margin: 12px 0 0;
+
+  font-size: clamp(28px, 3vw, 43px);
+
+  line-height: 1.1;
+
+  letter-spacing: -1px;
+
+  color: #44383a;
+}
+
+.elder-bottom-banner p {
+  margin: 0;
+
+  font-size: 14px;
+
+  line-height: 1.8;
+
+  color: #756861;
+}
+
+/* =========================================================
+   TABLET
+========================================================= */
+
+@media (max-width: 1100px) {
+  .elder-product-grid {
+    grid-template-columns:
+      repeat(3, minmax(0, 1fr));
+  }
+
+  .elder-hero-decoration {
+    opacity: 0.55;
+  }
+}
+
+/* =========================================================
+   MOBILE
+========================================================= */
+
+@media (max-width: 760px) {
+  .elder-hero {
+    min-height: 440px;
+
+    padding: 55px 6%;
+  }
+
+  .elder-hero h1 {
+    font-size: 52px;
+
+    letter-spacing: -2px;
+  }
+
+  .elder-hero p {
+    font-size: 14px;
+  }
+
+  .elder-hero-decoration {
+    width: 100%;
+    opacity: 0.35;
+  }
+
+  .elder-intro {
+    grid-template-columns: 1fr;
+
+    gap: 25px;
+
+    padding: 55px 6%;
+  }
+
+  .elder-products-section {
+    padding: 55px 6%;
+  }
+
+  .elder-products-header {
+    align-items: flex-start;
+
+    flex-direction: column;
+  }
+
+  .elder-product-grid {
+    grid-template-columns:
+      repeat(2, minmax(0, 1fr));
+
+    gap: 13px;
+  }
+
+  .elder-product-image {
+    height: 230px;
+  }
+
+  .elder-product-content {
+    padding: 14px;
+  }
+
+  .elder-product-name {
+    font-size: 13px;
+  }
+
+  .elder-product-rating {
+    flex-direction: column;
+
+    align-items: flex-start;
+
+    gap: 3px;
+  }
+
+  .elder-bottom-banner {
+    grid-template-columns: 1fr;
+
+    gap: 25px;
+
+    margin: 10px 6% 50px;
+
+    padding: 35px 25px;
+  }
+}
+
+/* =========================================================
+   SMALL MOBILE
+========================================================= */
+
+@media (max-width: 480px) {
+  .elder-product-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .elder-product-image {
+    height: 300px;
+  }
+
+  .elder-hero h1 {
+    font-size: 45px;
+  }
+
+  .elder-bottom-banner h2 {
+    font-size: 29px;
+  }
+}

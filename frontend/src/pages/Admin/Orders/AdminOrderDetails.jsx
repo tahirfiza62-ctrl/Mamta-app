@@ -1,6 +1,6 @@
-
 import { useEffect, useState } from "react";
 import axios from "axios";
+
 import {
   ArrowLeft,
   Package,
@@ -10,229 +10,515 @@ import {
   CalendarDays,
   Save,
 } from "lucide-react";
-import { useNavigate, useParams } from "react-router-dom";
+
+import {
+  useNavigate,
+  useParams,
+} from "react-router-dom";
 
 import "./AdminOrderDetails.css";
 
 const API_URL =
   "http://localhost:3000/api/admin/orders";
 
+const FALLBACK_IMAGE =
+  "https://placehold.co/100x100/F4D9DC/4A3032?text=MAMTA";
+
+
 const AdminOrderDetails = () => {
   const navigate = useNavigate();
   const { id } = useParams();
 
-  /* =========================================================
-     STATE
-  ========================================================= */
-
   const [order, setOrder] = useState(null);
-  const [status, setStatus] = useState("Pending");
-
   const [loading, setLoading] = useState(true);
   const [saving, setSaving] = useState(false);
-  const [error, setError] = useState("");
+
+  const [status, setStatus] =
+    useState("Pending");
+
 
   /* =========================================================
-     ORDER STATUSES
-  ========================================================= */
-
-  const statuses = [
-    "Pending",
-    "Confirmed",
-    "Processing",
-    "Shipped",
-    "Delivered",
-    "Cancelled",
-  ];
-
-  /* =========================================================
-     TOKEN
-  ========================================================= */
-
-  const getToken = () => {
-    return localStorage.getItem(
-      "mamta_admin_token"
-    );
-  };
-
-  /* =========================================================
-     INITIAL LOAD
+     FETCH ORDER
   ========================================================= */
 
   useEffect(() => {
-    let cancelled = false;
-
-    const loadOrder = async () => {
+    const fetchOrder = async () => {
       try {
-        const token = getToken();
+        setLoading(true);
+
+        const token =
+          localStorage.getItem(
+            "mamta_admin_token"
+          );
 
         if (!token) {
-          navigate("/admin");
+          navigate("/admin/login");
           return;
         }
 
-        const response = await axios.get(
-          `${API_URL}/${id}`,
-          {
-            headers: {
-              Authorization:
-                `Bearer ${token}`,
-            },
-          }
+        const response =
+          await axios.get(
+            `${API_URL}/${id}`,
+            {
+              headers: {
+                Authorization:
+                  `Bearer ${token}`,
+              },
+            }
+          );
+
+        console.log(
+          "ADMIN ORDER DETAILS:",
+          response.data
         );
 
-        if (cancelled) {
-          return;
-        }
+        const orderData =
+          response.data?.order ||
+          response.data;
 
-        const fetchedOrder =
-          response.data?.order;
-
-        if (!fetchedOrder) {
-          setError("Order not found.");
-          setOrder(null);
-          return;
-        }
-
-        setOrder(fetchedOrder);
+        setOrder(orderData);
 
         setStatus(
-          fetchedOrder.orderStatus ||
-            "Pending"
+          orderData?.orderStatus ||
+          orderData?.status ||
+          "Pending"
         );
 
-        setError("");
-      } catch (err) {
-        if (cancelled) {
-          return;
-        }
-
+      } catch (error) {
         console.error(
-          "GET ADMIN ORDER ERROR:",
-          err
+          "ADMIN ORDER DETAILS ERROR:",
+          error
         );
 
         if (
-          err.response?.status === 401 ||
-          err.response?.status === 403
+          error.response?.status === 401
         ) {
           localStorage.removeItem(
             "mamta_admin_token"
           );
 
-          navigate("/admin");
+          navigate("/admin/login");
           return;
         }
 
-        setError(
-          err.response?.data?.message ||
-            "Failed to load order."
-        );
+        setOrder(null);
+
       } finally {
-        if (!cancelled) {
-          setLoading(false);
-        }
+        setLoading(false);
       }
     };
 
-    loadOrder();
-
-    return () => {
-      cancelled = true;
-    };
+    if (id) {
+      fetchOrder();
+    }
   }, [id, navigate]);
+
 
   /* =========================================================
      UPDATE STATUS
   ========================================================= */
 
-  const handleStatusUpdate = async () => {
-    try {
-      setSaving(true);
-      setError("");
-
-      const token = getToken();
-
-      if (!token) {
-        navigate("/admin");
+  const handleStatusUpdate =
+    async () => {
+      if (!id || !status) {
         return;
       }
 
-      const response = await axios.put(
-        `${API_URL}/${id}/status`,
-        {
-          orderStatus: status,
-        },
-        {
-          headers: {
-            Authorization:
-              `Bearer ${token}`,
-          },
+      try {
+        setSaving(true);
+
+        const token =
+          localStorage.getItem(
+            "mamta_admin_token"
+          );
+
+        if (!token) {
+          navigate("/admin/login");
+          return;
         }
-      );
 
-      const updatedOrder =
-        response.data?.order;
-
-      if (updatedOrder) {
-        setOrder(updatedOrder);
-
-        setStatus(
-          updatedOrder.orderStatus ||
-            status
-        );
-      }
-
-      alert(
-        "Order status updated successfully."
-      );
-    } catch (err) {
-      console.error(
-        "UPDATE ORDER STATUS ERROR:",
-        err
-      );
-
-      if (
-        err.response?.status === 401 ||
-        err.response?.status === 403
-      ) {
-        localStorage.removeItem(
-          "mamta_admin_token"
+        console.log(
+          "UPDATING ORDER STATUS:",
+          {
+            orderId: id,
+            status,
+          }
         );
 
-        navigate("/admin");
-        return;
-      }
+        const response =
+          await axios.put(
+            `${API_URL}/${id}/status`,
+            {
+              status,
+            },
+            {
+              headers: {
+                Authorization:
+                  `Bearer ${token}`,
 
-      setError(
-        err.response?.data?.message ||
-          "Failed to update order status."
-      );
-    } finally {
-      setSaving(false);
-    }
-  };
+                "Content-Type":
+                  "application/json",
+              },
+            }
+          );
+
+        console.log(
+          "STATUS UPDATE RESPONSE:",
+          response.data
+        );
+
+        const updatedOrder =
+          response.data?.order ||
+          response.data;
+
+        setOrder((current) => ({
+          ...current,
+          ...(updatedOrder &&
+          typeof updatedOrder ===
+            "object"
+            ? updatedOrder
+            : {}),
+
+          orderStatus:
+            status,
+
+          status:
+            status,
+        }));
+
+        setStatus(status);
+
+        alert(
+          "Order status updated successfully."
+        );
+
+      } catch (error) {
+        console.error(
+          "UPDATE ORDER STATUS ERROR:",
+          error
+        );
+
+        console.error(
+          "STATUS ERROR RESPONSE:",
+          error.response?.data
+        );
+
+        if (
+          error.response?.status === 401
+        ) {
+          localStorage.removeItem(
+            "mamta_admin_token"
+          );
+
+          navigate("/admin/login");
+          return;
+        }
+
+        alert(
+          error.response?.data?.message ||
+          error.response?.data?.error ||
+          "Unable to update order status."
+        );
+
+      } finally {
+        setSaving(false);
+      }
+    };
+
 
   /* =========================================================
-     DATE + TIME
+     CUSTOMER HELPERS
   ========================================================= */
 
-  const formatDateTime = (date) => {
-    if (!date) {
-      return "-";
-    }
-
-    return new Date(date).toLocaleString(
-      "en-PK",
-      {
-        day: "2-digit",
-        month: "short",
-        year: "numeric",
-        hour: "2-digit",
-        minute: "2-digit",
-      }
+  const getCustomerName = () => {
+    return (
+      order?.customer?.name ||
+      order?.customerName ||
+      order?.name ||
+      "—"
     );
   };
+
+
+  const getCustomerEmail = () => {
+    return (
+      order?.customer?.email ||
+      order?.email ||
+      "—"
+    );
+  };
+
+
+  const getCustomerPhone = () => {
+    return (
+      order?.customer?.phone ||
+      order?.phone ||
+      "—"
+    );
+  };
+
+
+  const getAddress = () => {
+    const address =
+      order?.shippingAddress ||
+      order?.address ||
+      order?.deliveryAddress ||
+      order?.customer?.address;
+
+    if (
+      typeof address === "string"
+    ) {
+      return address;
+    }
+
+    if (
+      address &&
+      typeof address === "object"
+    ) {
+      return [
+        address.address,
+        address.street,
+        address.area,
+        address.city,
+        address.state,
+        address.postalCode,
+      ]
+        .filter(Boolean)
+        .join(", ");
+    }
+
+    return "—";
+  };
+
+
+  const getPaymentMethod = () => {
+    return (
+      order?.paymentMethod ||
+      order?.payment?.method ||
+      "—"
+    );
+  };
+
+
+  const getOrderDate = () => {
+    const date =
+      order?.createdAt ||
+      order?.date;
+
+    if (!date) {
+      return "—";
+    }
+
+    try {
+      return new Date(
+        date
+      ).toLocaleString(
+        "en-PK",
+        {
+          day: "2-digit",
+          month: "long",
+          year: "numeric",
+          hour: "2-digit",
+          minute: "2-digit",
+        }
+      );
+    } catch {
+      return "—";
+    }
+  };
+
+
+  /* =========================================================
+     MONEY HELPERS
+  ========================================================= */
+
+  const getSubtotal = () => {
+    if (
+      typeof order?.subtotal ===
+      "number"
+    ) {
+      return order.subtotal;
+    }
+
+    if (
+      Array.isArray(order?.items)
+    ) {
+      return order.items.reduce(
+        (total, item) =>
+          total +
+          Number(item.price || 0) *
+            Number(item.quantity || 0),
+        0
+      );
+    }
+
+    return 0;
+  };
+
+
+  const getShipping = () => {
+    return Number(
+      order?.shipping ??
+      order?.shippingFee ??
+      0
+    );
+  };
+
+
+  const getTotal = () => {
+    if (
+      typeof order?.total ===
+      "number"
+    ) {
+      return order.total;
+    }
+
+    return (
+      getSubtotal() +
+      getShipping()
+    );
+  };
+
+
+  /* =========================================================
+     COLOR HELPERS
+  ========================================================= */
+
+  const getColorName = (item) => {
+    if (!item) {
+      return "";
+    }
+
+    if (
+      typeof item.color === "string"
+    ) {
+      return item.color.trim();
+    }
+
+    if (
+      item.color &&
+      typeof item.color === "object"
+    ) {
+      return (
+        item.color.name ||
+        item.color.colorName ||
+        item.color.value ||
+        item.color.label ||
+        ""
+      );
+    }
+
+    return "";
+  };
+
+
+  const getColorCode = (item) => {
+    if (!item) {
+      return "#e7d8d3";
+    }
+
+    /*
+      NEW ORDERS:
+      Use exact color code stored in database.
+    */
+
+    if (
+      item.colorCode &&
+      typeof item.colorCode === "string"
+    ) {
+      return item.colorCode;
+    }
+
+
+    /*
+      OLD ORDERS:
+      Small fallback map so old orders still
+      display a reasonable color.
+    */
+
+    const colorName =
+      getColorName(item)
+        .toLowerCase()
+        .trim();
+
+    const colorMap = {
+      pink: "#F4A6C1",
+      "blush pink": "#F7C4D4",
+      "dusty rose": "#C48A9A",
+      rose: "#E8A0B5",
+      mauve: "#B7849A",
+      lavender: "#C8B6E2",
+      purple: "#B39DDB",
+      lilac: "#C8A2C8",
+      blue: "#8DB9E8",
+      "baby blue": "#A9D6F5",
+      "sky blue": "#87CEEB",
+      "navy blue": "#1F3A5F",
+      "royal blue": "#4169E1",
+      teal: "#4FA7A0",
+      mint: "#A8D5BA",
+      green: "#91B89A",
+      "sage green": "#A3B18A",
+      olive: "#808000",
+      cream: "#F5E6C8",
+      ivory: "#FFFFF0",
+      white: "#FFFFFF",
+      "off white": "#F8F4EC",
+      beige: "#D8C3A5",
+      nude: "#E6C7B2",
+      camel: "#C19A6B",
+      brown: "#8B5E3C",
+      chocolate: "#5C4033",
+      grey: "#A7A7A7",
+      "light grey": "#D3D3D3",
+      charcoal: "#36454F",
+      black: "#222222",
+      yellow: "#F5D76E",
+      mustard: "#D4A017",
+      orange: "#F4A261",
+      peach: "#FFCBA4",
+      coral: "#FF7F7F",
+      red: "#E57373",
+      maroon: "#800000",
+      wine: "#722F37",
+      burgundy: "#800020",
+      turquoise: "#40E0D0",
+      "sea green": "#2E8B57",
+      "peacock blue": "#006D77",
+      denim: "#1560BD",
+      terracotta: "#C66B3D",
+      khaki: "#C3B091",
+    };
+
+    return (
+      colorMap[colorName] ||
+      "#e7d8d3"
+    );
+  };
+
+
+  /* =========================================================
+     COLOR IMAGE
+  ========================================================= */
+
+  const getColorImage = (item) => {
+    if (
+      item?.colorImage &&
+      typeof item.colorImage === "string"
+    ) {
+      return item.colorImage;
+    }
+
+    if (
+      item?.image &&
+      typeof item.image === "string"
+    ) {
+      return item.image;
+    }
+
+    return FALLBACK_IMAGE;
+  };
+
 
   /* =========================================================
      LOADING
@@ -240,467 +526,506 @@ const AdminOrderDetails = () => {
 
   if (loading) {
     return (
-      <div className="admin-order-details-loading">
-        Loading order...
-      </div>
-    );
-  }
-
-  /* =========================================================
-     ERROR WITHOUT ORDER
-  ========================================================= */
-
-  if (error && !order) {
-    return (
       <div className="admin-order-details-page">
 
-        <div className="admin-order-details-error">
-          {error}
-        </div>
+        <div className="admin-order-details-loading">
 
-        <button
-          className="admin-order-details-back"
-          onClick={() =>
-            navigate("/admin/orders")
-          }
-        >
-          <ArrowLeft size={18} />
-          Back to Orders
-        </button>
+          <Package size={30} />
+
+          <p>
+            Loading order details...
+          </p>
+
+        </div>
 
       </div>
     );
   }
 
+
   /* =========================================================
-     NO ORDER
+     ORDER NOT FOUND
   ========================================================= */
 
   if (!order) {
-    return null;
+    return (
+      <div className="admin-order-details-page">
+
+        <div className="admin-order-not-found">
+
+          <Package size={35} />
+
+          <h2>
+            Order not found
+          </h2>
+
+          <p>
+            This order could not be found.
+          </p>
+
+          <button
+            type="button"
+            onClick={() =>
+              navigate("/admin/orders")
+            }
+          >
+            <ArrowLeft size={17} />
+
+            Back to Orders
+          </button>
+
+        </div>
+
+      </div>
+    );
   }
 
-  /* =========================================================
-     CUSTOMER
-  ========================================================= */
-
-  const customer =
-    order.customer || {};
 
   /* =========================================================
-     ITEMS
-  ========================================================= */
-
-  const items =
-    Array.isArray(order.items)
-      ? order.items
-      : [];
-
-  /* =========================================================
-     RENDER
+     PAGE
   ========================================================= */
 
   return (
-    <section className="admin-order-details-page">
+    <div className="admin-order-details-page">
 
-      {/* =====================================================
-          TOP
-      ===================================================== */}
+      {/* BACK */}
 
-      <div className="admin-order-details-top">
+      <button
+        type="button"
+        className="admin-order-back-button"
+        onClick={() =>
+          navigate("/admin/orders")
+        }
+      >
+        <ArrowLeft size={18} />
 
-        <button
-          className="admin-order-details-back"
-          onClick={() =>
-            navigate("/admin/orders")
-          }
-        >
-          <ArrowLeft size={18} />
-          Back to Orders
-        </button>
+        Back to Orders
+      </button>
 
-        <div className="admin-order-details-heading">
 
-          <div>
+      {/* HEADER */}
 
-            <p className="admin-order-details-eyebrow">
-              MAMTA ADMIN
-            </p>
+      <div className="admin-order-details-header">
 
-            <h1>
-              Order #
-              {order.orderNumber ||
-                String(order._id).slice(-8)}
-            </h1>
+        <div>
 
-            <p>
-              Placed on{" "}
-              {formatDateTime(
-                order.createdAt
-              )}
-            </p>
+          <span className="admin-order-details-eyebrow">
+            MAMTA ORDER
+          </span>
 
-          </div>
+          <h1>
+            Order Details
+          </h1>
 
-          <span
-            className={`admin-order-details-status ${String(
-              order.orderStatus ||
-                "Pending"
-            )
-              .toLowerCase()
-              .replace(
-                /\s+/g,
-                "-"
-              )}`}
-          >
-            {order.orderStatus ||
-              "Pending"}
+          <p>
+            #
+            {String(
+              order.orderNumber ||
+              order._id ||
+              order.id ||
+              id
+            ).slice(-10)}
+          </p>
+
+        </div>
+
+
+        <div className="admin-order-details-date">
+
+          <CalendarDays size={17} />
+
+          <span>
+            {getOrderDate()}
           </span>
 
         </div>
 
       </div>
 
-      {/* =====================================================
-          ERROR
-      ===================================================== */}
 
-      {error && (
-        <div className="admin-order-details-error">
-          {error}
-        </div>
-      )}
+      {/* TOP GRID */}
 
-      {/* =====================================================
-          CONTENT LAYOUT
-      ===================================================== */}
+      <div className="admin-order-details-grid">
 
-      <div className="admin-order-details-layout">
+        {/* CUSTOMER */}
 
-        {/* ===================================================
-            MAIN
-        =================================================== */}
+        <div className="admin-order-card">
 
-        <div className="admin-order-details-main">
+          <div className="admin-order-card-heading">
 
-          {/* =================================================
-              CUSTOMER INFORMATION
-          ================================================= */}
+            <div className="admin-order-card-icon">
+              <User size={18} />
+            </div>
 
-          <section className="admin-order-details-card">
+            <div>
 
-            <div className="admin-order-details-card-title">
+              <span>
+                CUSTOMER
+              </span>
 
-              <div className="admin-order-details-card-icon">
-                <User size={18} />
-              </div>
-
-              <div>
-
-                <h2>
-                  Customer Information
-                </h2>
-
-                <p>
-                  Customer details for this order
-                </p>
-
-              </div>
+              <h2>
+                Customer Information
+              </h2>
 
             </div>
 
-            <div className="admin-order-customer-grid">
+          </div>
 
-              <div>
 
-                <span>
-                  Name
-                </span>
+          <div className="admin-order-customer-details">
 
-                <strong>
-                  {customer.name ||
-                    order.userId?.name ||
-                    "-"}
-                </strong>
-
-              </div>
-
-              <div>
-
-                <span>
-                  Email
-                </span>
-
-                <strong>
-                  {customer.email ||
-                    order.userId?.email ||
-                    "-"}
-                </strong>
-
-              </div>
-
-              <div>
-
-                <span>
-                  Phone
-                </span>
-
-                <strong>
-                  {customer.phone ||
-                    "-"}
-                </strong>
-
-              </div>
-
-            </div>
-
-          </section>
-
-          {/* =================================================
-              DELIVERY ADDRESS
-          ================================================= */}
-
-          <section className="admin-order-details-card">
-
-            <div className="admin-order-details-card-title">
-
-              <div className="admin-order-details-card-icon">
-                <MapPin size={18} />
-              </div>
-
-              <div>
-
-                <h2>
-                  Delivery Address
-                </h2>
-
-                <p>
-                  Shipping information
-                </p>
-
-              </div>
-
-            </div>
-
-            <div className="admin-order-address">
+            <div>
+              <span>Name</span>
 
               <strong>
-                {customer.name ||
-                  order.userId?.name ||
-                  "-"}
+                {getCustomerName()}
               </strong>
+            </div>
+
+            <div>
+              <span>Email</span>
+
+              <strong>
+                {getCustomerEmail()}
+              </strong>
+            </div>
+
+            <div>
+              <span>Phone</span>
+
+              <strong>
+                {getCustomerPhone()}
+              </strong>
+            </div>
+
+          </div>
+
+        </div>
+
+
+        {/* DELIVERY */}
+
+        <div className="admin-order-card">
+
+          <div className="admin-order-card-heading">
+
+            <div className="admin-order-card-icon">
+              <MapPin size={18} />
+            </div>
+
+            <div>
 
               <span>
-                {customer.address ||
-                  "-"}
+                DELIVERY
               </span>
 
-              <span>
-                {customer.city ||
-                  "-"}
-              </span>
-
-              {customer.phone && (
-                <span>
-                  Phone:{" "}
-                  {customer.phone}
-                </span>
-              )}
+              <h2>
+                Delivery Address
+              </h2>
 
             </div>
 
-          </section>
+          </div>
 
-          {/* =================================================
-              ORDERED PRODUCTS
-          ================================================= */}
 
-          <section className="admin-order-details-card">
+          <div className="admin-order-address">
 
-            <div className="admin-order-details-card-title">
+            <MapPin size={17} />
 
-              <div className="admin-order-details-card-icon">
-                <Package size={18} />
-              </div>
+            <p>
+              {getAddress()}
+            </p>
 
-              <div>
+          </div>
 
-                <h2>
-                  Ordered Products
-                </h2>
+        </div>
 
-                <p>
-                  Products included in this order
-                </p>
 
-              </div>
+        {/* PAYMENT */}
+
+        <div className="admin-order-card">
+
+          <div className="admin-order-card-heading">
+
+            <div className="admin-order-card-icon">
+              <CreditCard size={18} />
+            </div>
+
+            <div>
+
+              <span>
+                PAYMENT
+              </span>
+
+              <h2>
+                Payment Information
+              </h2>
 
             </div>
 
-            <div className="admin-order-items-list">
+          </div>
 
-              {items.length === 0 ? (
 
-                <div className="admin-order-empty-items">
-                  No products found in this order.
-                </div>
+          <div className="admin-order-payment-details">
 
-              ) : (
+            <span>
+              Method
+            </span>
 
-                items.map(
-                  (item, index) => (
+            <strong>
+              {getPaymentMethod()}
+            </strong>
 
-                    <div
-                      className="admin-order-item"
-                      key={
-                        item._id ||
-                        item.productId ||
-                        index
-                      }
-                    >
+          </div>
 
-                      {/* IMAGE */}
+        </div>
 
-                      <div className="admin-order-item-image">
+      </div>
 
-                        {item.image ? (
 
-                          <img
-                            src={item.image}
-                            alt={
-                              item.name ||
-                              "Product"
-                            }
-                          />
+      {/* ORDERED PRODUCTS */}
 
+      <div className="admin-order-card admin-order-products-card">
+
+        <div className="admin-order-card-heading">
+
+          <div className="admin-order-card-icon">
+            <Package size={18} />
+          </div>
+
+          <div>
+
+            <span>
+              ORDER
+            </span>
+
+            <h2>
+              Ordered Products
+            </h2>
+
+          </div>
+
+        </div>
+
+
+        <div className="admin-order-items">
+
+          {Array.isArray(order.items) &&
+            order.items.map(
+              (item, index) => {
+
+                const colorName =
+                  getColorName(item);
+
+                const colorCode =
+                  getColorCode(item);
+
+                const itemPrice =
+                  Number(
+                    item.price || 0
+                  );
+
+                const itemQuantity =
+                  Number(
+                    item.quantity || 0
+                  );
+
+                const itemTotal =
+                  Number(item.total) ||
+                  itemPrice *
+                    itemQuantity;
+
+                const productImage =
+                  getColorImage(item);
+
+                return (
+                  <div
+                    className="admin-order-item"
+                    key={`${item.productId || "product"}-${
+                      colorName || "default"
+                    }-${index}`}
+                  >
+
+                    {/* PRODUCT IMAGE */}
+
+                    <div className="admin-order-item-image">
+
+                      <img
+                        src={productImage}
+                        alt={
+                          item.name ||
+                          "Product"
+                        }
+                        onError={(e) => {
+                          if (
+                            e.currentTarget.src !==
+                            FALLBACK_IMAGE
+                          ) {
+                            e.currentTarget.src =
+                              FALLBACK_IMAGE;
+                          }
+                        }}
+                      />
+
+                    </div>
+
+
+                    {/* PRODUCT INFO */}
+
+                    <div className="admin-order-item-info">
+
+                      <strong className="admin-order-item-name">
+                        {item.name ||
+                          "Product"}
+                      </strong>
+
+
+                      {/* COLOR */}
+
+                      <div className="admin-order-item-color-box">
+
+                        <span className="admin-order-color-label">
+                          SELECTED COLOR
+                        </span>
+
+                        {colorName ? (
+                          <div className="admin-order-color-value">
+
+                            <span
+                              className="admin-order-color-dot"
+                              style={{
+                                backgroundColor:
+                                  colorCode,
+                              }}
+                            />
+
+                            <span className="admin-order-color-name">
+                              {colorName}
+                            </span>
+
+                          </div>
                         ) : (
-
-                          <Package
-                            size={24}
-                          />
-
+                          <span className="admin-order-no-color">
+                            No color selected
+                          </span>
                         )}
 
                       </div>
 
-                      {/* INFO */}
 
-                      <div className="admin-order-item-info">
+                      {/* QUANTITY */}
 
-                        <strong>
-                          {item.name ||
-                            "Product"}
-                        </strong>
+                      <span className="admin-order-item-quantity">
 
-                        <span>
-                          Quantity:{" "}
-                          {Number(
-                            item.quantity || 0
-                          )}
-                        </span>
-
-                      </div>
-
-                      {/* PRICE */}
-
-                      <div className="admin-order-item-price">
-
-                        <span>
-                          Rs.{" "}
-                          {Number(
-                            item.price || 0
-                          ).toLocaleString()}
-                        </span>
+                        Quantity:
 
                         <strong>
-                          Rs.{" "}
-                          {Number(
-                            item.total ??
-                              (
-                                Number(
-                                  item.price || 0
-                                ) *
-                                Number(
-                                  item.quantity || 0
-                                )
-                              )
-                          ).toLocaleString()}
+                          {itemQuantity}
                         </strong>
 
-                      </div>
+                      </span>
 
                     </div>
 
-                  )
-                )
 
-              )}
+                    {/* PRICE */}
 
-            </div>
+                    <div className="admin-order-item-price">
 
-          </section>
+                      <span>
+                        Rs.{" "}
+                        {itemPrice.toLocaleString()}
+                        {" "}×{" "}
+                        {itemQuantity}
+                      </span>
+
+                      <strong>
+                        Rs.{" "}
+                        {itemTotal.toLocaleString()}
+                      </strong>
+
+                    </div>
+
+                  </div>
+                );
+              }
+            )}
 
         </div>
 
-        {/* ===================================================
-            SIDEBAR
-        =================================================== */}
+      </div>
 
-        <aside className="admin-order-details-sidebar">
 
-          {/* =================================================
-              ORDER STATUS
-          ================================================= */}
+      {/* BOTTOM */}
 
-          <section className="admin-order-details-card">
+      <div className="admin-order-bottom-grid">
 
-            <div className="admin-order-details-card-title">
+        {/* STATUS */}
 
-              <div className="admin-order-details-card-icon">
-                <Save size={18} />
-              </div>
+        <div className="admin-order-card">
 
-              <div>
+          <div className="admin-order-card-heading">
 
-                <h2>
-                  Order Status
-                </h2>
+            <div className="admin-order-card-icon">
+              <Save size={18} />
+            </div>
 
-                <p>
-                  Update order progress
-                </p>
+            <div>
 
-              </div>
+              <span>
+                ORDER STATUS
+              </span>
+
+              <h2>
+                Update Status
+              </h2>
 
             </div>
 
+          </div>
+
+
+          <div className="admin-status-update">
+
             <select
-              className="admin-order-status-select"
               value={status}
               onChange={(e) =>
                 setStatus(
                   e.target.value
                 )
               }
+              disabled={saving}
             >
 
-              {statuses.map(
-                (item) => (
+              <option value="Pending">
+                Pending
+              </option>
 
-                  <option
-                    key={item}
-                    value={item}
-                  >
-                    {item}
-                  </option>
+              <option value="Confirmed">
+                Confirmed
+              </option>
 
-                )
-              )}
+              <option value="Processing">
+                Processing
+              </option>
+
+              <option value="Shipped">
+                Shipped
+              </option>
+
+              <option value="Delivered">
+                Delivered
+              </option>
+
+              <option value="Cancelled">
+                Cancelled
+              </option>
 
             </select>
 
+
             <button
-              className="admin-order-save-status"
+              type="button"
               onClick={
                 handleStatusUpdate
               }
@@ -710,195 +1035,94 @@ const AdminOrderDetails = () => {
               <Save size={17} />
 
               {saving
-                ? "Updating..."
-                : "Update Status"}
+                ? "Saving..."
+                : "Save Status"}
 
             </button>
 
-          </section>
+          </div>
 
-          {/* =================================================
-              PAYMENT
-          ================================================= */}
+        </div>
 
-          <section className="admin-order-details-card">
 
-            <div className="admin-order-details-card-title">
+        {/* SUMMARY */}
 
-              <div className="admin-order-details-card-icon">
-                <CreditCard size={18} />
-              </div>
+        <div className="admin-order-card admin-order-summary-card">
 
-              <div>
+          <div className="admin-order-card-heading">
 
-                <h2>
-                  Payment
-                </h2>
+            <div className="admin-order-card-icon">
+              <Package size={18} />
+            </div>
 
-                <p>
-                  Payment information
-                </p>
+            <div>
 
-              </div>
+              <span>
+                SUMMARY
+              </span>
+
+              <h2>
+                Order Summary
+              </h2>
 
             </div>
 
-            <div className="admin-order-payment-info">
+          </div>
 
-              <div>
 
-                <span>
-                  Method
-                </span>
+          <div className="admin-order-summary">
 
-                <strong>
-                  {order.paymentMethod ||
-                    "-"}
-                </strong>
+            <div>
 
-              </div>
+              <span>
+                Subtotal
+              </span>
 
-              <div>
-
-                <span>
-                  Status
-                </span>
-
-                <strong
-                  className={`payment-${String(
-                    order.paymentStatus ||
-                      "Pending"
-                  ).toLowerCase()}`}
-                >
-                  {order.paymentStatus ||
-                    "Pending"}
-                </strong>
-
-              </div>
-
-              {order.paymentReference && (
-
-                <div>
-
-                  <span>
-                    Reference
-                  </span>
-
-                  <strong>
-                    {
-                      order.paymentReference
-                    }
-                  </strong>
-
-                </div>
-
-              )}
-
-              {order.paymentProvider && (
-
-                <div>
-
-                  <span>
-                    Provider
-                  </span>
-
-                  <strong>
-                    {
-                      order.paymentProvider
-                    }
-                  </strong>
-
-                </div>
-
-              )}
+              <strong>
+                Rs.{" "}
+                {getSubtotal().toLocaleString()}
+              </strong>
 
             </div>
 
-          </section>
 
-          {/* =================================================
-              ORDER SUMMARY
-          ================================================= */}
+            <div>
 
-          <section className="admin-order-details-card">
+              <span>
+                Shipping
+              </span>
 
-            <div className="admin-order-details-card-title">
-
-              <div className="admin-order-details-card-icon">
-                <CalendarDays size={18} />
-              </div>
-
-              <div>
-
-                <h2>
-                  Order Summary
-                </h2>
-
-                <p>
-                  Price breakdown
-                </p>
-
-              </div>
+              <strong>
+                {getShipping() === 0
+                  ? "FREE"
+                  : `Rs. ${getShipping().toLocaleString()}`}
+              </strong>
 
             </div>
 
-            <div className="admin-order-summary">
 
-              <div>
+            <div className="admin-order-summary-total">
 
-                <span>
-                  Subtotal
-                </span>
+              <span>
+                Total
+              </span>
 
-                <strong>
-                  Rs.{" "}
-                  {Number(
-                    order.subtotal || 0
-                  ).toLocaleString()}
-                </strong>
-
-              </div>
-
-              <div>
-
-                <span>
-                  Shipping
-                </span>
-
-                <strong>
-                  Rs.{" "}
-                  {Number(
-                    order.shipping || 0
-                  ).toLocaleString()}
-                </strong>
-
-              </div>
-
-              <div className="admin-order-summary-total">
-
-                <span>
-                  Total
-                </span>
-
-                <strong>
-                  Rs.{" "}
-                  {Number(
-                    order.total || 0
-                  ).toLocaleString()}
-                </strong>
-
-              </div>
+              <strong>
+                Rs.{" "}
+                {getTotal().toLocaleString()}
+              </strong>
 
             </div>
 
-          </section>
+          </div>
 
-        </aside>
+        </div>
 
       </div>
 
-    </section>
+    </div>
   );
 };
+
 
 export default AdminOrderDetails;

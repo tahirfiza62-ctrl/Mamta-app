@@ -1,4 +1,3 @@
-
 import {
   BrowserRouter,
   Routes,
@@ -9,7 +8,7 @@ import {
 import Header from "./components/Header/Header";
 import Footer from "./components/Footer/Footer";
 import MoveToTop from "./components/MoveToTop/MoveToTop";
-
+import WhatsAppButton from "./components/WhatsAppButton/WhatsAppButton";
 /* =========================================================
    CUSTOMER PAGES
 ========================================================= */
@@ -19,10 +18,15 @@ import Shop from "./pages/Shop/Shop";
 import Categories from "./pages/Categories/Categories";
 import MaternityPillows from "./pages/MaternityPillows/MaternityPillows";
 import BabyPillows from "./pages/BabyPillows/BabyPillows";
+import NursingPillows from "./pages/NursingPillows/NursingPillows";
+import ElderPillows from "./pages/ElderPillows/ElderPillows";
 import About from "./pages/About/About";
 import Contact from "./pages/Contact/Contact";
 import Login from "./pages/Login/Login";
 import Register from "./pages/Register/Register";
+import EmailSent from "./pages/EmailSent/EmailSent";
+import VerifyEmail from "./pages/VerifyEmail/VerifyEmail";
+import VerifyPhone from "./pages/VerifyPhone/VerifyPhone";
 import ProductDetails from "./pages/ProductDetails/ProductDetails";
 import Account from "./pages/Account/Account";
 import Cart from "./pages/Cart/Cart";
@@ -33,6 +37,7 @@ import PaymentSuccess from "./pages/PaymentSuccess/PaymentSuccess";
 import OrderDetails from "./pages/OrderDetails/OrderDetails";
 import Wishlist from "./pages/Wishlist/Wishlist";
 import Search from "./pages/Search/Search";
+
 /* =========================================================
    ADMIN
 ========================================================= */
@@ -49,6 +54,7 @@ import AdminProducts from "./pages/Admin/Products/AdminProducts";
 import AddProduct from "./pages/Admin/Products/AddProduct";
 import EditProduct from "./pages/Admin/Products/EditProduct";
 import AdminContacts from "./pages/Admin/AdminContacts/AdminContacts";
+
 /* =========================================================
    ADMIN ORDERS
 ========================================================= */
@@ -59,19 +65,34 @@ import OrderStatusPage from "./pages/Admin/Orders/OrderStatusPage";
 import AdminCustomers from "./pages/Admin/Customers/AdminCustomers";
 import AdminCustomerDetails from "./pages/Admin/Customers/AdminCustomerDetails";
 import AdminPayments from "./pages/Admin/AdminPayments";
+
 /* =========================================================
    APP CONTENT
 ========================================================= */
 
+import ReturnPolicy from "./pages/ReturnPolicy/ReturnPolicy";
+import ShippingPolicy from "./pages/ShippingPolicy/ShippingPolicy";
+import TermsOfSale from "./pages/TermsOfSale/TermsOfSale";
+import PrivacyPolicy from "./pages/PrivacyPolicy/PrivacyPolicy";
+import FAQ from "./pages/FAQ/FAQ";
+
 function AppContent() {
-  const location = useLocation();
+
+  const location =
+    useLocation();
 
   /* =======================================================
      ADMIN ROUTES
   ======================================================= */
 
-  if (location.pathname.startsWith("/admin")) {
+  if (
+    location.pathname.startsWith(
+      "/admin"
+    )
+  ) {
+
     return (
+
       <Routes>
 
         {/* =================================================
@@ -80,15 +101,20 @@ function AppContent() {
 
         <Route
           path="/admin"
-          element={<AdminLogin />}
+          element={
+            <AdminLogin />
+          }
         />
-
 
         {/* =================================================
             ADMIN LAYOUT
         ================================================= */}
 
-        <Route element={<AdminLayout />}>
+        <Route
+          element={
+            <AdminLayout />
+          }
+        >
 
           {/* =================================================
               DASHBOARD
@@ -96,137 +122,153 @@ function AppContent() {
 
           <Route
             path="/admin/dashboard"
-            element={<AdminDashboard />}
+            element={
+              <AdminDashboard />
+            }
           />
-
 
           {/* =================================================
               PRODUCTS
           ================================================= */}
 
-          {/* ALL PRODUCTS */}
-
           <Route
             path="/admin/products"
-            element={<AdminProducts />}
+            element={
+              <AdminProducts />
+            }
           />
-
-          {/* ADD PRODUCT */}
 
           <Route
             path="/admin/products/add"
-            element={<AddProduct />}
+            element={
+              <AddProduct />
+            }
           />
-
-          {/* EDIT PRODUCT */}
 
           <Route
             path="/admin/products/edit/:id"
-            element={<EditProduct />}
+            element={
+              <EditProduct />
+            }
           />
-
 
           {/* =================================================
               ORDERS
           ================================================= */}
 
-          {/* ALL ORDERS */}
-
           <Route
             path="/admin/orders"
-            element={<AdminOrders />}
+            element={
+              <AdminOrders />
+            }
           />
-
-          {/* PENDING ORDERS */}
 
           <Route
             path="/admin/orders/pending"
             element={
-              <OrderStatusPage status="Pending" />
+              <OrderStatusPage
+                status="Pending"
+              />
             }
           />
-
-          {/* PROCESSING ORDERS */}
 
           <Route
             path="/admin/orders/processing"
             element={
-              <OrderStatusPage status="Processing" />
+              <OrderStatusPage
+                status="Processing"
+              />
             }
           />
-
-          {/* SHIPPED ORDERS */}
 
           <Route
             path="/admin/orders/shipped"
             element={
-              <OrderStatusPage status="Shipped" />
+              <OrderStatusPage
+                status="Shipped"
+              />
             }
           />
-
-          {/* DELIVERED ORDERS */}
 
           <Route
             path="/admin/orders/delivered"
             element={
-              <OrderStatusPage status="Delivered" />
+              <OrderStatusPage
+                status="Delivered"
+              />
             }
           />
-
-          {/* CANCELLED ORDERS */}
 
           <Route
             path="/admin/orders/cancelled"
             element={
-              <OrderStatusPage status="Cancelled" />
+              <OrderStatusPage
+                status="Cancelled"
+              />
             }
           />
 
-          {/* ORDER DETAILS */}
-
           <Route
             path="/admin/orders/:id"
-            element={<AdminOrderDetails />}
+            element={
+              <AdminOrderDetails />
+            }
           />
-<Route
-  path="/admin/contacts"
-  element={<AdminContacts />}
-/>
+
+          {/* =================================================
+              CONTACTS
+          ================================================= */}
+
+          <Route
+            path="/admin/contacts"
+            element={
+              <AdminContacts />
+            }
+          />
 
           {/* =================================================
               CUSTOMERS
           ================================================= */}
-<Route
-  path="/admin/customers"
-  element={<AdminCustomers />}
-/>
 
-<Route
-  path="/admin/customers/:id"
-  element={<AdminCustomerDetails />}
-/>
+          <Route
+            path="/admin/customers"
+            element={
+              <AdminCustomers />
+            }
+          />
 
+          <Route
+            path="/admin/customers/:id"
+            element={
+              <AdminCustomerDetails />
+            }
+          />
 
           {/* =================================================
               PAYMENTS
           ================================================= */}
-<Route
-  path="/admin/payments"
-  element={<AdminPayments />}
-/>
+
+          <Route
+            path="/admin/payments"
+            element={
+              <AdminPayments />
+            }
+          />
 
         </Route>
+
       </Routes>
     );
   }
-
 
   /* =======================================================
      CUSTOMER WEBSITE
   ======================================================= */
 
   return (
+
     <>
+
       {/* =====================================================
           HEADER
       ===================================================== */}
@@ -251,9 +293,10 @@ function AppContent() {
 
         <Route
           path="/"
-          element={<Home />}
+          element={
+            <Home />
+          }
         />
-
 
         {/* =================================================
             SHOP
@@ -261,9 +304,10 @@ function AppContent() {
 
         <Route
           path="/shop"
-          element={<Shop />}
+          element={
+            <Shop />
+          }
         />
-
 
         {/* =================================================
             CATEGORIES
@@ -271,9 +315,10 @@ function AppContent() {
 
         <Route
           path="/categories"
-          element={<Categories />}
+          element={
+            <Categories />
+          }
         />
-
 
         {/* =================================================
             MATERNITY PILLOWS
@@ -281,9 +326,10 @@ function AppContent() {
 
         <Route
           path="/maternity-pillows"
-          element={<MaternityPillows />}
+          element={
+            <MaternityPillows />
+          }
         />
-
 
         {/* =================================================
             BABY PILLOWS
@@ -291,19 +337,29 @@ function AppContent() {
 
         <Route
           path="/baby-pillows"
-          element={<BabyPillows />}
+          element={
+            <BabyPillows />
+          }
         />
+<Route
+  path="/nursing-pillows"
+  element={<NursingPillows />}
+/>
 
-
+<Route
+  path="/elder-pillows"
+  element={<ElderPillows />}
+/>
         {/* =================================================
             ABOUT
         ================================================= */}
 
         <Route
           path="/about"
-          element={<About />}
+          element={
+            <About />
+          }
         />
-
 
         {/* =================================================
             CONTACT
@@ -311,9 +367,10 @@ function AppContent() {
 
         <Route
           path="/contact"
-          element={<Contact />}
+          element={
+            <Contact />
+          }
         />
-
 
         {/* =================================================
             LOGIN
@@ -321,9 +378,10 @@ function AppContent() {
 
         <Route
           path="/login"
-          element={<Login />}
+          element={
+            <Login />
+          }
         />
-
 
         {/* =================================================
             REGISTER
@@ -331,9 +389,43 @@ function AppContent() {
 
         <Route
           path="/register"
-          element={<Register />}
+          element={
+            <Register />
+          }
         />
 
+        {/* =================================================
+            EMAIL SENT
+        ================================================= */}
+
+        <Route
+          path="/email-sent"
+          element={
+            <EmailSent />
+          }
+        />
+
+        {/* =================================================
+            VERIFY EMAIL
+        ================================================= */}
+
+        <Route
+          path="/verify-email"
+          element={
+            <VerifyEmail />
+          }
+        />
+
+        {/* =================================================
+            VERIFY PHONE
+        ================================================= */}
+
+        <Route
+          path="/verify-phone"
+          element={
+            <VerifyPhone />
+          }
+        />
 
         {/* =================================================
             PROFILE / ACCOUNT
@@ -341,19 +433,43 @@ function AppContent() {
 
         <Route
           path="/profile"
-          element={<Account />}
+          element={
+            <Account />
+          }
         />
-<Route path="/search" element={<Search />} />
-<Route path="/wishlist" element={<Wishlist />} />
+
+        {/* =================================================
+            SEARCH
+        ================================================= */}
+
+        <Route
+          path="/search"
+          element={
+            <Search />
+          }
+        />
+
+        {/* =================================================
+            WISHLIST
+        ================================================= */}
+
+        <Route
+          path="/wishlist"
+          element={
+            <Wishlist />
+          }
+        />
+
         {/* =================================================
             CART
         ================================================= */}
 
         <Route
           path="/cart"
-          element={<Cart />}
+          element={
+            <Cart />
+          }
         />
-
 
         {/* =================================================
             PRODUCT DETAILS
@@ -361,9 +477,10 @@ function AppContent() {
 
         <Route
           path="/product/:id"
-          element={<ProductDetails />}
+          element={
+            <ProductDetails />
+          }
         />
-
 
         {/* =================================================
             CHECKOUT
@@ -371,9 +488,10 @@ function AppContent() {
 
         <Route
           path="/checkout"
-          element={<Checkout />}
+          element={
+            <Checkout />
+          }
         />
-
 
         {/* =================================================
             ORDER SUCCESS
@@ -381,9 +499,10 @@ function AppContent() {
 
         <Route
           path="/order-success/:id"
-          element={<OrderSuccess />}
+          element={
+            <OrderSuccess />
+          }
         />
-
 
         {/* =================================================
             MY ORDERS
@@ -391,9 +510,10 @@ function AppContent() {
 
         <Route
           path="/orders"
-          element={<MyOrders />}
+          element={
+            <MyOrders />
+          }
         />
-
 
         {/* =================================================
             CUSTOMER ORDER DETAILS
@@ -401,9 +521,10 @@ function AppContent() {
 
         <Route
           path="/orders/:id"
-          element={<OrderDetails />}
+          element={
+            <OrderDetails />
+          }
         />
-
 
         {/* =================================================
             PAYMENT SUCCESS
@@ -411,32 +532,79 @@ function AppContent() {
 
         <Route
           path="/payment-success"
-          element={<PaymentSuccess />}
+          element={
+            <PaymentSuccess />
+          }
+        />
+
+        {/* =================================================
+            POLICIES
+        ================================================= */}
+
+        <Route
+          path="/return-policy"
+          element={
+            <ReturnPolicy />
+          }
+        />
+
+        <Route
+          path="/shipping-policy"
+          element={
+            <ShippingPolicy />
+          }
+        />
+
+        <Route
+          path="/terms-of-sale"
+          element={
+            <TermsOfSale />
+          }
+        />
+
+        <Route
+          path="/privacy-policy"
+          element={
+            <PrivacyPolicy />
+          }
+        />
+
+        <Route
+          path="/faq"
+          element={
+            <FAQ />
+          }
         />
 
       </Routes>
-
-
+<WhatsAppButton />
       {/* =====================================================
           FOOTER
       ===================================================== */}
 
       <Footer />
+
     </>
+
   );
 }
-
 
 /* =========================================================
    APP
 ========================================================= */
 
 function App() {
+
   return (
+
     <BrowserRouter>
+
       <AppContent />
+
     </BrowserRouter>
+
   );
+
 }
 
 export default App;

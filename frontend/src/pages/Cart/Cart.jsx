@@ -24,9 +24,9 @@ const Cart = () => {
   const [loading, setLoading] = useState(true);
   const [updatingId, setUpdatingId] = useState(null);
 
-  // =========================================================
-  // LOAD CART
-  // =========================================================
+  /* =========================================================
+     LOAD CART
+  ========================================================= */
 
   useEffect(() => {
     const token = localStorage.getItem("mamta_user_token");
@@ -40,14 +40,11 @@ const Cart = () => {
 
     const loadCart = async () => {
       try {
-        const response = await axios.get(
-          `${API_URL}/cart`,
-          {
-            headers: {
-              Authorization: `Bearer ${token}`,
-            },
-          }
-        );
+        const response = await axios.get(`${API_URL}/cart`, {
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
+        });
 
         if (cancelled) return;
 
@@ -81,36 +78,50 @@ const Cart = () => {
     };
   }, [navigate]);
 
-  // =========================================================
-  // UPDATE QUANTITY
-  // =========================================================
+  /* =========================================================
+     UPDATE QUANTITY
+  ========================================================= */
 
   const updateQuantity = async (
     productId,
-    newQuantity
+    newQuantity,
+    color = ""
   ) => {
     if (newQuantity < 1) return;
 
-    const token = localStorage.getItem(
-      "mamta_user_token"
-    );
+    const token =
+      localStorage.getItem("mamta_user_token");
 
     if (!token) {
       navigate("/login");
       return;
     }
 
+    /*
+      The backend identifies a cart item using:
+
+      productId + color
+
+      Therefore color must be sent with
+      every quantity update.
+    */
+
+    const updateKey =
+      `${productId}-${color || "default"}`;
+
     try {
-      setUpdatingId(productId);
+      setUpdatingId(updateKey);
 
       const response = await axios.put(
         `${API_URL}/cart/update/${productId}`,
         {
-          quantity: newQuantity,
+          quantity: Number(newQuantity),
+          color: color || "",
         },
         {
           headers: {
-            Authorization: `Bearer ${token}`,
+            Authorization:
+              `Bearer ${token}`,
           },
         }
       );
@@ -120,13 +131,21 @@ const Cart = () => {
       window.dispatchEvent(
         new Event("cartChanged")
       );
+
     } catch (error) {
       console.error(
         "UPDATE QUANTITY ERROR:",
         error
       );
 
-      if (error.response?.status === 401) {
+      console.error(
+        "UPDATE QUANTITY RESPONSE:",
+        error.response?.data
+      );
+
+      if (
+        error.response?.status === 401
+      ) {
         localStorage.removeItem(
           "mamta_user_token"
         );
@@ -141,33 +160,49 @@ const Cart = () => {
 
         navigate("/login");
       }
+
     } finally {
       setUpdatingId(null);
     }
   };
 
-  // =========================================================
-  // REMOVE ITEM
-  // =========================================================
+  /* =========================================================
+     REMOVE ITEM
+  ========================================================= */
 
-  const removeItem = async (productId) => {
-    const token = localStorage.getItem(
-      "mamta_user_token"
-    );
+  const removeItem = async (
+    productId,
+    color = ""
+  ) => {
+    const token =
+      localStorage.getItem("mamta_user_token");
 
     if (!token) {
       navigate("/login");
       return;
     }
 
+    const updateKey =
+      `${productId}-${color || "default"}`;
+
     try {
-      setUpdatingId(productId);
+      setUpdatingId(updateKey);
 
       const response = await axios.delete(
         `${API_URL}/cart/remove/${productId}`,
         {
           headers: {
-            Authorization: `Bearer ${token}`,
+            Authorization:
+              `Bearer ${token}`,
+          },
+
+          /*
+            Axios DELETE request body
+            must be inside `data`.
+          */
+
+          data: {
+            color: color || "",
           },
         }
       );
@@ -177,13 +212,21 @@ const Cart = () => {
       window.dispatchEvent(
         new Event("cartChanged")
       );
+
     } catch (error) {
       console.error(
         "REMOVE ITEM ERROR:",
         error
       );
 
-      if (error.response?.status === 401) {
+      console.error(
+        "REMOVE ITEM RESPONSE:",
+        error.response?.data
+      );
+
+      if (
+        error.response?.status === 401
+      ) {
         localStorage.removeItem(
           "mamta_user_token"
         );
@@ -198,19 +241,19 @@ const Cart = () => {
 
         navigate("/login");
       }
+
     } finally {
       setUpdatingId(null);
     }
   };
 
-  // =========================================================
-  // CLEAR CART
-  // =========================================================
+  /* =========================================================
+     CLEAR CART
+  ========================================================= */
 
   const clearCart = async () => {
-    const token = localStorage.getItem(
-      "mamta_user_token"
-    );
+    const token =
+      localStorage.getItem("mamta_user_token");
 
     if (!token) {
       navigate("/login");
@@ -222,7 +265,8 @@ const Cart = () => {
         `${API_URL}/cart/clear`,
         {
           headers: {
-            Authorization: `Bearer ${token}`,
+            Authorization:
+              `Bearer ${token}`,
           },
         }
       );
@@ -234,13 +278,16 @@ const Cart = () => {
       window.dispatchEvent(
         new Event("cartChanged")
       );
+
     } catch (error) {
       console.error(
         "CLEAR CART ERROR:",
         error
       );
 
-      if (error.response?.status === 401) {
+      if (
+        error.response?.status === 401
+      ) {
         localStorage.removeItem(
           "mamta_user_token"
         );
@@ -258,52 +305,59 @@ const Cart = () => {
     }
   };
 
-  // =========================================================
-  // TOTALS
-  // =========================================================
+  /* =========================================================
+     TOTALS
+  ========================================================= */
 
-  const items = cart?.items || [];
+  const items =
+    cart?.items || [];
 
-  const subtotal = items.reduce(
-    (total, item) =>
-      total +
-      Number(item.price) *
-        Number(item.quantity),
-    0
-  );
+  const subtotal =
+    items.reduce(
+      (total, item) =>
+        total +
+        Number(item.price) *
+          Number(item.quantity),
+      0
+    );
 
-  const shipping =
-    items.length > 0 ? 0 : 0;
+  const shipping = 0;
 
-  const total = subtotal + shipping;
+  const total =
+    subtotal + shipping;
 
-  // =========================================================
-  // LOADING
-  // =========================================================
+  /* =========================================================
+     LOADING
+  ========================================================= */
 
   if (loading) {
     return (
       <main className="cart-page">
+
         <div className="cart-loading">
+
           <ShoppingBag size={30} />
 
           <p>
             Loading your cart...
           </p>
+
         </div>
+
       </main>
     );
   }
 
-  // =========================================================
-  // EMPTY CART
-  // =========================================================
+  /* =========================================================
+     EMPTY CART
+  ========================================================= */
 
   if (items.length === 0) {
     return (
       <main className="cart-page">
 
         <section className="cart-hero">
+
           <div className="cart-hero-content">
 
             <span>
@@ -320,6 +374,7 @@ const Cart = () => {
             </p>
 
           </div>
+
         </section>
 
         <section className="empty-cart">
@@ -356,16 +411,12 @@ const Cart = () => {
     );
   }
 
-  // =========================================================
-  // CART
-  // =========================================================
+  /* =========================================================
+     CART
+  ========================================================= */
 
   return (
     <main className="cart-page">
-
-      {/* =====================================================
-         HERO
-      ===================================================== */}
 
       <section className="cart-hero">
 
@@ -388,15 +439,11 @@ const Cart = () => {
 
       </section>
 
-      {/* =====================================================
-         CONTENT
-      ===================================================== */}
-
       <section className="cart-container">
 
-        {/* ===================================================
-           LEFT — CART ITEMS
-        =================================================== */}
+        {/* =================================================
+           LEFT
+        ================================================= */}
 
         <div className="cart-items-section">
 
@@ -427,161 +474,248 @@ const Cart = () => {
 
           </div>
 
-          {/* =================================================
-             ITEMS
-          ================================================= */}
-
           <div className="cart-items">
 
-            {items.map((item, index) => (
+            {items.map(
+              (
+                item,
+                index
+              ) => {
 
-              <article
-                className="cart-item"
-                key={
-                  item.productId ||
-                  item._id ||
-                  index
-                }
-              >
+                /*
+                  Unique key for product + color.
 
-                {/* IMAGE */}
+                  This is important when the same product
+                  exists in two different colors.
+                */
 
-                <div className="cart-item-image">
+                const itemKey =
+                  `${item.productId}-${item.color || "default"}`;
 
-                  {item.image ? (
-                    <img
-                      src={item.image}
-                      alt={
-                        item.name ||
-                        "MAMTA Product"
-                      }
-                    />
-                  ) : (
-                    <ShoppingBag size={30} />
-                  )}
+                const isUpdating =
+                  updatingId === itemKey;
 
-                </div>
+                return (
+                  <article
+                    className="cart-item"
+                    key={`${itemKey}-${index}`}
+                  >
 
-                {/* DETAILS */}
+                    {/* =================================================
+                       IMAGE
+                    ================================================= */}
 
-                <div className="cart-item-details">
+                    <div className="cart-item-image">
 
-                  <span className="cart-item-label">
-                    MAMTA COLLECTION
-                  </span>
-
-                  <h3>
-                    {item.name}
-                  </h3>
-
-                  <p className="cart-item-price">
-                    Rs.{" "}
-                    {Number(
-                      item.price
-                    ).toLocaleString()}
-                  </p>
-
-                  {/* QUANTITY */}
-
-                  <div className="quantity-row">
-
-                    <span>
-                      Quantity
-                    </span>
-
-                    <div className="quantity-control">
-
-                      <button
-                        type="button"
-                        disabled={
-                          updatingId ===
-                          item.productId
-                        }
-                        onClick={() =>
-                          updateQuantity(
-                            item.productId,
-                            Number(
-                              item.quantity
-                            ) - 1
-                          )
-                        }
-                        aria-label="Decrease quantity"
-                      >
-                        <Minus size={14} />
-                      </button>
-
-                      <strong>
-                        {item.quantity}
-                      </strong>
-
-                      <button
-                        type="button"
-                        disabled={
-                          updatingId ===
-                          item.productId
-                        }
-                        onClick={() =>
-                          updateQuantity(
-                            item.productId,
-                            Number(
-                              item.quantity
-                            ) + 1
-                          )
-                        }
-                        aria-label="Increase quantity"
-                      >
-                        <Plus size={14} />
-                      </button>
+                      {item.image ? (
+                        <img
+                          src={item.image}
+                          alt={
+                            item.name ||
+                            "MAMTA Product"
+                          }
+                        />
+                      ) : (
+                        <ShoppingBag
+                          size={30}
+                        />
+                      )}
 
                     </div>
 
-                  </div>
+                    {/* =================================================
+                       DETAILS
+                    ================================================= */}
 
-                </div>
+                    <div className="cart-item-details">
 
-                {/* RIGHT */}
+                      <span className="cart-item-label">
+                        MAMTA COLLECTION
+                      </span>
 
-                <div className="cart-item-right">
+                      <h3>
+                        {item.name}
+                      </h3>
 
-                  <strong>
-                    Rs.{" "}
-                    {(
-                      Number(item.price) *
-                      Number(
-                        item.quantity
-                      )
-                    ).toLocaleString()}
-                  </strong>
+                      <p className="cart-item-price">
+                        Rs.{" "}
+                        {Number(
+                          item.price
+                        ).toLocaleString()}
+                      </p>
 
-                  <button
-                    type="button"
-                    className="remove-item"
-                    disabled={
-                      updatingId ===
-                      item.productId
-                    }
-                    onClick={() =>
-                      removeItem(
-                        item.productId
-                      )
-                    }
-                    aria-label={`Remove ${
-                      item.name ||
-                      "product"
-                    }`}
-                  >
-                    <Trash2 size={17} />
-                  </button>
+                      {/* =================================================
+                         COLOR
+                      ================================================= */}
 
-                </div>
+                      
+                     {item.color && (
+  <div className="cart-item-color">
+    <span className="color-label">
+      Color
+    </span>
 
-              </article>
+    <span className="selected-color">
 
-            ))}
+      <span
+        className="color-dot"
+        style={{
+          backgroundColor:
+            item.colorCode || "#e7d8d3",
+        }}
+      />
+
+      {item.color}
+
+    </span>
+  </div>
+)}
+
+                      {/* =================================================
+                         QUANTITY
+                      ================================================= */}
+
+                      <div className="quantity-row">
+
+                        <span>
+                          Quantity
+                        </span>
+
+                        <div className="quantity-control">
+
+                          {/* DECREASE */}
+
+                          <button
+                            type="button"
+                            disabled={
+                              isUpdating ||
+                              Number(
+                                item.quantity
+                              ) <= 1
+                            }
+                            onClick={() =>
+                              updateQuantity(
+                                item.productId,
+                                Number(
+                                  item.quantity
+                                ) - 1,
+                                item.color || ""
+                              )
+                            }
+                            aria-label="Decrease quantity"
+                          >
+                            <Minus
+                              size={14}
+                            />
+                          </button>
+
+                          {/* CURRENT QUANTITY */}
+
+                          <strong>
+                            {item.quantity}
+                          </strong>
+
+                          {/* INCREASE */}
+
+                          <button
+                            type="button"
+                            disabled={
+                              isUpdating
+                            }
+                            onClick={() =>
+                              updateQuantity(
+                                item.productId,
+                                Number(
+                                  item.quantity
+                                ) + 1,
+                                item.color || ""
+                              )
+                            }
+                            aria-label="Increase quantity"
+                          >
+                            <Plus
+                              size={14}
+                            />
+                          </button>
+
+                        </div>
+
+                      </div>
+
+                    </div>
+
+                    {/* =================================================
+                       RIGHT
+                    ================================================= */}
+
+                    <div className="cart-item-right">
+
+                      <strong>
+                      
+                      </strong>
+
+                      {/* =================================================
+                         EDIT + DELETE
+                      ================================================= */}
+
+                      <div className="cart-item-actions">
+
+                        {/* EDIT */}
+
+                        <button
+                          type="button"
+                          className="edit-item"
+                          onClick={() =>
+                            navigate(
+                              `/product/${item.productId}`
+                            )
+                          }
+                          aria-label={`Edit ${
+                            item.name ||
+                            "product"
+                          }`}
+                        >
+                          EDIT
+                        </button>
+
+                        {/* DELETE */}
+
+                        <button
+                          type="button"
+                          className="remove-item"
+                          disabled={
+                            isUpdating
+                          }
+                          onClick={() =>
+                            removeItem(
+                              item.productId,
+                              item.color || ""
+                            )
+                          }
+                          aria-label={`Remove ${
+                            item.name ||
+                            "product"
+                          }`}
+                        >
+                          <Trash2
+                            size={17}
+                          />
+                        </button>
+
+                      </div>
+
+                    </div>
+
+                  </article>
+                );
+              }
+            )}
 
           </div>
 
-          {/* CONTINUE SHOPPING */}
+          {/* =================================================
+             CONTINUE SHOPPING
+          ================================================= */}
 
           <Link
             to="/shop"
@@ -593,9 +727,9 @@ const Cart = () => {
 
         </div>
 
-        {/* ===================================================
-           RIGHT — SUMMARY
-        =================================================== */}
+        {/* =================================================
+           SUMMARY
+        ================================================= */}
 
         <aside className="cart-summary">
 
@@ -605,13 +739,17 @@ const Cart = () => {
               ORDER SUMMARY
             </span>
 
-            <ShoppingBag size={21} />
+            <ShoppingBag
+              size={21}
+            />
 
           </div>
 
           <h2>
             Your Order
           </h2>
+
+          {/* SUBTOTAL */}
 
           <div className="summary-line">
 
@@ -626,21 +764,23 @@ const Cart = () => {
 
           </div>
 
+          {/* SHIPPING */}
+
           <div className="summary-line">
 
             <span>
               Shipping
             </span>
 
-            <strong>
-              {shipping === 0
-                ? "FREE"
-                : `Rs. ${shipping.toLocaleString()}`}
+            <strong className="free-shipping">
+              FREE SHIPPING
             </strong>
 
           </div>
 
           <div className="summary-divider" />
+
+          {/* TOTAL */}
 
           <div className="summary-total">
 
@@ -655,6 +795,8 @@ const Cart = () => {
 
           </div>
 
+          {/* CHECKOUT */}
+
           <Link
             to="/checkout"
             className="checkout-button"
@@ -663,12 +805,14 @@ const Cart = () => {
             <ArrowRight size={17} />
           </Link>
 
+          {/* SECURE NOTE */}
+
           <div className="secure-note">
 
             <PackageOpen size={16} />
 
             <span>
-              Secure checkout ·
+              Free shipping · Secure checkout ·
               Carefully packed by MAMTA
             </span>
 
@@ -683,4 +827,3 @@ const Cart = () => {
 };
 
 export default Cart;
-

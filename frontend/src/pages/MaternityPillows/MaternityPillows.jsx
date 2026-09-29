@@ -2,6 +2,7 @@
 import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import axios from "axios";
+import toast from "react-hot-toast";
 
 import {
   Heart,
@@ -22,59 +23,66 @@ import "./MaternityPillows.css";
 const API_URL = "http://localhost:3000/api";
 
 /* =========================================================
-   MATERNITY PRODUCTS
-========================================================= */
-
-const maternityProducts = [
-  {
-    id: 1,
-    name: "Cloud Comfort Maternity Pillow",
-    price: 4990,
-    oldPrice: 5790,
-    image: "/products/maternity-pillow-1.jpg",
-    tag: "BESTSELLER",
-    rating: "4.9",
-  },
-  {
-    id: 2,
-    name: "Mum's Embrace Pregnancy Pillow",
-    price: 5490,
-    oldPrice: 6290,
-    image: "/products/maternity-pillow-2.jpg",
-    tag: "NEW",
-    rating: "4.8",
-  },
-  {
-    id: 3,
-    name: "Soft Hug Body Pillow",
-    price: 4690,
-    oldPrice: 5290,
-    image: "/products/maternity-pillow-3.jpg",
-    tag: "POPULAR",
-    rating: "4.9",
-  },
-  {
-    id: 4,
-    name: "Gentle Support Maternity Pillow",
-    price: 4290,
-    oldPrice: 4890,
-    image: "/products/maternity-pillow-4.jpg",
-    tag: "ESSENTIAL",
-    rating: "4.8",
-  },
-];
-
-/* =========================================================
    COMPONENT
 ========================================================= */
 
 const MaternityPillows = () => {
   const navigate = useNavigate();
 
-  const [wishlist, setWishlist] = useState([]);
+  /* =======================================================
+     PRODUCTS
+  ======================================================== */
+
+  const [maternityProducts, setMaternityProducts] =
+    useState([]);
+
+  const [wishlist, setWishlist] =
+    useState([]);
 
   const [addingProductId, setAddingProductId] =
     useState(null);
+
+  /* =======================================================
+     LOAD MATERNITY PRODUCTS FROM DATABASE
+  ======================================================== */
+
+  useEffect(() => {
+    const loadMaternityProducts = async () => {
+      try {
+        const response = await axios.get(
+          `${API_URL}/products`
+        );
+
+        const products =
+          response.data?.products || [];
+
+        /*
+          Only show products whose category
+          contains "maternity".
+        */
+
+        const filteredProducts =
+          products.filter((product) =>
+            String(product.category || "")
+              .toLowerCase()
+              .includes("maternity")
+          );
+
+        setMaternityProducts(
+          filteredProducts
+        );
+      } catch (error) {
+        console.error(
+          "MATERNITY PRODUCTS LOAD ERROR:",
+          error
+        );
+
+        setMaternityProducts([]);
+      }
+    };
+
+    loadMaternityProducts();
+  }, []);
 
   /* =======================================================
      LOAD WISHLIST
@@ -85,7 +93,9 @@ const MaternityPillows = () => {
       try {
         const savedWishlist =
           JSON.parse(
-            localStorage.getItem("mamta_wishlist")
+            localStorage.getItem(
+              "mamta_wishlist"
+            )
           ) || [];
 
         setWishlist(
@@ -103,10 +113,8 @@ const MaternityPillows = () => {
       }
     };
 
-    // Initial wishlist load
     loadWishlist();
 
-    // Listen for wishlist changes
     window.addEventListener(
       "wishlistUpdated",
       loadWishlist
@@ -134,10 +142,13 @@ const MaternityPillows = () => {
      CHECK WISHLIST
   ======================================================== */
 
-  const isProductInWishlist = (productId) => {
+  const isProductInWishlist = (
+    productId
+  ) => {
     return wishlist.some(
       (item) =>
-        (item._id || item.id) === productId
+        (item._id || item.id) ===
+        productId
     );
   };
 
@@ -152,7 +163,9 @@ const MaternityPillows = () => {
     try {
       const savedWishlist =
         JSON.parse(
-          localStorage.getItem("mamta_wishlist")
+          localStorage.getItem(
+            "mamta_wishlist"
+          )
         ) || [];
 
       const currentWishlist =
@@ -170,7 +183,7 @@ const MaternityPillows = () => {
       let updatedWishlist;
 
       /* ---------------------------------------------
-         REMOVE FROM WISHLIST
+         REMOVE
       --------------------------------------------- */
 
       if (alreadyExists) {
@@ -180,10 +193,14 @@ const MaternityPillows = () => {
               (item._id || item.id) !==
               productId
           );
+
+        toast.success(
+          `${product.name} removed from wishlist.`
+        );
       }
 
       /* ---------------------------------------------
-         ADD TO WISHLIST
+         ADD
       --------------------------------------------- */
 
       else {
@@ -191,44 +208,271 @@ const MaternityPillows = () => {
           ...currentWishlist,
           product,
         ];
+
+        toast.success(
+          `${product.name} added to wishlist.`
+        );
       }
 
       /* ---------------------------------------------
-         SAVE TO LOCAL STORAGE
+         SAVE
       --------------------------------------------- */
 
       localStorage.setItem(
         "mamta_wishlist",
-        JSON.stringify(updatedWishlist)
+        JSON.stringify(
+          updatedWishlist
+        )
       );
 
       /* ---------------------------------------------
-         UPDATE LOCAL STATE
+         STATE
       --------------------------------------------- */
 
-      setWishlist(updatedWishlist);
+      setWishlist(
+        updatedWishlist
+      );
 
       /* ---------------------------------------------
-         UPDATE HEADER + OTHER PAGES
+         HEADER + OTHER PAGES
       --------------------------------------------- */
 
       window.dispatchEvent(
         new Event("wishlistUpdated")
       );
-
     } catch (error) {
       console.error(
         "WISHLIST ERROR:",
         error
       );
+
+      toast.error(
+        "Unable to update wishlist."
+      );
     }
+  };
+
+  /* =======================================================
+     FLY TO CART ANIMATION
+     SAME ANIMATION AS SHOP.JSX
+  ======================================================== */
+
+  const animateToCart = (
+    buttonElement
+  ) => {
+    if (!buttonElement) {
+      console.log(
+        "❌ Add button not found"
+      );
+
+      return;
+    }
+
+    /* ---------------------------------------------
+       FIND CART
+    --------------------------------------------- */
+
+    const cartTarget =
+      document.querySelector(
+        '[data-cart-target="true"]'
+      );
+
+    if (!cartTarget) {
+      console.warn(
+        "MAMTA: Cart target not found. Add data-cart-target='true' to the cart element."
+      );
+
+      return;
+    }
+
+    /* ---------------------------------------------
+       BUTTON POSITION
+    --------------------------------------------- */
+
+    const buttonRect =
+      buttonElement.getBoundingClientRect();
+
+    /* ---------------------------------------------
+       CART POSITION
+    --------------------------------------------- */
+
+    const cartRect =
+      cartTarget.getBoundingClientRect();
+
+    /* ---------------------------------------------
+       FLYING ITEM SIZE
+    --------------------------------------------- */
+
+    const size = 58;
+
+    /* ---------------------------------------------
+       START
+    --------------------------------------------- */
+
+    const startX =
+      buttonRect.left +
+      buttonRect.width / 2 -
+      size / 2;
+
+    const startY =
+      buttonRect.top +
+      buttonRect.height / 2 -
+      size / 2;
+
+    /* ---------------------------------------------
+       END
+    --------------------------------------------- */
+
+    const endX =
+      cartRect.left +
+      cartRect.width / 2 -
+      size / 2;
+
+    const endY =
+      cartRect.top +
+      cartRect.height / 2 -
+      size / 2;
+
+    /* ---------------------------------------------
+       DISTANCE
+    --------------------------------------------- */
+
+    const deltaX =
+      endX - startX;
+
+    const deltaY =
+      endY - startY;
+
+    /* ---------------------------------------------
+       CREATE FLYING M
+    --------------------------------------------- */
+
+    const flyingItem =
+      document.createElement(
+        "div"
+      );
+
+    flyingItem.className =
+      "mamta-flying-cart-item";
+
+    flyingItem.innerHTML = `
+      <span>M</span>
+    `;
+
+    /* ---------------------------------------------
+       INITIAL POSITION
+    --------------------------------------------- */
+
+    flyingItem.style.left =
+      `${startX}px`;
+
+    flyingItem.style.top =
+      `${startY}px`;
+
+    document.body.appendChild(
+      flyingItem
+    );
+
+    /* ---------------------------------------------
+       ANIMATION
+    --------------------------------------------- */
+
+    const animation =
+      flyingItem.animate(
+        [
+          {
+            transform:
+              "translate3d(0, 0, 0) scale(1)",
+            opacity: 1,
+          },
+
+          {
+            transform:
+              `translate3d(
+                ${deltaX * 0.18}px,
+                ${deltaY * 0.18 - 45}px,
+                0
+              ) scale(0.96)`,
+            opacity: 1,
+          },
+
+          {
+            transform:
+              `translate3d(
+                ${deltaX * 0.48}px,
+                ${deltaY * 0.48 - 55}px,
+                0
+              ) scale(0.82)`,
+            opacity: 0.95,
+          },
+
+          {
+            transform:
+              `translate3d(
+                ${deltaX * 0.78}px,
+                ${deltaY * 0.78 - 25}px,
+                0
+              ) scale(0.6)`,
+            opacity: 0.65,
+          },
+
+          {
+            transform:
+              `translate3d(
+                ${deltaX}px,
+                ${deltaY}px,
+                0
+              ) scale(0.25)`,
+            opacity: 0,
+          },
+        ],
+        {
+          duration: 950,
+
+          easing:
+            "cubic-bezier(0.16, 1, 0.3, 1)",
+
+          fill: "forwards",
+        }
+      );
+
+    /* ---------------------------------------------
+       ANIMATION FINISHED
+    --------------------------------------------- */
+
+    animation.onfinish = () => {
+      flyingItem.remove();
+
+      /* -------------------------------------------
+         CART POP
+      ------------------------------------------- */
+
+      cartTarget.classList.remove(
+        "cart-flying-pop"
+      );
+
+      void cartTarget.offsetWidth;
+
+      cartTarget.classList.add(
+        "cart-flying-pop"
+      );
+
+      setTimeout(() => {
+        cartTarget.classList.remove(
+          "cart-flying-pop"
+        );
+      }, 450);
+    };
   };
 
   /* =======================================================
      ADD TO CART
   ======================================================== */
 
-  const addToCart = async (product) => {
+  const addToCart = async (
+    product,
+    buttonElement
+  ) => {
     /* ---------------------------------------------
        CHECK LOGIN
     --------------------------------------------- */
@@ -239,9 +483,21 @@ const MaternityPillows = () => {
       );
 
     if (!token) {
+      toast.error(
+        "Please login before adding items to your cart."
+      );
+
       navigate("/login");
+
       return;
     }
+
+    /* ---------------------------------------------
+       PRODUCT ID
+    --------------------------------------------- */
+
+    const productId =
+      product._id || product.id;
 
     /* ---------------------------------------------
        PREVENT DOUBLE CLICK
@@ -249,13 +505,24 @@ const MaternityPillows = () => {
 
     if (
       addingProductId ===
-      product.id
+      productId
     ) {
       return;
     }
 
     try {
-      setAddingProductId(product.id);
+      setAddingProductId(
+        productId
+      );
+
+      /* -------------------------------------------
+         START FLYING ANIMATION
+         IMMEDIATELY
+      ------------------------------------------- */
+
+      animateToCart(
+        buttonElement
+      );
 
       /* -------------------------------------------
          BACKEND REQUEST
@@ -265,14 +532,16 @@ const MaternityPillows = () => {
         `${API_URL}/cart/add`,
         {
           productId:
-            product.id ||
-            product._id,
+            productId,
 
-          name: product.name,
+          name:
+            product.name,
 
-          image: product.image,
+          image:
+            product.image,
 
-          price: product.price,
+          price:
+            product.price,
 
           quantity: 1,
         },
@@ -293,13 +562,13 @@ const MaternityPillows = () => {
       );
 
       /* -------------------------------------------
-         SUCCESS MESSAGE
+         SUCCESS TOAST
+         SAME AS SHOP.JSX
       ------------------------------------------- */
 
-      alert(
-        `${product.name} added to cart`
+      toast.success(
+        `${product.name} added to cart.`
       );
-
     } catch (error) {
       console.error(
         "ADD TO CART ERROR:",
@@ -333,6 +602,10 @@ const MaternityPillows = () => {
           new Event("authChanged")
         );
 
+        toast.error(
+          "Your session has expired. Please login again."
+        );
+
         navigate("/login");
 
         return;
@@ -342,13 +615,14 @@ const MaternityPillows = () => {
          OTHER ERROR
       ------------------------------------------- */
 
-      alert(
+      toast.error(
         error.response?.data?.message ||
-        "Unable to add product to cart."
+          "Unable to add product to cart."
       );
-
     } finally {
-      setAddingProductId(null);
+      setAddingProductId(
+        null
+      );
     }
   };
 
@@ -704,14 +978,18 @@ const MaternityPillows = () => {
           {maternityProducts.map(
             (product, index) => {
 
+              const productId =
+                product._id ||
+                product.id;
+
               const productInWishlist =
                 isProductInWishlist(
-                  product.id
+                  productId
                 );
 
               return (
                 <ScrollReveal
-                  key={product.id}
+                  key={productId}
                   direction="up"
                   className={`stagger-${
                     (index % 6) + 1
@@ -727,8 +1005,12 @@ const MaternityPillows = () => {
                     <div className="maternity-product-image">
 
                       <img
-                        src={product.image}
-                        alt={product.name}
+                        src={
+                          product.image
+                        }
+                        alt={
+                          product.name
+                        }
                         onError={(e) => {
                           e.currentTarget.src =
                             "https://placehold.co/700x700/F4D9DC/4A3032?text=MAMTA";
@@ -737,11 +1019,13 @@ const MaternityPillows = () => {
 
                       {/* PRODUCT TAG */}
 
-                      <span className="maternity-product-tag">
+                      {product.tag && (
+                        <span className="maternity-product-tag">
 
-                        {product.tag}
+                          {product.tag}
 
-                      </span>
+                        </span>
+                      )}
 
                       {/* =================================================
                           WISHLIST
@@ -755,7 +1039,9 @@ const MaternityPillows = () => {
                             : ""
                         }`}
                         onClick={() =>
-                          toggleWishlist(product)
+                          toggleWishlist(
+                            product
+                          )
                         }
                         aria-label={
                           productInWishlist
@@ -788,7 +1074,7 @@ const MaternityPillows = () => {
                           className="maternity-details-button"
                           onClick={() =>
                             navigate(
-                              `/product/${product.id}`
+                              `/product/${productId}`
                             )
                           }
                         >
@@ -806,12 +1092,15 @@ const MaternityPillows = () => {
                         <button
                           type="button"
                           className="maternity-add-cart-button"
-                          onClick={() =>
-                            addToCart(product)
+                          onClick={(e) =>
+                            addToCart(
+                              product,
+                              e.currentTarget
+                            )
                           }
                           disabled={
                             addingProductId ===
-                            product.id
+                            productId
                           }
                         >
 
@@ -820,7 +1109,7 @@ const MaternityPillows = () => {
                           />
 
                           {addingProductId ===
-                          product.id
+                          productId
                             ? "Adding..."
                             : "Add to cart"}
 
@@ -846,7 +1135,8 @@ const MaternityPillows = () => {
                         />
 
                         <span>
-                          {product.rating}
+                          {product.rating ||
+                            "4.9"}
                         </span>
 
                       </div>
@@ -867,11 +1157,13 @@ const MaternityPillows = () => {
                           )}
                         </strong>
 
-                        <span>
-                          {formatPrice(
-                            product.oldPrice
-                          )}
-                        </span>
+                        {product.oldPrice && (
+                          <span>
+                            {formatPrice(
+                              product.oldPrice
+                            )}
+                          </span>
+                        )}
 
                       </div>
 

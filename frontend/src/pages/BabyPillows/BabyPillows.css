@@ -132,7 +132,7 @@ margin-left: 40px;
 
   color: var(--mamta-pink-dark);
 
-  font-size: 10px;
+  font-size: 14px;
   font-weight: 800;
 
   letter-spacing: 2.8px;
@@ -188,7 +188,7 @@ margin-top: 20px;
 
   color: var(--mamta-muted);
 
-  font-size: 15px;
+  font-size: 20px;
   line-height: 1.9;
 }
 
@@ -223,7 +223,7 @@ margin-top: 20px;
 
   text-decoration: none;
 
-  font-size: 10px;
+  font-size: 13px;
   font-weight: 800;
 
   letter-spacing: 1.3px;
@@ -648,7 +648,7 @@ margin-top: 20px;
 
   color: var(--mamta-pink-dark);
 
-  font-size: 9px;
+  font-size: 15px;
   font-weight: 800;
 
   letter-spacing: 2.5px;
@@ -677,7 +677,7 @@ margin-top: 20px;
 
   color: var(--mamta-pink-dark);
 
-  font-style: italic;
+ font-style: normal;
 
   margin-top: 7px;
 }
@@ -710,7 +710,7 @@ margin-top: 20px;
 
   color: var(--mamta-muted);
 
-  font-size: 14px;
+  font-size: 16px;
 
   line-height: 1.9;
 }
@@ -824,7 +824,7 @@ margin-top: 20px;
     Georgia,
     serif;
 
-  font-size: 22px;
+  font-size: 25px;
 
   font-weight: 400;
 }
@@ -835,7 +835,7 @@ margin-top: 20px;
 
   color: var(--mamta-muted);
 
-  font-size: 12px;
+  font-size: 16px;
 
   line-height: 1.7;
 }
@@ -902,18 +902,18 @@ margin-top: 20px;
 
   color: var(--mamta-pink-dark);
 
-  font-style: italic;
+font-style: normal;
 }
 
 
 .baby-products-heading > p {
-  max-width: 330px;
+  max-width: 400px;
 
   margin: 0;
 
   color: var(--mamta-muted);
 
-  font-size: 12px;
+  font-size: 15px;
 
   line-height: 1.8;
 }
@@ -975,7 +975,7 @@ height: 500px;
 .baby-product-image {
   position: relative;
 
-  height: 250px;
+  height: 280px;
 
   overflow: hidden;
 
@@ -1051,7 +1051,7 @@ height: 500px;
 
   color: var(--mamta-cocoa);
 
-  font-size: 8px;
+  font-size: 15px;
   font-weight: 800;
 
   letter-spacing: 1.2px;
@@ -1172,7 +1172,7 @@ height: 500px;
 
   text-decoration: none;
 
-  font-size: 9px;
+  font-size: 13px;
   font-weight: 800;
 
   letter-spacing: 1.3px;
@@ -1247,7 +1247,7 @@ height: 500px;
 
   color: var(--mamta-pink-dark);
 
-  font-size: 8px;
+  font-size: 15px;
   font-weight: 800;
 
   letter-spacing: 1.5px;
@@ -1265,7 +1265,7 @@ height: 500px;
     Georgia,
     serif;
 
-  font-size: 19px;
+  font-size: 22px;
 
   font-weight: 400;
 
@@ -1292,7 +1292,7 @@ height: 500px;
 
   gap: 9px;
 
-  margin-top: 13px;
+ 
 }
 
 
@@ -1300,7 +1300,7 @@ height: 500px;
   display: flex;
 
   gap: 2px;
-
+font-size: 15px;
   color: var(--mamta-gold);
 }
 
@@ -1308,7 +1308,7 @@ height: 500px;
 .baby-rating > span {
   color: #988789;
 
-  font-size: 9px;
+  font-size: 13px;
 }
 
 
@@ -1352,7 +1352,7 @@ height: 500px;
 .baby-price strong {
   color: var(--mamta-cocoa);
 
-  font-size: 15px;
+  font-size: 20px;
 
   font-weight: 800;
 }
@@ -1361,7 +1361,7 @@ height: 500px;
 .baby-price del {
   color: #aa999b;
 
-  font-size: 10px;
+  font-size: 16px;
 }
 
 
@@ -1527,8 +1527,8 @@ height: 500px;
 
   color: var(--mamta-peach);
 
-  font-size: 9px;
-  font-weight: 800;
+  font-size: 20px;
+  
 
   letter-spacing: 3px;
 }
@@ -1556,7 +1556,7 @@ font-size: 70px;
 
   color: var(--mamta-peach);
 
-  font-style: italic;
+
 
   margin-top: 8px;
 }
@@ -1570,7 +1570,7 @@ font-size: 70px;
   color:
     rgba(255, 255, 255, 0.68);
 
-  font-size: 13px;
+  font-size: 16px;
 
   line-height: 1.8;
 }
@@ -1594,7 +1594,7 @@ font-size: 70px;
 
   text-decoration: none;
 
-  font-size: 9px;
+  font-size: 15px;
   font-weight: 800;
 
   letter-spacing: 1.3px;
@@ -2118,6 +2118,151 @@ font-size: 70px;
     opacity: 1 !important;
 
     transform: none !important;
+  }
+
+}
+/* =========================================================
+   MAMTA — BABY PILLOWS
+   SMOOTH FLY TO CART
+========================================================= */
+
+.mamta-flying-cart-item {
+  position: fixed;
+
+  left: 0;
+  top: 0;
+
+  width: 58px;
+  height: 58px;
+
+  z-index: 999999;
+
+  pointer-events: none;
+
+  border-radius: 16px;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  background: linear-gradient(
+    145deg,
+    #f7b8c4 0%,
+    #ed91a4 100%
+  );
+
+  box-shadow:
+    0 14px 35px rgba(74, 48, 50, 0.18),
+    0 5px 14px rgba(237, 145, 164, 0.28);
+
+  overflow: hidden;
+
+  will-change:
+    transform,
+    opacity;
+}
+
+/* =========================================================
+   SOFT SHINE
+========================================================= */
+
+.mamta-flying-cart-item::before {
+  content: "";
+
+  position: absolute;
+
+  top: -35%;
+  left: -25%;
+
+  width: 70%;
+  height: 170%;
+
+  background: rgba(
+    255,
+    255,
+    255,
+    0.2
+  );
+
+  transform: rotate(25deg);
+
+  pointer-events: none;
+}
+
+/* =========================================================
+   M LOGO
+========================================================= */
+
+.mamta-flying-cart-item span {
+  position: relative;
+
+  z-index: 2;
+
+  color: #ffffff;
+
+  font-family:
+    Georgia,
+    "Times New Roman",
+    serif;
+
+  font-size: 27px;
+
+  font-weight: 600;
+
+  line-height: 1;
+
+  user-select: none;
+}
+
+/* =========================================================
+   CART POP
+========================================================= */
+
+.cart-flying-pop {
+  animation:
+    mamta-cart-pop
+    450ms
+    cubic-bezier(
+      0.16,
+      1,
+      0.3,
+      1
+    );
+}
+
+@keyframes mamta-cart-pop {
+
+  0% {
+    transform: scale(1);
+  }
+
+  40% {
+    transform: scale(1.18);
+  }
+
+  70% {
+    transform: scale(0.94);
+  }
+
+  100% {
+    transform: scale(1);
+  }
+
+}
+
+/* =========================================================
+   REDUCED MOTION
+========================================================= */
+
+@media (prefers-reduced-motion: reduce) {
+
+  .mamta-flying-cart-item {
+    animation: none !important;
+    transition: none !important;
+  }
+
+  .cart-flying-pop {
+    animation: none !important;
   }
 
 }

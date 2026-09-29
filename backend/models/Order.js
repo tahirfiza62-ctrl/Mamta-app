@@ -1,10 +1,16 @@
 const mongoose = require("mongoose");
 
+
+/* =========================================================
+   ORDER ITEM
+========================================================= */
+
 const orderItemSchema = new mongoose.Schema(
   {
     productId: {
       type: String,
       required: true,
+      trim: true,
     },
 
     name: {
@@ -30,6 +36,27 @@ const orderItemSchema = new mongoose.Schema(
       min: 1,
     },
 
+    // Selected color name
+    color: {
+      type: String,
+      default: "",
+      trim: true,
+    },
+
+    // Exact selected color code
+    colorCode: {
+      type: String,
+      default: "",
+      trim: true,
+    },
+
+    // Exact image belonging to selected color
+    colorImage: {
+      type: String,
+      default: "",
+      trim: true,
+    },
+
     total: {
       type: Number,
       required: true,
@@ -41,60 +68,50 @@ const orderItemSchema = new mongoose.Schema(
   }
 );
 
+
+/* =========================================================
+   ORDER
+========================================================= */
+
 const orderSchema = new mongoose.Schema(
   {
     userId: {
       type: mongoose.Schema.Types.ObjectId,
       ref: "User",
       required: true,
-      index: true,
     },
 
     orderNumber: {
       type: String,
       required: true,
       unique: true,
+      trim: true,
     },
 
     items: {
       type: [orderItemSchema],
-      required: true,
-      validate: {
-        validator: (items) => items.length > 0,
-        message: "Order must contain at least one item.",
-      },
+      default: [],
     },
 
     customer: {
       name: {
         type: String,
-        required: true,
-        trim: true,
+        default: "",
       },
 
       email: {
         type: String,
-        required: true,
-        lowercase: true,
-        trim: true,
+        default: "",
       },
 
       phone: {
         type: String,
-        required: true,
-        trim: true,
+        default: "",
       },
 
       address: {
         type: String,
-        required: true,
-        trim: true,
-      },
-
-      city: {
-        type: String,
-        required: true,
-        trim: true,
+        default: "",
       },
     },
 
@@ -106,9 +123,8 @@ const orderSchema = new mongoose.Schema(
 
     shipping: {
       type: Number,
-      required: true,
-      min: 0,
       default: 0,
+      min: 0,
     },
 
     total: {
@@ -117,43 +133,15 @@ const orderSchema = new mongoose.Schema(
       min: 0,
     },
 
-    /* =====================================================
-       PAYMENT
-    ===================================================== */
-
     paymentMethod: {
       type: String,
-      enum: [
-        "Cash on Delivery",
-        "Online Payment",
-      ],
       default: "Cash on Delivery",
     },
 
     paymentStatus: {
       type: String,
-      enum: [
-        "Pending",
-        "Paid",
-        "Failed",
-        "Cancelled",
-      ],
       default: "Pending",
     },
-
-    paymentReference: {
-      type: String,
-      default: "",
-    },
-
-    paymentProvider: {
-      type: String,
-      default: "",
-    },
-
-    /* =====================================================
-       ORDER STATUS
-    ===================================================== */
 
     orderStatus: {
       type: String,
@@ -173,4 +161,8 @@ const orderSchema = new mongoose.Schema(
   }
 );
 
-module.exports = mongoose.model("Order", orderSchema);
+
+module.exports = mongoose.model(
+  "Order",
+  orderSchema
+);

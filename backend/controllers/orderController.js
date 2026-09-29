@@ -1,281 +1,434 @@
-const Order = require("../models/Order");
 const Cart = require("../models/Cart");
-const User = require("../models/User");
+const Order = require("../models/Order");
 
-// =====================================================
-// GENERATE ORDER NUMBER
-// =====================================================
 
-const generateOrderNumber = () => {
-  const timestamp = Date.now().toString().slice(-8);
-  const random = Math.floor(1000 + Math.random() * 9000);
-
-  return `MAMTA-${timestamp}-${random}`;
-};
-
-// =====================================================
-// CREATE ORDER
-// =====================================================
+/* =========================================================
+   CREATE ORDER
+========================================================= */
 
 const createOrder = async (req, res) => {
   try {
-    const userId = req.user.id;
-
     const {
       name,
       email,
       phone,
       address,
-      city,
-      paymentMethod = "Cash on Delivery",
+      paymentMethod,
     } = req.body;
 
-    // -----------------------------
-    // Validate customer information
-    // -----------------------------
-
-    if (
-      !name ||
-      !email ||
-      !phone ||
-      !address ||
-      !city
-    ) {
+    if (!name || !name.trim()) {
       return res.status(400).json({
-        message: "Please provide all customer details.",
+        success: false,
+        message: "Customer name is required.",
       });
     }
 
-    // -----------------------------
-    // Validate payment method
-    // -----------------------------
-
-    if (paymentMethod !== "Cash on Delivery") {
+    if (!email || !email.trim()) {
       return res.status(400).json({
-        message: "Invalid payment method.",
+        success: false,
+        message: "Customer email is required.",
       });
     }
 
-    // -----------------------------
-    // Get user's cart
-    // -----------------------------
+    if (!phone || !phone.trim()) {
+      return res.status(400).json({
+        success: false,
+        message: "Customer phone is required.",
+      });
+    }
+
+    if (!address || !address.trim()) {
+      return res.status(400).json({
+        success: false,
+        message: "Delivery address is required.",
+      });
+    }
+
+
+    /* =====================================================
+       GET CART
+    ===================================================== */
 
     const cart = await Cart.findOne({
-      userId,
+      userId: req.user._id,
     });
 
-    if (!cart || !cart.items || cart.items.length === 0) {
+    if (
+      !cart ||
+      !Array.isArray(cart.items) ||
+      cart.items.length === 0
+    ) {
       return res.status(400).json({
+        success: false,
         message: "Your cart is empty.",
       });
     }
 
-    // -----------------------------
-    // Calculate order items
-    // -----------------------------
 
-    const orderItems = cart.items.map((item) => ({
-      productId: item.productId,
-      name: item.name,
-      image: item.image || "",
-      price: Number(item.price),
-      quantity: Number(item.quantity),
-      total:
-        Number(item.price) *
-        Number(item.quantity),
-    }));
+    /* =====================================================
+       SUBTOTAL
+    ===================================================== */
 
-    // -----------------------------
-    // Calculate subtotal
-    // -----------------------------
-
-    const subtotal = orderItems.reduce(
-      (total, item) => total + item.total,
+    const subtotal = cart.items.reduce(
+      (total, item) => {
+        return (
+          total +
+          Number(item.price || 0) *
+            Number(item.quantity || 0)
+        );
+      },
       0
     );
 
-    // -----------------------------
-    // Shipping
-    // -----------------------------
 
-    const shipping = subtotal >= 5000 ? 0 : 250;
+    /* =====================================================
+       SHIPPING
+    ===================================================== */
 
-    // -----------------------------
-    // Final total
-    // -----------------------------
+    const shipping =
+      subtotal >= 5000
+        ? 0
+        : 250;
 
-    const total = subtotal + shipping;
 
-    // -----------------------------
-    // Create order
-    // -----------------------------
+    /* =====================================================
+       TOTAL
+    ===================================================== */
 
-    const order = await Order.create({
-      userId,
+    const total =
+      subtotal + shipping;
 
-      orderNumber: generateOrderNumber(),
 
-      items: orderItems,
+    /* =====================================================
+       ORDER NUMBER
+    ===================================================== */
 
-      customer: {
-        name: name.trim(),
-        email: email.trim().toLowerCase(),
-        phone: phone.trim(),
-        address: address.trim(),
-        city: city.trim(),
-      },
+    const orderNumber =
+      `MAMTA-${Date.now()}`;
 
-      subtotal,
 
-      shipping,
+    /* =====================================================
+       ORDER ITEMS
 
-      total,
+       IMPORTANT:
+       Keep selected color + exact color code +
+       selected color image.
+    ===================================================== */
 
-      paymentMethod,
+    const orderItems =
+      cart.items.map((item) => {
+        const itemPrice =
+          Number(item.price || 0);
 
-      paymentStatus: "Pending",
+        const itemQuantity =
+          Number(item.quantity || 0);
 
-      orderStatus: "Pending",
-    });
+        return {
+          productId:
+            String(item.productId),
 
-    // -----------------------------
-    // Clear cart
-    // -----------------------------
+          name:
+            String(item.name || "").trim(),
+
+          image:
+            item.image || "",
+
+          price:
+            itemPrice,
+
+          quantity:
+            itemQuantity,
+
+          color:
+            typeof item.color === "string"
+              ? item.color.trim()
+              : "",
+
+          colorCode:
+            typeof item.colorCode === "string"
+              ? item.colorCode.trim()
+              : "",
+
+          colorImage:
+            typeof item.colorImage === "string"
+              ? item.colorImage.trim()
+              : "",
+
+          total:
+            itemPrice * itemQuantity,
+        };
+      });
+
+
+    /* =====================================================
+       CREATE ORDER
+    ===================================================== */
+
+    const order =
+      await Order.create({
+        userId: req.user._id,
+
+        orderNumber,
+
+        items: orderItems,
+
+        customer: {
+          name: name.trim(),
+          email: email.trim(),
+          phone: phone.trim(),
+          address: address.trim(),
+        },
+
+        subtotal,
+
+        shipping,
+
+        total,
+
+        paymentMethod:
+          paymentMethod ||
+          "Cash on Delivery",
+
+        paymentStatus:
+          "Pending",
+
+        orderStatus:
+          "Pending",
+      });
+
+
+    /* =====================================================
+       CLEAR CART
+    ===================================================== */
 
     cart.items = [];
 
     await cart.save();
 
-    // -----------------------------
-    // Response
-    // -----------------------------
+
+    /* =====================================================
+       RESPONSE
+    ===================================================== */
 
     res.status(201).json({
       success: true,
-
       message: "Order placed successfully.",
-
       order,
     });
+
   } catch (error) {
-    console.error("CREATE ORDER ERROR:", error);
+    console.error(
+      "CREATE ORDER ERROR:",
+      error
+    );
 
     res.status(500).json({
-      message: "Unable to place order.",
+      success: false,
+      message: "Unable to create order.",
     });
   }
 };
 
-// =====================================================
-// GET MY ORDERS
-// =====================================================
+
+/* =========================================================
+   GET MY ORDERS
+========================================================= */
 
 const getMyOrders = async (req, res) => {
   try {
-    const orders = await Order.find({
-      userId: req.user.id,
-    }).sort({
-      createdAt: -1,
-    });
+    const orders =
+      await Order.find({
+        userId: req.user._id,
+      }).sort({
+        createdAt: -1,
+      });
 
-    res.json({
+    res.status(200).json({
       success: true,
       orders,
     });
+
   } catch (error) {
-    console.error("GET MY ORDERS ERROR:", error);
+    console.error(
+      "GET MY ORDERS ERROR:",
+      error
+    );
 
     res.status(500).json({
-      message: "Unable to load orders.",
+      success: false,
+      message: "Unable to fetch orders.",
     });
   }
 };
 
-// =====================================================
-// GET SINGLE ORDER
-// =====================================================
+
+/* =========================================================
+   GET ORDER BY ID
+========================================================= */
 
 const getOrderById = async (req, res) => {
   try {
-    const order = await Order.findOne({
-      _id: req.params.id,
-      userId: req.user.id,
-    });
+    const order =
+      await Order.findOne({
+        _id: req.params.id,
+        userId: req.user._id,
+      });
 
     if (!order) {
       return res.status(404).json({
+        success: false,
         message: "Order not found.",
       });
     }
 
-    res.json({
+    res.status(200).json({
       success: true,
       order,
     });
+
   } catch (error) {
-    console.error("GET ORDER ERROR:", error);
+    console.error(
+      "GET ORDER BY ID ERROR:",
+      error
+    );
 
     res.status(500).json({
-      message: "Unable to load order.",
+      success: false,
+      message: "Unable to fetch order.",
     });
   }
 };
 
-// =====================================================
-// CANCEL ORDER
-// =====================================================
+
+/* =========================================================
+   CANCEL ORDER
+========================================================= */
 
 const cancelOrder = async (req, res) => {
   try {
-    const order = await Order.findOne({
-      _id: req.params.id,
-      userId: req.user.id,
-    });
+    const order =
+      await Order.findOne({
+        _id: req.params.id,
+        userId: req.user._id,
+      });
 
     if (!order) {
       return res.status(404).json({
+        success: false,
         message: "Order not found.",
       });
     }
 
-    // Only pending/confirmed orders can be cancelled
     if (
-      order.orderStatus !== "Pending" &&
-      order.orderStatus !== "Confirmed"
+      ["Shipped", "Delivered", "Cancelled"]
+        .includes(order.orderStatus)
     ) {
       return res.status(400).json({
+        success: false,
         message:
-          "This order can no longer be cancelled.",
+          "This order cannot be cancelled.",
       });
     }
 
-    order.orderStatus = "Cancelled";
+    order.orderStatus =
+      "Cancelled";
 
     await order.save();
 
-    res.json({
+    res.status(200).json({
       success: true,
-
-      message: "Order cancelled successfully.",
-
+      message: "Order cancelled.",
       order,
     });
+
   } catch (error) {
-    console.error("CANCEL ORDER ERROR:", error);
+    console.error(
+      "CANCEL ORDER ERROR:",
+      error
+    );
 
     res.status(500).json({
+      success: false,
       message: "Unable to cancel order.",
     });
   }
 };
 
-// =====================================================
-// EXPORT
-// =====================================================
+
+/* =========================================================
+   UPDATE ORDER STATUS
+========================================================= */
+
+const updateOrderStatus = async (
+  req,
+  res
+) => {
+  try {
+    const {
+      status,
+    } = req.body;
+
+    const allowedStatuses = [
+      "Pending",
+      "Confirmed",
+      "Processing",
+      "Shipped",
+      "Delivered",
+      "Cancelled",
+    ];
+
+    if (
+      !allowedStatuses.includes(status)
+    ) {
+      return res.status(400).json({
+        success: false,
+        message: "Invalid order status.",
+      });
+    }
+
+    const order =
+      await Order.findById(
+        req.params.id
+      );
+
+    if (!order) {
+      return res.status(404).json({
+        success: false,
+        message: "Order not found.",
+      });
+    }
+
+    order.orderStatus =
+      status;
+
+    await order.save();
+
+    res.status(200).json({
+      success: true,
+      message:
+        "Order status updated successfully.",
+      order,
+    });
+
+  } catch (error) {
+    console.error(
+      "UPDATE ORDER STATUS ERROR:",
+      error
+    );
+
+    res.status(500).json({
+      success: false,
+      message:
+        "Unable to update order status.",
+    });
+  }
+};
+
 
 module.exports = {
   createOrder,
   getMyOrders,
   getOrderById,
   cancelOrder,
+  updateOrderStatus,
 };
