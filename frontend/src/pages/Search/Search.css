@@ -1,0 +1,692 @@
+
+/* =========================================================
+   MAMTA SEARCH PAGE
+   Premium • Soft • Elegant
+========================================================= */
+
+.mamta-search-page {
+  width: 100%;
+  min-height: 100vh;
+  background: #fff9f4;
+  color: #4a3032;
+  font-family: "Poppins", "DM Sans", "Segoe UI", sans-serif;
+}
+
+/* =========================================================
+   SEARCH HERO
+========================================================= */
+
+.search-hero {
+  width: 100%;
+  padding: 90px 20px 80px;
+  background:
+    radial-gradient(
+      circle at 15% 20%,
+      rgba(244, 217, 220, 0.5),
+      transparent 35%
+    ),
+    #fff9f4;
+}
+
+.search-hero-inner {
+  width: min(900px, 100%);
+  margin: 0 auto;
+  text-align: center;
+}
+
+.search-eyebrow {
+  display: inline-block;
+  margin-bottom: 18px;
+  color: #b86172;
+  font-size: 10px;
+  font-weight: 700;
+  letter-spacing: 3px;
+}
+
+.search-hero h1 {
+  margin: 0;
+  font-family: "Playfair Display", Georgia, serif;
+  font-size: 50px;
+  font-weight: 500;
+  line-height: 1.05;
+  letter-spacing: -2px;
+  color: #4a3032;
+}
+
+.search-hero h1 span {
+  display: inline-block;
+  color: #b86172;
+margin-left: 15px;
+}
+
+.search-hero p {
+  max-width: 540px;
+  margin: 22px auto 34px;
+  color: #80686a;
+  font-size: 14px;
+  line-height: 1.8;
+}
+
+/* =========================================================
+   SEARCH FORM
+========================================================= */
+
+.search-form {
+  width: min(720px, 100%);
+  min-height: 64px;
+  margin: 0 auto;
+  padding: 7px 7px 7px 22px;
+
+  display: flex;
+  align-items: center;
+  gap: 12px;
+
+  background: #ffffff;
+  border: 1px solid #eadbdd;
+  border-radius: 4px;
+
+  box-shadow:
+    0 18px 50px rgba(74, 48, 50, 0.08);
+
+  transition:
+    border-color 0.25s ease,
+    box-shadow 0.25s ease;
+}
+
+.search-form:focus-within {
+  border-color: #c9939d;
+
+  box-shadow:
+    0 18px 55px rgba(184, 97, 114, 0.13);
+}
+
+.search-form > svg {
+  flex-shrink: 0;
+  color: #b86172;
+}
+
+.search-form input {
+  flex: 1;
+  min-width: 0;
+
+  border: 0;
+  outline: 0;
+  background: transparent;
+
+  color: #4a3032;
+
+  font-family: inherit;
+  font-size: 14px;
+}
+
+.search-form input::placeholder {
+  color: #ad999b;
+}
+
+.search-clear {
+  width: 34px;
+  height: 34px;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  border: 0;
+  background: transparent;
+  color: #92777a;
+
+  cursor: pointer;
+}
+
+.search-clear:hover {
+  color: #b86172;
+}
+
+.search-submit {
+  min-height: 48px;
+  padding: 0 25px;
+
+  border: 0;
+  border-radius: 2px;
+
+  background: #4a3032;
+  color: #ffffff;
+
+  font-family: inherit;
+  font-size: 12px;
+  font-weight: 600;
+  letter-spacing: 0.5px;
+
+  cursor: pointer;
+
+  transition:
+    background 0.25s ease,
+    transform 0.25s ease;
+}
+
+.search-submit:hover {
+  background: #b86172;
+  transform: translateY(-1px);
+}
+
+/* =========================================================
+   RESULTS
+========================================================= */
+
+.search-results {
+  width: 100%;
+  padding: 10px 20px 100px;
+}
+
+.search-results-container {
+  width: min(1240px, 100%);
+  margin: 0 auto;
+}
+
+.search-results-heading {
+  margin-bottom: 35px;
+
+  display: flex;
+  align-items: flex-end;
+  justify-content: space-between;
+  gap: 20px;
+
+  border-bottom: 1px solid #eadbdd;
+  padding-bottom: 20px;
+}
+
+.search-results-heading > div > span {
+  display: block;
+  margin-bottom: 8px;
+
+  color: #b86172;
+
+  font-size: 9px;
+  font-weight: 700;
+  letter-spacing: 2.5px;
+}
+
+.search-results-heading h2 {
+  margin: 0;
+
+  font-family: "Playfair Display", Georgia, serif;
+  font-size: 30px;
+  font-weight: 500;
+  color: #4a3032;
+}
+
+.search-results-heading h2 strong {
+  color: #b86172;
+  font-weight: 500;
+}
+
+.search-results-heading > p {
+  margin: 0;
+  color: #92777a;
+  font-size: 12px;
+}
+
+/* =========================================================
+   EMPTY / LOADING MESSAGE
+========================================================= */
+
+.search-message {
+  min-height: 360px;
+
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+
+  text-align: center;
+  padding: 50px 20px;
+
+  color: #92777a;
+}
+
+.search-message > svg {
+  margin-bottom: 18px;
+  color: #c9939d;
+}
+
+.search-message h3 {
+  margin: 0 0 8px;
+
+  font-family: "Playfair Display", Georgia, serif;
+  font-size: 28px;
+  font-weight: 500;
+
+  color: #4a3032;
+}
+
+.search-message p {
+  max-width: 450px;
+  margin: 0;
+
+  font-size: 13px;
+  line-height: 1.7;
+  color: #92777a;
+}
+
+.search-start {
+  min-height: 300px;
+}
+
+/* =========================================================
+   SPINNER
+========================================================= */
+
+.search-spinner {
+  width: 32px;
+  height: 32px;
+
+  margin-bottom: 20px;
+
+  border: 2px solid #eadbdd;
+  border-top-color: #b86172;
+  border-radius: 50%;
+
+  animation: searchSpin 0.8s linear infinite;
+}
+
+@keyframes searchSpin {
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+/* =========================================================
+   NO RESULTS
+========================================================= */
+
+.empty-search-icon {
+  width: 68px;
+  height: 68px;
+
+  margin-bottom: 20px;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  border-radius: 50%;
+  background: #f4e4e5;
+  color: #b86172;
+}
+
+.search-shop-button {
+  margin-top: 25px;
+
+  display: inline-flex;
+  align-items: center;
+  gap: 9px;
+
+  padding: 13px 20px;
+
+  background: #4a3032;
+  color: #ffffff;
+
+  text-decoration: none;
+
+  font-size: 11px;
+  font-weight: 600;
+
+  transition:
+    background 0.25s ease,
+    transform 0.25s ease;
+}
+
+.search-shop-button:hover {
+  background: #b86172;
+  transform: translateY(-2px);
+}
+
+/* =========================================================
+   PRODUCT GRID
+========================================================= */
+
+.search-product-grid {
+  display: grid;
+  grid-template-columns:
+    repeat(4, minmax(0, 1fr));
+  gap: 22px;
+}
+
+/* =========================================================
+   PRODUCT CARD
+========================================================= */
+
+.search-product-card {
+  min-width: 0;
+  background: #ffffff;
+
+  border: 1px solid #eee1e2;
+
+  transition:
+    transform 0.3s ease,
+    box-shadow 0.3s ease;
+}
+
+.search-product-card:hover {
+  transform: translateY(-5px);
+
+  box-shadow:
+    0 20px 45px rgba(74, 48, 50, 0.09);
+}
+
+/* =========================================================
+   PRODUCT IMAGE
+========================================================= */
+
+.search-product-image {
+  position: relative;
+
+  width: 100%;
+  aspect-ratio: 1 / 1;
+
+  overflow: hidden;
+
+  background: #f7eeee;
+}
+
+.search-product-image img {
+  width: 100%;
+  height: 100%;
+
+  display: block;
+
+  object-fit: cover;
+
+  transition:
+    transform 0.5s ease;
+}
+
+.search-product-card:hover
+.search-product-image img {
+  transform: scale(1.045);
+}
+
+/* =========================================================
+   CATEGORY BADGE
+========================================================= */
+
+.search-product-badge {
+  position: absolute;
+  top: 14px;
+  left: 14px;
+
+  max-width: calc(100% - 70px);
+
+  padding: 6px 9px;
+
+  background: rgba(255, 255, 255, 0.9);
+  color: #80686a;
+
+  font-size: 8px;
+  font-weight: 700;
+  letter-spacing: 1.1px;
+
+  backdrop-filter: blur(8px);
+}
+
+/* =========================================================
+   WISHLIST
+========================================================= */
+
+.search-wishlist {
+  position: absolute;
+  top: 13px;
+  right: 13px;
+
+  width: 38px;
+  height: 38px;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  border: 1px solid rgba(255, 255, 255, 0.8);
+  border-radius: 50%;
+
+  background: rgba(255, 255, 255, 0.92);
+  color: #80686a;
+
+  cursor: pointer;
+
+  transition:
+    color 0.25s ease,
+    background 0.25s ease,
+    transform 0.25s ease;
+}
+
+.search-wishlist:hover {
+  color: #b86172;
+  transform: scale(1.05);
+}
+
+.search-wishlist.active {
+  background: #b86172;
+  color: #ffffff;
+  border-color: #b86172;
+}
+
+/* =========================================================
+   VIEW DETAILS
+========================================================= */
+
+.search-view-button {
+  position: absolute;
+  left: 14px;
+  right: 14px;
+  bottom: 14px;
+
+  min-height: 42px;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+
+  background: rgba(74, 48, 50, 0.94);
+  color: #ffffff;
+
+  text-decoration: none;
+
+  font-size: 10px;
+  font-weight: 600;
+  letter-spacing: 0.4px;
+
+  opacity: 0;
+  transform: translateY(8px);
+
+  transition:
+    opacity 0.3s ease,
+    transform 0.3s ease,
+    background 0.25s ease;
+}
+
+.search-product-card:hover
+.search-view-button {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+.search-view-button:hover {
+  background: #b86172;
+}
+
+/* =========================================================
+   PRODUCT INFO
+========================================================= */
+
+.search-product-info {
+  padding: 20px 18px 22px;
+}
+
+.search-product-info h3 {
+  min-height: 44px;
+
+  margin: 0 0 11px;
+
+  color: #4a3032;
+
+  font-family: "Playfair Display", Georgia, serif;
+  font-size: 17px;
+  font-weight: 500;
+  line-height: 1.35;
+}
+
+/* =========================================================
+   RATING
+========================================================= */
+
+.search-rating {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+
+  margin-bottom: 14px;
+}
+
+.search-stars {
+  display: flex;
+  align-items: center;
+  gap: 2px;
+
+  color: #b86172;
+}
+
+.search-rating > span {
+  color: #92777a;
+  font-size: 10px;
+}
+
+/* =========================================================
+   PRICE
+========================================================= */
+
+.search-price {
+  display: flex;
+  align-items: center;
+  gap: 9px;
+}
+
+.search-price strong {
+  color: #4a3032;
+
+  font-size: 14px;
+  font-weight: 700;
+}
+
+.search-price del {
+  color: #b6a3a5;
+  font-size: 11px;
+}
+
+/* =========================================================
+   TABLET
+========================================================= */
+
+@media (max-width: 1050px) {
+
+  .search-product-grid {
+    grid-template-columns:
+      repeat(3, minmax(0, 1fr));
+  }
+
+}
+
+/* =========================================================
+   MOBILE
+========================================================= */
+
+@media (max-width: 760px) {
+
+  .search-hero {
+    padding: 65px 16px 60px;
+  }
+
+  .search-hero h1 {
+    font-size: 44px;
+    letter-spacing: -1.5px;
+  }
+
+  .search-form {
+    min-height: 58px;
+    padding-left: 16px;
+  }
+
+  .search-submit {
+    min-height: 44px;
+    padding: 0 17px;
+  }
+
+  .search-results {
+    padding: 0 16px 70px;
+  }
+
+  .search-results-heading {
+    align-items: flex-start;
+    flex-direction: column;
+    gap: 10px;
+  }
+
+  .search-results-heading h2 {
+    font-size: 26px;
+  }
+
+  .search-product-grid {
+    grid-template-columns:
+      repeat(2, minmax(0, 1fr));
+    gap: 14px;
+  }
+
+  .search-product-info {
+    padding: 16px 13px 18px;
+  }
+
+  .search-product-info h3 {
+    min-height: 42px;
+    font-size: 15px;
+  }
+
+  .search-view-button {
+    opacity: 1;
+    transform: translateY(0);
+  }
+
+}
+
+/* =========================================================
+   SMALL MOBILE
+========================================================= */
+
+@media (max-width: 480px) {
+
+  .search-hero h1 {
+    font-size: 37px;
+  }
+
+  .search-form {
+    flex-wrap: wrap;
+    padding: 10px 10px 10px 15px;
+  }
+
+  .search-form input {
+    width: calc(100% - 50px);
+  }
+
+  .search-submit {
+    width: 100%;
+  }
+
+  .search-product-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .search-product-info h3 {
+    min-height: auto;
+  }
+
+}
+

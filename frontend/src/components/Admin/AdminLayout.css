@@ -1,0 +1,208 @@
+
+/* =========================================================
+   ADMIN LAYOUT
+========================================================= */
+
+.admin-layout {
+  min-height: 100vh;
+  width: 100%;
+  display: flex;
+  background: #f8f7f4;
+  color: #4a3032;
+}
+
+
+/* =========================================================
+   MAIN AREA
+========================================================= */
+
+.admin-main {
+  flex: 1;
+  min-width: 0;
+  margin-left: 260px;
+  min-height: 100vh;
+}
+
+
+/* =========================================================
+   CONTENT
+========================================================= */
+
+.admin-content {
+  width: 100%;
+  padding: 28px;
+  min-height: calc(100vh - 76px);
+}
+
+
+/* =========================================================
+   RESPONSIVE
+========================================================= */
+
+@media (max-width: 900px) {
+  .admin-main {
+    margin-left: 0;
+  }
+
+  .admin-content {
+    padding: 20px;
+  }
+}
+
+@media (max-width: 600px) {
+  .admin-content {
+    padding: 16px;
+  }
+}
+
+
+/* =========================================================
+   TABLET
+========================================================= */
+
+@media (max-width: 1100px) {
+
+  .admin-main {
+    margin-left: 240px;
+  }
+
+  .admin-content {
+    padding: 24px;
+  }
+
+}
+
+
+/* =========================================================
+   MOBILE
+========================================================= */
+
+@media (max-width: 900px) {
+
+  .admin-main {
+    width: 100%;
+
+    margin-left: 0;
+
+    min-height: 100vh;
+  }
+
+  .admin-content {
+    padding: 20px 16px;
+  }
+
+}
+
+
+/* =========================================================
+   SMALL MOBILE
+========================================================= */
+
+@media (max-width: 600px) {
+
+  .admin-content {
+    padding: 16px 12px;
+  }
+
+}
+
+/* =========================================================
+   MOBILE SIDEBAR
+========================================================= */
+
+.admin-sidebar-overlay {
+  position: fixed;
+  inset: 0;
+
+  background: rgba(50, 30, 30, 0.45);
+
+  z-index: 999;
+}
+
+
+/* =========================================================
+   MOBILE SIDEBAR CLOSE BUTTON
+========================================================= */
+
+.admin-mobile-close {
+  display: none;
+
+  border: none;
+  background: transparent;
+
+  color: #4a3032;
+
+  cursor: pointer;
+
+  align-items: center;
+  justify-content: center;
+}
+
+
+/* =========================================================
+   MOBILE
+========================================================= */
+
+@media (max-width: 900px) {
+
+  .admin-sidebar {
+    position: fixed;
+
+    top: 0;
+    left: 0;
+
+    width: 260px;
+    height: 100vh;
+
+    z-index: 1000;
+
+    transform: translateX(-100%);
+
+    transition: transform 0.3s ease;
+
+    box-shadow: 8px 0 30px rgba(74, 48, 50, 0.12);
+  }
+
+
+  .admin-sidebar.mobile-open {
+    transform: translateX(0);
+  }
+
+
+  .admin-mobile-close {
+    display: flex;
+
+    width: 38px;
+    height: 38px;
+
+    border-radius: 9px;
+  }
+
+
+  .admin-mobile-close:hover {
+    background: #fff1eb;
+  }
+
+}
+
+
+/* =========================================================
+   DESKTOP
+========================================================= */
+
+@media (min-width: 901px) {
+
+  .admin-sidebar-overlay {
+    display: none;
+  }
+
+}
+
+@media (max-width: 900px) {
+  .admin-menu-btn {
+    display: flex;
+  }
+}
+/* =========================================================
+   ADMIN NAV LINKS
+========================================================= */

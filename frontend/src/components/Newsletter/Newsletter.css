@@ -1,0 +1,876 @@
+
+/* =========================================================
+   MAMTA DARK NEWSLETTER
+   Premium • Elegant • Warm • Minimal
+========================================================= */
+
+.mamta-newsletter-section {
+  position: relative;
+
+  width: 100%;
+
+  padding: 100px 8%;
+
+  background:
+    radial-gradient(
+      circle at 12% 20%,
+      rgba(189, 111, 124, 0.16),
+      transparent 30%
+    ),
+    radial-gradient(
+      circle at 88% 80%,
+      rgba(185, 146, 90, 0.09),
+      transparent 28%
+    ),
+    #241719;
+
+  color: #fff9f4;
+
+  overflow: hidden;
+
+  border-top: 1px solid rgba(185, 146, 90, 0.15);
+  border-bottom: 1px solid rgba(185, 146, 90, 0.15);
+}
+
+
+/* =========================================================
+   INNER
+========================================================= */
+
+.newsletter-inner {
+  position: relative;
+  z-index: 2;
+
+  max-width: 1250px;
+
+  margin: 0 auto;
+
+  display: grid;
+
+  grid-template-columns: 1.05fr 0.95fr;
+
+  align-items: center;
+
+  gap: 100px;
+}
+
+
+/* =========================================================
+   DECORATIVE GLOW
+========================================================= */
+
+.newsletter-glow {
+  position: absolute;
+
+  border-radius: 50%;
+
+  pointer-events: none;
+
+  filter: blur(2px);
+}
+
+.newsletter-glow-one {
+  width: 320px;
+  height: 320px;
+
+  left: -190px;
+  top: -150px;
+
+  border: 1px solid rgba(217, 143, 154, 0.12);
+}
+
+.newsletter-glow-two {
+  width: 420px;
+  height: 420px;
+
+  right: -270px;
+  bottom: -250px;
+
+  border: 1px solid rgba(185, 146, 90, 0.12);
+}
+
+
+/* =========================================================
+   LABEL
+========================================================= */
+
+.newsletter-label {
+  display: flex;
+  align-items: center;
+
+  gap: 10px;
+
+  margin-bottom: 22px;
+
+  color: #d6b77e;
+
+  font-size: 10px;
+  font-weight: 700;
+
+  letter-spacing: 3px;
+}
+
+.newsletter-line {
+  width: 30px;
+  height: 1px;
+
+  background: #b9925a;
+
+  opacity: 0.8;
+}
+
+
+/* =========================================================
+   HEADING
+========================================================= */
+
+.newsletter-content h2 {
+  margin: 0;
+
+  font-family: "Playfair Display", Georgia, serif;
+
+  color: #fff9f4;
+
+  font-size: clamp(44px, 5vw, 72px);
+
+  font-weight: 400;
+
+  line-height: 1.05;
+
+  letter-spacing: -1.8px;
+}
+
+.newsletter-content h2 em {
+  color: #d98f9a;
+font-style: normal;
+  font-weight: 500;
+}
+
+
+.newsletter-content > p {
+  max-width: 520px;
+
+  margin: 27px 0 0;
+
+  color: #c8b7b8;
+
+  font-size: 14px;
+
+  line-height: 1.9;
+}
+
+
+/* =========================================================
+   FORM CARD
+========================================================= */
+
+.newsletter-form-wrapper {
+  position: relative;
+
+  padding: 35px;
+
+  background:
+    linear-gradient(
+      145deg,
+      rgba(255, 249, 244, 0.07),
+      rgba(255, 249, 244, 0.025)
+    );
+
+  border: 1px solid rgba(255, 249, 244, 0.11);
+
+  border-radius: 24px;
+
+  box-shadow:
+    0 25px 70px rgba(0, 0, 0, 0.18);
+
+  backdrop-filter: blur(10px);
+}
+
+
+/* =========================================================
+   FORM HEADING
+========================================================= */
+
+.newsletter-form-heading {
+  display: flex;
+  align-items: center;
+
+  gap: 14px;
+
+  margin-bottom: 24px;
+}
+
+.mail-icon {
+  width: 44px;
+  height: 44px;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  flex-shrink: 0;
+
+  border: 1px solid rgba(185, 146, 90, 0.35);
+
+  border-radius: 50%;
+
+  color: #d6b77e;
+
+  background: rgba(185, 146, 90, 0.07);
+}
+
+.newsletter-form-heading span {
+  display: block;
+
+  margin-bottom: 4px;
+
+  color: #d6b77e;
+
+  font-size: 9px;
+  font-weight: 700;
+
+  letter-spacing: 2.2px;
+}
+
+.newsletter-form-heading p {
+  margin: 0;
+
+  color: #c8b7b8;
+
+  font-size: 13px;
+}
+
+
+/* =========================================================
+   FORM
+========================================================= */
+
+.mamta-newsletter-form {
+  display: flex;
+
+  width: 100%;
+
+  padding: 5px;
+
+  background: #fff9f4;
+
+  border: 1px solid rgba(255, 249, 244, 0.15);
+
+  border-radius: 14px;
+
+  transition:
+    box-shadow 0.25s ease,
+    border-color 0.25s ease;
+}
+
+.mamta-newsletter-form:focus-within {
+  border-color: rgba(217, 143, 154, 0.5);
+
+  box-shadow:
+    0 0 0 4px rgba(217, 143, 154, 0.08);
+}
+
+
+/* INPUT */
+
+.newsletter-input-wrapper {
+  flex: 1;
+
+  min-width: 0;
+}
+
+.newsletter-input-wrapper input {
+  width: 100%;
+
+  height: 48px;
+
+  padding: 0 15px;
+
+  border: none;
+  outline: none;
+
+  background: transparent;
+
+  color: #4a3032;
+
+  font-family: "DM Sans", sans-serif;
+
+  font-size: 13px;
+}
+
+.newsletter-input-wrapper input::placeholder {
+  color: #9a8587;
+}
+
+
+/* BUTTON */
+
+.mamta-newsletter-form button {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  gap: 9px;
+
+  min-width: 145px;
+
+  padding: 0 19px;
+
+  border: none;
+
+  border-radius: 10px;
+
+  background: #bd6f7c;
+
+  color: #ffffff;
+
+  font-family: "DM Sans", sans-serif;
+
+  font-size: 12px;
+  font-weight: 700;
+
+  cursor: pointer;
+
+  transition:
+    background 0.25s ease,
+    transform 0.25s ease,
+    box-shadow 0.25s ease;
+}
+
+.mamta-newsletter-form button:hover {
+  background: #d98f9a;
+
+  transform: translateY(-2px);
+
+  box-shadow:
+    0 8px 22px rgba(217, 143, 154, 0.22);
+}
+
+.mamta-newsletter-form button svg {
+  transition: transform 0.25s ease;
+}
+
+.mamta-newsletter-form button:hover svg {
+  transform: translate(2px, -2px);
+}
+
+
+/* =========================================================
+   NOTE
+========================================================= */
+
+.newsletter-note {
+  margin: 15px 2px 0;
+
+  color: #907c7e;
+
+  font-size: 10px;
+
+  letter-spacing: 0.2px;
+}
+
+
+/* =========================================================
+   BOTTOM DECORATION
+========================================================= */
+
+.newsletter-bottom-decoration {
+  position: absolute;
+
+  left: 50%;
+  bottom: 24px;
+
+  transform: translateX(-50%);
+
+  display: flex;
+
+  align-items: center;
+
+  gap: 7px;
+}
+
+.newsletter-bottom-decoration span {
+  width: 4px;
+  height: 4px;
+
+  border-radius: 50%;
+
+  background: #b9925a;
+
+  opacity: 0.45;
+}
+
+.newsletter-bottom-decoration span:nth-child(2) {
+  width: 6px;
+  height: 6px;
+
+  opacity: 0.8;
+}
+
+
+/* =========================================================
+   TABLET
+========================================================= */
+
+@media (max-width: 950px) {
+
+  .mamta-newsletter-section {
+    padding: 80px 7%;
+  }
+
+  .newsletter-inner {
+    grid-template-columns: 1fr;
+
+    gap: 50px;
+  }
+
+  .newsletter-content > p {
+    max-width: 650px;
+  }
+
+  .newsletter-form-wrapper {
+    max-width: 650px;
+  }
+}
+
+
+/* =========================================================
+   MOBILE
+========================================================= */
+
+@media (max-width: 650px) {
+
+  .mamta-newsletter-section {
+    padding: 65px 6%;
+  }
+
+  .newsletter-inner {
+    gap: 38px;
+  }
+
+  .newsletter-label {
+    font-size: 8px;
+
+    letter-spacing: 2px;
+  }
+
+  .newsletter-line {
+    width: 20px;
+  }
+
+  .newsletter-content h2 {
+    font-size: 42px;
+
+    letter-spacing: -1px;
+  }
+
+  .newsletter-content > p {
+    margin-top: 20px;
+
+    font-size: 13px;
+
+    line-height: 1.8;
+  }
+
+
+  /* FORM CARD */
+
+  .newsletter-form-wrapper {
+    padding: 24px 20px;
+
+    border-radius: 20px;
+  }
+
+  .newsletter-form-heading {
+    margin-bottom: 19px;
+  }
+
+  .mail-icon {
+    width: 40px;
+    height: 40px;
+  }
+
+  .newsletter-form-heading span {
+    font-size: 8px;
+  }
+
+  .newsletter-form-heading p {
+    font-size: 12px;
+  }
+
+
+  /* FORM */
+
+  .mamta-newsletter-form {
+    flex-direction: column;
+
+    gap: 5px;
+
+    padding: 5px;
+
+    border-radius: 13px;
+  }
+
+  .newsletter-input-wrapper input {
+    height: 47px;
+
+    font-size: 12px;
+  }
+
+  .mamta-newsletter-form button {
+    width: 100%;
+
+    height: 46px;
+
+    min-width: 0;
+  }
+
+  .newsletter-note {
+    font-size: 9px;
+
+    line-height: 1.5;
+  }
+}
+
+
+/* =========================================================
+   SMALL MOBILE
+========================================================= */
+
+@media (max-width: 400px) {
+
+  .mamta-newsletter-section {
+    padding: 55px 5%;
+  }
+
+  .newsletter-content h2 {
+    font-size: 35px;
+  }
+
+  .newsletter-form-wrapper {
+    padding: 20px 16px;
+  }
+
+}
+/* =========================================================
+   MAMTA NEWSLETTER
+   Premium Motion & Transitions
+========================================================= */
+
+
+/* =========================================================
+   SECTION
+========================================================= */
+
+.mamta-newsletter-section {
+  position: relative;
+  overflow: hidden;
+}
+
+
+/* =========================================================
+   DECORATIVE GLOWS
+========================================================= */
+
+.newsletter-glow {
+  transition:
+    transform 1.5s cubic-bezier(0.16, 1, 0.3, 1),
+    opacity 1s ease;
+  animation: newsletterGlowMove 9s ease-in-out infinite;
+  pointer-events: none;
+}
+
+.newsletter-glow-one {
+  animation-delay: 0s;
+}
+
+.newsletter-glow-two {
+  animation-delay: -4s;
+}
+
+@keyframes newsletterGlowMove {
+  0%,
+  100% {
+    transform: translate3d(0, 0, 0) scale(1);
+  }
+
+  50% {
+    transform: translate3d(12px, -10px, 0) scale(1.04);
+  }
+}
+
+
+/* =========================================================
+   NEWSLETTER CONTENT
+========================================================= */
+
+.newsletter-content {
+  transition:
+    transform 0.6s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+
+/* =========================================================
+   LABEL
+========================================================= */
+
+.newsletter-label {
+  transition:
+    letter-spacing 0.45s ease,
+    opacity 0.4s ease;
+}
+
+.newsletter-label:hover {
+  letter-spacing: 0.16em;
+}
+
+.newsletter-line {
+  transition:
+    width 0.5s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.newsletter-label:hover .newsletter-line {
+  width: 42px;
+}
+
+
+/* =========================================================
+   SPARKLE ICON
+========================================================= */
+
+.newsletter-label svg {
+  transition:
+    transform 0.6s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.newsletter-label:hover svg {
+  transform: rotate(12deg) scale(1.12);
+}
+
+
+/* =========================================================
+   HEADING
+========================================================= */
+
+.newsletter-content h2 {
+  transition:
+    transform 0.6s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.newsletter-content h2 em {
+  transition:
+    color 0.4s ease,
+    padding-left 0.5s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.newsletter-content:hover h2 em {
+  color: #d98f9a;
+  padding-left: 4px;
+}
+
+
+/* =========================================================
+   FORM WRAPPER
+========================================================= */
+
+.newsletter-form-wrapper {
+  transition:
+    transform 0.65s cubic-bezier(0.16, 1, 0.3, 1),
+    box-shadow 0.65s ease;
+}
+
+.newsletter-form-wrapper:hover {
+  transform: translateY(-4px);
+}
+
+
+/* =========================================================
+   MAIL ICON
+========================================================= */
+
+.mail-icon {
+  transition:
+    transform 0.5s cubic-bezier(0.16, 1, 0.3, 1),
+    background 0.4s ease,
+    color 0.4s ease;
+}
+
+.newsletter-form-wrapper:hover .mail-icon {
+  transform: translateY(-3px) rotate(-3deg);
+  background: #d98f9a;
+  color: #fff9f4;
+}
+
+
+/* =========================================================
+   FORM HEADING
+========================================================= */
+
+.newsletter-form-heading span {
+  transition:
+    color 0.35s ease,
+    letter-spacing 0.4s ease;
+}
+
+.newsletter-form-wrapper:hover
+.newsletter-form-heading span {
+  letter-spacing: 0.12em;
+}
+
+
+/* =========================================================
+   INPUT
+========================================================= */
+
+.newsletter-input-wrapper {
+  transition:
+    box-shadow 0.35s ease,
+    border-color 0.35s ease;
+}
+
+.newsletter-input-wrapper:focus-within {
+  box-shadow: 0 0 0 3px rgba(217, 143, 154, 0.12);
+}
+
+
+/* =========================================================
+   INPUT TEXT
+========================================================= */
+
+.newsletter-input-wrapper input {
+  transition:
+    color 0.3s ease,
+    background 0.3s ease;
+}
+
+.newsletter-input-wrapper input:focus {
+  outline: none;
+}
+
+
+/* =========================================================
+   JOIN BUTTON
+========================================================= */
+
+.mamta-newsletter-form button {
+  position: relative;
+  overflow: hidden;
+
+  transition:
+    transform 0.45s cubic-bezier(0.16, 1, 0.3, 1),
+    background 0.4s ease,
+    color 0.4s ease,
+    box-shadow 0.45s ease;
+}
+
+.mamta-newsletter-form button::before {
+  content: "";
+
+  position: absolute;
+  inset: 0;
+
+  background: #d98f9a;
+
+  transform: translateY(100%);
+
+  transition:
+    transform 0.45s cubic-bezier(0.16, 1, 0.3, 1);
+
+  z-index: 0;
+}
+
+.mamta-newsletter-form button span,
+.mamta-newsletter-form button svg {
+  position: relative;
+  z-index: 1;
+}
+
+.mamta-newsletter-form button:hover::before {
+  transform: translateY(0);
+}
+
+.mamta-newsletter-form button:hover {
+  color: #fff9f4;
+  transform: translateY(-3px);
+  box-shadow:
+    0 12px 28px rgba(74, 48, 50, 0.18);
+}
+
+
+/* =========================================================
+   BUTTON ARROW
+========================================================= */
+
+.mamta-newsletter-form button svg {
+  transition:
+    transform 0.45s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.mamta-newsletter-form button:hover svg {
+  transform: translate(3px, -3px);
+}
+
+
+/* =========================================================
+   NOTE
+========================================================= */
+
+.newsletter-note {
+  transition:
+    opacity 0.35s ease,
+    transform 0.4s ease;
+}
+
+.newsletter-form-wrapper:hover .newsletter-note {
+  transform: translateY(-1px);
+  opacity: 0.9;
+}
+
+
+/* =========================================================
+   STAGGER
+========================================================= */
+
+.newsletter-form-reveal {
+  animation-delay: 0.18s;
+}
+
+
+/* =========================================================
+   MOBILE
+========================================================= */
+
+@media (max-width: 700px) {
+
+  .newsletter-form-wrapper:hover {
+    transform: none;
+  }
+
+  .newsletter-content:hover h2 em {
+    padding-left: 0;
+  }
+
+}
+
+
+/* =========================================================
+   REDUCED MOTION
+========================================================= */
+
+@media (prefers-reduced-motion: reduce) {
+
+  .newsletter-glow {
+    animation: none;
+  }
+
+  .newsletter-form-wrapper,
+  .newsletter-content,
+  .newsletter-label,
+  .newsletter-line,
+  .mail-icon,
+  .mamta-newsletter-form button,
+  .mamta-newsletter-form button svg {
+    transition: none !important;
+  }
+
+}

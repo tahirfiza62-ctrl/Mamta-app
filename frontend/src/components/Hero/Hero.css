@@ -1,0 +1,1194 @@
+/* =========================================================
+   MAMTA HERO
+========================================================= */
+
+.hero {
+  width: 100%;
+  min-height: calc(100vh - 134px);
+
+  display: grid;
+  grid-template-columns: 0.95fr 1.05fr;
+
+  align-items: center;
+
+  position: relative;
+
+  overflow: hidden;
+
+  padding: 65px 7% 75px;
+
+background: radial-gradient(circle at 15% 25%, rgba(217, 143, 154, 0.14), transparent 30%), radial-gradient(circle at 85% 75%, rgba(239, 197, 181, 0.18), transparent 30%), #f6e0e2;
+
+
+  box-sizing: border-box;
+}
+
+
+/* =========================================================
+   LEFT CONTENT
+========================================================= */
+
+.hero-content {
+  position: relative;
+
+  z-index: 3;
+
+  max-width: 590px;
+
+  padding-right: 50px;
+
+  animation: heroContent 0.9s ease forwards;
+}
+
+
+/* =========================================================
+   SMALL LABEL
+========================================================= */
+
+.hero-small {
+  display: inline-flex;
+
+  align-items: center;
+
+  gap: 10px;
+
+  margin-bottom: 25px;
+
+  color: #bd6f7c;
+
+  font-family:
+    "Helvetica Neue",
+    Arial,
+    sans-serif;
+
+  font-size: 9px;
+
+  font-weight: 600;
+
+  letter-spacing: 2.4px;
+
+  line-height: 1.5;
+}
+
+
+.hero-small::before {
+  content: "";
+
+  width: 28px;
+  height: 1px;
+
+  background: #d98f9a;
+}
+
+
+/* =========================================================
+   HEADING
+========================================================= */
+.hero h1 {
+  margin: 0;
+  color: #4a3032;
+  font-family: "Playfair Display", Georgia, serif;
+  font-size: clamp(58px, 5.8vw, 86px);
+  font-weight: 500;
+  line-height: 0.98;
+  letter-spacing: -2px;
+}
+
+.hero h1 span {
+  color: #bd6f7c;
+  font-family: "Playfair Display", Georgia, serif;
+  font-weight: 400;
+}
+/* =========================================================
+   DESCRIPTION
+========================================================= */
+
+.hero-content > p {
+  max-width: 470px;
+
+  margin: 28px 0 32px;
+
+  color: #6e5556;
+
+  font-family:
+    "Helvetica Neue",
+    Arial,
+    sans-serif;
+
+  font-size: 14px;
+
+  font-weight: 400;
+
+  line-height: 1.85;
+
+  letter-spacing: 0.1px;
+}
+
+
+/* =========================================================
+   BUTTONS
+========================================================= */
+
+.hero-buttons {
+  display: flex;
+
+  align-items: center;
+
+  gap: 14px;
+}
+
+
+/* Both buttons */
+
+.hero-buttons a {
+  min-height: 49px;
+
+  box-sizing: border-box;
+
+  display: inline-flex;
+
+  align-items: center;
+
+  justify-content: center;
+
+  text-decoration: none;
+
+  font-family:
+    "Helvetica Neue",
+    Arial,
+    sans-serif;
+
+  font-size: 10px;
+
+  font-weight: 600;
+
+  letter-spacing: 1.2px;
+
+  text-transform: uppercase;
+
+  transition:
+    all 0.3s ease;
+}
+
+
+/* =========================================================
+   PRIMARY BUTTON
+========================================================= */
+
+.primary-btn {
+  gap: 13px;
+
+  padding: 0 23px;
+
+  color: #fff9f4;
+
+  background: #bd6f7c;
+
+  border: 1px solid #bd6f7c;
+
+  border-radius: 3px;
+
+  box-shadow:
+    0 9px 25px rgba(189, 111, 124, 0.16);
+}
+
+
+.primary-btn svg {
+  transition:
+    transform 0.3s ease;
+}
+
+
+.primary-btn:hover {
+  color: #fff9f4;
+
+  background: #4a3032;
+
+  border-color: #4a3032;
+
+  transform: translateY(-2px);
+
+  box-shadow:
+    0 13px 28px rgba(74, 48, 50, 0.18);
+}
+
+
+.primary-btn:hover svg {
+  transform: translateX(4px);
+}
+
+
+/* =========================================================
+   SECONDARY BUTTON
+========================================================= */
+
+.secondary-btn {
+  padding: 0 20px;
+
+  color: #4a3032;
+
+  background: transparent;
+
+  border: 1px solid #d8c3c2;
+
+  border-radius: 3px;
+}
+
+
+.secondary-btn:hover {
+  color: #bd6f7c;
+
+  background: #f4d9dc;
+
+  border-color: #bd6f7c;
+
+  transform: translateY(-2px);
+}
+
+
+/* =========================================================
+   TRUST SECTION
+========================================================= */
+
+.hero-trust {
+  margin-top: 43px;
+
+  display: flex;
+
+  align-items: center;
+
+  gap: 20px;
+}
+
+
+.trust-item {
+  display: flex;
+
+  align-items: center;
+
+  gap: 9px;
+}
+
+
+.trust-item > svg {
+  color: #bd6f7c;
+
+  flex-shrink: 0;
+}
+
+
+.trust-item strong {
+  display: block;
+
+  margin-bottom: 3px;
+
+  color: #4a3032;
+
+  font-family:
+    "Helvetica Neue",
+    Arial,
+    sans-serif;
+
+  font-size: 9px;
+
+  font-weight: 600;
+
+  letter-spacing: 0.3px;
+}
+
+
+.trust-item span {
+  display: block;
+
+  color: #857273;
+
+  font-family:
+    "Helvetica Neue",
+    Arial,
+    sans-serif;
+
+  font-size: 8px;
+
+  line-height: 1.4;
+}
+
+
+.trust-line {
+  width: 1px;
+
+  height: 31px;
+
+  background: #dfcfcd;
+}
+
+
+.trust-dot {
+  width: 9px;
+  height: 9px;
+
+  flex-shrink: 0;
+
+  border-radius: 50%;
+
+  background: #d98f9a;
+
+  box-shadow:
+    0 0 0 5px #f4d9dc;
+}
+
+
+/* =========================================================
+   RIGHT IMAGE AREA
+========================================================= */
+
+.hero-image {
+  min-height: 570px;
+
+  position: relative;
+
+  display: flex;
+
+  align-items: center;
+
+  justify-content: flex-end;
+
+  padding-left: 20px;
+}
+
+
+/* =========================================================
+   IMAGE FRAME
+========================================================= */
+
+.image-frame {
+  width: min(100%, 610px);
+
+  height: 570px;
+
+  position: relative;
+
+  overflow: hidden;
+
+  border-radius: 160px 160px 5px 5px;
+
+  box-shadow:
+    0 25px 60px rgba(74, 48, 50, 0.12);
+}
+
+
+.image-frame::after {
+  content: "";
+
+  position: absolute;
+
+  inset: 0;
+
+  background:
+    linear-gradient(
+      180deg,
+      rgba(74, 48, 50, 0.02),
+      rgba(74, 48, 50, 0.08)
+    );
+
+  pointer-events: none;
+}
+
+
+.image-frame img {
+  width: 100%;
+  height: 100%;
+
+  display: block;
+
+  object-fit: cover;
+
+  object-position: center;
+
+  transition:
+    transform 0.8s ease;
+}
+
+
+.image-frame:hover img {
+  transform: scale(1.035);
+}
+
+
+/* =========================================================
+   FLOATING CARD
+========================================================= */
+
+.floating-card {
+  position: absolute;
+
+  left: 20px;
+
+  bottom: 55px;
+
+  z-index: 5;
+
+  min-width: 225px;
+
+  padding: 17px 20px;
+
+  display: flex;
+
+  align-items: center;
+
+  gap: 12px;
+
+  background: rgba(255, 249, 244, 0.94);
+
+  border: 1px solid rgba(255, 255, 255, 0.8);
+
+  border-radius: 4px;
+
+  box-shadow:
+    0 18px 45px rgba(74, 48, 50, 0.15);
+
+  backdrop-filter: blur(12px);
+
+  animation: floatingCard 1s 0.4s ease both;
+}
+
+
+/* Floating icon */
+
+.floating-icon {
+  width: 36px;
+  height: 36px;
+
+  display: flex;
+
+  align-items: center;
+
+  justify-content: center;
+
+  flex-shrink: 0;
+
+  color: #bd6f7c;
+
+  background: #f4d9dc;
+
+  border-radius: 50%;
+}
+
+
+.floating-text strong {
+  display: block;
+
+  margin-bottom: 4px;
+
+  color: #4a3032;
+
+  font-family:
+    Georgia,
+    "Times New Roman",
+    serif;
+
+  font-size: 14px;
+
+  font-weight: 400;
+}
+
+
+.floating-text small {
+  display: block;
+
+  color: #827071;
+
+  font-family:
+    "Helvetica Neue",
+    Arial,
+    sans-serif;
+
+  font-size: 8px;
+
+  letter-spacing: 1px;
+}
+
+
+/* =========================================================
+   IMAGE NUMBER
+========================================================= */
+
+.image-number {
+  position: absolute;
+
+  right: -2px;
+
+  bottom: 18px;
+
+  color: #bd6f7c;
+
+  font-family:
+    Georgia,
+    "Times New Roman",
+    serif;
+
+  font-size: 12px;
+
+  letter-spacing: 2px;
+}
+
+
+/* =========================================================
+   ANIMATIONS
+========================================================= */
+
+@keyframes heroContent {
+
+  from {
+    opacity: 0;
+
+    transform: translateY(25px);
+  }
+
+  to {
+    opacity: 1;
+
+    transform: translateY(0);
+  }
+
+}
+
+
+@keyframes floatingCard {
+
+  from {
+    opacity: 0;
+
+    transform:
+      translateY(20px);
+  }
+
+  to {
+    opacity: 1;
+
+    transform:
+      translateY(0);
+  }
+
+}
+
+
+/* =========================================================
+   LARGE TABLET
+========================================================= */
+
+@media (max-width: 1150px) {
+
+  .hero {
+    padding-left: 5%;
+
+    padding-right: 5%;
+  }
+
+
+  .hero-content {
+    padding-right: 30px;
+  }
+
+
+  .hero h1 {
+    font-size: 65px;
+  }
+
+
+  .hero-image {
+    min-height: 510px;
+  }
+
+
+  .image-frame {
+    height: 510px;
+  }
+
+
+  .floating-card {
+    left: 5px;
+  }
+
+}
+
+
+/* =========================================================
+   TABLET
+========================================================= */
+
+@media (max-width: 900px) {
+
+  .hero {
+    min-height: auto;
+
+    grid-template-columns: 1fr;
+
+    gap: 50px;
+
+    padding: 65px 40px 80px;
+  }
+
+
+  .hero-content {
+    max-width: 650px;
+
+    padding-right: 0;
+  }
+
+
+  .hero h1 {
+    font-size: clamp(58px, 9vw, 78px);
+  }
+
+
+  .hero-image {
+    min-height: 500px;
+
+    padding-left: 0;
+
+    justify-content: center;
+  }
+
+
+  .image-frame {
+    width: 100%;
+
+    max-width: 620px;
+
+    height: 500px;
+  }
+
+
+  .floating-card {
+    left: 20px;
+  }
+
+}
+
+
+/* =========================================================
+   MOBILE
+========================================================= */
+
+@media (max-width: 600px) {
+
+  .hero {
+    display: flex;
+
+    flex-direction: column;
+
+    gap: 40px;
+
+    padding: 48px 20px 65px;
+
+    align-items: stretch;
+  }
+
+
+  .hero-small {
+    margin-bottom: 18px;
+
+    font-size: 7px;
+
+    letter-spacing: 1.6px;
+
+    gap: 7px;
+  }
+
+
+  .hero-small::before {
+    width: 18px;
+  }
+
+
+  .hero h1 {
+    font-size: 50px;
+
+    line-height: 0.96;
+
+    letter-spacing: -2px;
+  }
+
+
+  .hero-content > p {
+    margin: 22px 0 27px;
+
+    font-size: 12px;
+
+    line-height: 1.75;
+  }
+
+
+  .hero-buttons {
+    flex-direction: column;
+
+    align-items: stretch;
+
+    gap: 9px;
+  }
+
+
+  .hero-buttons a {
+    width: 100%;
+  }
+
+
+  .hero-trust {
+    margin-top: 30px;
+
+    gap: 14px;
+  }
+
+
+  .trust-item strong {
+    font-size: 8px;
+  }
+
+
+  .trust-item span {
+    font-size: 7px;
+  }
+
+
+  .trust-line {
+    height: 27px;
+  }
+
+
+  .hero-image {
+    min-height: 430px;
+
+    width: 100%;
+  }
+
+
+  .image-frame {
+    width: 100%;
+
+    height: 430px;
+
+    border-radius: 100px 100px 4px 4px;
+  }
+
+
+  .floating-card {
+    left: 10px;
+
+    bottom: 25px;
+
+    min-width: auto;
+
+    width: auto;
+
+    padding: 13px 15px;
+  }
+
+
+  .floating-icon {
+    width: 32px;
+    height: 32px;
+  }
+
+
+  .floating-text strong {
+    font-size: 12px;
+  }
+
+
+  .floating-text small {
+    font-size: 7px;
+  }
+
+
+  .image-number {
+    right: 5px;
+
+    bottom: 5px;
+  }
+
+}
+
+
+/* =========================================================
+   SMALL MOBILE
+========================================================= */
+
+@media (max-width: 400px) {
+
+  .hero {
+    padding-left: 16px;
+
+    padding-right: 16px;
+  }
+
+
+  .hero h1 {
+    font-size: 44px;
+  }
+
+
+  .hero-trust {
+    display: none;
+  }
+
+
+  .hero-image {
+    min-height: 370px;
+  }
+
+
+  .image-frame {
+    height: 370px;
+
+    border-radius: 80px 80px 4px 4px;
+  }
+
+}
+/* =========================================================
+   MAMTA PREMIUM HERO ANIMATIONS
+   Very Slow • Smooth • Elegant
+========================================================= */
+
+
+/* =========================================================
+   LEFT CONTENT — SOFT TOP TO DOWN
+========================================================= */
+
+@keyframes heroTopDown {
+  from {
+    opacity: 0;
+    transform: translateY(-18px);
+  }
+
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+
+/* Small label */
+
+.hero-small {
+  animation:
+    heroTopDown 1.4s 0.15s
+    cubic-bezier(0.16, 1, 0.3, 1)
+    both;
+}
+
+
+/* Heading */
+
+.hero h1 {
+  animation:
+    heroTopDown 1.6s 0.25s
+    cubic-bezier(0.16, 1, 0.3, 1)
+    both;
+}
+
+
+/* Description */
+
+.hero-content > p {
+  animation:
+    heroTopDown 1.5s 0.4s
+    cubic-bezier(0.16, 1, 0.3, 1)
+    both;
+}
+
+
+/* Buttons */
+
+.hero-buttons {
+  animation:
+    heroTopDown 1.4s 0.55s
+    cubic-bezier(0.16, 1, 0.3, 1)
+    both;
+}
+
+
+/* Trust */
+
+.hero-trust {
+  animation:
+    heroTopDown 1.4s 0.7s
+    cubic-bezier(0.16, 1, 0.3, 1)
+    both;
+}
+
+
+/* =========================================================
+   RIGHT IMAGE — VERY SOFT BOTTOM TO UP
+========================================================= */
+
+.hero-image {
+  animation:
+    heroBottomUp 1.8s 0.2s
+    cubic-bezier(0.16, 1, 0.3, 1)
+    both;
+}
+
+
+@keyframes heroBottomUp {
+  from {
+    opacity: 0;
+    transform: translateY(25px);
+  }
+
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+
+/* =========================================================
+   IMAGE FRAME
+========================================================= */
+
+.image-frame {
+  animation:
+    imageReveal 2s 0.3s
+    cubic-bezier(0.16, 1, 0.3, 1)
+    both;
+
+  transition:
+    transform 0.8s ease,
+    box-shadow 0.8s ease;
+}
+
+
+@keyframes imageReveal {
+  from {
+    opacity: 0;
+    transform: translateY(18px);
+  }
+
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+
+/* =========================================================
+   FLOATING CARD
+========================================================= */
+
+.floating-card {
+  animation:
+    floatingCardUp 1.5s 0.85s
+    cubic-bezier(0.16, 1, 0.3, 1)
+    both;
+
+  transition:
+    transform 0.7s ease,
+    box-shadow 0.7s ease;
+}
+
+
+@keyframes floatingCardUp {
+  from {
+    opacity: 0;
+    transform: translateY(22px);
+  }
+
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+
+/* Floating card hover */
+
+.floating-card:hover {
+  transform: translateY(-3px);
+
+  box-shadow:
+    0 22px 48px rgba(74, 48, 50, 0.15);
+}
+
+
+/* =========================================================
+   FLOATING ICON
+========================================================= */
+
+.floating-icon {
+  transition:
+    transform 0.6s ease,
+    background 0.5s ease;
+}
+
+
+.floating-card:hover .floating-icon {
+  transform: scale(1.04);
+
+  background: #f0cfd3;
+}
+
+
+/* =========================================================
+   IMAGE HOVER
+========================================================= */
+
+.image-frame:hover {
+  transform: translateY(-2px);
+
+  box-shadow:
+    0 30px 65px rgba(74, 48, 50, 0.14);
+}
+
+
+/* Image hover */
+
+.image-frame img {
+  transition:
+    transform 1.4s
+    cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+
+.image-frame:hover img {
+  transform: scale(1.025);
+}
+
+
+/* =========================================================
+   BUTTONS
+========================================================= */
+
+.hero-buttons a {
+  transition:
+    transform 0.6s ease,
+    background 0.5s ease,
+    color 0.5s ease,
+    border-color 0.5s ease,
+    box-shadow 0.6s ease;
+}
+
+
+.primary-btn:hover {
+  transform: translateY(-2px);
+
+  box-shadow:
+    0 12px 28px rgba(189, 111, 124, 0.18);
+}
+
+
+.secondary-btn:hover {
+  transform: translateY(-2px);
+}
+
+
+/* =========================================================
+   IMAGE NUMBER
+========================================================= */
+
+.image-number {
+  animation:
+    numberReveal 1.3s 1s ease-out both;
+
+  transition:
+    color 0.5s ease,
+    transform 0.5s ease;
+}
+
+
+@keyframes numberReveal {
+  from {
+    opacity: 0;
+    transform: translateY(8px);
+  }
+
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+
+.image-frame:hover + .image-number {
+  color: #4a3032;
+}
+
+
+/* =========================================================
+   TRUST ITEMS
+========================================================= */
+
+.trust-item {
+  transition:
+    transform 0.6s ease;
+}
+
+
+.trust-item:hover {
+  transform: translateY(-2px);
+}
+
+
+.trust-item > svg {
+  transition:
+    transform 0.5s ease;
+}
+
+
+.trust-item:hover > svg {
+  transform: scale(1.04);
+}
+
+
+/* =========================================================
+   VERY SUBTLE IMAGE FLOAT
+========================================================= */
+
+@keyframes gentleFloat {
+
+  0% {
+    transform: translateY(0);
+  }
+
+  50% {
+    transform: translateY(-2px);
+  }
+
+  100% {
+    transform: translateY(0);
+  }
+
+}
+
+
+/*
+   Start after entrance animation.
+   Very slow so it feels almost natural.
+*/
+
+.image-frame img {
+  animation:
+    gentleFloat 10s ease-in-out 2.5s infinite;
+}
+
+
+/* =========================================================
+   REDUCED MOTION
+========================================================= */
+
+@media (prefers-reduced-motion: reduce) {
+
+  .hero-small,
+  .hero h1,
+  .hero-content > p,
+  .hero-buttons,
+  .hero-trust,
+  .hero-image,
+  .image-frame,
+  .floating-card,
+  .image-number,
+  .image-frame img {
+    animation: none;
+    transition: none;
+  }
+
+}

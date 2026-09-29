@@ -1,0 +1,873 @@
+
+/* =========================================================
+   MAMTA ADMIN
+   EDIT PRODUCT PAGE
+   Premium • Soft • Elegant • Modern
+========================================================= */
+
+
+/* =========================================================
+   PAGE
+========================================================= */
+
+.add-product-page {
+  width: 100%;
+  min-height: 100%;
+  color: #4a3032;
+  font-family: "DM Sans", "Segoe UI", sans-serif;
+}
+
+
+/* =========================================================
+   PAGE HEADER
+========================================================= */
+
+.add-product-top {
+  width: 100%;
+  margin-bottom: 28px;
+}
+
+
+/* =========================================================
+   BACK BUTTON
+========================================================= */
+
+.add-product-back-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+
+  padding: 7px 0;
+  margin-bottom: 22px;
+
+  border: none;
+  background: transparent;
+
+  color: #8b686b;
+
+  font-family: inherit;
+  font-size: 14px;
+  font-weight: 600;
+
+  cursor: pointer;
+
+  transition:
+    color 0.2s ease,
+    transform 0.2s ease;
+}
+
+.add-product-back-btn:hover {
+  color: #4a3032;
+  transform: translateX(-3px);
+}
+
+
+/* =========================================================
+   EYEBROW
+========================================================= */
+
+.add-product-eyebrow {
+  margin: 0 0 8px;
+
+  color: #a8797c;
+
+  font-size: 12px;
+  font-weight: 800;
+
+  letter-spacing: 2px;
+  text-transform: uppercase;
+}
+
+
+/* =========================================================
+   MAIN TITLE
+========================================================= */
+
+.add-product-top h1 {
+  margin: 0;
+
+  color: #4a3032;
+
+  font-family:
+    "Playfair Display",
+    Georgia,
+    serif;
+
+  font-size: 34px;
+  font-weight: 700;
+
+  line-height: 1.2;
+}
+
+.add-product-top p:not(.add-product-eyebrow) {
+  margin: 8px 0 0;
+
+  color: #8f7a7c;
+
+  font-size: 14px;
+  line-height: 1.5;
+}
+
+
+/* =========================================================
+   ERROR MESSAGE
+========================================================= */
+
+.add-product-error {
+  width: 100%;
+  box-sizing: border-box;
+
+  margin-bottom: 20px;
+  padding: 14px 16px;
+
+  border: 1px solid #f0c7ca;
+  border-radius: 12px;
+
+  background: #fff3f4;
+  color: #b84b55;
+
+  font-size: 14px;
+  font-weight: 600;
+
+  line-height: 1.5;
+}
+
+
+/* =========================================================
+   LOADING
+========================================================= */
+
+.add-product-loading {
+  min-height: 400px;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  color: #8f7a7c;
+
+  font-size: 15px;
+  font-weight: 500;
+}
+
+
+/* =========================================================
+   FORM
+========================================================= */
+
+.add-product-form {
+  width: 100%;
+
+  display: flex;
+  flex-direction: column;
+
+  gap: 20px;
+}
+
+
+/* =========================================================
+   CARD
+========================================================= */
+
+.add-product-card {
+  width: 100%;
+  box-sizing: border-box;
+
+  padding: 26px;
+
+  background: #ffffff;
+
+  border: 1px solid #eee2df;
+  border-radius: 18px;
+
+  box-shadow:
+    0 6px 24px rgba(74, 48, 50, 0.045);
+}
+
+
+/* =========================================================
+   CARD HEADING
+========================================================= */
+
+.add-product-card-heading {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+
+  margin-bottom: 24px;
+}
+
+.add-product-card-heading h2 {
+  margin: 0;
+
+  color: #4a3032;
+
+  font-size: 18px;
+  font-weight: 700;
+}
+
+.add-product-card-heading p {
+  margin: 6px 0 0;
+
+  color: #968284;
+
+  font-size: 13px;
+  line-height: 1.5;
+}
+
+
+/* =========================================================
+   FORM FIELD
+========================================================= */
+
+.add-product-field {
+  width: 100%;
+
+  display: flex;
+  flex-direction: column;
+
+  gap: 8px;
+
+  margin-bottom: 18px;
+}
+
+.add-product-field:last-child {
+  margin-bottom: 0;
+}
+
+.add-product-field label {
+  color: #5d4447;
+
+  font-size: 13px;
+  font-weight: 700;
+}
+
+
+/* =========================================================
+   INPUTS
+========================================================= */
+
+.add-product-field input,
+.add-product-field textarea,
+.add-product-field select {
+  width: 100%;
+  box-sizing: border-box;
+
+  border: 1px solid #e4d8d6;
+  border-radius: 11px;
+
+  background: #fffdfc;
+  color: #4a3032;
+
+  padding: 13px 14px;
+
+  outline: none;
+
+  font-family: inherit;
+  font-size: 14px;
+
+  transition:
+    border-color 0.2s ease,
+    box-shadow 0.2s ease,
+    background 0.2s ease;
+}
+
+
+/* =========================================================
+   NORMAL INPUT HEIGHT
+========================================================= */
+
+.add-product-field input,
+.add-product-field select {
+  min-height: 46px;
+}
+
+
+/* =========================================================
+   TEXTAREA
+========================================================= */
+
+.add-product-field textarea {
+  min-height: 120px;
+
+  resize: vertical;
+
+  line-height: 1.6;
+}
+
+
+/* =========================================================
+   FOCUS
+========================================================= */
+
+.add-product-field input:focus,
+.add-product-field textarea:focus,
+.add-product-field select:focus {
+  border-color: #b98589;
+
+  background: #ffffff;
+
+  box-shadow:
+    0 0 0 3px rgba(185, 133, 137, 0.12);
+}
+
+
+/* =========================================================
+   PLACEHOLDER
+========================================================= */
+
+.add-product-field input::placeholder,
+.add-product-field textarea::placeholder {
+  color: #b6a6a7;
+}
+
+
+/* =========================================================
+   SELECT
+========================================================= */
+
+.add-product-field select {
+  cursor: pointer;
+}
+
+
+/* =========================================================
+   PRICING GRID
+========================================================= */
+
+.add-product-grid {
+  display: grid;
+
+  grid-template-columns:
+    repeat(3, minmax(0, 1fr));
+
+  gap: 18px;
+}
+
+
+/* =========================================================
+   IMAGE PREVIEW
+========================================================= */
+
+.add-product-image-preview {
+  width: 180px;
+  height: 180px;
+
+  margin-top: 16px;
+
+  overflow: hidden;
+
+  border: 1px solid #eadedc;
+  border-radius: 15px;
+
+  background: #faf7f5;
+
+  box-shadow:
+    0 5px 18px rgba(74, 48, 50, 0.06);
+}
+
+.add-product-image-preview img {
+  width: 100%;
+  height: 100%;
+
+  display: block;
+
+  object-fit: cover;
+}
+
+
+/* =========================================================
+   FEATURE INPUT
+========================================================= */
+
+.add-product-feature-input {
+  width: 100%;
+
+  display: flex;
+  align-items: center;
+
+  gap: 10px;
+
+  margin-bottom: 16px;
+}
+
+.add-product-feature-input input {
+  flex: 1;
+
+  min-height: 45px;
+
+  box-sizing: border-box;
+
+  padding: 12px 14px;
+
+  border: 1px solid #e4d8d6;
+  border-radius: 11px;
+
+  background: #fffdfc;
+  color: #4a3032;
+
+  outline: none;
+
+  font-family: inherit;
+  font-size: 14px;
+
+  transition:
+    border-color 0.2s ease,
+    box-shadow 0.2s ease;
+}
+
+.add-product-feature-input input:focus {
+  border-color: #b98589;
+
+  box-shadow:
+    0 0 0 3px rgba(185, 133, 137, 0.12);
+}
+
+.add-product-feature-input input::placeholder {
+  color: #b6a6a7;
+}
+
+
+/* =========================================================
+   ADD FEATURE BUTTON
+========================================================= */
+
+.add-product-feature-input button {
+  min-height: 45px;
+
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+
+  gap: 7px;
+
+  padding: 0 17px;
+
+  border: none;
+  border-radius: 10px;
+
+  background: #4a3032;
+  color: #ffffff;
+
+  font-family: inherit;
+  font-size: 13px;
+  font-weight: 700;
+
+  cursor: pointer;
+
+  transition:
+    background 0.2s ease,
+    transform 0.2s ease,
+    box-shadow 0.2s ease;
+}
+
+.add-product-feature-input button:hover {
+  background: #382225;
+
+  transform: translateY(-1px);
+
+  box-shadow:
+    0 5px 12px rgba(74, 48, 50, 0.15);
+}
+
+
+/* =========================================================
+   FEATURES
+========================================================= */
+
+.add-product-features {
+  display: flex;
+  flex-wrap: wrap;
+
+  gap: 9px;
+}
+
+
+/* =========================================================
+   SINGLE FEATURE
+========================================================= */
+
+.add-product-feature {
+  display: inline-flex;
+  align-items: center;
+
+  gap: 8px;
+
+  padding: 8px 10px 8px 13px;
+
+  border: 1px solid #eadedc;
+  border-radius: 22px;
+
+  background: #fff8f5;
+  color: #684b4e;
+
+  font-size: 13px;
+  font-weight: 600;
+}
+
+
+/* =========================================================
+   REMOVE FEATURE
+========================================================= */
+
+.add-product-feature button {
+  width: 21px;
+  height: 21px;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  padding: 0;
+
+  border: none;
+  border-radius: 50%;
+
+  background: #ead9d7;
+  color: #684b4e;
+
+  cursor: pointer;
+
+  transition:
+    background 0.2s ease,
+    color 0.2s ease;
+}
+
+.add-product-feature button:hover {
+  background: #4a3032;
+  color: #ffffff;
+}
+
+
+/* =========================================================
+   PRODUCT STATUS
+========================================================= */
+
+.add-product-status {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+
+  gap: 20px;
+}
+
+.add-product-status h3 {
+  margin: 0;
+
+  color: #4a3032;
+
+  font-size: 16px;
+  font-weight: 700;
+}
+
+.add-product-status p {
+  margin: 6px 0 0;
+
+  color: #968284;
+
+  font-size: 13px;
+  line-height: 1.5;
+}
+
+
+/* =========================================================
+   STATUS SWITCH
+========================================================= */
+
+.add-product-switch {
+  position: relative;
+
+  width: 48px;
+  height: 27px;
+
+  flex-shrink: 0;
+
+  cursor: pointer;
+}
+
+
+/* HIDE CHECKBOX */
+
+.add-product-switch input {
+  position: absolute;
+
+  width: 0;
+  height: 0;
+
+  opacity: 0;
+}
+
+
+/* SWITCH TRACK */
+
+.add-product-switch span {
+  position: absolute;
+
+  inset: 0;
+
+  border-radius: 30px;
+
+  background: #d8cdcb;
+
+  transition:
+    background 0.25s ease;
+}
+
+
+/* SWITCH CIRCLE */
+
+.add-product-switch span::before {
+  content: "";
+
+  position: absolute;
+
+  width: 21px;
+  height: 21px;
+
+  top: 3px;
+  left: 3px;
+
+  border-radius: 50%;
+
+  background: #ffffff;
+
+  box-shadow:
+    0 2px 6px rgba(0, 0, 0, 0.14);
+
+  transition:
+    transform 0.25s ease;
+}
+
+
+/* ACTIVE */
+
+.add-product-switch input:checked + span {
+  background: #4a3032;
+}
+
+.add-product-switch input:checked + span::before {
+  transform: translateX(21px);
+}
+
+
+/* =========================================================
+   ACTIONS
+========================================================= */
+
+.add-product-actions {
+  width: 100%;
+
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+
+  gap: 12px;
+
+  padding-top: 4px;
+}
+
+
+/* =========================================================
+   CANCEL
+========================================================= */
+
+.add-product-cancel {
+  min-height: 46px;
+
+  padding: 0 21px;
+
+  border: 1px solid #dfd2d0;
+  border-radius: 10px;
+
+  background: #ffffff;
+  color: #6f5558;
+
+  font-family: inherit;
+  font-size: 14px;
+  font-weight: 700;
+
+  cursor: pointer;
+
+  transition:
+    border-color 0.2s ease,
+    background 0.2s ease,
+    color 0.2s ease;
+}
+
+.add-product-cancel:hover {
+  border-color: #bca9a7;
+
+  background: #fffaf8;
+
+  color: #4a3032;
+}
+
+
+/* =========================================================
+   SAVE CHANGES
+========================================================= */
+
+.add-product-submit {
+  min-height: 46px;
+
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+
+  gap: 8px;
+
+  padding: 0 22px;
+
+  border: none;
+  border-radius: 10px;
+
+  background: #4a3032;
+  color: #ffffff;
+
+  font-family: inherit;
+  font-size: 14px;
+  font-weight: 700;
+
+  cursor: pointer;
+
+  box-shadow:
+    0 5px 15px rgba(74, 48, 50, 0.15);
+
+  transition:
+    background 0.2s ease,
+    transform 0.2s ease,
+    box-shadow 0.2s ease;
+}
+
+.add-product-submit:hover:not(:disabled) {
+  background: #382225;
+
+  transform: translateY(-1px);
+
+  box-shadow:
+    0 8px 20px rgba(74, 48, 50, 0.20);
+}
+
+.add-product-submit:disabled {
+  opacity: 0.65;
+
+  cursor: not-allowed;
+
+  transform: none;
+}
+
+
+/* =========================================================
+   RESPONSIVE — TABLET
+========================================================= */
+
+@media (max-width: 900px) {
+
+  .add-product-grid {
+    grid-template-columns:
+      repeat(2, minmax(0, 1fr));
+  }
+
+}
+
+
+/* =========================================================
+   RESPONSIVE — MOBILE
+========================================================= */
+
+@media (max-width: 650px) {
+
+  .add-product-page {
+    width: 100%;
+  }
+
+
+  .add-product-top h1 {
+    font-size: 29px;
+  }
+
+
+  .add-product-card {
+    padding: 20px;
+
+    border-radius: 15px;
+  }
+
+
+  .add-product-grid {
+    grid-template-columns: 1fr;
+
+    gap: 0;
+  }
+
+
+  .add-product-feature-input {
+    flex-direction: column;
+
+    align-items: stretch;
+  }
+
+
+  .add-product-feature-input input {
+    width: 100%;
+  }
+
+
+  .add-product-feature-input button {
+    width: 100%;
+  }
+
+
+  .add-product-status {
+    align-items: flex-start;
+  }
+
+
+  .add-product-actions {
+    flex-direction: column-reverse;
+
+    align-items: stretch;
+  }
+
+
+  .add-product-cancel,
+  .add-product-submit {
+    width: 100%;
+  }
+
+
+  .add-product-image-preview {
+    width: 150px;
+    height: 150px;
+  }
+
+}
+
+
+/* =========================================================
+   SMALL MOBILE
+========================================================= */
+
+@media (max-width: 420px) {
+
+  .add-product-top h1 {
+    font-size: 25px;
+  }
+
+
+  .add-product-card {
+    padding: 17px;
+  }
+
+
+  .add-product-back-btn {
+    margin-bottom: 17px;
+  }
+
+
+  .add-product-card-heading h2 {
+    font-size: 17px;
+  }
+
+}
+

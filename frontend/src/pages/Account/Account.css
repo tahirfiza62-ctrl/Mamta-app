@@ -1,0 +1,1526 @@
+/* =========================================================
+   MAMTA ACCOUNT PAGE
+   Premium • Elegant • Soft • Feminine
+========================================================= */
+
+.account-page {
+  min-height: 100vh;
+  background: #fff9f4;
+  color: #4a3032;
+  font-family: "Poppins", "Segoe UI", sans-serif;
+}
+
+
+/* =========================================================
+   ACCOUNT HERO
+========================================================= */
+
+.account-hero {
+  position: relative;
+  overflow: hidden;
+
+  min-height: 300px;
+
+  display: flex;
+  align-items: center;
+
+  background:
+    linear-gradient(
+      120deg,
+      #f4d9dc 0%,
+      #f8e7e2 50%,
+      #efc5b5 100%
+    );
+}
+
+.account-hero::before {
+  content: "";
+
+  position: absolute;
+
+  width: 480px;
+  height: 480px;
+
+  right: -170px;
+  top: -270px;
+
+  border: 1px solid rgba(189, 111, 124, 0.2);
+
+  border-radius: 50%;
+}
+
+.account-hero::after {
+  content: "";
+
+  position: absolute;
+
+  width: 350px;
+  height: 350px;
+
+  left: -200px;
+  bottom: -240px;
+
+  border-radius: 50%;
+
+  background: rgba(255, 255, 255, 0.28);
+}
+
+.account-hero-content {
+  position: relative;
+  z-index: 2;
+
+  width: 88%;
+  max-width: 1200px;
+
+  margin: 0 auto;
+}
+
+.account-eyebrow {
+  display: block;
+
+  margin-bottom: 15px;
+
+  color: #bd6f7c;
+
+  font-size: 10px;
+  font-weight: 700;
+
+  letter-spacing: 3px;
+}
+
+.account-hero h1 {
+  margin: 0;
+
+  color: #4a3032;
+
+font-family: 'Times New Roman', Times, serif;
+
+  font-size: clamp(38px, 5vw, 60px);
+  font-weight: 400;
+
+  line-height: 1.08;
+}
+
+.account-hero h1 em {
+  color: #bd6f7c;
+
+font-family: 'Times New Roman', Times, serif;
+  font-style: italic;
+}
+
+.account-hero p {
+  max-width: 560px;
+
+  margin: 18px 0 0;
+
+  color: #76585b;
+
+  font-size: 13px;
+
+  line-height: 1.8;
+}
+
+
+/* =========================================================
+   ACCOUNT CONTAINER
+========================================================= */
+
+.account-container {
+  width: 88%;
+  max-width: 1200px;
+
+  margin: 55px auto 90px;
+
+  display: grid;
+
+  grid-template-columns: 280px minmax(0, 1fr);
+
+  gap: 45px;
+
+  align-items: start;
+}
+
+
+/* =========================================================
+   SIDEBAR
+========================================================= */
+
+.account-sidebar {
+  height: fit-content;
+margin-top: 150px;
+  background: #ffffff;
+
+  border: 1px solid rgba(74, 48, 50, 0.08);
+
+  box-shadow:
+    0 18px 50px rgba(74, 48, 50, 0.07);
+}
+
+
+/* =========================================================
+   USER MINI PROFILE
+========================================================= */
+
+.account-user-mini {
+  display: flex;
+  align-items: center;
+
+  gap: 13px;
+
+  padding: 24px;
+
+  border-bottom: 1px solid #f0e4df;
+}
+
+.account-avatar {
+  width: 48px;
+  height: 48px;
+
+  flex-shrink: 0;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  border-radius: 50%;
+
+  background: #f4d9dc;
+
+  color: #bd6f7c;
+}
+
+.account-user-info {
+  min-width: 0;
+}
+
+.account-user-info strong {
+  display: block;
+
+  overflow: hidden;
+
+  color: #4a3032;
+
+  font-family: Georgia, "Times New Roman", serif;
+
+  font-size: 15px;
+  font-weight: 600;
+
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.account-user-info span {
+  display: block;
+
+  max-width: 165px;
+
+  margin-top: 5px;
+
+  overflow: hidden;
+
+  color: #927b7d;
+
+  font-size: 10px;
+
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+
+/* =========================================================
+   SIDEBAR MENU
+========================================================= */
+
+.account-menu {
+  padding: 18px 14px;
+}
+
+.account-menu-item {
+  width: 100%;
+
+  display: flex;
+  align-items: center;
+
+  gap: 12px;
+
+  padding: 13px 12px;
+
+  border: none;
+  border-radius: 3px;
+
+  background: transparent;
+
+  color: #7d6769;
+
+  font-family: "Poppins", "Segoe UI", sans-serif;
+
+  font-size: 11px;
+  font-weight: 600;
+
+  text-align: left;
+
+  cursor: pointer;
+
+  transition:
+    background 0.25s ease,
+    color 0.25s ease,
+    transform 0.25s ease;
+}
+
+.account-menu-item span {
+  flex: 1;
+}
+
+.account-menu-item svg {
+  flex-shrink: 0;
+}
+
+.account-menu-item:hover {
+  background: #fff5f3;
+
+  color: #bd6f7c;
+
+  transform: translateX(2px);
+}
+
+.account-menu-item.active {
+  background: #f4d9dc;
+
+  color: #a95d69;
+}
+
+.account-menu-item.active svg:last-child {
+  transform: translateX(2px);
+}
+
+
+/* =========================================================
+   SIDEBAR BOTTOM
+========================================================= */
+
+.account-sidebar-bottom {
+  padding: 18px 14px 20px;
+
+  border-top: 1px solid #f0e4df;
+}
+
+.continue-shopping,
+.logout-button {
+  width: 100%;
+
+  display: flex;
+  align-items: center;
+
+  gap: 10px;
+
+  padding: 11px 12px;
+
+  border: none;
+
+  background: transparent;
+
+  font-family: "Poppins", "Segoe UI", sans-serif;
+
+  font-size: 10px;
+  font-weight: 600;
+
+  text-decoration: none;
+
+  cursor: pointer;
+
+  transition:
+    color 0.25s ease,
+    background 0.25s ease;
+}
+
+.continue-shopping {
+  color: #7d6769;
+}
+
+.logout-button {
+  margin-top: 3px;
+
+  color: #bd6f7c;
+}
+
+.continue-shopping:hover {
+  background: #fff7f4;
+
+  color: #bd6f7c;
+}
+
+.logout-button:hover {
+  background: #fff7f4;
+
+  color: #a95d69;
+}
+
+
+/* =========================================================
+   MAIN CONTENT
+========================================================= */
+
+.account-content {
+  min-width: 0;
+}
+
+.account-section {
+  width: 100%;
+}
+
+
+/* =========================================================
+   SECTION HEADING
+========================================================= */
+
+.section-heading {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+
+  padding-bottom: 24px;
+
+  border-bottom: 1px solid #eadeda;
+}
+
+.section-heading span {
+  display: block;
+
+  margin-bottom: 7px;
+
+  color: #bd6f7c;
+
+  font-size: 9px;
+  font-weight: 700;
+
+  letter-spacing: 2.5px;
+}
+
+.section-heading h2 {
+  margin: 0;
+
+  color: #4a3032;
+
+  font-family: Georgia, "Times New Roman", serif;
+
+  font-size: 30px;
+  font-weight: 400;
+}
+
+.section-heading > svg {
+  color: #bd6f7c;
+
+  margin-top: 5px;
+}
+
+
+/* =========================================================
+   DETAILS GRID
+========================================================= */
+
+.details-grid {
+  display: grid;
+
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+
+  gap: 16px;
+
+  margin-top: 28px;
+}
+
+.detail-card {
+  min-height: 105px;
+
+  display: flex;
+  align-items: center;
+
+  gap: 15px;
+
+  padding: 20px;
+
+  background: #ffffff;
+
+  border: 1px solid rgba(74, 48, 50, 0.07);
+
+  transition:
+    transform 0.25s ease,
+    box-shadow 0.25s ease,
+    border-color 0.25s ease;
+}
+
+.detail-card:hover {
+  transform: translateY(-3px);
+
+  border-color: rgba(217, 143, 154, 0.35);
+
+  box-shadow:
+    0 15px 35px rgba(74, 48, 50, 0.07);
+}
+
+
+/* =========================================================
+   DETAIL ICON
+========================================================= */
+
+.detail-icon {
+  width: 43px;
+  height: 43px;
+
+  flex-shrink: 0;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  background: #fff1f1;
+
+  color: #bd6f7c;
+}
+
+
+/* =========================================================
+   DETAIL TEXT
+========================================================= */
+
+.detail-card span {
+  display: block;
+
+  margin-bottom: 6px;
+
+  color: #9b8586;
+
+  font-size: 8px;
+  font-weight: 700;
+
+  letter-spacing: 1.5px;
+}
+
+.detail-card strong {
+  display: flex;
+  align-items: center;
+
+  gap: 6px;
+
+  color: #4a3032;
+
+  font-family: Georgia, "Times New Roman", serif;
+
+  font-size: 15px;
+  font-weight: 500;
+
+  line-height: 1.4;
+
+  word-break: break-word;
+}
+
+
+/* =========================================================
+   PASSWORD PROTECTION
+========================================================= */
+
+.protected-password {
+  color: #80676a !important;
+
+  font-family: "Poppins", "Segoe UI", sans-serif !important;
+
+  font-size: 11px !important;
+}
+
+.protected-password svg {
+  color: #bd6f7c;
+}
+
+
+/* =========================================================
+   ACCOUNT STATUS
+========================================================= */
+
+.account-status {
+  color: #5c9072 !important;
+
+  font-family: "Poppins", "Segoe UI", sans-serif !important;
+
+  font-size: 12px !important;
+}
+
+
+/* =========================================================
+   SECURITY NOTE
+========================================================= */
+
+.security-note {
+  display: flex;
+  align-items: flex-start;
+
+  gap: 14px;
+
+  margin-top: 24px;
+
+  padding: 18px 20px;
+
+  background: #f8eee9;
+
+  border-left: 3px solid #d98f9a;
+}
+
+.security-note-icon {
+  flex-shrink: 0;
+
+  color: #bd6f7c;
+}
+
+.security-note strong {
+  display: block;
+
+  margin-bottom: 5px;
+
+  color: #4a3032;
+
+  font-size: 12px;
+  font-weight: 600;
+}
+
+.security-note p {
+  margin: 0;
+
+  color: #80676a;
+
+  font-size: 10px;
+
+  line-height: 1.75;
+}
+
+
+/* =========================================================
+   QUICK ACCESS
+========================================================= */
+
+.quick-section {
+  margin-top: 40px;
+}
+
+.quick-label {
+  display: block;
+
+  margin-bottom: 15px;
+
+  color: #bd6f7c;
+
+  font-size: 9px;
+  font-weight: 700;
+
+  letter-spacing: 2px;
+}
+
+.quick-grid {
+  display: grid;
+
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+
+  gap: 15px;
+}
+
+.quick-card {
+  min-width: 0;
+
+  display: flex;
+  align-items: center;
+
+  gap: 13px;
+
+  padding: 18px;
+
+  border: 1px solid #eadeda;
+
+  background: #ffffff;
+
+  color: #bd6f7c;
+
+  font-family: "Poppins", "Segoe UI", sans-serif;
+
+  text-align: left;
+
+  cursor: pointer;
+
+  transition:
+    transform 0.25s ease,
+    box-shadow 0.25s ease,
+    border-color 0.25s ease;
+}
+
+.quick-card > div {
+  flex: 1;
+
+  min-width: 0;
+}
+
+.quick-card strong {
+  display: block;
+
+  margin-bottom: 4px;
+
+  color: #4a3032;
+
+  font-family: Georgia, "Times New Roman", serif;
+
+  font-size: 14px;
+  font-weight: 500;
+}
+
+.quick-card span {
+  color: #907779;
+
+  font-size: 9px;
+}
+
+.quick-card:hover {
+  transform: translateY(-3px);
+
+  border-color: #d98f9a;
+
+  box-shadow:
+    0 12px 30px rgba(74, 48, 50, 0.06);
+}
+
+
+/* =========================================================
+   EMPTY ORDERS
+========================================================= */
+
+.empty-orders {
+  margin-top: 35px;
+
+  padding: 60px 30px;
+
+  background: #ffffff;
+
+  border: 1px solid #eadeda;
+
+  text-align: center;
+}
+
+.empty-orders-icon {
+  width: 68px;
+  height: 68px;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  margin: 0 auto 20px;
+
+  border-radius: 50%;
+
+  background: #f4d9dc;
+
+  color: #bd6f7c;
+}
+
+.empty-orders h3 {
+  margin: 0;
+
+  color: #4a3032;
+
+  font-family: Georgia, "Times New Roman", serif;
+
+  font-size: 23px;
+  font-weight: 400;
+}
+
+.empty-orders p {
+  max-width: 480px;
+
+  margin: 13px auto 26px;
+
+  color: #80676a;
+
+  font-size: 11px;
+
+  line-height: 1.8;
+}
+
+
+/* =========================================================
+   SHOP BUTTON
+========================================================= */
+
+.shop-now-button {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+
+  gap: 8px;
+
+  min-height: 43px;
+
+  padding: 0 22px;
+
+  background: #bd6f7c;
+
+  color: #ffffff;
+
+  font-size: 9px;
+  font-weight: 700;
+
+  letter-spacing: 1.4px;
+
+  text-decoration: none;
+
+  transition:
+    background 0.25s ease,
+    transform 0.25s ease;
+}
+
+.shop-now-button:hover {
+  background: #a95d69;
+
+  transform: translateY(-2px);
+}
+
+
+/* =========================================================
+   PASSWORD INTRO
+========================================================= */
+
+.password-intro {
+  display: flex;
+  align-items: center;
+
+  gap: 12px;
+
+  margin-top: 25px;
+  margin-bottom: 20px;
+
+  padding: 16px 18px;
+
+  background: #f8eee9;
+
+  color: #80676a;
+}
+
+.password-intro svg {
+  flex-shrink: 0;
+
+  color: #bd6f7c;
+}
+
+.password-intro p {
+  margin: 0;
+
+  font-size: 10px;
+
+  line-height: 1.7;
+}
+
+
+/* =========================================================
+   PASSWORD MESSAGES
+========================================================= */
+
+.password-error,
+.password-success {
+  margin-bottom: 18px;
+
+  padding: 13px 16px;
+
+  font-size: 10px;
+
+  line-height: 1.5;
+}
+
+.password-error {
+  background: #fff0f0;
+
+  border-left: 3px solid #bd6f7c;
+
+  color: #b35d67;
+}
+
+.password-success {
+  background: #edf8f2;
+
+  border-left: 3px solid #6da485;
+
+  color: #52806a;
+}
+
+
+/* =========================================================
+   CHANGE PASSWORD FORM
+========================================================= */
+
+.change-password-form {
+  max-width: 650px;
+
+  padding: 30px;
+
+  background: #ffffff;
+margin-left: 100px;
+  border: 1px solid #eadeda;
+
+  box-shadow:
+    0 10px 35px rgba(74, 48, 50, 0.04);
+}
+
+.password-field {
+  margin-bottom: 20px;
+}
+
+.password-field label {
+  display: block;
+
+  margin-bottom: 8px;
+
+  color: #80676a;
+
+  font-size: 8px;
+  font-weight: 700;
+
+  letter-spacing: 1.5px;
+}
+
+.password-input {
+  height: 48px;
+
+  display: flex;
+  align-items: center;
+
+  gap: 10px;
+
+  padding: 0 14px;
+
+  border: 1px solid #e6d8d5;
+
+  background: #fffaf8;
+
+  transition:
+    border-color 0.25s ease,
+    box-shadow 0.25s ease;
+}
+
+.password-input:focus-within {
+  border-color: #d98f9a;
+
+  box-shadow:
+    0 0 0 3px rgba(217, 143, 154, 0.08);
+}
+
+.password-input svg {
+  flex-shrink: 0;
+
+  color: #bd6f7c;
+}
+
+.password-input input {
+  width: 100%;
+
+  padding: 0;
+
+  border: none;
+  outline: none;
+
+  background: transparent;
+
+  color: #4a3032;
+
+  font-family: "Poppins", "Segoe UI", sans-serif;
+
+  font-size: 11px;
+}
+
+.password-input input::placeholder {
+  color: #b7a4a5;
+}
+
+
+/* =========================================================
+   CHANGE PASSWORD BUTTON
+========================================================= */
+
+.change-password-button {
+  min-width: 190px;
+  height: 46px;
+
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+
+  gap: 9px;
+
+  margin-top: 3px;
+
+  border: none;
+
+  background: #bd6f7c;
+
+  color: #ffffff;
+
+  font-family: "Poppins", "Segoe UI", sans-serif;
+
+  font-size: 9px;
+  font-weight: 700;
+
+  letter-spacing: 1.3px;
+
+  cursor: pointer;
+
+  transition:
+    background 0.25s ease,
+    transform 0.25s ease,
+    box-shadow 0.25s ease;
+}
+
+.change-password-button:hover:not(:disabled) {
+  background: #a95d69;
+
+  transform: translateY(-2px);
+
+  box-shadow:
+    0 8px 20px rgba(189, 111, 124, 0.22);
+}
+
+.change-password-button:disabled {
+  opacity: 0.6;
+
+  cursor: not-allowed;
+}
+
+
+/* =========================================================
+   RESPONSIVE — TABLET
+========================================================= */
+
+@media (max-width: 900px) {
+
+  .account-container {
+    grid-template-columns: 240px minmax(0, 1fr);
+
+    gap: 28px;
+  }
+
+  .account-user-mini {
+    padding: 20px;
+  }
+
+  .account-menu {
+    padding: 14px 10px;
+  }
+
+  .account-sidebar-bottom {
+    padding: 15px 10px;
+  }
+
+  .account-menu-item {
+    padding: 12px 9px;
+
+    font-size: 10px;
+  }
+
+  .details-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .quick-grid {
+    grid-template-columns: 1fr;
+  }
+}
+
+
+/* =========================================================
+   RESPONSIVE — MOBILE
+========================================================= */
+
+@media (max-width: 700px) {
+
+  .account-hero {
+    min-height: 260px;
+  }
+
+  .account-hero-content {
+    width: 92%;
+  }
+
+  .account-hero h1 {
+    font-size: 40px;
+  }
+
+  .account-hero p {
+    max-width: 100%;
+
+    font-size: 12px;
+  }
+
+  .account-container {
+    width: 92%;
+
+    margin-top: 35px;
+    margin-bottom: 60px;
+
+    grid-template-columns: 1fr;
+
+    gap: 25px;
+  }
+
+  .account-sidebar {
+    width: 100%;
+  }
+
+  .account-menu {
+    padding: 12px;
+  }
+
+  .account-menu-item {
+    padding: 13px 11px;
+  }
+
+  .account-sidebar-bottom {
+    display: flex;
+
+    gap: 8px;
+
+    padding: 12px;
+  }
+
+  .continue-shopping,
+  .logout-button {
+    justify-content: center;
+
+    margin: 0;
+  }
+
+  .section-heading h2 {
+    font-size: 27px;
+  }
+
+  .details-grid {
+    grid-template-columns: 1fr;
+
+    gap: 12px;
+  }
+
+  .detail-card {
+    min-height: 90px;
+
+    padding: 17px;
+  }
+
+  .security-note {
+    padding: 16px;
+  }
+
+  .quick-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .empty-orders {
+    padding: 45px 20px;
+  }
+
+  .change-password-form {
+    padding: 22px;
+  }
+}
+
+
+/* =========================================================
+   RESPONSIVE — SMALL MOBILE
+========================================================= */
+
+@media (max-width: 450px) {
+
+  .account-hero {
+    min-height: 240px;
+  }
+
+  .account-hero h1 {
+    font-size: 34px;
+  }
+
+  .account-container {
+    width: 94%;
+  }
+
+  .account-sidebar-bottom {
+    flex-direction: column;
+  }
+
+  .section-heading h2 {
+    font-size: 24px;
+  }
+
+  .section-heading > svg {
+    width: 21px;
+    height: 21px;
+  }
+
+  .detail-card {
+    gap: 12px;
+  }
+
+  .detail-icon {
+    width: 39px;
+    height: 39px;
+  }
+
+  .detail-card strong {
+    font-size: 14px;
+  }
+
+  .change-password-button {
+    width: 100%;
+  }
+}
+
+
+/* =========================================================
+   ACCESSIBILITY / REDUCED MOTION
+========================================================= */
+
+@media (prefers-reduced-motion: reduce) {
+
+  .account-menu-item,
+  .detail-card,
+  .quick-card,
+  .shop-now-button,
+  .change-password-button {
+    transition: none;
+  }
+}
+/* =========================================================
+   ORDERS PREVIEW CARD
+========================================================= */
+
+.orders-preview-card {
+  position: relative;
+  display: flex;
+  align-items: center;
+  gap: 24px;
+
+  width: 100%;
+  padding: 28px 30px;
+
+  background:
+    linear-gradient(
+      135deg,
+      #fff9f4 0%,
+      #fdf0f1 100%
+    );
+
+  border: 1px solid rgba(189, 111, 124, 0.16);
+  border-radius: 20px;
+
+  box-shadow:
+    0 12px 35px rgba(74, 48, 50, 0.07);
+
+  overflow: hidden;
+
+  transition:
+    transform 0.35s ease,
+    box-shadow 0.35s ease,
+    border-color 0.35s ease;
+}
+
+/* Decorative glow */
+
+.orders-preview-card::before {
+  content: "";
+  position: absolute;
+
+  width: 180px;
+  height: 180px;
+
+  right: -70px;
+  top: -80px;
+
+  background: rgba(217, 143, 154, 0.12);
+
+  border-radius: 50%;
+
+  pointer-events: none;
+}
+
+.orders-preview-card::after {
+  content: "";
+  position: absolute;
+
+  width: 100px;
+  height: 100px;
+
+  left: -55px;
+  bottom: -60px;
+
+  background: rgba(239, 197, 181, 0.18);
+
+  border-radius: 50%;
+
+  pointer-events: none;
+}
+
+/* Hover */
+
+.orders-preview-card:hover {
+  transform: translateY(-4px);
+
+  border-color: rgba(189, 111, 124, 0.3);
+
+  box-shadow:
+    0 18px 45px rgba(74, 48, 50, 0.11);
+}
+
+
+/* =========================================================
+   ORDER ICON
+========================================================= */
+
+.orders-preview-icon {
+  position: relative;
+  z-index: 2;
+
+  flex-shrink: 0;
+
+  width: 66px;
+  height: 66px;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  color: #bd6f7c;
+
+  background: #ffffff;
+
+  border: 1px solid rgba(189, 111, 124, 0.16);
+
+  border-radius: 17px;
+
+  box-shadow:
+    0 8px 20px rgba(74, 48, 50, 0.06);
+
+  transition:
+    transform 0.35s ease,
+    background 0.35s ease,
+    color 0.35s ease;
+}
+
+.orders-preview-card:hover .orders-preview-icon {
+  transform: translateY(-2px) rotate(-3deg);
+
+  background: #bd6f7c;
+  color: #fff9f4;
+}
+
+
+/* =========================================================
+   CONTENT
+========================================================= */
+
+.orders-preview-content {
+  position: relative;
+  z-index: 2;
+
+  flex: 1;
+  min-width: 0;
+}
+
+.orders-preview-content h3 {
+  margin: 0 0 7px;
+
+  color: #4a3032;
+
+  font-family:
+    "Poppins",
+    "Segoe UI",
+    sans-serif;
+
+  font-size: 19px;
+  font-weight: 700;
+
+  letter-spacing: -0.2px;
+}
+
+.orders-preview-content p {
+  margin: 0;
+
+  max-width: 620px;
+
+  color: #817071;
+
+  font-family:
+    "Poppins",
+    "Segoe UI",
+    sans-serif;
+
+  font-size: 13px;
+  line-height: 1.7;
+}
+
+
+/* =========================================================
+   VIEW ORDERS BUTTON
+========================================================= */
+
+.view-orders-button {
+  position: relative;
+  z-index: 2;
+
+  flex-shrink: 0;
+
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 9px;
+
+  min-height: 46px;
+
+  padding: 0 20px;
+
+  color: #ffffff;
+
+  background: #4a3032;
+
+  border: 1px solid #4a3032;
+  border-radius: 10px;
+
+  text-decoration: none;
+
+  font-family:
+    "Poppins",
+    "Segoe UI",
+    sans-serif;
+
+  font-size: 11px;
+  font-weight: 700;
+
+  letter-spacing: 0.9px;
+
+  transition:
+    background 0.3s ease,
+    border-color 0.3s ease,
+    transform 0.3s ease,
+    box-shadow 0.3s ease;
+}
+
+.view-orders-button svg {
+  transition:
+    transform 0.3s ease;
+}
+
+.view-orders-button:hover {
+  background: #bd6f7c;
+  border-color: #bd6f7c;
+
+  transform: translateY(-2px);
+
+  box-shadow:
+    0 9px 20px rgba(189, 111, 124, 0.25);
+}
+
+.view-orders-button:hover svg {
+  transform: translateX(4px);
+}
+
+
+/* =========================================================
+   TABLET
+========================================================= */
+
+@media (max-width: 900px) {
+  .orders-preview-card {
+    gap: 18px;
+    padding: 24px;
+  }
+
+  .orders-preview-icon {
+    width: 58px;
+    height: 58px;
+  }
+
+  .orders-preview-icon svg {
+    width: 26px;
+    height: 26px;
+  }
+
+  .orders-preview-content h3 {
+    font-size: 17px;
+  }
+
+  .orders-preview-content p {
+    font-size: 12px;
+  }
+
+  .view-orders-button {
+    padding: 0 16px;
+    min-height: 43px;
+    font-size: 10px;
+  }
+}
+
+
+/* =========================================================
+   MOBILE
+========================================================= */
+
+@media (max-width: 600px) {
+  .orders-preview-card {
+    flex-direction: column;
+    align-items: flex-start;
+
+    gap: 17px;
+
+    padding: 24px 20px;
+
+    border-radius: 18px;
+  }
+
+  .orders-preview-icon {
+    width: 56px;
+    height: 56px;
+
+    border-radius: 15px;
+  }
+
+  .orders-preview-content {
+    width: 100%;
+  }
+
+  .orders-preview-content h3 {
+    font-size: 17px;
+    line-height: 1.4;
+  }
+
+  .orders-preview-content p {
+    font-size: 12px;
+    line-height: 1.65;
+  }
+
+  .view-orders-button {
+    width: 100%;
+
+    min-height: 46px;
+
+    padding: 0 18px;
+  }
+}
+
+
+/* =========================================================
+   SMALL MOBILE
+========================================================= */
+
+@media (max-width: 380px) {
+  .orders-preview-card {
+    padding: 20px 17px;
+  }
+
+  .orders-preview-content h3 {
+    font-size: 16px;
+  }
+
+  .orders-preview-content p {
+    font-size: 11.5px;
+  }
+
+  .view-orders-button {
+    font-size: 9.5px;
+  }
+}

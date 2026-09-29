@@ -1,0 +1,855 @@
+
+/* =========================================================
+   MAMTA ADMIN SIDEBAR
+   Premium • Soft • Colorful • Elegant
+========================================================= */
+
+.admin-sidebar {
+  position: fixed;
+  top: 0;
+  left: 0;
+
+  width: 265px;
+  height: 100vh;
+
+  background:
+    radial-gradient(
+      circle at 100% 0%,
+      rgba(216, 130, 145, 0.18),
+      transparent 32%
+    ),
+    linear-gradient(
+      180deg,
+      #4a3032 0%,
+      #3e292c 52%,
+      #342326 100%
+    );
+
+  color: #ffffff;
+
+  display: flex;
+  flex-direction: column;
+
+  z-index: 1000;
+
+  box-shadow:
+    8px 0 35px rgba(74, 48, 50, 0.14);
+}
+
+
+/* =========================================================
+   BRAND
+========================================================= */
+
+.admin-sidebar-brand {
+  min-height: 88px;
+
+  padding: 0 22px;
+
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+
+  border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+
+  position: relative;
+}
+
+
+/* Small decorative glow */
+
+.admin-sidebar-brand::after {
+  content: "";
+
+  position: absolute;
+
+  left: 22px;
+  bottom: -1px;
+
+  width: 62px;
+  height: 2px;
+
+  background:
+    linear-gradient(
+      90deg,
+      #e49aa6,
+      #f2c5cb,
+      transparent
+    );
+
+  border-radius: 5px;
+}
+
+
+/* =========================================================
+   BRAND TEXT
+========================================================= */
+
+.admin-brand-name {
+  display: block;
+
+  color: #ffffff;
+
+  font-family:
+    "Playfair Display",
+    Georgia,
+    serif;
+
+  font-size: 20px;
+  font-weight: 700;
+
+  letter-spacing: 3px;
+
+  line-height: 1;
+}
+
+
+.admin-brand-label {
+  display: block;
+
+  margin-top: 7px;
+
+  color: #e9c8cc;
+
+  font-size: 8px;
+  font-weight: 700;
+
+  letter-spacing: 2.2px;
+
+  text-transform: uppercase;
+}
+
+
+/* =========================================================
+   MOBILE CLOSE
+========================================================= */
+
+.admin-mobile-close {
+  display: none;
+
+  width: 36px;
+  height: 36px;
+
+  border: 1px solid rgba(255, 255, 255, 0.12);
+
+  border-radius: 10px;
+
+  background: rgba(255, 255, 255, 0.06);
+
+  color: #ffffff;
+
+  cursor: pointer;
+
+  align-items: center;
+  justify-content: center;
+
+  transition: 0.2s ease;
+}
+
+
+.admin-mobile-close:hover {
+  background: rgba(255, 255, 255, 0.13);
+
+  border-color: rgba(255, 255, 255, 0.22);
+
+  transform: rotate(3deg);
+}
+
+
+/* =========================================================
+   NAVIGATION
+========================================================= */
+
+.admin-sidebar-nav {
+  flex: 1;
+
+  padding: 18px 12px 20px;
+
+  overflow-y: auto;
+}
+
+
+/* Scrollbar */
+
+.admin-sidebar-nav::-webkit-scrollbar {
+  width: 4px;
+}
+
+.admin-sidebar-nav::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+.admin-sidebar-nav::-webkit-scrollbar-thumb {
+  background: rgba(255, 255, 255, 0.14);
+
+  border-radius: 10px;
+}
+
+.admin-sidebar-nav::-webkit-scrollbar-thumb:hover {
+  background: rgba(255, 255, 255, 0.25);
+}
+
+
+/* =========================================================
+   SECTION
+========================================================= */
+
+.admin-nav-section {
+  margin-top: 23px;
+}
+
+
+.admin-nav-section:first-of-type {
+  margin-top: 7px;
+}
+
+
+/* =========================================================
+   SECTION TITLE
+========================================================= */
+
+.admin-nav-section-title {
+  padding: 0 13px 8px;
+
+  color: #cfaeb2;
+
+  font-size: 8px;
+  font-weight: 800;
+
+  letter-spacing: 1.8px;
+
+  text-transform: uppercase;
+}
+
+
+/* =========================================================
+   NAV LINKS
+========================================================= */
+
+.admin-nav-link {
+  position: relative;
+
+  min-height: 43px;
+
+  margin-bottom: 4px;
+
+  padding: 0 13px;
+
+  display: flex;
+  align-items: center;
+
+  gap: 12px;
+
+  color: #f5e9ea;
+
+  text-decoration: none;
+
+  border: 1px solid transparent;
+
+  border-radius: 11px;
+
+  font-size: 13px;
+  font-weight: 500;
+
+  transition:
+    background 0.2s ease,
+    color 0.2s ease,
+    border-color 0.2s ease,
+    transform 0.2s ease,
+    box-shadow 0.2s ease;
+}
+
+
+/* Icon */
+
+.admin-nav-link svg {
+  flex-shrink: 0;
+
+  opacity: 0.9;
+
+  transition:
+    color 0.2s ease,
+    transform 0.2s ease;
+}
+
+
+/* =========================================================
+   HOVER
+========================================================= */
+
+.admin-nav-link:hover {
+  background:
+    linear-gradient(
+      90deg,
+      rgba(255, 255, 255, 0.1),
+      rgba(255, 255, 255, 0.045)
+    );
+
+  border-color: rgba(255, 255, 255, 0.06);
+
+  color: #ffffff;
+
+  transform: translateX(2px);
+}
+
+
+.admin-nav-link:hover svg {
+  color: #f0b0b9;
+
+  transform: scale(1.06);
+}
+
+
+/* =========================================================
+   ACTIVE LINK
+========================================================= */
+
+.admin-nav-link.active {
+  background:
+    linear-gradient(
+      135deg,
+      #fff9f4 0%,
+      #fdecef 100%
+    );
+
+  border-color: #f4d8dc;
+
+  color: #4a3032;
+
+  font-weight: 700;
+
+  box-shadow:
+    0 7px 18px rgba(0, 0, 0, 0.09);
+}
+
+
+.admin-nav-link.active svg {
+  color: #b96773;
+
+  opacity: 1;
+}
+
+
+/* Active left accent */
+
+.admin-nav-link.active::before {
+  content: "";
+
+  position: absolute;
+
+  left: -1px;
+  top: 8px;
+  bottom: 8px;
+
+  width: 4px;
+
+  background:
+    linear-gradient(
+      180deg,
+      #d98291,
+      #b85f6c
+    );
+
+  border-radius: 0 6px 6px 0;
+}
+
+
+/* =========================================================
+   SUB ICON
+========================================================= */
+
+.admin-sub-icon {
+  width: 19px;
+
+  color: #e3a3ac;
+
+  text-align: center;
+
+  font-size: 18px;
+  font-weight: 400;
+
+  line-height: 1;
+}
+
+
+/* =========================================================
+   STATUS DOTS
+========================================================= */
+
+.admin-sub-dot {
+  width: 7px;
+  height: 7px;
+
+  margin-left: 6px;
+
+  flex-shrink: 0;
+
+  border-radius: 50%;
+
+  box-shadow:
+    0 0 0 3px rgba(255, 255, 255, 0.035);
+}
+
+
+/* Pending */
+
+.admin-sub-dot.pending {
+  background: #e4b85f;
+
+  box-shadow:
+    0 0 0 3px rgba(228, 184, 95, 0.1);
+}
+
+
+/* Processing */
+
+.admin-sub-dot.processing {
+  background: #9ca9df;
+
+  box-shadow:
+    0 0 0 3px rgba(156, 169, 223, 0.1);
+}
+
+
+/* Shipped */
+
+.admin-sub-dot.shipped {
+  background: #82c4d2;
+
+  box-shadow:
+    0 0 0 3px rgba(130, 196, 210, 0.1);
+}
+
+
+/* Delivered */
+
+.admin-sub-dot.delivered {
+  background: #78c39f;
+
+  box-shadow:
+    0 0 0 3px rgba(120, 195, 159, 0.1);
+}
+
+
+/* Cancelled */
+
+.admin-sub-dot.cancelled {
+  background: #dd8490;
+
+  box-shadow:
+    0 0 0 3px rgba(221, 132, 144, 0.1);
+}
+
+
+/* =========================================================
+   BOTTOM AREA
+========================================================= */
+
+.admin-sidebar-bottom {
+  padding: 12px;
+}
+
+
+/* Divider */
+
+.admin-sidebar-divider {
+  height: 1px;
+
+  margin: 0 5px 12px;
+
+  background:
+    linear-gradient(
+      90deg,
+      transparent,
+      rgba(255, 255, 255, 0.13),
+      transparent
+    );
+}
+
+
+/* =========================================================
+   LOGOUT
+========================================================= */
+
+.admin-logout-btn {
+  position: relative;
+
+  width: 100%;
+  height: 44px;
+
+  border: 1px solid transparent;
+
+  border-radius: 11px;
+
+  background: transparent;
+
+  color: #f1dfe1;
+
+  display: flex;
+  align-items: center;
+
+  gap: 12px;
+
+  padding: 0 13px;
+
+  font-family: inherit;
+
+  font-size: 13px;
+  font-weight: 500;
+
+  cursor: pointer;
+
+  transition:
+    background 0.2s ease,
+    border-color 0.2s ease,
+    color 0.2s ease,
+    transform 0.2s ease;
+}
+
+
+.admin-logout-btn:hover {
+  background: rgba(221, 132, 144, 0.12);
+
+  border-color: rgba(221, 132, 144, 0.18);
+
+  color: #ffdfe3;
+
+  transform: translateX(2px);
+}
+
+
+.admin-logout-btn svg {
+  color: #d9939d;
+}
+
+
+/* =========================================================
+   MOBILE OVERLAY
+========================================================= */
+
+.admin-sidebar-overlay {
+  display: none;
+}
+
+
+/* =========================================================
+   TABLET / MOBILE
+========================================================= */
+
+@media (max-width: 900px) {
+
+  .admin-sidebar {
+    width: 275px;
+
+    transform: translateX(-100%);
+
+    transition:
+      transform 0.28s cubic-bezier(0.4, 0, 0.2, 1);
+
+    box-shadow:
+      12px 0 35px rgba(38, 22, 25, 0.2);
+  }
+
+
+  .admin-sidebar.mobile-open {
+    transform: translateX(0);
+  }
+
+
+  .admin-mobile-close {
+    display: flex;
+  }
+
+
+  .admin-sidebar-overlay {
+    display: block;
+
+    position: fixed;
+
+    inset: 0;
+
+    background:
+      rgba(47, 28, 31, 0.48);
+
+    backdrop-filter: blur(2px);
+
+    z-index: 999;
+  }
+
+}
+
+
+/* =========================================================
+   SMALL MOBILE
+========================================================= */
+
+@media (max-width: 520px) {
+
+  .admin-sidebar {
+    width: 280px;
+  }
+
+
+  .admin-sidebar-brand {
+    min-height: 80px;
+
+    padding: 0 19px;
+  }
+
+
+  .admin-brand-name {
+    font-size: 24px;
+  }
+
+
+  .admin-sidebar-nav {
+    padding: 15px 11px 18px;
+  }
+
+
+  .admin-nav-link {
+    min-height: 42px;
+
+    font-size: 12.5px;
+  }
+
+}
+
+
+/* =========================================================
+   VERY SMALL MOBILE
+========================================================= */
+
+@media (max-width: 380px) {
+
+  .admin-sidebar {
+    width: 265px;
+  }
+
+
+  .admin-brand-name {
+    font-size: 22px;
+
+    letter-spacing: 2.5px;
+  }
+
+
+  .admin-brand-label {
+    font-size: 7px;
+  }
+
+}
+
+/* =========================================================
+CONTACT / MESSAGES SECTION
+========================================================= */
+
+.admin-nav-section {
+width: 100%;
+margin-top: 22px;
+}
+
+.admin-nav-section-title {
+padding: 0 18px 10px;
+}
+
+.admin-nav-section-title span {
+display: block;
+color: #a58f91;
+font-family: "Poppins", "DM Sans", sans-serif;
+font-size: 10px;
+font-weight: 700;
+letter-spacing: 1.4px;
+text-transform: uppercase;
+}
+
+/* Messages NavLink */
+.admin-nav-section a {
+position: relative;
+display: flex;
+align-items: center;
+gap: 12px;
+
+width: 100%;
+padding: 12px 18px;
+
+color: #7b6668;
+text-decoration: none;
+
+font-family: "Poppins", "DM Sans", sans-serif;
+font-size: 13px;
+font-weight: 500;
+
+border-radius: 10px;
+transition: all 0.25s ease;
+box-sizing: border-box;
+}
+
+/* Icon */
+.admin-nav-section a svg {
+flex-shrink: 0;
+
+transition: all 0.25s ease;
+}
+
+/* Hover */
+.admin-nav-section a:hover {
+background: #fff3ef;
+color: #4a3032;
+transform: translateX(2px);
+}
+
+.admin-nav-section a:hover svg {
+color: #b86172;
+}
+
+/* Active */
+.admin-nav-section a.active {
+background: linear-gradient(
+135deg,
+#f8e7e4,
+#fcefeb
+);
+
+color: #8f4d5b;
+font-weight: 600;
+}
+
+/* Active left indicator */
+.admin-nav-section a.active::before {
+content: "";
+
+position: absolute;
+left: 0;
+top: 50%;
+transform: translateY(-50%);
+
+width: 3px;
+height: 24px;
+
+background: #b86172;
+border-radius: 0 4px 4px 0;
+}
+
+.admin-nav-section a.active svg {
+color: #b86172;
+}
+
+/* =========================================================
+MOBILE
+========================================================= */
+
+@media (max-width: 900px) {
+.admin-nav-section {
+margin-top: 18px;
+}
+
+.admin-nav-section-title {
+padding-left: 16px;
+padding-right: 16px;
+}
+
+.admin-nav-section a {
+padding: 11px 16px;
+}
+}
+
+/* =========================================================
+   NAV LINKS — COLOR ONLY
+========================================================= */
+
+.admin-sidebar .admin-nav-link {
+  color: #f5e9ea !important;
+  font-size: 13px;
+}
+
+
+/* =========================================================
+   NAV LINK ICONS
+========================================================= */
+
+.admin-sidebar .admin-nav-link svg {
+  color: #d9b9bd !important;
+  opacity: 1 !important;
+}
+
+
+/* =========================================================
+   HOVER
+========================================================= */
+
+.admin-sidebar .admin-nav-link:hover {
+  color: #ffffff !important;
+}
+
+.admin-sidebar .admin-nav-link:hover svg {
+  color: #f0aab5 !important;
+}
+
+
+/* =========================================================
+   ACTIVE LINK
+========================================================= */
+
+.admin-sidebar .admin-nav-link.active {
+  color: #4a3032 !important;
+}
+
+
+/* =========================================================
+   ACTIVE ICON
+========================================================= */
+
+.admin-sidebar .admin-nav-link.active svg {
+  color: #b96773 !important;
+  opacity: 1 !important;
+}
+
+
+/* =========================================================
+   ADD PRODUCT (+)
+========================================================= */
+
+.admin-sidebar .admin-sub-icon {
+  color: #e3a3ac !important;
+}
+
+
+/* =========================================================
+   MESSAGES / CONTACT LINK
+========================================================= */
+
+.admin-sidebar .admin-nav-section a {
+  color: #f5e9ea !important;
+}
+
+
+/* Messages icon */
+
+.admin-sidebar .admin-nav-section a svg {
+  color: #d9b9bd !important;
+  opacity: 1 !important;
+}
+
+
+/* Messages hover */
+
+.admin-sidebar .admin-nav-section a:hover {
+  color: #ffffff !important;
+}
+
+.admin-sidebar .admin-nav-section a:hover svg {
+  color: #f0aab5 !important;
+}
+
+
+/* Messages active */
+
+.admin-sidebar .admin-nav-section a.active {
+  color: #4a3032 !important;
+}
+
+.admin-sidebar .admin-nav-section a.active svg {
+  color: #b96773 !important;
+}
+

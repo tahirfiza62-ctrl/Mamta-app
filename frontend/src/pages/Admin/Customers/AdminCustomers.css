@@ -1,0 +1,880 @@
+
+/* =========================================================
+   MAMTA ADMIN CUSTOMERS
+   Premium • Clean • Soft • Professional
+========================================================= */
+
+.admin-customers-page {
+  width: 100%;
+  min-height: 100%;
+  color: #4a3032;
+  font-family: "Poppins", "DM Sans", "Segoe UI", sans-serif;
+}
+
+
+/* =========================================================
+   PAGE HEADER
+========================================================= */
+
+.customers-page-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+
+  gap: 25px;
+  margin-bottom: 28px;
+}
+
+.customers-heading {
+  display: flex;
+  align-items: center;
+  gap: 15px;
+}
+
+.customers-heading-icon {
+  width: 50px;
+  height: 50px;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  flex-shrink: 0;
+
+  background: #f4d9de;
+  color: #b66f7d;
+
+  border: 1px solid #eac5cc;
+  border-radius: 14px;
+}
+
+.customers-heading > div:last-child {
+  display: flex;
+  flex-direction: column;
+}
+
+.customers-heading span {
+  margin-bottom: 3px;
+
+  color: #b66f7d;
+
+  font-size: 9px;
+  font-weight: 700;
+  letter-spacing: 2px;
+}
+
+.customers-heading h1 {
+  margin: 0;
+
+  color: #4a3032;
+
+  font-family: "Playfair Display", Georgia, serif;
+  font-size: 32px;
+  font-weight: 500;
+  line-height: 1.15;
+}
+
+.customers-heading p {
+  margin: 5px 0 0;
+
+  color: #817174;
+
+  font-size: 12px;
+  line-height: 1.5;
+}
+
+
+/* =========================================================
+   REFRESH BUTTON
+========================================================= */
+
+.customers-refresh-btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+
+  min-height: 42px;
+  padding: 0 17px;
+
+  background: #ffffff;
+
+  border: 1px solid #eadcdf;
+  border-radius: 10px;
+
+  color: #5a3d40;
+
+  font-family: inherit;
+  font-size: 12px;
+  font-weight: 600;
+
+  cursor: pointer;
+
+  box-shadow: 0 4px 15px rgba(74, 48, 50, 0.04);
+
+  transition:
+    background 0.25s ease,
+    color 0.25s ease,
+    border-color 0.25s ease,
+    transform 0.25s ease;
+}
+
+.customers-refresh-btn:hover {
+  background: #c47788;
+  border-color: #c47788;
+  color: #ffffff;
+
+  transform: translateY(-1px);
+}
+
+.customers-refresh-btn:disabled {
+  opacity: 0.6;
+  cursor: not-allowed;
+  transform: none;
+}
+
+.customers-refresh-btn svg {
+  transition: transform 0.4s ease;
+}
+
+.customers-refresh-btn:hover svg {
+  transform: rotate(180deg);
+}
+
+
+/* =========================================================
+   STATISTICS
+========================================================= */
+
+.customers-stats {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+
+  gap: 18px;
+
+  margin-bottom: 25px;
+}
+
+.customer-stat-card {
+  display: flex;
+  align-items: center;
+
+  gap: 15px;
+
+  min-height: 105px;
+  padding: 20px;
+
+  background: #ffffff;
+
+  border: 1px solid #eee3e5;
+  border-radius: 15px;
+
+  box-shadow:
+    0 5px 20px rgba(74, 48, 50, 0.045);
+
+  transition:
+    transform 0.3s ease,
+    box-shadow 0.3s ease,
+    border-color 0.3s ease;
+}
+
+.customer-stat-card:hover {
+  transform: translateY(-3px);
+
+  border-color: #ead0d5;
+
+  box-shadow:
+    0 10px 28px rgba(74, 48, 50, 0.07);
+}
+
+.customer-stat-icon {
+  width: 46px;
+  height: 46px;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  flex-shrink: 0;
+
+  border-radius: 12px;
+}
+
+.customer-stat-icon.total {
+  background: #f5e3e7;
+  color: #b66f7d;
+}
+
+.customer-stat-icon.active {
+  background: #e8f5ef;
+  color: #29926d;
+}
+
+.customer-stat-icon.inactive {
+  background: #f9e9e9;
+  color: #c86b72;
+}
+
+.customer-stat-card > div:last-child {
+  display: flex;
+  flex-direction: column;
+}
+
+.customer-stat-card span {
+  color: #857477;
+
+  font-size: 11px;
+  font-weight: 500;
+}
+
+.customer-stat-card strong {
+  margin-top: 3px;
+
+  color: #4a3032;
+
+  font-size: 24px;
+  font-weight: 700;
+  line-height: 1.2;
+}
+
+
+/* =========================================================
+   ERROR
+========================================================= */
+
+.customers-error {
+  margin-bottom: 20px;
+  padding: 13px 16px;
+
+  background: #fff0f0;
+
+  border: 1px solid #f2cccc;
+  border-radius: 10px;
+
+  color: #b14f58;
+
+  font-size: 12px;
+  font-weight: 500;
+}
+
+
+/* =========================================================
+   TOOLBAR
+========================================================= */
+
+.customers-toolbar {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+
+  gap: 18px;
+
+  margin-bottom: 16px;
+}
+
+.customers-search {
+  width: min(100%, 460px);
+
+  display: flex;
+  align-items: center;
+  gap: 10px;
+
+  min-height: 44px;
+  padding: 0 14px;
+
+  background: #ffffff;
+
+  border: 1px solid #e8dcdf;
+  border-radius: 10px;
+
+  color: #a18388;
+
+  transition:
+    border-color 0.25s ease,
+    box-shadow 0.25s ease;
+}
+
+.customers-search:focus-within {
+  border-color: #c47788;
+
+  box-shadow:
+    0 0 0 3px rgba(196, 119, 136, 0.10);
+}
+
+.customers-search input {
+  width: 100%;
+
+  border: 0;
+  outline: 0;
+
+  background: transparent;
+
+  color: #4a3032;
+
+  font-family: inherit;
+  font-size: 12px;
+}
+
+.customers-search input::placeholder {
+  color: #ad9b9e;
+}
+
+.customers-count {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+
+  min-height: 38px;
+  padding: 0 13px;
+
+  background: #f8edef;
+
+  border: 1px solid #ead6da;
+  border-radius: 20px;
+
+  color: #9e6470;
+
+  font-size: 11px;
+  font-weight: 600;
+
+  white-space: nowrap;
+}
+
+
+/* =========================================================
+   TABLE CARD
+========================================================= */
+
+.customers-table-card {
+  width: 100%;
+
+  overflow: hidden;
+
+  background: #ffffff;
+
+  border: 1px solid #eee3e5;
+  border-radius: 15px;
+
+  box-shadow:
+    0 6px 25px rgba(74, 48, 50, 0.045);
+}
+
+.customers-table-wrapper {
+  width: 100%;
+
+  overflow-x: auto;
+}
+
+.customers-table {
+  width: 100%;
+
+  min-width: 850px;
+
+  border-collapse: collapse;
+}
+
+
+/* =========================================================
+   TABLE HEADER
+========================================================= */
+
+.customers-table thead {
+  background: #fcf7f8;
+}
+
+.customers-table th {
+  padding: 15px 18px;
+
+  border-bottom: 1px solid #eee2e4;
+
+  color: #80686c;
+
+  font-size: 9px;
+  font-weight: 700;
+  letter-spacing: 1.2px;
+  text-align: left;
+  text-transform: uppercase;
+
+  white-space: nowrap;
+}
+
+
+/* =========================================================
+   TABLE BODY
+========================================================= */
+
+.customers-table td {
+  padding: 17px 18px;
+
+  border-bottom: 1px solid #f1e9ea;
+
+  color: #5c474a;
+
+  font-size: 12px;
+
+  vertical-align: middle;
+}
+
+.customers-table tbody tr {
+  transition: background 0.25s ease;
+}
+
+.customers-table tbody tr:hover {
+  background: #fffafb;
+}
+
+.customers-table tbody tr:last-child td {
+  border-bottom: none;
+}
+
+
+/* =========================================================
+   CUSTOMER PROFILE
+========================================================= */
+
+.customer-profile {
+  display: flex;
+  align-items: center;
+
+  gap: 11px;
+
+  min-width: 190px;
+}
+
+.customer-avatar {
+  width: 39px;
+  height: 39px;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  flex-shrink: 0;
+
+  background:
+    linear-gradient(
+      135deg,
+      #f3d7dc,
+      #f9e9eb
+    );
+
+  border: 1px solid #ebcdd2;
+  border-radius: 50%;
+
+  color: #a9606d;
+
+  font-size: 13px;
+  font-weight: 700;
+}
+
+.customer-profile > div:last-child {
+  display: flex;
+  flex-direction: column;
+  gap: 3px;
+}
+
+.customer-profile strong {
+  color: #4a3032;
+
+  font-size: 12px;
+  font-weight: 600;
+}
+
+.customer-profile span {
+  color: #a08c90;
+
+  font-size: 10px;
+}
+
+
+/* =========================================================
+   EMAIL
+========================================================= */
+
+.customer-email {
+  display: flex;
+  align-items: center;
+  gap: 7px;
+
+  color: #756164;
+
+  white-space: nowrap;
+}
+
+.customer-email svg {
+  color: #c47788;
+}
+
+
+/* =========================================================
+   DATE
+========================================================= */
+
+.customer-date {
+  display: flex;
+  align-items: center;
+  gap: 7px;
+
+  color: #756164;
+
+  white-space: nowrap;
+}
+
+.customer-date svg {
+  color: #b98a93;
+}
+
+
+/* =========================================================
+   STATUS
+========================================================= */
+
+.customer-status {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+
+  min-width: 68px;
+
+  padding: 6px 10px;
+
+  border-radius: 20px;
+
+  font-size: 9px;
+  font-weight: 700;
+  letter-spacing: 0.4px;
+}
+
+.customer-status.active {
+  background: #e8f6ef;
+  color: #2b8c69;
+}
+
+.customer-status.inactive {
+  background: #fbeaea;
+  color: #c26169;
+}
+
+
+/* =========================================================
+   ACTIONS
+========================================================= */
+
+.customer-actions {
+  display: flex;
+  align-items: center;
+  gap: 7px;
+}
+
+.customer-actions button {
+  width: 34px;
+  height: 34px;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  border-radius: 9px;
+
+  cursor: pointer;
+
+  transition:
+    background 0.25s ease,
+    color 0.25s ease,
+    border-color 0.25s ease,
+    transform 0.2s ease;
+}
+
+.customer-actions button:hover {
+  transform: translateY(-1px);
+}
+
+.customer-actions button:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+  transform: none;
+}
+
+
+/* VIEW */
+
+.customer-view-btn {
+  background: #f7f1f2;
+  border: 1px solid #eadcdf;
+
+  color: #806267;
+}
+
+.customer-view-btn:hover {
+  background: #eee0e3;
+  border-color: #dcc3c8;
+  color: #a35f6c;
+}
+
+
+/* ACTIVATE */
+
+.customer-status-btn.activate {
+  background: #edf8f2;
+  border: 1px solid #d4eddf;
+
+  color: #2b8c69;
+}
+
+.customer-status-btn.activate:hover {
+  background: #2b8c69;
+  border-color: #2b8c69;
+
+  color: #ffffff;
+}
+
+
+/* DEACTIVATE */
+
+.customer-status-btn.deactivate {
+  background: #fff4f4;
+  border: 1px solid #f2dada;
+
+  color: #c36a72;
+}
+
+.customer-status-btn.deactivate:hover {
+  background: #c36a72;
+  border-color: #c36a72;
+
+  color: #ffffff;
+}
+
+
+/* DELETE */
+
+.customer-delete-btn {
+  background: #fff4f4;
+  border: 1px solid #f2dada;
+
+  color: #c36a72;
+}
+
+.customer-delete-btn:hover {
+  background: #d96d75;
+  border-color: #d96d75;
+
+  color: #ffffff;
+}
+
+
+/* =========================================================
+   EMPTY STATE
+========================================================= */
+
+.customers-empty {
+  min-height: 330px;
+
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+
+  padding: 40px;
+
+  background: #ffffff;
+
+  border: 1px solid #eee3e5;
+  border-radius: 15px;
+
+  text-align: center;
+
+  box-shadow:
+    0 6px 25px rgba(74, 48, 50, 0.04);
+}
+
+.customers-empty-icon {
+  width: 70px;
+  height: 70px;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  margin-bottom: 18px;
+
+  background: #f8e9ec;
+
+  border-radius: 50%;
+
+  color: #c47788;
+}
+
+.customers-empty h3 {
+  margin: 0 0 7px;
+
+  color: #4a3032;
+
+  font-family: "Playfair Display", Georgia, serif;
+  font-size: 21px;
+  font-weight: 500;
+}
+
+.customers-empty p {
+  max-width: 380px;
+
+  margin: 0;
+
+  color: #8c797c;
+
+  font-size: 12px;
+  line-height: 1.7;
+}
+
+
+/* =========================================================
+   LOADING
+========================================================= */
+
+.customers-loading {
+  min-height: 450px;
+
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+
+  color: #80696d;
+}
+
+.customers-loader {
+  width: 35px;
+  height: 35px;
+
+  margin-bottom: 14px;
+
+  border: 3px solid #f0dfe2;
+  border-top-color: #c47788;
+
+  border-radius: 50%;
+
+  animation: customersSpin 0.8s linear infinite;
+}
+
+.customers-loading p {
+  margin: 0;
+
+  font-size: 12px;
+}
+
+@keyframes customersSpin {
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+
+/* =========================================================
+   TABLET
+========================================================= */
+
+@media (max-width: 900px) {
+
+  .customers-stats {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+
+  .customers-stats
+    .customer-stat-card:last-child {
+    grid-column: 1 / -1;
+  }
+
+  .customers-page-header {
+    align-items: flex-start;
+  }
+
+  .customers-heading h1 {
+    font-size: 29px;
+  }
+}
+
+
+/* =========================================================
+   MOBILE
+========================================================= */
+
+@media (max-width: 600px) {
+
+  .customers-page-header {
+    flex-direction: column;
+    align-items: stretch;
+  }
+
+  .customers-heading {
+    align-items: flex-start;
+  }
+
+  .customers-heading-icon {
+    width: 44px;
+    height: 44px;
+  }
+
+  .customers-heading h1 {
+    font-size: 27px;
+  }
+
+  .customers-heading p {
+    font-size: 11px;
+  }
+
+  .customers-refresh-btn {
+    width: 100%;
+  }
+
+  .customers-stats {
+    grid-template-columns: 1fr;
+  }
+
+  .customers-stats
+    .customer-stat-card:last-child {
+    grid-column: auto;
+  }
+
+  .customer-stat-card {
+    min-height: 90px;
+  }
+
+  .customers-toolbar {
+    flex-direction: column;
+    align-items: stretch;
+  }
+
+  .customers-search {
+    width: 100%;
+  }
+
+  .customers-count {
+    align-self: flex-start;
+  }
+
+  .customers-table-card {
+    border-radius: 12px;
+  }
+}
+
+
+/* =========================================================
+   SMALL MOBILE
+========================================================= */
+
+@media (max-width: 400px) {
+
+  .customers-heading h1 {
+    font-size: 24px;
+  }
+
+  .customer-stat-card strong {
+    font-size: 21px;
+  }
+
+  .customers-empty {
+    min-height: 280px;
+    padding: 25px 18px;
+  }
+}
+

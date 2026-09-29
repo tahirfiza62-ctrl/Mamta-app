@@ -1,0 +1,526 @@
+/* =========================================================
+   MAMTA REGISTER
+   Premium • Soft • Elegant
+========================================================= */
+
+.mamta-register-page {
+  min-height: 100vh;
+  position: relative;
+  overflow: hidden;
+  background: #fff9f4;
+  color: #4a3032;
+  font-family: "Poppins", "Segoe UI", sans-serif;
+}
+
+.mamta-register-container {
+  min-height: 100vh;
+  display: grid;
+  grid-template-columns: 1fr 1.15fr;
+  position: relative;
+  z-index: 2;
+}
+
+/* =========================================================
+   BACKGROUND
+========================================================= */
+
+.register-bg-circle {
+  position: fixed;
+  border-radius: 50%;
+  pointer-events: none;
+  filter: blur(3px);
+}
+
+.register-bg-one {
+  width: 430px;
+  height: 430px;
+  top: -210px;
+  right: -150px;
+  background: rgba(244, 217, 220, 0.55);
+}
+
+.register-bg-two {
+  width: 330px;
+  height: 330px;
+  bottom: -160px;
+  left: -120px;
+  background: rgba(239, 197, 181, 0.28);
+}
+
+/* =========================================================
+   VISUAL SIDE
+========================================================= */
+
+.register-visual {
+  min-height: 100vh;
+  position: relative;
+  display: flex;
+  align-items: center;
+  padding: 80px;
+  overflow: hidden;
+  background: #4a3032;
+  color: #ffffff;
+}
+
+.register-visual::before {
+  content: "";
+  position: absolute;
+  width: 570px;
+  height: 570px;
+  border-radius: 50%;
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  right: -270px;
+  top: 10%;
+}
+
+.register-visual::after {
+  content: "";
+  position: absolute;
+  width: 410px;
+  height: 410px;
+  border-radius: 50%;
+  border: 1px solid rgba(217, 143, 154, 0.25);
+  right: -190px;
+  top: 23%;
+}
+
+.register-visual-inner {
+  width: 100%;
+  position: relative;
+  z-index: 2;
+}
+
+.register-logo {
+  display: inline-flex;
+  align-items: center;
+  gap: 9px;
+  color: #ffffff;
+  font-family: Georgia, serif;
+  font-size: 18px;
+  font-weight: 700;
+  letter-spacing: 3px;
+  margin-bottom: 95px;
+}
+
+.register-logo svg {
+  color: #d98f9a;
+}
+
+.register-number {
+  display: flex;
+  align-items: center;
+  gap: 13px;
+  margin-bottom: 27px;
+}
+
+.register-number span {
+  color: #d98f9a;
+  font-family: Georgia, serif;
+  font-size: 16px;
+}
+
+.register-number div {
+  width: 45px;
+  height: 1px;
+  background: rgba(255, 255, 255, 0.25);
+}
+
+.register-number small {
+  color: rgba(255, 255, 255, 0.48);
+  font-size: 8px;
+  font-weight: 700;
+  letter-spacing: 2px;
+}
+
+.register-visual-copy > span {
+  display: block;
+  margin-bottom: 18px;
+  color: #d6ad79;
+  font-size: 9px;
+  font-weight: 800;
+  letter-spacing: 3px;
+}
+
+.register-visual-copy h1 {
+  margin: 0;
+  font-family: "Playfair Display", Georgia, serif;
+  font-size: clamp(50px, 5vw, 75px);
+  font-weight: 400;
+  line-height: 1.03;
+  letter-spacing: -2px;
+}
+
+.register-visual-copy h1 em {
+  color: #d98f9a;
+  font-style: italic;
+}
+
+.register-visual-copy p {
+  max-width: 390px;
+  margin: 30px 0 0;
+  color: rgba(255, 255, 255, 0.62);
+  font-size: 13px;
+  line-height: 1.9;
+}
+
+.register-orbit {
+  position: absolute;
+  width: 125px;
+  height: 125px;
+  right: 45px;
+  bottom: 30px;
+  border-radius: 50%;
+  border: 1px solid rgba(217, 143, 154, 0.35);
+}
+
+.register-orbit::before {
+  content: "";
+  position: absolute;
+  inset: 16px;
+  border-radius: 50%;
+  border: 1px solid rgba(185, 146, 90, 0.3);
+}
+
+.register-orbit::after {
+  content: "MAMTA";
+  position: absolute;
+  inset: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: rgba(255, 255, 255, 0.45);
+  font-size: 7px;
+  font-weight: 800;
+  letter-spacing: 2px;
+}
+
+/* =========================================================
+   FORM SIDE
+========================================================= */
+
+.register-form-panel {
+  min-height: 100vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 70px 80px;
+  background: #fff9f4;
+}
+
+.register-form-wrapper {
+  width: 100%;
+  max-width: 550px;
+  animation: registerFadeUp 0.8s ease both;
+}
+
+@keyframes registerFadeUp {
+  from {
+    opacity: 0;
+    transform: translateY(25px);
+  }
+
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+/* =========================================================
+   HEADING
+========================================================= */
+
+.register-heading {
+  margin-bottom: 32px;
+}
+
+.register-heading > span {
+  display: block;
+  margin-bottom: 12px;
+  color: #b9925a;
+  font-size: 9px;
+  font-weight: 800;
+  letter-spacing: 3px;
+}
+
+.register-heading h2 {
+  margin: 0;
+  color: #4a3032;
+  font-family: "Playfair Display", Georgia, serif;
+  font-size: 42px;
+  font-weight: 500;
+  line-height: 1.15;
+}
+
+.register-heading h2 em {
+  color: #bd6f7c;
+  font-style: italic;
+}
+
+.register-heading p {
+  max-width: 470px;
+  margin: 13px 0 0;
+  color: #8b7274;
+  font-size: 12px;
+  line-height: 1.7;
+}
+
+/* =========================================================
+   ERROR
+========================================================= */
+
+.register-error {
+  padding: 13px 16px;
+  margin-bottom: 22px;
+  border-left: 3px solid #bd6f7c;
+  background: #f9e7e9;
+  color: #8e4f59;
+  font-size: 11px;
+  line-height: 1.5;
+}
+
+/* =========================================================
+   FORM
+========================================================= */
+
+.mamta-register-form {
+  display: flex;
+  flex-direction: column;
+  gap: 21px;
+}
+
+.register-field label {
+  display: block;
+  margin-bottom: 8px;
+  color: #6c5557;
+  font-size: 9px;
+  font-weight: 800;
+  letter-spacing: 1.8px;
+}
+
+.register-input {
+  height: 53px;
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 0 16px;
+  border: 1px solid #eadbd6;
+  background: #ffffff;
+  transition:
+    border-color 0.3s ease,
+    box-shadow 0.3s ease,
+    transform 0.3s ease;
+}
+
+.register-input:focus-within {
+  border-color: #d98f9a;
+  box-shadow: 0 10px 28px rgba(189, 111, 124, 0.1);
+  transform: translateY(-1px);
+}
+
+.register-input > svg {
+  flex-shrink: 0;
+  color: #bd6f7c;
+}
+
+.register-input input {
+  width: 100%;
+  height: 100%;
+  border: none;
+  outline: none;
+  background: transparent;
+  color: #4a3032;
+  font-family: inherit;
+  font-size: 11px;
+}
+
+.register-input input::placeholder {
+  color: #b7a5a4;
+}
+
+.register-password-row {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 15px;
+}
+
+.register-eye {
+  width: 28px;
+  height: 28px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+  padding: 0;
+  border: none;
+  background: transparent;
+  color: #9b8586;
+  cursor: pointer;
+  transition: color 0.3s ease;
+}
+
+.register-eye:hover {
+  color: #bd6f7c;
+}
+
+/* =========================================================
+   BUTTON
+========================================================= */
+
+.register-submit {
+  width: 100%;
+  height: 56px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 14px;
+  margin-top: 7px;
+  border: none;
+  background: #bd6f7c;
+  color: #ffffff;
+  font-family: inherit;
+  font-size: 10px;
+  font-weight: 800;
+  letter-spacing: 2px;
+  cursor: pointer;
+  transition:
+    background 0.3s ease,
+    transform 0.3s ease,
+    box-shadow 0.3s ease;
+}
+
+.register-submit:hover:not(:disabled) {
+  background: #4a3032;
+  transform: translateY(-2px);
+  box-shadow: 0 15px 30px rgba(74, 48, 50, 0.16);
+}
+
+.register-submit:disabled {
+  opacity: 0.65;
+  cursor: not-allowed;
+}
+
+.register-submit svg {
+  transition: transform 0.3s ease;
+}
+
+.register-submit:hover svg {
+  transform: translateX(4px);
+}
+
+/* =========================================================
+   FOOTER
+========================================================= */
+
+.register-switch {
+  margin: 25px 0 0;
+  text-align: center;
+  color: #8b7274;
+  font-size: 11px;
+}
+
+.register-switch a {
+  margin-left: 6px;
+  color: #bd6f7c;
+  font-weight: 700;
+  text-decoration: none;
+}
+
+.register-switch a:hover {
+  text-decoration: underline;
+}
+
+.register-back-home {
+  display: block;
+  width: fit-content;
+  margin: 25px auto 0;
+  color: #8b7274;
+  font-size: 10px;
+  text-decoration: none;
+  transition: color 0.3s ease;
+}
+
+.register-back-home:hover {
+  color: #bd6f7c;
+}
+
+/* =========================================================
+   RESPONSIVE
+========================================================= */
+
+@media (max-width: 1050px) {
+  .mamta-register-container {
+    grid-template-columns: 1fr;
+  }
+
+  .register-visual {
+    min-height: 430px;
+    padding: 60px;
+  }
+
+  .register-logo {
+    margin-bottom: 55px;
+  }
+
+  .register-form-panel {
+    min-height: auto;
+    padding: 70px 40px;
+  }
+}
+
+@media (max-width: 600px) {
+  .register-visual {
+    min-height: 390px;
+    padding: 45px 25px;
+  }
+
+  .register-logo {
+    margin-bottom: 45px;
+  }
+
+  .register-visual-copy h1 {
+    font-size: 46px;
+    letter-spacing: -1px;
+  }
+
+  .register-visual-copy p {
+    font-size: 12px;
+  }
+
+  .register-orbit {
+    width: 90px;
+    height: 90px;
+    right: 15px;
+    bottom: 20px;
+  }
+
+  .register-form-panel {
+    padding: 55px 22px;
+  }
+
+  .register-heading h2 {
+    font-size: 34px;
+  }
+
+  .register-password-row {
+    grid-template-columns: 1fr;
+    gap: 21px;
+  }
+
+  .register-bg-circle {
+    display: none;
+  }
+}
+
+@media (max-width: 400px) {
+  .register-visual {
+    padding: 40px 20px;
+  }
+
+  .register-visual-copy h1 {
+    font-size: 40px;
+  }
+
+  .register-form-panel {
+    padding: 45px 18px;
+  }
+}

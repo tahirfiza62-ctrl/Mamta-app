@@ -1,0 +1,670 @@
+
+/* =========================================================
+   MAMTA ADMIN CONTACTS
+========================================================= */
+
+.admin-contacts {
+  width: 100%;
+  color: #4a3032;
+}
+
+/* =========================================================
+   HEADER
+========================================================= */
+
+.admin-contacts-header {
+  margin-bottom: 28px;
+}
+
+.admin-contacts-header span {
+  color: #b86172;
+  font-size: 9px;
+  font-weight: 700;
+  letter-spacing: 2px;
+}
+
+.admin-contacts-header h1 {
+  margin: 6px 0 7px;
+  font-family: "Playfair Display", Georgia, serif;
+  font-size: 32px;
+  font-weight: 500;
+}
+
+.admin-contacts-header p {
+  margin: 0;
+  color: #92777a;
+  font-size: 13px;
+}
+
+/* =========================================================
+   STATS
+========================================================= */
+
+.contacts-stats {
+  display: grid;
+  grid-template-columns:
+    repeat(4, minmax(0, 1fr));
+  gap: 16px;
+  margin-bottom: 24px;
+}
+
+.contact-stat-card {
+  min-height: 95px;
+  padding: 18px;
+
+  display: flex;
+  align-items: center;
+  gap: 14px;
+
+  background: #ffffff;
+  border: 1px solid #eee1e2;
+}
+
+.contact-stat-icon {
+  width: 42px;
+  height: 42px;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  background: #f7e9eb;
+  color: #b86172;
+}
+
+.contact-stat-icon.new {
+  background: #fdf1df;
+  color: #bd8032;
+}
+
+.contact-stat-icon.read {
+  background: #e9f0f6;
+  color: #627d98;
+}
+
+.contact-stat-icon.replied {
+  background: #e5f5ef;
+  color: #3d9674;
+}
+
+.contact-stat-card span {
+  display: block;
+  margin-bottom: 4px;
+
+  color: #92777a;
+  font-size: 8px;
+  font-weight: 700;
+  letter-spacing: 1.3px;
+}
+
+.contact-stat-card strong {
+  font-size: 23px;
+  font-weight: 700;
+}
+
+/* =========================================================
+   CONTENT
+========================================================= */
+
+.contacts-layout {
+  display: grid;
+  grid-template-columns:
+    minmax(0, 1.7fr)
+    minmax(320px, 0.9fr);
+  gap: 20px;
+}
+
+/* =========================================================
+   LIST
+========================================================= */
+
+.contacts-list,
+.contact-details {
+  background: #ffffff;
+  border: 1px solid #eee1e2;
+}
+
+.contacts-list-header {
+  height: 65px;
+  padding: 0 20px;
+
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+
+  border-bottom: 1px solid #eee1e2;
+}
+
+.contacts-list-header h2 {
+  margin: 0;
+
+  font-family: "Playfair Display", Georgia, serif;
+  font-size: 21px;
+  font-weight: 500;
+}
+
+.contacts-list-header > span {
+  min-width: 26px;
+  height: 26px;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  border-radius: 50%;
+
+  background: #f7e9eb;
+  color: #b86172;
+
+  font-size: 10px;
+  font-weight: 700;
+}
+
+.contacts-table-wrapper {
+  overflow-x: auto;
+}
+
+.contacts-table {
+  width: 100%;
+  border-collapse: collapse;
+}
+
+.contacts-table th {
+  padding: 13px 16px;
+
+  background: #fffaf8;
+
+  color: #92777a;
+
+  text-align: left;
+
+  font-size: 8px;
+  font-weight: 700;
+  letter-spacing: 1.2px;
+  white-space: nowrap;
+}
+
+.contacts-table td {
+  padding: 16px;
+
+  border-top: 1px solid #f2e8e9;
+
+  vertical-align: middle;
+}
+
+.customer-cell {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.customer-avatar,
+.detail-avatar {
+  width: 36px;
+  height: 36px;
+
+  flex-shrink: 0;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  border-radius: 50%;
+
+  background: #f4d9dc;
+  color: #8e5360;
+
+  font-size: 12px;
+  font-weight: 700;
+}
+
+.customer-cell strong {
+  display: block;
+  margin-bottom: 3px;
+  font-size: 12px;
+}
+
+.customer-cell span {
+  display: block;
+  color: #9b8587;
+  font-size: 9px;
+}
+
+.subject-cell {
+  display: block;
+  max-width: 170px;
+
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+
+  color: #5c4447;
+  font-size: 11px;
+}
+
+.date-cell {
+  color: #92777a;
+  font-size: 10px;
+  white-space: nowrap;
+}
+
+/* =========================================================
+   STATUS
+========================================================= */
+
+.contact-status {
+  display: inline-flex;
+  padding: 5px 9px;
+
+  border-radius: 20px;
+
+  font-size: 8px;
+  font-weight: 700;
+}
+
+.contact-status.new {
+  background: #fff0f2;
+  color: #b86172;
+}
+
+.contact-status.read {
+  background: #edf2f6;
+  color: #627d98;
+}
+
+.contact-status.replied {
+  background: #e9f6f0;
+  color: #3d9674;
+}
+
+/* =========================================================
+   ACTIONS
+========================================================= */
+
+.contact-actions {
+  display: flex;
+  align-items: center;
+  gap: 7px;
+}
+
+.contact-actions button {
+  width: 32px;
+  height: 32px;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  border: 1px solid #eadbdd;
+  background: #ffffff;
+  color: #80686a;
+
+  cursor: pointer;
+
+  transition: 0.2s ease;
+}
+
+.contact-actions button:hover {
+  border-color: #b86172;
+  color: #b86172;
+}
+
+.contact-actions button.delete:hover {
+  border-color: #d55d69;
+  color: #d55d69;
+}
+
+/* =========================================================
+   DETAILS
+========================================================= */
+
+.contact-details {
+  min-height: 500px;
+  padding: 24px;
+}
+
+.contact-details-empty {
+  min-height: 450px;
+
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+
+  text-align: center;
+
+  color: #c2afb1;
+}
+
+.contact-details-empty h3 {
+  margin: 14px 0 6px;
+
+  color: #5c4447;
+
+  font-family: "Playfair Display", Georgia, serif;
+  font-size: 21px;
+  font-weight: 500;
+}
+
+.contact-details-empty p {
+  margin: 0;
+
+  color: #a18d8f;
+  font-size: 11px;
+}
+
+.contact-details-header {
+  display: flex;
+  justify-content: space-between;
+  gap: 15px;
+
+  padding-bottom: 18px;
+
+  border-bottom: 1px solid #eee1e2;
+}
+
+.contact-details-header span {
+  color: #b86172;
+  font-size: 8px;
+  font-weight: 700;
+  letter-spacing: 1.5px;
+}
+
+.contact-details-header h2 {
+  margin: 6px 0 0;
+
+  font-family: "Playfair Display", Georgia, serif;
+  font-size: 22px;
+  font-weight: 500;
+}
+
+.contact-details-header button {
+  width: 30px;
+  height: 30px;
+
+  border: 0;
+  background: #f8eeee;
+
+  color: #80686a;
+
+  font-size: 20px;
+  line-height: 1;
+
+  cursor: pointer;
+}
+
+/* =========================================================
+   CUSTOMER DETAILS
+========================================================= */
+
+.contact-customer-details {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+
+  padding: 20px 0;
+}
+
+.detail-avatar {
+  width: 44px;
+  height: 44px;
+}
+
+.contact-customer-details strong {
+  display: block;
+  margin-bottom: 5px;
+  font-size: 13px;
+}
+
+.contact-customer-details a {
+  display: block;
+
+  margin-bottom: 2px;
+
+  color: #92777a;
+
+  font-size: 10px;
+  text-decoration: none;
+}
+
+.contact-customer-details a:hover {
+  color: #b86172;
+}
+
+/* =========================================================
+   MESSAGE
+========================================================= */
+
+.contact-message-box {
+  padding: 17px;
+
+  background: #fffaf8;
+  border: 1px solid #f0e3e4;
+}
+
+.contact-message-box > span {
+  display: block;
+  margin-bottom: 9px;
+
+  color: #b86172;
+
+  font-size: 8px;
+  font-weight: 700;
+  letter-spacing: 1.5px;
+}
+
+.contact-message-box p {
+  margin: 0;
+
+  color: #5c4447;
+
+  font-size: 12px;
+  line-height: 1.8;
+
+  white-space: pre-wrap;
+}
+
+/* =========================================================
+   META
+========================================================= */
+
+.contact-message-meta {
+  padding: 17px 0;
+
+  display: flex;
+  justify-content: space-between;
+  gap: 10px;
+
+  color: #92777a;
+
+  font-size: 10px;
+}
+
+.contact-message-meta > div {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+
+/* =========================================================
+   STATUS ACTIONS
+========================================================= */
+
+.contact-status-actions {
+  padding: 16px 0;
+
+  border-top: 1px solid #eee1e2;
+}
+
+.contact-status-actions > span {
+  display: block;
+  margin-bottom: 9px;
+
+  color: #92777a;
+
+  font-size: 8px;
+  font-weight: 700;
+  letter-spacing: 1.3px;
+}
+
+.contact-status-actions > div {
+  display: flex;
+  gap: 7px;
+}
+
+.contact-status-actions button {
+  flex: 1;
+
+  padding: 9px 8px;
+
+  border: 1px solid #eadbdd;
+  background: #ffffff;
+
+  color: #80686a;
+
+  font-size: 9px;
+  font-weight: 600;
+
+  cursor: pointer;
+}
+
+.contact-status-actions button.selected,
+.contact-status-actions button:hover {
+  background: #b86172;
+  border-color: #b86172;
+  color: #ffffff;
+}
+
+/* =========================================================
+   REPLY
+========================================================= */
+
+.contact-reply-button {
+  width: 100%;
+  min-height: 43px;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+
+  margin-top: 10px;
+
+  background: #4a3032;
+  color: #ffffff;
+
+  text-decoration: none;
+
+  font-size: 10px;
+  font-weight: 600;
+
+  transition: background 0.25s ease;
+}
+
+.contact-reply-button:hover {
+  background: #b86172;
+}
+
+/* =========================================================
+   DELETE
+========================================================= */
+
+.contact-delete-button {
+  width: 100%;
+  min-height: 40px;
+
+  margin-top: 8px;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 7px;
+
+  border: 1px solid #efd9dc;
+  background: #fff7f8;
+
+  color: #c05a67;
+
+  font-size: 10px;
+  font-weight: 600;
+
+  cursor: pointer;
+}
+
+.contact-delete-button:hover {
+  background: #fdebed;
+}
+
+/* =========================================================
+   LOADING / EMPTY
+========================================================= */
+
+.contacts-loading,
+.contacts-empty {
+  min-height: 280px;
+
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+
+  text-align: center;
+
+  color: #92777a;
+}
+
+.contacts-empty h3 {
+  margin: 12px 0 5px;
+
+  color: #5c4447;
+
+  font-family: "Playfair Display", Georgia, serif;
+  font-size: 20px;
+  font-weight: 500;
+}
+
+.contacts-empty p {
+  margin: 0;
+  font-size: 11px;
+}
+
+/* =========================================================
+   RESPONSIVE
+========================================================= */
+
+@media (max-width: 1100px) {
+
+  .contacts-layout {
+    grid-template-columns: 1fr;
+  }
+
+  .contact-details {
+    min-height: auto;
+  }
+
+}
+
+@media (max-width: 850px) {
+
+  .contacts-stats {
+    grid-template-columns:
+      repeat(2, 1fr);
+  }
+
+}
+
+@media (max-width: 600px) {
+
+  .contacts-stats {
+    grid-template-columns: 1fr;
+  }
+
+  .admin-contacts-header h1 {
+    font-size: 27px;
+  }
+
+  .contact-details {
+    padding: 18px;
+  }
+
+}

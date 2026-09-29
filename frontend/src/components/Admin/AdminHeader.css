@@ -1,0 +1,406 @@
+
+/* =========================================================
+   MAMTA ADMIN HEADER
+   Soft • Premium • Colorful • Elegant
+========================================================= */
+
+.admin-header {
+  position: sticky;
+  top: 0;
+
+  min-height: 88px;
+
+  padding: 0 34px;
+
+  background:
+    linear-gradient(
+      135deg,
+      #fffaf7 0%,
+      #fff5f3 55%,
+      #fdf0f3 100%
+    );
+
+  border-bottom: 1px solid #f0d9dd;
+
+  backdrop-filter: blur(14px);
+
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+
+  z-index: 900;
+
+  box-shadow:
+    0 4px 18px rgba(139, 76, 86, 0.06);
+}
+
+
+/* =========================================================
+   LEFT SECTION
+========================================================= */
+
+.admin-header-left {
+  display: flex;
+  align-items: center;
+  gap: 15px;
+}
+
+
+/* =========================================================
+   SMALL LABEL
+========================================================= */
+
+.admin-header-label {
+  display: inline-flex;
+  align-items: center;
+
+  margin-bottom: 5px;
+
+  padding: 5px 10px;
+
+  background: #f8e2e6;
+
+  border: 1px solid #efd0d5;
+
+  border-radius: 20px;
+
+  color: #a65d68;
+
+  font-size: 8px;
+  font-weight: 800;
+
+  letter-spacing: 1.7px;
+
+  text-transform: uppercase;
+}
+
+
+/* =========================================================
+   MAIN TITLE
+========================================================= */
+
+.admin-header h1 {
+  margin: 0;
+
+  color: #4a3032;
+
+  font-family:
+    "Playfair Display",
+    Georgia,
+    serif;
+
+  font-size: 27px;
+  font-weight: 700;
+
+  line-height: 1.15;
+
+  letter-spacing: -0.3px;
+}
+
+
+/* =========================================================
+   DESCRIPTION
+========================================================= */
+
+.admin-header p {
+  margin: 5px 0 0;
+
+  color: #8c7074;
+
+  font-size: 12px;
+  font-weight: 400;
+
+  line-height: 1.5;
+}
+
+
+/* =========================================================
+   HEADER ACTIONS
+========================================================= */
+
+.admin-header-actions {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+
+/* =========================================================
+   HEADER ICON BUTTON
+========================================================= */
+
+.admin-header-icon {
+  position: relative;
+
+  width: 43px;
+  height: 43px;
+
+  border: 1px solid #edd7da;
+
+  border-radius: 13px;
+
+  background: rgba(255, 255, 255, 0.88);
+
+  color: #8e4f5b;
+
+  cursor: pointer;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  box-shadow:
+    0 4px 12px rgba(139, 76, 86, 0.07);
+
+  transition:
+    transform 0.2s ease,
+    background 0.2s ease,
+    border-color 0.2s ease,
+    box-shadow 0.2s ease;
+}
+
+
+.admin-header-icon:hover {
+  background: #f8e1e5;
+
+  border-color: #dfb8be;
+
+  color: #793f49;
+
+  transform: translateY(-2px);
+
+  box-shadow:
+    0 7px 18px rgba(139, 76, 86, 0.12);
+}
+
+
+.admin-header-icon:active {
+  transform: translateY(0);
+}
+
+
+/* =========================================================
+   NOTIFICATION DOT
+========================================================= */
+
+.admin-header-icon:first-child::after {
+  content: "";
+
+  position: absolute;
+
+  top: 8px;
+  right: 8px;
+
+  width: 7px;
+  height: 7px;
+
+  background: #d97c8a;
+
+  border: 2px solid #ffffff;
+
+  border-radius: 50%;
+}
+
+
+/* =========================================================
+   MENU BUTTON
+========================================================= */
+
+.admin-menu-btn {
+  display: none;
+
+  width: 43px;
+  height: 43px;
+
+  border: 1px solid #edd7da;
+
+  border-radius: 12px;
+
+  background: #ffffff;
+
+  color: #8e4f5b;
+
+  cursor: pointer;
+
+  align-items: center;
+  justify-content: center;
+
+  box-shadow:
+    0 4px 12px rgba(139, 76, 86, 0.07);
+
+  transition:
+    background 0.2s ease,
+    border-color 0.2s ease,
+    transform 0.2s ease;
+}
+
+
+.admin-menu-btn:hover {
+  background: #f8e1e5;
+
+  border-color: #dfb8be;
+
+  color: #793f49;
+
+  transform: translateY(-2px);
+}
+
+
+/* =========================================================
+   OPTIONAL COLOR ACCENT
+   Decorative line below the header
+========================================================= */
+
+.admin-header::after {
+  content: "";
+
+  position: absolute;
+
+  left: 0;
+  bottom: -1px;
+
+  width: 150px;
+  height: 2px;
+
+  background:
+    linear-gradient(
+      90deg,
+      #d98291,
+      #e8a9b2,
+      transparent
+    );
+
+  border-radius: 0 5px 5px 0;
+}
+
+
+/* =========================================================
+   RESPONSIVE — TABLET
+========================================================= */
+
+@media (max-width: 900px) {
+
+  .admin-header {
+    min-height: 76px;
+
+    padding: 0 20px;
+  }
+
+
+  .admin-menu-btn {
+    display: flex;
+  }
+
+
+  .admin-header h1 {
+    font-size: 23px;
+  }
+
+
+  .admin-header p {
+    display: none;
+  }
+
+
+  .admin-header-label {
+    font-size: 7.5px;
+
+    padding: 4px 9px;
+  }
+
+}
+
+
+/* =========================================================
+   RESPONSIVE — MOBILE
+========================================================= */
+
+@media (max-width: 520px) {
+
+  .admin-header {
+    min-height: 72px;
+
+    padding: 0 14px;
+  }
+
+
+  .admin-header-left {
+    gap: 10px;
+  }
+
+
+  .admin-header-label {
+    margin-bottom: 3px;
+
+    padding: 3px 8px;
+
+    font-size: 7px;
+
+    letter-spacing: 1.3px;
+  }
+
+
+  .admin-header h1 {
+    font-size: 20px;
+  }
+
+
+  .admin-header-icon,
+  .admin-menu-btn {
+    width: 38px;
+    height: 38px;
+
+    border-radius: 11px;
+  }
+
+
+  .admin-header-actions {
+    gap: 6px;
+  }
+
+
+  .admin-header-icon:first-child::after {
+    top: 6px;
+    right: 6px;
+
+    width: 6px;
+    height: 6px;
+  }
+
+
+  .admin-header::after {
+    width: 100px;
+  }
+
+}
+
+
+/* =========================================================
+   VERY SMALL SCREENS
+========================================================= */
+
+@media (max-width: 380px) {
+
+  .admin-header {
+    padding: 0 11px;
+  }
+
+
+  .admin-header h1 {
+    font-size: 18px;
+  }
+
+
+  .admin-header-label {
+    display: none;
+  }
+
+
+  .admin-header-icon,
+  .admin-menu-btn {
+    width: 36px;
+    height: 36px;
+  }
+
+}
+

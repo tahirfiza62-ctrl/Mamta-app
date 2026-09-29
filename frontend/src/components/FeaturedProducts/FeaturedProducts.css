@@ -1,0 +1,1033 @@
+
+/* =========================================================
+   MAMTA — FEATURED PRODUCTS
+   Soft Blush • Premium • Elegant • Feminine
+========================================================= */
+
+.featured-products {
+  position: relative;
+  width: 100%;
+  margin: 0;
+  padding: 115px 0 125px;
+  background:
+    radial-gradient(
+      circle at 10% 15%,
+      rgba(255, 255, 255, 0.72) 0,
+      rgba(255, 255, 255, 0) 30%
+    ),
+    radial-gradient(
+      circle at 92% 82%,
+      rgba(225, 163, 176, 0.12) 0,
+      rgba(225, 163, 176, 0) 32%
+    ),
+    #fdf0f2;
+  color: #4a3032;
+  overflow: hidden;
+}
+
+/* =========================================================
+   SOFT BACKGROUND DETAILS
+========================================================= */
+
+.featured-products::before {
+  content: "";
+  position: absolute;
+  width: 420px;
+  height: 420px;
+  top: -220px;
+  right: -130px;
+  border-radius: 50%;
+  background: rgba(255, 255, 255, 0.32);
+  filter: blur(2px);
+  pointer-events: none;
+}
+
+.featured-products::after {
+  content: "";
+  position: absolute;
+  width: 320px;
+  height: 320px;
+  bottom: -180px;
+  left: -120px;
+  border-radius: 50%;
+  background: rgba(221, 151, 166, 0.09);
+  pointer-events: none;
+}
+
+/* =========================================================
+   CONTAINER
+========================================================= */
+
+.featured-container {
+  position: relative;
+  z-index: 1;
+
+  width: 100%;
+  max-width: 1380px;
+  margin: 0 auto;
+  padding: 0 46px;
+}
+
+/* =========================================================
+   HEADING
+========================================================= */
+
+.featured-heading {
+  width: 100%;
+
+  display: flex;
+  align-items: flex-end;
+  justify-content: space-between;
+
+  gap: 70px;
+  margin-bottom: 60px;
+}
+
+/* =========================================================
+   TITLE
+========================================================= */
+
+.featured-title {
+  flex: 1;
+}
+
+.featured-eyebrow {
+  position: relative;
+
+  display: inline-flex;
+  align-items: center;
+  gap: 11px;
+
+  margin-bottom: 19px;
+
+  color: #b66f7d;
+
+  font-family: "Poppins", "DM Sans", sans-serif;
+  font-size: 10px;
+  font-weight: 700;
+  letter-spacing: 3px;
+  text-transform: uppercase;
+}
+
+.featured-eyebrow::before {
+  content: "";
+
+  width: 32px;
+  height: 1px;
+
+  background: #cf8b99;
+}
+
+.featured-title h2 {
+  margin: 0;
+
+  color: #4a3032;
+
+  font-family: "Playfair Display", Georgia, serif;
+  font-size: clamp(45px, 5vw, 70px);
+  font-weight: 500;
+  line-height: 1.02;
+  letter-spacing: -2px;
+}
+
+.featured-title h2 span {
+  color: #c47788;
+  font-style: italic;
+  font-weight: 400;
+}
+
+/* =========================================================
+   INTRO
+========================================================= */
+
+.featured-intro {
+  width: min(390px, 100%);
+
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+
+  gap: 23px;
+}
+
+.featured-intro p {
+  margin: 0;
+
+  color: #765f63;
+
+  font-family: "DM Sans", "Poppins", sans-serif;
+  font-size: 14px;
+  font-weight: 400;
+  line-height: 1.85;
+}
+
+/* =========================================================
+   VIEW ALL
+========================================================= */
+
+.view-all-products {
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+
+  padding-bottom: 8px;
+
+  color: #55383c;
+  border-bottom: 1px solid #cf9ca5;
+
+  font-family: "Poppins", "DM Sans", sans-serif;
+  font-size: 11px;
+  font-weight: 600;
+  letter-spacing: 0.7px;
+
+  transition:
+    color 0.4s ease,
+    border-color 0.4s ease,
+    gap 0.5s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.view-all-products svg {
+  transition:
+    transform 0.5s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.view-all-products:hover {
+  color: #bd687a;
+  border-color: #bd687a;
+  gap: 15px;
+}
+
+.view-all-products:hover svg {
+  transform: translate(3px, -3px);
+}
+
+/* =========================================================
+   PRODUCTS GRID
+========================================================= */
+
+.products-grid {
+  width: 100%;
+
+  display: grid;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+
+  gap: 23px;
+}
+
+/* =========================================================
+   SCROLL REVEAL WRAPPER
+========================================================= */
+
+.products-grid > * {
+  min-width: 0;
+}
+
+/* =========================================================
+   PRODUCT CARD
+========================================================= */
+
+.product-card {
+  position: relative;
+
+  width: 100%;
+  min-width: 0;
+
+  background: #ffffff;
+
+  border: 1px solid rgba(164, 104, 116, 0.10);
+
+  border-radius: 2px;
+
+  overflow: hidden;
+
+  box-shadow:
+    0 12px 35px rgba(112, 67, 76, 0.055);
+
+  transition:
+    transform 0.7s cubic-bezier(0.16, 1, 0.3, 1),
+    box-shadow 0.7s ease,
+    border-color 0.4s ease;
+}
+
+.product-card:hover {
+  transform: translateY(-9px);
+
+  border-color: rgba(194, 116, 136, 0.22);
+
+  box-shadow:
+    0 25px 60px rgba(112, 67, 76, 0.13);
+}
+
+/* =========================================================
+   PRODUCT IMAGE
+========================================================= */
+
+.product-image {
+  position: relative;
+
+  width: 100%;
+  aspect-ratio: 0.86;
+
+  overflow: hidden;
+
+  background: #f6e5e8;
+}
+
+.product-image img {
+  width: 100%;
+  height: 100%;
+
+  display: block;
+
+  object-fit: cover;
+
+  transition:
+    transform 1s cubic-bezier(0.16, 1, 0.3, 1),
+    filter 0.7s ease;
+}
+
+.product-card:hover .product-image img {
+  transform: scale(1.045);
+}
+
+/* =========================================================
+   IMAGE OVERLAY
+========================================================= */
+
+.product-image::after {
+  content: "";
+
+  position: absolute;
+  inset: 0;
+
+  background:
+    linear-gradient(
+      to bottom,
+      rgba(74, 48, 50, 0.02) 0%,
+      transparent 45%,
+      rgba(74, 48, 50, 0.07) 100%
+    );
+
+  pointer-events: none;
+}
+
+/* =========================================================
+   BESTSELLER
+========================================================= */
+
+.product-badge {
+  position: absolute;
+
+  top: 17px;
+  left: 17px;
+
+  z-index: 4;
+
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+
+  min-height: 28px;
+
+  padding: 0 12px;
+
+  background: rgba(255, 250, 250, 0.94);
+  color: #aa6572;
+
+  border: 1px solid rgba(170, 101, 114, 0.12);
+
+  font-family: "Poppins", "DM Sans", sans-serif;
+  font-size: 8px;
+  font-weight: 700;
+  letter-spacing: 1.5px;
+
+  backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px);
+}
+
+/* =========================================================
+   WISHLIST
+========================================================= */
+
+.wishlist-button {
+  position: absolute;
+
+  top: 15px;
+  right: 15px;
+
+  z-index: 5;
+
+  width: 39px;
+  height: 39px;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  padding: 0;
+
+  border: 1px solid rgba(92, 53, 61, 0.09);
+  border-radius: 50%;
+
+  background: rgba(255, 250, 250, 0.94);
+  color: #6c4b51;
+
+  cursor: pointer;
+
+  backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px);
+
+  transition:
+    transform 0.45s cubic-bezier(0.16, 1, 0.3, 1),
+    background 0.35s ease,
+    color 0.35s ease,
+    border-color 0.35s ease;
+}
+
+.wishlist-button:hover {
+  transform: scale(1.09);
+
+  background: #c47788;
+  color: #ffffff;
+
+  border-color: #c47788;
+}
+
+.wishlist-button:active {
+  transform: scale(0.95);
+}
+
+/* =========================================================
+   QUICK VIEW
+========================================================= */
+
+.quick-view {
+  position: absolute;
+
+  left: 50%;
+  bottom: 18px;
+
+  z-index: 5;
+
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+
+  gap: 8px;
+
+  min-width: 126px;
+
+  padding: 11px 17px;
+
+  background: rgba(255, 249, 249, 0.95);
+  color: #4a3032;
+
+  border: 1px solid rgba(74, 48, 50, 0.08);
+
+  font-family: "Poppins", "DM Sans", sans-serif;
+  font-size: 10px;
+  font-weight: 600;
+  letter-spacing: 0.5px;
+
+  opacity: 0;
+
+  transform: translate(-50%, 16px);
+
+  backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px);
+
+  transition:
+    opacity 0.45s ease,
+    transform 0.55s cubic-bezier(0.16, 1, 0.3, 1),
+    background 0.35s ease,
+    color 0.35s ease;
+}
+
+.quick-view svg {
+  transition:
+    transform 0.45s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.product-card:hover .quick-view {
+  opacity: 1;
+  transform: translate(-50%, 0);
+}
+
+.quick-view:hover {
+  background: #c47788;
+  color: #ffffff;
+}
+
+.quick-view:hover svg {
+  transform: translate(2px, -2px);
+}
+
+/* =========================================================
+   PRODUCT INFO
+========================================================= */
+
+.product-info {
+  width: 100%;
+
+  padding: 23px 21px 26px;
+
+  background: #ffffff;
+}
+
+/* =========================================================
+   PRODUCT NAME
+========================================================= */
+
+.product-info h3 {
+  min-height: 49px;
+
+  margin: 0;
+
+  color: #4a3032;
+
+  font-family: "Playfair Display", Georgia, serif;
+  font-size: 18px;
+  font-weight: 500;
+  line-height: 1.38;
+  letter-spacing: -0.15px;
+
+  transition: color 0.35s ease;
+}
+
+.product-card:hover .product-info h3 {
+  color: #b36676;
+}
+
+/* =========================================================
+   RATING
+========================================================= */
+
+.product-rating {
+  display: flex;
+  align-items: center;
+
+  gap: 9px;
+
+  margin-top: 16px;
+}
+
+.stars {
+  display: flex;
+  align-items: center;
+
+  gap: 2px;
+
+  color: #d39a76;
+}
+
+.product-rating > span {
+  color: #806a6e;
+
+  font-family: "DM Sans", "Poppins", sans-serif;
+  font-size: 11px;
+  font-weight: 600;
+}
+
+/* =========================================================
+   PRICE
+========================================================= */
+
+.product-price {
+  display: flex;
+  align-items: center;
+
+  gap: 10px;
+
+  margin-top: 15px;
+}
+
+.product-price strong {
+  color: #4a3032;
+
+  font-family: "Poppins", "DM Sans", sans-serif;
+  font-size: 15px;
+  font-weight: 700;
+}
+
+.product-price del {
+  color: #ad9b9e;
+
+  font-family: "DM Sans", "Poppins", sans-serif;
+  font-size: 11px;
+  font-weight: 400;
+}
+
+/* =========================================================
+   FOCUS
+========================================================= */
+
+.wishlist-button:focus-visible,
+.quick-view:focus-visible,
+.view-all-products:focus-visible {
+  outline: 2px solid #c47788;
+  outline-offset: 3px;
+}
+
+/* =========================================================
+   LARGE LAPTOP
+========================================================= */
+
+@media (max-width: 1150px) {
+  .featured-products {
+    padding: 95px 0 105px;
+  }
+
+  .featured-container {
+    padding: 0 32px;
+  }
+
+  .featured-heading {
+    gap: 45px;
+  }
+
+  .products-grid {
+    gap: 18px;
+  }
+
+  .product-info {
+    padding: 20px 18px 23px;
+  }
+
+  .product-info h3 {
+    font-size: 17px;
+  }
+}
+
+/* =========================================================
+   TABLET
+========================================================= */
+
+@media (max-width: 900px) {
+  .featured-products {
+    padding: 82px 0 92px;
+  }
+
+  .featured-container {
+    padding: 0 25px;
+  }
+
+  .featured-heading {
+    flex-direction: column;
+    align-items: flex-start;
+
+    gap: 25px;
+
+    margin-bottom: 43px;
+  }
+
+  .featured-intro {
+    width: min(530px, 100%);
+  }
+
+  .products-grid {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 20px;
+  }
+
+  .product-image {
+    aspect-ratio: 0.9;
+  }
+
+  .quick-view {
+    opacity: 1;
+    transform: translate(-50%, 0);
+  }
+}
+
+/* =========================================================
+   MOBILE
+========================================================= */
+
+@media (max-width: 600px) {
+  .featured-products {
+    padding: 68px 0 78px;
+  }
+
+  .featured-container {
+    padding: 0 17px;
+  }
+
+  .featured-heading {
+    margin-bottom: 34px;
+  }
+
+  .featured-eyebrow {
+    margin-bottom: 14px;
+
+    font-size: 8px;
+    letter-spacing: 2.2px;
+  }
+
+  .featured-eyebrow::before {
+    width: 23px;
+  }
+
+  .featured-title h2 {
+    font-size: 43px;
+    letter-spacing: -1.3px;
+  }
+
+  .featured-intro {
+    gap: 18px;
+  }
+
+  .featured-intro p {
+    font-size: 13px;
+    line-height: 1.75;
+  }
+
+  .products-grid {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 12px;
+  }
+
+  .product-image {
+    aspect-ratio: 0.82;
+  }
+
+  .product-badge {
+    top: 10px;
+    left: 10px;
+
+    min-height: 23px;
+
+    padding: 0 7px;
+
+    font-size: 7px;
+    letter-spacing: 1px;
+  }
+
+  .wishlist-button {
+    top: 9px;
+    right: 9px;
+
+    width: 32px;
+    height: 32px;
+  }
+
+  .wishlist-button svg {
+    width: 15px;
+    height: 15px;
+  }
+
+  .quick-view {
+    left: 50%;
+    bottom: 10px;
+
+    min-width: 96px;
+
+    padding: 8px 10px;
+
+    font-size: 8px;
+  }
+
+  .quick-view svg {
+    width: 12px;
+    height: 12px;
+  }
+
+  .product-info {
+    padding: 15px 12px 18px;
+  }
+
+  .product-info h3 {
+    min-height: 42px;
+
+    font-size: 14px;
+    line-height: 1.32;
+  }
+
+  .product-rating {
+    gap: 5px;
+    margin-top: 11px;
+  }
+
+  .stars {
+    gap: 1px;
+  }
+
+  .stars svg {
+    width: 9px;
+    height: 9px;
+  }
+
+  .product-rating > span {
+    font-size: 9px;
+  }
+
+  .product-price {
+    gap: 6px;
+    margin-top: 11px;
+  }
+
+  .product-price strong {
+    font-size: 12px;
+  }
+
+  .product-price del {
+    font-size: 9px;
+  }
+}
+
+/* =========================================================
+   SMALL MOBILE
+========================================================= */
+
+@media (max-width: 380px) {
+  .featured-container {
+    padding: 0 13px;
+  }
+
+  .products-grid {
+    gap: 9px;
+  }
+
+  .product-info {
+    padding: 13px 10px 15px;
+  }
+
+  .product-info h3 {
+    font-size: 13px;
+  }
+}
+
+/* =========================================================
+   REDUCED MOTION
+========================================================= */
+
+@media (prefers-reduced-motion: reduce) {
+  .product-card,
+  .product-image img,
+  .wishlist-button,
+  .quick-view,
+  .quick-view svg,
+  .view-all-products,
+  .view-all-products svg,
+  .product-info h3 {
+    transition: none !important;
+  }
+
+  .product-card:hover {
+    transform: none;
+  }
+
+  .product-card:hover .product-image img {
+    transform: none;
+  }
+}
+
+/* =========================================================
+   QUICK VIEW BUTTON
+   Premium • Soft Pink • Elegant
+========================================================= */
+
+.quick-view {
+  position: absolute;
+  left: 50%;
+  bottom: 18px;
+  transform: translateX(-50%) translateY(12px);
+
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+
+  min-width: 145px;
+  padding: 11px 18px;
+
+  background: rgba(255, 255, 255, 0.96);
+  color: #4a3032;
+
+  border: 1px solid rgba(196, 119, 136, 0.22);
+  border-radius: 30px;
+
+  font-family: "Poppins", "DM Sans", sans-serif;
+  font-size: 12px;
+  font-weight: 600;
+  letter-spacing: 0.2px;
+
+  text-decoration: none;
+
+  box-shadow:
+    0 8px 24px rgba(74, 48, 50, 0.12),
+    0 2px 8px rgba(196, 119, 136, 0.08);
+
+  opacity: 0;
+  visibility: hidden;
+
+  transition:
+    opacity 0.35s ease,
+    visibility 0.35s ease,
+    transform 0.35s ease,
+    background 0.3s ease,
+    color 0.3s ease,
+    box-shadow 0.3s ease,
+    border-color 0.3s ease;
+}
+
+/* SHOW ON IMAGE HOVER */
+
+.product-image:hover .quick-view {
+  opacity: 1;
+  visibility: visible;
+  transform: translateX(-50%) translateY(0);
+}
+
+/* ARROW */
+
+.quick-view svg {
+  width: 15px;
+  height: 15px;
+  transition: transform 0.3s ease;
+}
+
+/* HOVER */
+
+.quick-view:hover {
+  background: #c47788;
+  color: #ffffff;
+  border-color: #c47788;
+
+  box-shadow:
+    0 10px 28px rgba(196, 119, 136, 0.28),
+    0 4px 12px rgba(196, 119, 136, 0.16);
+
+  transform: translateX(-50%) translateY(-2px);
+}
+
+.quick-view:hover svg {
+  transform: translate(2px, -2px);
+}
+
+/* ACTIVE */
+
+.quick-view:active {
+  transform: translateX(-50%) translateY(0);
+}
+
+/* =========================================================
+   MOBILE
+========================================================= */
+
+@media (max-width: 600px) {
+  .quick-view {
+    min-width: 130px;
+    padding: 10px 15px;
+    font-size: 11px;
+
+    opacity: 1;
+    visibility: visible;
+
+    transform: translateX(-50%) translateY(0);
+  }
+}
+
+
+
+
+/* =========================================================
+   VIEW ALL PRODUCTS
+   Premium • Minimal • Elegant
+========================================================= */
+
+.view-all-products {
+  position: relative;
+
+  display: inline-flex;
+  align-items: center;
+  gap: 9px;
+
+  width: fit-content;
+
+  color: #4a3032;
+  text-decoration: none;
+
+  font-family: "Poppins", "DM Sans", sans-serif;
+  font-size: 13px;
+  font-weight: 600;
+  letter-spacing: 0.2px;
+
+  padding-bottom: 7px;
+
+  transition:
+    color 0.3s ease,
+    gap 0.3s ease;
+}
+
+/* Elegant underline */
+
+.view-all-products::after {
+  content: "";
+
+  position: absolute;
+  left: 0;
+  bottom: 0;
+
+  width: 100%;
+  height: 1px;
+
+  background: #c47788;
+
+  transform: scaleX(1);
+  transform-origin: left;
+
+  transition:
+    transform 0.35s ease,
+    background 0.3s ease;
+}
+
+/* Arrow */
+
+.view-all-products svg {
+  color: #c47788;
+
+  flex-shrink: 0;
+
+  transition:
+    transform 0.35s ease,
+    color 0.3s ease;
+}
+
+/* Hover */
+
+.view-all-products:hover {
+  color: #c47788;
+  gap: 12px;
+}
+
+.view-all-products:hover::after {
+  transform: scaleX(0.65);
+  transform-origin: right;
+}
+
+.view-all-products:hover svg {
+  color: #c47788;
+  transform: translate(3px, -3px);
+}
+
+/* Click */
+
+.view-all-products:active {
+  transform: translateY(1px);
+}
+
+/* =========================================================
+   RESPONSIVE
+========================================================= */
+
+@media (max-width: 600px) {
+  .view-all-products {
+    font-size: 12px;
+    gap: 8px;
+  }
+
+  .view-all-products:hover {
+    gap: 10px;
+  }
+}
+

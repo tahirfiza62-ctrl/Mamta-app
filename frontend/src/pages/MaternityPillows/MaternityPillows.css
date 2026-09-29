@@ -1,0 +1,1667 @@
+/* =========================================================
+   MAMTA MATERNITY PILLOWS PAGE
+   Light Luxury • Soft Feminine • Premium
+========================================================= */
+
+.maternity-page {
+  width: 100%;
+  min-height: 100vh;
+  background: #fff9f4;
+  color: #4a3032;
+  overflow: hidden;
+}
+
+
+/* =========================================================
+   HERO
+========================================================= */
+
+.maternity-hero {
+  position: relative;
+
+  min-height: 570px;
+
+  overflow: hidden;
+
+background: radial-gradient(circle at 15% 25%, rgba(217, 143, 154, 0.14), transparent 30%), radial-gradient(circle at 85% 75%, rgba(239, 197, 181, 0.18), transparent 30%), #f6e0e2;
+
+
+}
+
+.maternity-hero-inner {
+  position: relative;
+
+  z-index: 3;
+
+  width: min(1240px, 90%);
+
+  min-height: 570px;
+
+  margin: 0 auto;
+
+  display: grid;
+
+  grid-template-columns: 1fr 0.9fr;
+
+  align-items: center;
+
+  gap: 70px;
+}
+
+/* =========================================================
+   HERO CONTENT
+========================================================= */
+
+.maternity-hero-content {
+  max-width: 620px;
+}
+
+.maternity-eyebrow {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+
+  margin-bottom: 25px;
+
+  color: #b9925a;
+
+  font-size: 9px;
+  font-weight: 800;
+
+  letter-spacing: 2.8px;
+}
+
+.maternity-eyebrow > span {
+  width: 32px;
+  height: 1px;
+
+  background: #b9925a;
+}
+
+
+/* =========================================================
+   HERO TITLE
+========================================================= */
+
+.maternity-hero-content h1 {
+  margin: 0;
+
+  color: #4a3032;
+
+  font-family:
+    "Playfair Display",
+    Georgia,
+    serif;
+
+ font-size: clamp(76px, 5vw, 70px);
+  line-height: 0.98;
+
+  font-weight: 400;
+  letter-spacing: -2.8px;
+}
+
+.maternity-hero-content h1 em {
+   display: block;
+
+  margin-top: 4px;
+font-style: normal;
+  color: #d98f9a;
+}
+
+
+/* =========================================================
+   HERO DESCRIPTION
+========================================================= */
+
+.maternity-hero-content > p {
+  max-width: 500px;
+
+  margin: 30px 0 0;
+
+  color: #806a6c;
+
+  font-size: 14px;
+  line-height: 1.9;
+}
+
+
+/* =========================================================
+   HERO BUTTON
+========================================================= */
+
+.maternity-hero-actions {
+  display: flex;
+  align-items: center;
+  flex-wrap: wrap;
+
+  gap: 24px;
+
+  margin-top: 36px;
+}
+/* =========================================================
+   PRODUCT OVERLAY BUTTONS
+========================================================= */
+
+.maternity-product-overlay {
+  display: flex;
+  flex-direction: column;
+  gap: 9px;
+}
+
+
+/* =========================================================
+   VIEW DETAILS
+========================================================= */
+
+.maternity-details-button {
+  width: 100%;
+  min-height: 42px;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+
+  border: 1px solid rgba(255, 255, 255, 0.8);
+  background: rgba(255, 255, 255, 0.95);
+
+  color: #4a3032;
+
+  font-size: 10px;
+  font-weight: 700;
+  letter-spacing: 1.2px;
+  text-transform: uppercase;
+
+  cursor: pointer;
+
+  transition:
+    background 0.3s ease,
+    color 0.3s ease,
+    transform 0.3s ease;
+}
+
+.maternity-details-button:hover {
+  background: #4a3032;
+  color: #ffffff;
+
+  transform: translateY(-2px);
+}
+
+
+/* =========================================================
+   ADD TO CART
+========================================================= */
+
+.maternity-add-cart-button {
+  width: 100%;
+  min-height: 42px;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+
+  border: 1px solid #bd6f7c;
+  background: #bd6f7c;
+
+  color: #ffffff;
+
+  font-size: 10px;
+  font-weight: 700;
+  letter-spacing: 1.2px;
+  text-transform: uppercase;
+
+  cursor: pointer;
+
+  transition:
+    background 0.3s ease,
+    border-color 0.3s ease,
+    transform 0.3s ease;
+}
+
+.maternity-add-cart-button:hover {
+  background: #a85d6a;
+  border-color: #a85d6a;
+
+  transform: translateY(-2px);
+}
+
+.maternity-add-cart-button:disabled {
+  opacity: 0.65;
+  cursor: not-allowed;
+  transform: none;
+}
+
+
+/* =========================================================
+   MOBILE
+========================================================= */
+
+@media (max-width: 600px) {
+
+  .maternity-product-overlay {
+    gap: 7px;
+  }
+
+  .maternity-details-button,
+  .maternity-add-cart-button {
+    min-height: 40px;
+    font-size: 9px;
+  }
+
+}
+.maternity-primary-btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+
+  gap: 10px;
+
+  padding: 15px 22px;
+
+  border-radius: 4px;
+  border: 1px solid #bd6f7c;
+
+  background: #bd6f7c;
+  color: #ffffff;
+
+  text-decoration: none;
+
+  font-size: 11px;
+  font-weight: 700;
+  letter-spacing: 0.3px;
+
+  box-shadow:
+    0 12px 30px rgba(189, 111, 124, 0.18);
+
+  transition:
+    transform 0.3s ease,
+    background 0.3s ease,
+    box-shadow 0.3s ease;
+}
+
+.maternity-primary-btn:hover {
+  background: #a85f6b;
+  border-color: #a85f6b;
+
+  transform: translateY(-3px);
+
+  box-shadow:
+    0 17px 38px rgba(189, 111, 124, 0.25);
+}
+
+.maternity-hero-note {
+  color: #a58f90;
+
+  font-size: 9px;
+  font-weight: 600;
+
+  letter-spacing: 1.5px;
+  text-transform: uppercase;
+}
+
+
+/* =========================================================
+   HERO VISUAL
+========================================================= */
+
+.maternity-hero-visual {
+  position: relative;
+
+  height: 550px;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+
+/* =========================================================
+   HERO CIRCLE
+========================================================= */
+
+.maternity-hero-circle {
+  position: absolute;
+
+  width: 450px;
+  height: 450px;
+
+  border-radius: 50%;
+
+  background: #f4d9dc;
+
+  opacity: 0.75;
+}
+
+.maternity-hero-circle::before {
+  content: "";
+
+  position: absolute;
+
+  inset: 22px;
+
+  border-radius: 50%;
+
+  border:
+    1px solid rgba(189, 111, 124, 0.25);
+}
+
+.maternity-hero-circle::after {
+  content: "";
+
+  position: absolute;
+
+  inset: 55px;
+
+  border-radius: 50%;
+
+  border:
+    1px solid rgba(185, 146, 90, 0.18);
+}
+
+
+/* =========================================================
+   MAIN IMAGE
+========================================================= */
+
+.maternity-main-image {
+  position: relative;
+  z-index: 3;
+
+  width: 370px;
+  height: 465px;
+
+  overflow: hidden;
+
+  border-radius:
+    190px
+    190px
+    12px
+    12px;
+
+  border: 7px solid rgba(255, 255, 255, 0.9);
+
+  background: #f4d9dc;
+
+  box-shadow:
+    0 30px 70px rgba(74, 48, 50, 0.14);
+}
+
+.maternity-main-image img {
+  width: 100%;
+  height: 100%;
+
+  display: block;
+
+  object-fit: cover;
+
+  transition:
+    transform 0.7s ease;
+}
+
+.maternity-hero:hover
+.maternity-main-image img {
+  transform: scale(1.04);
+}
+
+
+/* =========================================================
+   FLOATING CARD
+========================================================= */
+
+.maternity-floating-card {
+  position: absolute;
+  z-index: 6;
+
+  left: 5px;
+  bottom: 50px;
+
+  width: 180px;
+
+  padding: 20px;
+
+  background:
+    rgba(255, 255, 255, 0.94);
+
+  border:
+    1px solid rgba(189, 111, 124, 0.12);
+
+  box-shadow:
+    0 18px 45px rgba(74, 48, 50, 0.11);
+
+  backdrop-filter: blur(10px);
+}
+
+.maternity-floating-card > span {
+  display: block;
+
+  margin-bottom: 9px;
+
+  color: #b9925a;
+
+  font-size: 8px;
+  font-weight: 800;
+
+  letter-spacing: 1.7px;
+}
+
+.maternity-floating-card strong {
+  display: block;
+
+  color: #4a3032;
+
+  font-family:
+    "Playfair Display",
+    Georgia,
+    serif;
+
+  font-size: 20px;
+  font-weight: 500;
+
+  line-height: 1.2;
+}
+
+.floating-check {
+  display: flex;
+  align-items: center;
+
+  gap: 7px;
+
+  margin-top: 15px;
+
+  color: #8c7072;
+
+  font-size: 9px;
+}
+
+.floating-check svg {
+  color: #bd6f7c;
+}
+
+
+/* =========================================================
+   ROUND BADGE
+========================================================= */
+
+.maternity-round-badge {
+  position: absolute;
+  z-index: 7;
+
+  top: 35px;
+  right: 12px;
+
+  width: 108px;
+  height: 108px;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  border-radius: 50%;
+
+  background: #d98f9a;
+
+  color: #ffffff;
+
+  box-shadow:
+    0 15px 35px rgba(189, 111, 124, 0.22);
+
+  animation:
+    maternityRotate 18s linear infinite;
+}
+
+.maternity-round-badge span {
+  width: 67px;
+
+  text-align: center;
+
+  font-size: 7px;
+  font-weight: 800;
+
+  line-height: 1.6;
+  letter-spacing: 1.2px;
+}
+
+@keyframes maternityRotate {
+  from {
+    transform: rotate(0deg);
+  }
+
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+
+/* =========================================================
+   HERO GLOWS
+========================================================= */
+
+.maternity-hero-glow {
+  position: absolute;
+
+  border-radius: 50%;
+
+  pointer-events: none;
+
+  filter: blur(25px);
+}
+
+.maternity-glow-one {
+  width: 320px;
+  height: 320px;
+
+  left: -120px;
+  top: -140px;
+
+  background: #f4d9dc;
+
+  opacity: 0.4;
+}
+
+.maternity-glow-two {
+  width: 350px;
+  height: 350px;
+
+  right: -170px;
+  bottom: -180px;
+
+  background: #efc5b5;
+
+  opacity: 0.3;
+}
+
+
+/* =========================================================
+   HERO BOTTOM
+========================================================= */
+
+.maternity-hero-bottom {
+  position: absolute;
+  z-index: 5;
+
+  left: 5%;
+  right: 5%;
+  bottom: 22px;
+
+  display: grid;
+
+  grid-template-columns:
+    auto
+    1fr
+    auto;
+
+  align-items: center;
+
+  gap: 15px;
+
+  color: #b29c9d;
+
+  font-size: 8px;
+  font-weight: 700;
+
+  letter-spacing: 2px;
+}
+
+.maternity-hero-bottom div {
+  height: 1px;
+
+  background:
+    rgba(74, 48, 50, 0.1);
+}
+
+
+/* =========================================================
+   INTRO
+========================================================= */
+
+.maternity-intro {
+  max-width: 760px;
+
+  margin: 0 auto;
+
+  padding: 110px 20px 80px;
+
+  text-align: center;
+}
+
+.maternity-intro-label {
+  margin-bottom: 18px;
+
+  color: #b9925a;
+
+  font-size: 9px;
+  font-weight: 800;
+
+  letter-spacing: 2.8px;
+}
+
+.maternity-intro h2 {
+  margin: 0;
+
+  color: #4a3032;
+
+  font-family:
+    "Playfair Display",
+    Georgia,
+    serif;
+
+  font-size: clamp(38px, 4vw, 54px);
+
+  font-weight: 500;
+
+  line-height: 1.08;
+}
+
+.maternity-intro h2 em {
+  color: #bd6f7c;
+
+  font-style: italic;
+  font-weight: 400;
+}
+
+.maternity-intro p {
+  max-width: 620px;
+
+  margin: 27px auto 0;
+
+  color: #806a6c;
+
+  font-size: 13px;
+
+  line-height: 1.9;
+}
+
+
+/* =========================================================
+   BENEFITS
+========================================================= */
+
+.maternity-benefits {
+  width: min(1120px, 88%);
+
+  margin: 0 auto;
+
+  display: grid;
+
+  grid-template-columns:
+    repeat(3, 1fr);
+
+  border-top:
+    1px solid rgba(74, 48, 50, 0.09);
+
+  border-bottom:
+    1px solid rgba(74, 48, 50, 0.09);
+}
+
+.maternity-benefit {
+  display: grid;
+
+  grid-template-columns: 40px 1fr;
+
+  gap: 17px;
+
+  padding: 38px 30px;
+
+  border-right:
+    1px solid rgba(74, 48, 50, 0.09);
+}
+
+.maternity-benefit:last-child {
+  border-right: none;
+}
+
+.benefit-number {
+  color: #d98f9a;
+
+  font-family:
+    "Playfair Display",
+    Georgia,
+    serif;
+
+  font-size: 18px;
+}
+
+.maternity-benefit h3 {
+  margin: 0 0 9px;
+
+  color: #4a3032;
+
+  font-family:
+    "Playfair Display",
+    Georgia,
+    serif;
+
+  font-size: 19px;
+  font-weight: 500;
+}
+
+.maternity-benefit p {
+  margin: 0;
+
+  color: #806a6c;
+
+  font-size: 11px;
+
+  line-height: 1.75;
+}
+
+
+/* =========================================================
+   PRODUCTS SECTION
+========================================================= */
+
+.maternity-products-section {
+  width: min(1240px, 90%);
+
+  margin: 0 auto;
+
+  padding: 115px 0;
+}
+
+.maternity-section-heading {
+  display: flex;
+
+  align-items: flex-end;
+
+  justify-content: space-between;
+
+  gap: 30px;
+
+  margin-bottom: 42px;
+}
+
+.maternity-section-eyebrow {
+  display: flex;
+  align-items: center;
+
+  gap: 10px;
+
+  margin-bottom: 12px;
+
+  color: #b9925a;
+
+  font-size: 9px;
+  font-weight: 800;
+
+  letter-spacing: 2.6px;
+}
+
+.maternity-section-eyebrow::before {
+  content: "";
+
+  width: 28px;
+  height: 1px;
+
+  background: #b9925a;
+}
+
+.maternity-section-heading h2 {
+  margin: 0;
+
+  color: #4a3032;
+
+  font-family:
+    "Playfair Display",
+    Georgia,
+    serif;
+
+  font-size: 45px;
+  font-weight: 500;
+}
+
+.maternity-section-heading h2 em {
+  color: #bd6f7c;
+
+  font-style: italic;
+  font-weight: 400;
+}
+
+.maternity-section-heading > p {
+  max-width: 260px;
+
+  margin: 0 0 4px;
+
+  color: #806a6c;
+
+  font-size: 12px;
+
+  line-height: 1.8;
+
+  text-align: right;
+}
+
+
+/* =========================================================
+   PRODUCT GRID
+========================================================= */
+
+.maternity-products-grid {
+  display: grid;
+
+  grid-template-columns:
+    repeat(4, 1fr);
+
+  gap: 22px;
+}
+
+
+/* =========================================================
+   PRODUCT CARD
+========================================================= */
+
+.maternity-product-card {
+  min-width: 0;
+
+  transition:
+    transform 0.35s ease;
+}
+
+.maternity-product-card:hover {
+  transform: translateY(-5px);
+}
+
+
+/* =========================================================
+   PRODUCT IMAGE
+========================================================= */
+
+.maternity-product-image {
+  position: relative;
+
+  height: 395px;
+
+  overflow: hidden;
+
+  border-radius: 7px;
+
+  background: #f4d9dc;
+}
+
+.maternity-product-image::after {
+  content: "";
+
+  position: absolute;
+
+  inset: 0;
+
+  background:
+    linear-gradient(
+      to top,
+      rgba(74, 48, 50, 0.12),
+      transparent 35%
+    );
+
+  pointer-events: none;
+}
+
+.maternity-product-image img {
+  width: 100%;
+  height: 100%;
+
+  display: block;
+
+  object-fit: cover;
+
+  transition:
+    transform 0.6s ease;
+}
+
+.maternity-product-card:hover
+.maternity-product-image img {
+  transform: scale(1.05);
+}
+
+
+/* =========================================================
+   PRODUCT TAG
+========================================================= */
+
+.maternity-product-tag {
+  position: absolute;
+  z-index: 4;
+
+  top: 14px;
+  left: 14px;
+
+  padding: 7px 10px;
+
+  background:
+    rgba(255, 255, 255, 0.92);
+
+  color: #4a3032;
+
+  border-radius: 2px;
+
+  font-size: 7px;
+  font-weight: 800;
+
+  letter-spacing: 1.4px;
+}
+
+
+/* =========================================================
+   WISHLIST
+========================================================= */
+
+.maternity-wishlist {
+  position: absolute;
+  z-index: 5;
+
+  top: 12px;
+  right: 12px;
+
+  width: 39px;
+  height: 39px;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  border: none;
+  border-radius: 50%;
+
+  background:
+    rgba(255, 255, 255, 0.93);
+
+  color: #806a6c;
+
+  cursor: pointer;
+
+  transition:
+    transform 0.25s ease,
+    color 0.25s ease,
+    background 0.25s ease;
+}
+
+.maternity-wishlist:hover {
+  color: #bd6f7c;
+
+  transform: scale(1.08);
+}
+
+.maternity-wishlist.liked {
+  background: #bd6f7c;
+
+  color: #ffffff;
+}
+
+
+/* =========================================================
+   PRODUCT OVERLAY
+========================================================= */
+
+.maternity-product-overlay {
+  position: absolute;
+  z-index: 5;
+
+  left: 0;
+  right: 0;
+  bottom: 0;
+
+  padding: 14px;
+
+  transform: translateY(100%);
+
+  transition:
+    transform 0.35s ease;
+}
+
+.maternity-product-card:hover
+.maternity-product-overlay {
+  transform: translateY(0);
+}
+
+.maternity-product-overlay button {
+  width: 100%;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  gap: 8px;
+
+  padding: 13px;
+
+  border: none;
+  border-radius: 3px;
+
+  background: #ffffff;
+
+  color: #4a3032;
+
+  font-family: inherit;
+
+  font-size: 10px;
+  font-weight: 700;
+
+  cursor: pointer;
+
+  box-shadow:
+    0 8px 25px rgba(74, 48, 50, 0.13);
+
+  transition:
+    background 0.25s ease,
+    color 0.25s ease;
+}
+
+.maternity-product-overlay button:hover {
+  background: #bd6f7c;
+
+  color: #ffffff;
+}
+
+
+/* =========================================================
+   PRODUCT INFO
+========================================================= */
+
+.maternity-product-info {
+  padding: 17px 3px 0;
+}
+
+.maternity-rating {
+  display: flex;
+  align-items: center;
+
+  gap: 5px;
+
+  margin-bottom: 8px;
+
+  color: #b9925a;
+
+  font-size: 9px;
+  font-weight: 700;
+}
+
+.maternity-product-info h3 {
+  margin: 0;
+
+  color: #4a3032;
+
+  font-family:
+    "Playfair Display",
+    Georgia,
+    serif;
+
+  font-size: 17px;
+  font-weight: 500;
+
+  line-height: 1.35;
+}
+
+.maternity-price {
+  display: flex;
+  align-items: center;
+
+  gap: 10px;
+
+  margin-top: 10px;
+}
+
+.maternity-price strong {
+  color: #4a3032;
+
+  font-size: 12px;
+  font-weight: 700;
+}
+
+.maternity-price span {
+  color: #ad9899;
+
+  font-size: 10px;
+
+  text-decoration: line-through;
+}
+
+
+/* =========================================================
+   CLOSING BANNER
+========================================================= */
+
+.maternity-closing {
+  position: relative;
+
+  overflow: hidden;
+
+  background:
+    linear-gradient(
+      135deg,
+      #f4d9dc 0%,
+      #f8e6e2 50%,
+      #efc5b5 100%
+    );
+}
+
+.maternity-closing::before {
+  content: "";
+
+  position: absolute;
+
+  width: 420px;
+  height: 420px;
+
+  top: -250px;
+  right: -100px;
+
+  border-radius: 50%;
+
+  border:
+    1px solid
+    rgba(189, 111, 124, 0.22);
+}
+
+.maternity-closing::after {
+  content: "";
+
+  position: absolute;
+
+  width: 280px;
+  height: 280px;
+
+  left: -160px;
+  bottom: -180px;
+
+  border-radius: 50%;
+
+  border:
+    1px solid
+    rgba(185, 146, 90, 0.2);
+}
+
+.maternity-closing-inner {
+  position: relative;
+  z-index: 2;
+
+  padding: 105px 20px;
+
+  text-align: center;
+}
+
+.maternity-closing-inner > span {
+  display: block;
+
+  margin-bottom: 17px;
+
+  color: #b9925a;
+
+  font-size: 9px;
+  font-weight: 800;
+
+  letter-spacing: 2.8px;
+}
+
+.maternity-closing-inner h2 {
+  margin: 0;
+
+  color: #4a3032;
+
+  font-family:
+    "Playfair Display",
+    Georgia,
+    serif;
+
+  font-size: clamp(42px, 5vw, 65px);
+
+  font-weight: 500;
+
+  line-height: 1.05;
+
+  letter-spacing: -1px;
+}
+
+.maternity-closing-inner h2 em {
+  color: #bd6f7c;
+
+  font-style: italic;
+
+  font-weight: 400;
+}
+
+.maternity-closing-inner a {
+  display: inline-flex;
+
+  align-items: center;
+  justify-content: center;
+
+  gap: 9px;
+
+  margin-top: 28px;
+
+  padding: 14px 21px;
+
+  border: 1px solid #4a3032;
+  border-radius: 3px;
+
+  color: #4a3032;
+
+  text-decoration: none;
+
+  font-size: 10px;
+  font-weight: 700;
+
+  transition:
+    background 0.25s ease,
+    color 0.25s ease,
+    transform 0.25s ease;
+}
+
+.maternity-closing-inner a:hover {
+  background: #4a3032;
+
+  color: #ffffff;
+
+  transform: translateY(-2px);
+}
+
+
+/* =========================================================
+   TABLET
+========================================================= */
+
+@media (max-width: 1050px) {
+
+  .maternity-hero-inner {
+    grid-template-columns: 1fr 0.85fr;
+
+    gap: 30px;
+  }
+
+  .maternity-hero-content h1 {
+    font-size: 65px;
+  }
+
+  .maternity-main-image {
+    width: 320px;
+    height: 420px;
+  }
+
+  .maternity-hero-circle {
+    width: 390px;
+    height: 390px;
+  }
+
+  .maternity-products-grid {
+    grid-template-columns:
+      repeat(2, 1fr);
+
+    gap: 30px 22px;
+  }
+
+  .maternity-product-image {
+    height: 430px;
+  }
+}
+
+
+/* =========================================================
+   TABLET / SMALL
+========================================================= */
+
+@media (max-width: 780px) {
+
+  .maternity-hero {
+    min-height: auto;
+
+    padding-bottom: 70px;
+  }
+
+  .maternity-hero-inner {
+    min-height: auto;
+
+    grid-template-columns: 1fr;
+
+    gap: 55px;
+
+    padding-top: 80px;
+  }
+
+  .maternity-hero-content {
+    max-width: 650px;
+
+    text-align: center;
+
+    margin: 0 auto;
+  }
+
+  .maternity-eyebrow {
+    justify-content: center;
+  }
+
+  .maternity-hero-content h1 {
+    font-size: clamp(52px, 12vw, 75px);
+  }
+
+  .maternity-hero-content > p {
+    margin-left: auto;
+    margin-right: auto;
+  }
+
+  .maternity-hero-actions {
+    justify-content: center;
+  }
+
+  .maternity-hero-visual {
+    height: 500px;
+  }
+
+  .maternity-benefits {
+    grid-template-columns: 1fr;
+  }
+
+  .maternity-benefit {
+    border-right: none;
+
+    border-bottom:
+      1px solid rgba(74, 48, 50, 0.09);
+  }
+
+  .maternity-benefit:last-child {
+    border-bottom: none;
+  }
+
+  .maternity-section-heading {
+    align-items: flex-start;
+
+    flex-direction: column;
+  }
+
+  .maternity-section-heading > p {
+    text-align: left;
+
+    margin: 0;
+  }
+
+  .maternity-products-section {
+    padding: 85px 0;
+  }
+}
+
+
+/* =========================================================
+   MOBILE
+========================================================= */
+
+@media (max-width: 560px) {
+
+  .maternity-hero-inner {
+    width: 90%;
+
+    padding-top: 65px;
+  }
+
+  .maternity-hero-content h1 {
+    font-size: 52px;
+
+    letter-spacing: -2px;
+  }
+
+  .maternity-hero-content > p {
+    font-size: 12px;
+
+    line-height: 1.8;
+  }
+
+  .maternity-hero-actions {
+    flex-direction: column;
+
+    gap: 17px;
+  }
+
+  .maternity-primary-btn {
+    width: auto;
+  }
+
+  .maternity-hero-visual {
+    height: 430px;
+  }
+
+  .maternity-main-image {
+    width: 270px;
+    height: 350px;
+
+    border-radius:
+      145px
+      145px
+      10px
+      10px;
+  }
+
+  .maternity-hero-circle {
+    width: 330px;
+    height: 330px;
+  }
+
+  .maternity-floating-card {
+    left: 0;
+    bottom: 25px;
+
+    width: 150px;
+
+    padding: 15px;
+  }
+
+  .maternity-floating-card strong {
+    font-size: 17px;
+  }
+
+  .maternity-round-badge {
+    width: 82px;
+    height: 82px;
+
+    top: 20px;
+    right: 0;
+  }
+
+  .maternity-round-badge span {
+    width: 52px;
+
+    font-size: 6px;
+  }
+
+  .maternity-hero-bottom {
+    display: none;
+  }
+
+  .maternity-intro {
+    padding: 80px 20px 60px;
+  }
+
+  .maternity-intro h2 {
+    font-size: 36px;
+  }
+
+  .maternity-intro p {
+    font-size: 12px;
+  }
+
+  .maternity-benefits {
+    width: 88%;
+  }
+
+  .maternity-benefit {
+    padding: 28px 20px;
+  }
+
+  .maternity-products-section {
+    width: 90%;
+
+    padding: 75px 0;
+  }
+
+  .maternity-section-heading h2 {
+    font-size: 37px;
+  }
+
+  .maternity-products-grid {
+    grid-template-columns: 1fr;
+
+    gap: 35px;
+  }
+
+  .maternity-product-image {
+    height: 420px;
+  }
+
+  .maternity-product-overlay {
+    transform: translateY(0);
+  }
+
+  .maternity-product-overlay button {
+    background: rgba(255, 255, 255, 0.94);
+  }
+
+  .maternity-closing-inner {
+    padding: 80px 20px;
+  }
+
+  .maternity-closing-inner h2 {
+    font-size: 42px;
+  }
+}
+
+
+/* =========================================================
+   VERY SMALL MOBILE
+========================================================= */
+
+@media (max-width: 380px) {
+
+  .maternity-hero-content h1 {
+    font-size: 45px;
+  }
+
+  .maternity-hero-visual {
+    height: 390px;
+  }
+
+  .maternity-main-image {
+    width: 245px;
+    height: 320px;
+  }
+
+  .maternity-hero-circle {
+    width: 295px;
+    height: 295px;
+  }
+
+  .maternity-floating-card {
+    width: 135px;
+    padding: 13px;
+  }
+
+  .maternity-round-badge {
+    width: 72px;
+    height: 72px;
+  }
+
+  .maternity-product-image {
+    height: 360px;
+  }
+
+  .maternity-closing-inner h2 {
+    font-size: 36px;
+  }
+}
+/* =========================================================
+   MAMTA MATERNITY SCROLL REVEAL
+========================================================= */
+
+.scroll-reveal {
+  opacity: 0;
+  will-change: transform, opacity;
+
+  transition:
+    opacity 0.9s cubic-bezier(0.16, 1, 0.3, 1),
+    transform 0.9s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+
+/* BOTTOM → TOP */
+
+.reveal-up {
+  transform: translate3d(0, 70px, 0);
+}
+
+.reveal-up.is-visible {
+  opacity: 1;
+  transform: translate3d(0, 0, 0);
+}
+
+
+/* TOP → BOTTOM */
+
+.reveal-down {
+  transform: translate3d(0, -70px, 0);
+}
+
+.reveal-down.is-visible {
+  opacity: 1;
+  transform: translate3d(0, 0, 0);
+}
+
+
+/* LEFT → RIGHT */
+
+.reveal-left {
+  transform: translate3d(-70px, 0, 0);
+}
+
+.reveal-left.is-visible {
+  opacity: 1;
+  transform: translate3d(0, 0, 0);
+}
+
+
+/* RIGHT → LEFT */
+
+.reveal-right {
+  transform: translate3d(70px, 0, 0);
+}
+
+.reveal-right.is-visible {
+  opacity: 1;
+  transform: translate3d(0, 0, 0);
+}
+
+
+/* =========================================================
+   STAGGER
+========================================================= */
+
+.scroll-reveal.stagger-1 {
+  transition-delay: 0.05s;
+}
+
+.scroll-reveal.stagger-2 {
+  transition-delay: 0.12s;
+}
+
+.scroll-reveal.stagger-3 {
+  transition-delay: 0.19s;
+}
+
+.scroll-reveal.stagger-4 {
+  transition-delay: 0.26s;
+}
+
+.scroll-reveal.stagger-5 {
+  transition-delay: 0.33s;
+}
+
+.scroll-reveal.stagger-6 {
+  transition-delay: 0.40s;
+}
+
+
+/* =========================================================
+   REDUCED MOTION
+========================================================= */
+
+@media (prefers-reduced-motion: reduce) {
+  .scroll-reveal {
+    opacity: 1 !important;
+    transform: none !important;
+    transition: none !important;
+  }
+}

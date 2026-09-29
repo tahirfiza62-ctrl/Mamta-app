@@ -1,0 +1,1226 @@
+/* =========================================================
+   MAMTA ABOUT PAGE
+   Premium • Warm • Editorial • Soft
+========================================================= */
+
+.about-page {
+  width: 100%;
+  overflow: hidden;
+  background: #fff9f4;
+  color: #4a3032;
+  font-family: "Poppins", "Segoe UI", sans-serif;
+}
+
+
+/* =========================================================
+   HERO
+========================================================= */
+
+.about-hero {
+  position: relative;
+  min-height: 570px;
+  display: flex;
+  align-items: center;
+background: radial-gradient(circle at 15% 25%, rgba(217, 143, 154, 0.14), transparent 30%), radial-gradient(circle at 85% 75%, rgba(239, 197, 181, 0.18), transparent 30%), #f6e0e2;
+ 
+}
+.about-hero-container {
+  width: min(1180px, 90%);
+  margin: 0 auto;
+
+  display: grid;
+  grid-template-columns: 0.9fr 1.1fr;
+  align-items: center;
+  gap: 60px;
+}
+
+
+/* =========================================================
+   HERO CONTENT
+========================================================= */
+
+.about-hero-content {
+  max-width: 500px;
+}
+
+.about-eyebrow,
+.about-section-label,
+.about-philosophy-label {
+  display: inline-flex;
+  align-items: center;
+  gap: 12px;
+
+  color: #b9925a;
+
+  font-size: 9px;
+  font-weight: 800;
+  letter-spacing: 2.8px;
+}
+
+.about-eyebrow::before,
+.about-section-label::before {
+  content: "";
+  width: 28px;
+  height: 1px;
+  background: #b9925a;
+}
+
+.about-hero-content h1 {
+  margin: 25px 0 22px;
+
+  color: #4a3032;
+
+  font-family:
+    "Playfair Display",
+    Georgia,
+    serif;
+
+  font-size: clamp(48px, 5vw, 72px);
+  font-weight: 500;
+  line-height: 0.98;
+  letter-spacing: -2.5px;
+}
+
+.about-hero-content h1 span {
+  display: block;
+  color: #bd6f7c;
+  font-style: italic;
+  font-weight: 400;
+}
+
+.about-hero-content > p {
+  max-width: 445px;
+
+  margin: 0;
+
+  color: #806d6f;
+
+  font-size: 14px;
+  line-height: 1.9;
+}
+
+.about-hero-button,
+.about-motherhood-button,
+.about-final-button {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 13px;
+
+  margin-top: 32px;
+  padding: 14px 21px;
+
+  text-decoration: none;
+
+  font-size: 10px;
+  font-weight: 700;
+  letter-spacing: 1.1px;
+
+  transition:
+    transform 0.3s ease,
+    background 0.3s ease,
+    box-shadow 0.3s ease;
+}
+
+.about-hero-button {
+  background: #4a3032;
+  color: #fff;
+
+  box-shadow:
+    0 12px 28px rgba(74, 48, 50, 0.13);
+}
+
+.about-hero-button:hover {
+  transform: translateY(-3px);
+  background: #bd6f7c;
+}
+
+
+/* =========================================================
+   HERO VISUAL
+========================================================= */
+
+.about-hero-visual {
+  position: relative;
+
+  height: 570px;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.about-hero-circle {
+  position: absolute;
+
+  width: 455px;
+  height: 455px;
+
+  border-radius: 50%;
+
+  background: #f4d9dc;
+  opacity: 0.72;
+}
+
+.about-hero-circle::before {
+  content: "";
+
+  position: absolute;
+  inset: 22px;
+
+  border: 1px solid rgba(189, 111, 124, 0.24);
+  border-radius: 50%;
+}
+
+.about-hero-circle::after {
+  content: "";
+
+  position: absolute;
+  inset: 55px;
+
+  border: 1px solid rgba(185, 146, 90, 0.18);
+  border-radius: 50%;
+}
+
+
+/* =========================================================
+   HERO IMAGE
+========================================================= */
+
+.about-main-image {
+  position: relative;
+  z-index: 3;
+
+  width: 365px;
+  height: 470px;
+
+  overflow: hidden;
+
+  border-radius:
+    185px
+    185px
+    14px
+    14px;
+
+  border: 7px solid rgba(255, 255, 255, 0.92);
+
+  background: #f4d9dc;
+
+  box-shadow:
+    0 30px 70px rgba(74, 48, 50, 0.15);
+}
+
+.about-main-image img {
+  width: 100%;
+  height: 100%;
+
+  display: block;
+
+  object-fit: cover;
+
+  transition: transform 0.8s ease;
+}
+
+.about-main-image:hover img {
+  transform: scale(1.045);
+}
+
+
+/* =========================================================
+   HERO FLOATING CARD
+========================================================= */
+
+.about-floating-card {
+  position: absolute;
+  z-index: 6;
+
+  left: 12px;
+  bottom: 55px;
+
+  display: flex;
+  align-items: center;
+  gap: 12px;
+
+  min-width: 190px;
+
+  padding: 16px 18px;
+
+  background: rgba(255, 255, 255, 0.94);
+
+  border: 1px solid rgba(189, 111, 124, 0.1);
+
+  box-shadow:
+    0 18px 45px rgba(74, 48, 50, 0.12);
+
+  backdrop-filter: blur(10px);
+}
+
+.about-floating-card > svg {
+  flex-shrink: 0;
+  color: #bd6f7c;
+}
+
+.about-floating-card strong {
+  display: block;
+
+  margin-bottom: 3px;
+
+  color: #4a3032;
+
+  font-family:
+    "Playfair Display",
+    Georgia,
+    serif;
+
+  font-size: 17px;
+  font-weight: 500;
+}
+
+.about-floating-card span {
+  color: #8b7678;
+
+  font-size: 8px;
+  letter-spacing: 0.5px;
+}
+
+.about-hero-number {
+  position: absolute;
+  z-index: 5;
+
+  right: 35px;
+  top: 70px;
+
+  color: #b9925a;
+
+  font-family:
+    "Playfair Display",
+    Georgia,
+    serif;
+
+  font-size: 15px;
+  font-style: italic;
+}
+
+
+/* =========================================================
+   HERO GLOW
+========================================================= */
+
+.about-glow {
+  position: absolute;
+
+  border-radius: 50%;
+
+  pointer-events: none;
+
+  filter: blur(25px);
+}
+
+.about-glow-one {
+  width: 260px;
+  height: 260px;
+
+  left: 0;
+  top: 10px;
+
+  background: #f4d9dc;
+  opacity: 0.38;
+}
+
+.about-glow-two {
+  width: 290px;
+  height: 290px;
+
+  right: -30px;
+  bottom: 0;
+
+  background: #efc5b5;
+  opacity: 0.3;
+}
+
+
+/* =========================================================
+   INTRO
+========================================================= */
+
+.about-intro {
+  padding: 120px 0;
+
+  background: #fff;
+}
+
+.about-intro-container {
+  width: min(1080px, 88%);
+  margin: 0 auto;
+
+  display: grid;
+  grid-template-columns: 0.9fr 1.1fr;
+  gap: 100px;
+}
+
+.about-intro-heading h2,
+.about-story-content h2,
+.about-values-heading h2,
+.about-motherhood-content h2 {
+  margin: 22px 0 0;
+
+  color: #4a3032;
+
+  font-family:
+    "Playfair Display",
+    Georgia,
+    serif;
+
+  font-size: clamp(40px, 4vw, 58px);
+  font-weight: 500;
+
+  line-height: 1.05;
+  letter-spacing: -1.8px;
+}
+
+.about-intro-heading h2 span,
+.about-story-content h2 span,
+.about-values-heading h2 span,
+.about-motherhood-content h2 span {
+  display: block;
+
+  color: #bd6f7c;
+
+  font-style: italic;
+  font-weight: 400;
+}
+
+.about-intro-text {
+  max-width: 560px;
+}
+
+.about-intro-text p {
+  margin: 0 0 22px;
+
+  color: #806d6f;
+
+  font-size: 13px;
+  line-height: 1.95;
+}
+
+.about-intro-text .about-intro-main {
+  color: #5d484a;
+
+  font-family:
+    "Playfair Display",
+    Georgia,
+    serif;
+
+  font-size: 20px;
+  line-height: 1.65;
+}
+
+
+/* =========================================================
+   STORY
+========================================================= */
+
+.about-story {
+  padding: 120px 0;
+
+  background: #f8ebe6;
+}
+
+.about-story-container {
+  width: min(1120px, 88%);
+  margin: 0 auto;
+
+  display: grid;
+  grid-template-columns: 1fr 0.9fr;
+  align-items: center;
+
+  gap: 100px;
+}
+
+.about-story-image {
+  position: relative;
+
+  height: 570px;
+
+  overflow: hidden;
+
+  background: #f4d9dc;
+}
+
+.about-story-image::after {
+  content: "";
+
+  position: absolute;
+  inset: 0;
+
+  background:
+    linear-gradient(
+      to top,
+      rgba(74, 48, 50, 0.2),
+      transparent 35%
+    );
+
+  pointer-events: none;
+}
+
+.about-story-image img {
+  width: 100%;
+  height: 100%;
+
+  display: block;
+
+  object-fit: cover;
+
+  transition: transform 0.8s ease;
+}
+
+.about-story-image:hover img {
+  transform: scale(1.04);
+}
+
+.about-story-label {
+  position: absolute;
+  z-index: 2;
+
+  left: 24px;
+  bottom: 23px;
+
+  display: flex;
+  align-items: center;
+  gap: 15px;
+
+  color: #fff;
+}
+
+.about-story-label span {
+  font-family:
+    "Playfair Display",
+    Georgia,
+    serif;
+
+  font-size: 16px;
+  font-style: italic;
+}
+
+.about-story-label p {
+  margin: 0;
+
+  font-size: 8px;
+  line-height: 1.7;
+  letter-spacing: 1px;
+  text-transform: uppercase;
+}
+
+.about-story-content {
+  max-width: 490px;
+}
+
+.about-story-content > p {
+  margin: 25px 0 0;
+
+  color: #806d6f;
+
+  font-size: 13px;
+  line-height: 1.95;
+}
+
+.about-story-content .about-story-main {
+  color: #5d484a;
+
+  font-family:
+    "Playfair Display",
+    Georgia,
+    serif;
+
+  font-size: 19px;
+  line-height: 1.65;
+}
+
+.about-story-line {
+  width: 55px;
+  height: 1px;
+
+  margin: 35px 0 18px;
+
+  background: #b9925a;
+}
+
+.about-signature {
+  color: #bd6f7c;
+
+  font-family:
+    "Playfair Display",
+    Georgia,
+    serif;
+
+  font-size: 20px;
+  font-style: italic;
+  letter-spacing: 2px;
+}
+
+
+/* =========================================================
+   VALUES
+========================================================= */
+
+.about-values {
+  padding: 125px 0;
+
+  background: #fff9f4;
+}
+
+.about-values-container {
+  width: min(1120px, 88%);
+  margin: 0 auto;
+}
+
+.about-values-heading {
+  max-width: 650px;
+  margin-bottom: 60px;
+}
+
+.about-values-heading p {
+  max-width: 480px;
+
+  margin-top: 25px;
+
+  color: #806d6f;
+
+  font-size: 13px;
+  line-height: 1.9;
+}
+
+.about-values-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+
+  gap: 18px;
+}
+
+.about-value-card {
+  position: relative;
+
+  min-height: 310px;
+
+  padding: 34px 30px;
+
+  background: #fff;
+
+  border: 1px solid rgba(189, 111, 124, 0.1);
+
+  transition:
+    transform 0.35s ease,
+    box-shadow 0.35s ease;
+}
+
+.about-value-card:hover {
+  transform: translateY(-7px);
+
+  box-shadow:
+    0 20px 45px rgba(74, 48, 50, 0.08);
+}
+
+.about-value-number {
+  position: absolute;
+
+  top: 23px;
+  right: 25px;
+
+  color: #c7aa7b;
+
+  font-family:
+    "Playfair Display",
+    Georgia,
+    serif;
+
+  font-size: 13px;
+  font-style: italic;
+}
+
+.about-value-icon {
+  width: 48px;
+  height: 48px;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  margin-bottom: 45px;
+
+  border-radius: 50%;
+
+  background: #f4d9dc;
+
+  color: #bd6f7c;
+}
+
+.about-value-card h3 {
+  margin: 0 0 13px;
+
+  color: #4a3032;
+
+  font-family:
+    "Playfair Display",
+    Georgia,
+    serif;
+
+  font-size: 25px;
+  font-weight: 500;
+}
+
+.about-value-card p {
+  margin: 0;
+
+  color: #806d6f;
+
+  font-size: 11px;
+  line-height: 1.9;
+}
+
+
+/* =========================================================
+   PHILOSOPHY
+========================================================= */
+
+.about-philosophy {
+  position: relative;
+
+  padding: 125px 20px;
+
+  background: #f4d9dc;
+
+  text-align: center;
+
+  overflow: hidden;
+}
+
+.about-philosophy::before,
+.about-philosophy::after {
+  content: "";
+
+  position: absolute;
+
+  border-radius: 50%;
+
+  border: 1px solid rgba(189, 111, 124, 0.16);
+}
+
+.about-philosophy::before {
+  width: 420px;
+  height: 420px;
+
+  left: -220px;
+  top: -180px;
+}
+
+.about-philosophy::after {
+  width: 350px;
+  height: 350px;
+
+  right: -190px;
+  bottom: -180px;
+}
+
+.about-philosophy-container {
+  position: relative;
+  z-index: 2;
+
+  max-width: 850px;
+  margin: 0 auto;
+}
+
+.about-quote-icon {
+  width: 48px;
+  height: 48px;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  margin: 0 auto 25px;
+
+  border-radius: 50%;
+
+  background: #fff9f4;
+
+  color: #bd6f7c;
+}
+
+.about-philosophy-label {
+  justify-content: center;
+}
+
+.about-philosophy h2 {
+  margin: 30px 0 20px;
+
+  color: #4a3032;
+
+  font-family:
+    "Playfair Display",
+    Georgia,
+    serif;
+
+  font-size: clamp(35px, 4.3vw, 55px);
+  font-weight: 500;
+
+  line-height: 1.15;
+  letter-spacing: -1.5px;
+}
+
+.about-philosophy h2 span {
+  color: #bd6f7c;
+  font-style: italic;
+  font-weight: 400;
+}
+
+.about-philosophy p {
+  margin: 0;
+
+  color: #806d6f;
+
+  font-size: 11px;
+}
+
+
+/* =========================================================
+   MOTHERHOOD
+========================================================= */
+
+.about-motherhood {
+  padding: 125px 0;
+
+  background: #fff;
+}
+
+.about-motherhood-container {
+  width: min(1120px, 88%);
+  margin: 0 auto;
+
+  display: grid;
+  grid-template-columns: 0.9fr 1.1fr;
+
+  align-items: center;
+
+  gap: 100px;
+}
+
+.about-motherhood-content {
+  max-width: 480px;
+}
+
+.about-motherhood-content > p {
+  margin: 24px 0 0;
+
+  color: #806d6f;
+
+  font-size: 13px;
+  line-height: 1.95;
+}
+
+.about-motherhood-button {
+  background: #4a3032;
+  color: #fff;
+}
+
+.about-motherhood-button:hover {
+  transform: translateY(-3px);
+  background: #bd6f7c;
+}
+
+.about-motherhood-visual {
+  position: relative;
+
+  min-height: 510px;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.motherhood-image-main {
+  width: 440px;
+  height: 500px;
+
+  overflow: hidden;
+
+  border-radius:
+    220px
+    220px
+    14px
+    14px;
+
+  border: 7px solid #f4d9dc;
+
+  box-shadow:
+    0 30px 65px rgba(74, 48, 50, 0.1);
+}
+
+.motherhood-image-main img {
+  width: 100%;
+  height: 100%;
+
+  object-fit: cover;
+
+  display: block;
+
+  transition: transform 0.8s ease;
+}
+
+.motherhood-image-main:hover img {
+  transform: scale(1.04);
+}
+
+.motherhood-small-card {
+  position: absolute;
+
+  left: 10px;
+  bottom: 45px;
+
+  display: flex;
+  align-items: center;
+  gap: 11px;
+
+  padding: 15px 18px;
+
+  background: #fff9f4;
+
+  color: #bd6f7c;
+
+  box-shadow:
+    0 16px 40px rgba(74, 48, 50, 0.1);
+}
+
+.motherhood-small-card span {
+  color: #806d6f;
+
+  font-size: 8px;
+  line-height: 1.4;
+}
+
+.motherhood-small-card strong {
+  display: block;
+
+  color: #4a3032;
+
+  font-family:
+    "Playfair Display",
+    Georgia,
+    serif;
+
+  font-size: 15px;
+  font-weight: 500;
+}
+
+
+/* =========================================================
+   FINAL CTA
+========================================================= */
+
+.about-final {
+  padding: 120px 20px;
+
+  background: #4a3032;
+
+  color: #fff;
+
+  text-align: center;
+}
+
+.about-final-content {
+  max-width: 720px;
+  margin: 0 auto;
+}
+
+.about-final-label {
+  color: #d9b878;
+
+  font-size: 9px;
+  font-weight: 800;
+
+  letter-spacing: 3px;
+}
+
+.about-final h2 {
+  margin: 22px 0 20px;
+
+  font-family:
+    "Playfair Display",
+    Georgia,
+    serif;
+
+  font-size: clamp(42px, 5vw, 65px);
+  font-weight: 500;
+
+  line-height: 1.05;
+  letter-spacing: -2px;
+}
+
+.about-final h2 span {
+  display: block;
+
+  color: #e6aab2;
+
+  font-style: italic;
+  font-weight: 400;
+}
+
+.about-final p {
+  max-width: 500px;
+
+  margin: 0 auto;
+
+  color: rgba(255, 255, 255, 0.68);
+
+  font-size: 12px;
+  line-height: 1.9;
+}
+
+.about-final-button {
+  background: #fff9f4;
+  color: #4a3032;
+}
+
+.about-final-button:hover {
+  transform: translateY(-3px);
+
+  background: #d98f9a;
+  color: #fff;
+}
+
+
+/* =========================================================
+   RESPONSIVE
+========================================================= */
+
+@media (max-width: 1000px) {
+
+  .about-hero-container,
+  .about-intro-container,
+  .about-story-container,
+  .about-motherhood-container {
+    grid-template-columns: 1fr;
+  }
+
+  .about-hero {
+    padding: 80px 0;
+  }
+
+  .about-hero-content {
+    max-width: 650px;
+    margin: 0 auto;
+    text-align: center;
+  }
+
+  .about-eyebrow {
+    justify-content: center;
+  }
+
+  .about-hero-content > p {
+    margin: 0 auto;
+  }
+
+  .about-hero-visual {
+    margin-top: 20px;
+  }
+
+  .about-intro-container {
+    gap: 50px;
+  }
+
+  .about-story-container {
+    gap: 60px;
+  }
+
+  .about-story-content {
+    max-width: 650px;
+  }
+
+  .about-values-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .about-value-card {
+    min-height: auto;
+  }
+
+  .about-motherhood-container {
+    gap: 60px;
+  }
+
+  .about-motherhood-content {
+    max-width: 650px;
+  }
+}
+
+
+@media (max-width: 650px) {
+
+  .about-hero {
+    min-height: auto;
+    padding: 65px 0 75px;
+  }
+
+  .about-hero-container {
+    width: 90%;
+    gap: 20px;
+  }
+
+  .about-hero-content h1 {
+    font-size: 45px;
+    letter-spacing: -1.5px;
+  }
+
+  .about-hero-content > p {
+    font-size: 12px;
+  }
+
+  .about-hero-visual {
+    height: 450px;
+  }
+
+  .about-hero-circle {
+    width: 330px;
+    height: 330px;
+  }
+
+  .about-main-image {
+    width: 275px;
+    height: 365px;
+
+    border-radius:
+      145px
+      145px
+      12px
+      12px;
+  }
+
+  .about-floating-card {
+    left: 0;
+    bottom: 25px;
+
+    min-width: 165px;
+
+    padding: 13px;
+  }
+
+  .about-floating-card strong {
+    font-size: 14px;
+  }
+
+  .about-hero-number {
+    right: 5px;
+    top: 55px;
+  }
+
+
+  .about-intro,
+  .about-story,
+  .about-values,
+  .about-motherhood {
+    padding: 80px 0;
+  }
+
+  .about-intro-container,
+  .about-story-container,
+  .about-motherhood-container {
+    width: 90%;
+  }
+
+  .about-intro-container {
+    gap: 35px;
+  }
+
+  .about-intro-heading h2,
+  .about-story-content h2,
+  .about-values-heading h2,
+  .about-motherhood-content h2 {
+    font-size: 39px;
+  }
+
+  .about-intro-text .about-intro-main {
+    font-size: 17px;
+  }
+
+
+  .about-story-container {
+    gap: 45px;
+  }
+
+  .about-story-image {
+    height: 420px;
+  }
+
+
+  .about-values-grid {
+    gap: 12px;
+  }
+
+  .about-value-card {
+    padding: 28px 24px;
+  }
+
+  .about-value-icon {
+    margin-bottom: 35px;
+  }
+
+
+  .about-philosophy {
+    padding: 90px 20px;
+  }
+
+  .about-philosophy h2 {
+    font-size: 35px;
+  }
+
+
+  .about-motherhood-container {
+    gap: 45px;
+  }
+
+  .about-motherhood-visual {
+    min-height: 410px;
+  }
+
+  .motherhood-image-main {
+    width: 300px;
+    height: 390px;
+
+    border-radius:
+      150px
+      150px
+      12px
+      12px;
+  }
+
+  .motherhood-small-card {
+    left: 0;
+    bottom: 15px;
+  }
+
+
+  .about-final {
+    padding: 90px 20px;
+  }
+
+  .about-final h2 {
+    font-size: 42px;
+  }
+}
+
+
+/* =========================================================
+   REDUCED MOTION
+========================================================= */
+
+@media (prefers-reduced-motion: reduce) {
+
+  .about-main-image img,
+  .about-story-image img,
+  .motherhood-image-main img,
+  .about-hero-button,
+  .about-motherhood-button,
+  .about-final-button,
+  .about-value-card {
+    transition: none;
+  }
+}

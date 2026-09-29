@@ -1,0 +1,616 @@
+
+/* =========================================================
+   MAMTA — MOTHER & BABY BANNER
+========================================================= */
+
+.mother-baby-banner {
+  width: 100%;
+  padding: 15px 7%;
+  background: #fff9f4;
+}
+
+.mother-baby-container {
+  width: 100%;
+  max-width: 1450px;
+  min-height: 570px;
+  margin: 0 auto;
+
+  display: grid;
+  grid-template-columns: 1.05fr 0.95fr;
+
+  background: #f4d9dc;
+  border-radius: 20px;
+
+  overflow: hidden;
+}
+
+/* =========================================================
+   IMAGE
+========================================================= */
+
+.mother-baby-image {
+  position: relative;
+
+  min-height: 570px;
+
+  overflow: hidden;
+}
+
+.mother-baby-image img {
+  width: 100%;
+  height: 100%;
+
+  display: block;
+
+  object-fit: cover;
+
+  transition: transform 0.8s ease;
+}
+
+.mother-baby-container:hover .mother-baby-image img {
+  transform: scale(1.04);
+}
+
+/* Image overlay */
+
+.mother-baby-image::after {
+  content: "";
+
+  position: absolute;
+  inset: 0;
+
+  background: linear-gradient(
+    180deg,
+    transparent 55%,
+    rgba(74, 48, 50, 0.28)
+  );
+
+  pointer-events: none;
+}
+
+/* =========================================================
+   IMAGE LABEL
+========================================================= */
+
+.mother-baby-image-label {
+  position: absolute;
+
+  left: 30px;
+  bottom: 28px;
+
+  z-index: 2;
+
+  display: flex;
+  align-items: center;
+  gap: 14px;
+}
+
+.mother-baby-image-label span {
+  width: 38px;
+  height: 38px;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  background: #fff9f4;
+  color: #4a3032;
+
+  border-radius: 50%;
+
+  font-family: "Poppins", sans-serif;
+  font-size: 10px;
+  font-weight: 600;
+}
+
+.mother-baby-image-label p {
+  margin: 0;
+
+  color: #fff9f4;
+
+  font-family: "Poppins", sans-serif;
+  font-size: 10px;
+  letter-spacing: 1px;
+  text-transform: uppercase;
+}
+
+/* =========================================================
+   CONTENT
+========================================================= */
+
+.mother-baby-content {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+
+  padding: 75px 70px;
+}
+
+.mother-baby-eyebrow {
+  color: #bd6f7c;
+
+  font-family: "Poppins", sans-serif;
+  font-size: 10px;
+  font-weight: 600;
+
+  letter-spacing: 2.8px;
+  text-transform: uppercase;
+}
+
+.mother-baby-content h2 {
+  margin: 15px 0 25px;
+
+  color: #4a3032;
+
+  font-family: "Playfair Display", Georgia, serif;
+  font-size: clamp(48px, 5vw, 70px);
+  font-weight: 500;
+
+  line-height: 0.98;
+  letter-spacing: -1.5px;
+}
+
+.mother-baby-content h2 span {
+  display: block;
+
+  color: #bd6f7c;
+
+  font-weight: 400;
+  font-style: italic;
+}
+
+.mother-baby-main-text {
+  max-width: 480px;
+
+  margin: 0 0 15px;
+
+  color: #5e494c;
+
+  font-family: "Poppins", sans-serif;
+  font-size: 14px;
+  line-height: 1.9;
+}
+
+.mother-baby-small-text {
+  max-width: 450px;
+
+  margin: 0;
+
+  color: #81777a;
+
+  font-family: "Poppins", sans-serif;
+  font-size: 11px;
+  line-height: 1.8;
+}
+
+/* =========================================================
+   BUTTON
+========================================================= */
+
+.mother-baby-button {
+  width: fit-content;
+
+  display: inline-flex;
+  align-items: center;
+  gap: 9px;
+
+  margin-top: 30px;
+  padding: 13px 20px;
+
+  background: #4a3032;
+  color: #fff9f4;
+
+  border-radius: 3px;
+
+  font-family: "Poppins", sans-serif;
+  font-size: 10px;
+  font-weight: 600;
+
+  letter-spacing: 1px;
+  text-transform: uppercase;
+
+  text-decoration: none;
+
+  transition:
+    background 0.3s ease,
+    transform 0.3s ease;
+}
+
+.mother-baby-button:hover {
+  background: #bd6f7c;
+  transform: translateY(-3px);
+}
+
+/* =========================================================
+   DETAILS
+========================================================= */
+
+.mother-baby-details {
+  display: flex;
+
+  gap: 38px;
+
+  margin-top: 45px;
+  padding-top: 25px;
+
+  border-top: 1px solid rgba(74, 48, 50, 0.15);
+}
+
+.mother-baby-details div {
+  display: flex;
+  flex-direction: column;
+
+  gap: 4px;
+}
+
+.mother-baby-details strong {
+  color: #4a3032;
+
+  font-family: "Playfair Display", Georgia, serif;
+  font-size: 17px;
+  font-weight: 500;
+}
+
+.mother-baby-details span {
+  color: #81777a;
+
+  font-family: "Poppins", sans-serif;
+  font-size: 9px;
+
+  letter-spacing: 1px;
+  text-transform: uppercase;
+}
+
+/* =========================================================
+   TABLET
+========================================================= */
+
+@media (max-width: 1000px) {
+  .mother-baby-banner {
+    padding: 100px 5%;
+  }
+
+  .mother-baby-container {
+    grid-template-columns: 1fr;
+  }
+
+  .mother-baby-image {
+    min-height: 430px;
+  }
+
+  .mother-baby-content {
+    padding: 60px 50px;
+  }
+}
+
+/* =========================================================
+   MOBILE
+========================================================= */
+
+@media (max-width: 600px) {
+  .mother-baby-banner {
+    padding: 75px 20px;
+  }
+
+  .mother-baby-container {
+    border-radius: 14px;
+  }
+
+  .mother-baby-image {
+    min-height: 330px;
+  }
+
+  .mother-baby-content {
+    padding: 45px 28px;
+  }
+
+  .mother-baby-content h2 {
+    font-size: 44px;
+  }
+
+  .mother-baby-main-text {
+    font-size: 12px;
+  }
+
+  .mother-baby-details {
+    gap: 20px;
+    flex-wrap: wrap;
+    margin-top: 35px;
+  }
+
+  .mother-baby-details strong {
+    font-size: 15px;
+  }
+}
+
+/* =========================================================
+   MAMTA — MOTHER BABY BANNER MOTION
+========================================================= */
+
+.mother-baby-banner {
+  overflow: hidden;
+}
+
+/* ---------------------------------------------------------
+   IMAGE
+--------------------------------------------------------- */
+
+.mother-baby-image {
+  overflow: hidden;
+  position: relative;
+  transition:
+    transform 0.8s cubic-bezier(0.16, 1, 0.3, 1),
+    box-shadow 0.8s ease;
+}
+
+.mother-baby-image img {
+  width: 100%;
+  display: block;
+  transition:
+    transform 1.2s cubic-bezier(0.16, 1, 0.3, 1),
+    filter 0.8s ease;
+}
+
+/* Gentle image movement */
+
+.mother-baby-image:hover img {
+  transform: scale(1.035);
+}
+
+/* Very subtle lift */
+
+.mother-baby-image:hover {
+  transform: translateY(-4px);
+}
+
+
+/* ---------------------------------------------------------
+   IMAGE LABEL
+--------------------------------------------------------- */
+
+.mother-baby-image-label {
+  transition:
+    transform 0.6s cubic-bezier(0.16, 1, 0.3, 1),
+    opacity 0.5s ease;
+}
+
+.mother-baby-image:hover .mother-baby-image-label {
+  transform: translateY(-5px);
+}
+
+
+/* ---------------------------------------------------------
+   EYEBROW
+--------------------------------------------------------- */
+
+.mother-baby-eyebrow {
+  transition:
+    color 0.35s ease,
+    letter-spacing 0.45s ease;
+}
+
+.mother-baby-eyebrow:hover {
+  letter-spacing: 0.18em;
+}
+
+
+/* ---------------------------------------------------------
+   HEADING
+--------------------------------------------------------- */
+
+.mother-baby-content h2 {
+  transition:
+    transform 0.6s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.mother-baby-content h2 span {
+  transition:
+    color 0.4s ease,
+    padding-left 0.45s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.mother-baby-content:hover h2 span {
+  color: #bd6f7c;
+  padding-left: 4px;
+}
+
+
+/* ---------------------------------------------------------
+   PARAGRAPHS
+--------------------------------------------------------- */
+
+.mother-baby-main-text,
+.mother-baby-small-text {
+  transition:
+    color 0.4s ease,
+    transform 0.6s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+
+/* ---------------------------------------------------------
+   BUTTON
+--------------------------------------------------------- */
+
+.mother-baby-button {
+  position: relative;
+  overflow: hidden;
+
+  transition:
+    transform 0.4s cubic-bezier(0.16, 1, 0.3, 1),
+    background 0.4s ease,
+    color 0.4s ease,
+    box-shadow 0.4s ease;
+}
+
+.mother-baby-button::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+
+  background: #bd6f7c;
+
+  transform: translateY(100%);
+
+  transition:
+    transform 0.45s cubic-bezier(0.16, 1, 0.3, 1);
+
+  z-index: 0;
+}
+
+.mother-baby-button span,
+.mother-baby-button svg {
+  position: relative;
+  z-index: 1;
+}
+
+.mother-baby-button:hover::before {
+  transform: translateY(0);
+}
+
+.mother-baby-button:hover {
+  color: #fff;
+  transform: translateY(-3px);
+  box-shadow: 0 12px 30px rgba(74, 48, 50, 0.14);
+}
+
+.mother-baby-button svg {
+  transition:
+    transform 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.mother-baby-button:hover svg {
+  transform: translate(3px, -3px);
+}
+
+
+/* ---------------------------------------------------------
+   DETAIL ITEMS
+--------------------------------------------------------- */
+
+.mother-detail-item {
+  transition:
+    transform 0.45s cubic-bezier(0.16, 1, 0.3, 1),
+    border-color 0.35s ease;
+}
+
+.mother-detail-item:hover {
+  transform: translateY(-5px);
+}
+
+.mother-detail-item strong {
+  transition:
+    color 0.35s ease;
+}
+
+.mother-detail-item:hover strong {
+  color: #bd6f7c;
+}
+
+.mother-detail-item span {
+  transition:
+    color 0.35s ease;
+}
+/* =========================================================
+   MAMTA SCROLL REVEAL ANIMATIONS
+========================================================= */
+
+.scroll-reveal {
+  opacity: 0;
+  will-change: transform, opacity;
+
+  transition:
+    opacity 0.95s cubic-bezier(0.16, 1, 0.3, 1),
+    transform 0.95s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+
+/* =========================================================
+   IMAGE — LEFT TO RIGHT
+========================================================= */
+
+.reveal-left {
+  transform: translate3d(-75px, 0, 0);
+}
+
+.reveal-left.is-visible {
+  opacity: 1;
+  transform: translate3d(0, 0, 0);
+}
+
+
+/* =========================================================
+   CONTENT — BOTTOM TO TOP
+========================================================= */
+
+.reveal-up {
+  transform: translate3d(0, 75px, 0);
+}
+
+.reveal-up.is-visible {
+  opacity: 1;
+  transform: translate3d(0, 0, 0);
+}
+
+
+/* =========================================================
+   OPTIONAL TOP TO BOTTOM
+========================================================= */
+
+.reveal-down {
+  transform: translate3d(0, -70px, 0);
+}
+
+.reveal-down.is-visible {
+  opacity: 1;
+  transform: translate3d(0, 0, 0);
+}
+
+
+/* =========================================================
+   OPTIONAL RIGHT TO LEFT
+========================================================= */
+
+.reveal-right {
+  transform: translate3d(75px, 0, 0);
+}
+
+.reveal-right.is-visible {
+  opacity: 1;
+  transform: translate3d(0, 0, 0);
+}
+
+
+/* =========================================================
+   MOBILE
+========================================================= */
+
+@media (max-width: 768px) {
+  .reveal-left {
+    transform: translate3d(-45px, 0, 0);
+  }
+
+  .reveal-up {
+    transform: translate3d(0, 45px, 0);
+  }
+
+  .reveal-down {
+    transform: translate3d(0, -45px, 0);
+  }
+
+  .reveal-right {
+    transform: translate3d(45px, 0, 0);
+  }
+}
+
+
+/* =========================================================
+   REDUCED MOTION
+========================================================= */
+
+@media (prefers-reduced-motion: reduce) {
+  .scroll-reveal {
+    opacity: 1 !important;
+    transform: none !important;
+    transition: none !important;
+  }
+}

@@ -1,0 +1,501 @@
+
+/* =========================================================
+   MAMTA — WHY CHOOSE US
+========================================================= */
+
+.why-mamta {
+  width: 100%;
+  padding: 120px 7%;
+  background: #fff9f4;
+  overflow: hidden;
+}
+
+.why-mamta-container {
+  width: 100%;
+  max-width: 1450px;
+  margin: 0 auto;
+}
+
+/* =========================================================
+   HEADING
+========================================================= */
+
+.why-mamta-heading {
+  max-width: 680px;
+  margin-bottom: 65px;
+}
+
+.why-mamta-eyebrow {
+  display: inline-block;
+  color: #bd6f7c;
+
+  font-family: "Poppins", sans-serif;
+  font-size: 10px;
+  font-weight: 600;
+
+  letter-spacing: 2.8px;
+  text-transform: uppercase;
+}
+
+.why-mamta-heading h2 {
+  margin: 14px 0 20px;
+
+  color: #4a3032;
+
+  font-family: "Playfair Display", Georgia, serif;
+  font-size: clamp(45px, 5vw, 68px);
+  font-weight: 500;
+
+  line-height: 1;
+  letter-spacing: -1.5px;
+}
+
+.why-mamta-heading h2 span {
+  color: #bd6f7c;
+  font-weight: 700;
+}
+
+.why-mamta-heading p {
+  max-width: 590px;
+  margin: 0;
+
+  color: #725d60;
+
+  font-family: "Poppins", sans-serif;
+  font-size: 13px;
+  line-height: 1.9;
+}
+
+/* =========================================================
+   FEATURES GRID
+========================================================= */
+
+.why-mamta-grid {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 20px;
+}
+
+/* =========================================================
+   LIGHT PINK CARDS
+========================================================= */
+
+.why-mamta-card {
+  position: relative;
+
+  min-height: 255px;
+
+  padding: 28px 25px 25px;
+
+  background: #f4d9dc;
+
+  border: 1px solid rgba(189, 111, 124, 0.15);
+  border-radius: 14px;
+
+  overflow: hidden;
+
+  transition:
+    transform 0.35s ease,
+    box-shadow 0.35s ease,
+    background 0.35s ease;
+}
+
+.why-mamta-card:hover {
+  transform: translateY(-8px);
+
+  background: #f1cdd1;
+
+  box-shadow:
+    0 18px 40px rgba(74, 48, 50, 0.10);
+}
+
+/* =========================================================
+   TOP
+========================================================= */
+
+.why-card-top {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+
+  margin-bottom: 42px;
+}
+
+.why-number {
+  color: #bd6f7c;
+
+  font-family: "Poppins", sans-serif;
+  font-size: 10px;
+  font-weight: 600;
+
+  letter-spacing: 1.5px;
+}
+
+.why-icon {
+  width: 45px;
+  height: 45px;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  color: #bd6f7c;
+
+  background: #fff9f4;
+
+  border-radius: 50%;
+
+  transition:
+    background 0.3s ease,
+    color 0.3s ease,
+    transform 0.3s ease;
+}
+
+.why-mamta-card:hover .why-icon {
+  background: #bd6f7c;
+  color: #fff9f4;
+
+  transform: rotate(-6deg);
+}
+
+/* =========================================================
+   CONTENT
+========================================================= */
+
+.why-card-content h3 {
+  margin: 0 0 10px;
+
+  color: #4a3032;
+
+  font-family: "Playfair Display", Georgia, serif;
+  font-size: 23px;
+  font-weight: 600;
+
+  line-height: 1.2;
+}
+
+.why-card-content p {
+  max-width: 260px;
+
+  margin: 0;
+
+  color: #725d60;
+
+  font-family: "Poppins", sans-serif;
+  font-size: 11px;
+  line-height: 1.8;
+}
+
+/* =========================================================
+   BOTTOM LINE
+========================================================= */
+
+.why-card-line {
+  position: absolute;
+
+  left: 25px;
+  bottom: 0;
+
+  width: 45px;
+  height: 2px;
+
+  background: #bd6f7c;
+
+  transition: width 0.35s ease;
+}
+
+.why-mamta-card:hover .why-card-line {
+  width: 240px;
+}
+
+/* =========================================================
+   TABLET
+========================================================= */
+
+@media (max-width: 1100px) {
+  .why-mamta {
+    padding: 100px 5%;
+  }
+
+  .why-mamta-grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+
+/* =========================================================
+   MOBILE
+========================================================= */
+
+@media (max-width: 650px) {
+  .why-mamta {
+    padding: 80px 20px;
+  }
+
+  .why-mamta-heading {
+    margin-bottom: 45px;
+  }
+
+  .why-mamta-heading h2 {
+    font-size: 43px;
+  }
+
+  .why-mamta-grid {
+    grid-template-columns: 1fr;
+    gap: 16px;
+  }
+
+  .why-mamta-card {
+    min-height: 220px;
+  }
+}
+
+/* =========================================================
+   MAMTA — WHY CHOOSE MAMTA
+   PREMIUM ANIMATIONS & TRANSITIONS
+========================================================= */
+
+
+/* =========================================================
+   HEADING
+========================================================= */
+
+.why-mamta-heading {
+  transition:
+    transform 0.6s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+
+/* =========================================================
+   EYEBROW
+========================================================= */
+
+.why-mamta-eyebrow {
+  transition:
+    letter-spacing 0.45s ease,
+    color 0.35s ease;
+}
+
+.why-mamta-eyebrow:hover {
+  letter-spacing: 0.16em;
+}
+
+
+/* =========================================================
+   HEADING ACCENT
+========================================================= */
+
+.why-mamta-heading h2 span {
+  transition:
+    color 0.4s ease,
+    padding-left 0.45s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.why-mamta-heading h2:hover span {
+  color: #bd6f7c;
+  padding-left: 5px;
+}
+
+
+/* =========================================================
+   CARD
+========================================================= */
+
+.why-mamta-card {
+  position: relative;
+
+  transition:
+    transform 0.55s cubic-bezier(0.16, 1, 0.3, 1),
+    box-shadow 0.55s ease,
+    background 0.4s ease;
+}
+
+.why-mamta-card:hover {
+  transform: translateY(-8px);
+  box-shadow:
+    0 18px 42px rgba(74, 48, 50, 0.09);
+}
+
+
+/* =========================================================
+   CARD TOP
+========================================================= */
+
+.why-card-top {
+  transition:
+    transform 0.5s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.why-mamta-card:hover .why-card-top {
+  transform: translateY(-2px);
+}
+
+
+/* =========================================================
+   NUMBER
+========================================================= */
+
+.why-number {
+  transition:
+    color 0.35s ease,
+    letter-spacing 0.4s ease;
+}
+
+.why-mamta-card:hover .why-number {
+  color: #bd6f7c;
+  letter-spacing: 0.08em;
+}
+
+
+/* =========================================================
+   ICON
+========================================================= */
+
+.why-icon {
+  transition:
+    transform 0.55s cubic-bezier(0.16, 1, 0.3, 1),
+    background 0.4s ease,
+    color 0.4s ease,
+    border-color 0.4s ease;
+}
+
+.why-mamta-card:hover .why-icon {
+  transform:
+    translateY(-4px)
+    rotate(-4deg);
+
+  background: #d98f9a;
+  color: #fff9f4;
+  border-color: #d98f9a;
+}
+
+
+/* =========================================================
+   ICON SVG
+========================================================= */
+
+.why-icon svg {
+  transition:
+    transform 0.45s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.why-mamta-card:hover .why-icon svg {
+  transform: scale(1.08);
+}
+
+
+/* =========================================================
+   CARD CONTENT
+========================================================= */
+
+.why-card-content {
+  transition:
+    transform 0.5s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.why-mamta-card:hover .why-card-content {
+  transform: translateY(-2px);
+}
+
+
+/* =========================================================
+   CARD TITLE
+========================================================= */
+
+.why-card-content h3 {
+  transition:
+    color 0.35s ease;
+}
+
+.why-mamta-card:hover .why-card-content h3 {
+  color: #bd6f7c;
+}
+
+
+/* =========================================================
+   CARD DESCRIPTION
+========================================================= */
+
+.why-card-content p {
+  transition:
+    color 0.35s ease;
+}
+
+
+/* =========================================================
+   BOTTOM LINE
+========================================================= */
+
+.why-card-line {
+  display: block;
+
+  transform-origin: left center;
+
+  transition:
+    transform 0.6s cubic-bezier(0.16, 1, 0.3, 1),
+    background 0.35s ease;
+}
+
+.why-mamta-card:hover .why-card-line {
+  transform: scaleX(1.25);
+  background: #d98f9a;
+}
+
+
+/* =========================================================
+   STAGGER
+========================================================= */
+
+.why-mamta-grid .stagger-1 {
+  animation-delay: 0.10s !important;
+}
+
+.why-mamta-grid .stagger-2 {
+  animation-delay: 0.25s !important;
+}
+
+.why-mamta-grid .stagger-3 {
+  animation-delay: 0.40s !important;
+}
+
+.why-mamta-grid .stagger-4 {
+  animation-delay: 0.55s !important;
+}
+
+
+/* =========================================================
+   MOBILE
+========================================================= */
+
+@media (max-width: 700px) {
+
+  .why-mamta-card:hover {
+    transform: translateY(-4px);
+  }
+
+  .why-mamta-heading h2:hover span {
+    padding-left: 0;
+  }
+
+}
+
+
+/* =========================================================
+   REDUCED MOTION
+========================================================= */
+
+@media (prefers-reduced-motion: reduce) {
+
+  .why-mamta-heading,
+  .why-mamta-card,
+  .why-card-top,
+  .why-number,
+  .why-icon,
+  .why-icon svg,
+  .why-card-content,
+  .why-card-content h3,
+  .why-card-content p,
+  .why-card-line {
+    transition: none !important;
+  }
+
+}

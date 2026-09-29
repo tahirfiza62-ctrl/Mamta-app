@@ -1,0 +1,569 @@
+
+/* =========================================================
+   MAMTA ADMIN - ADD PRODUCT
+========================================================= */
+
+.admin-add-product-page {
+  width: 100%;
+  color: #4a3032;
+}
+
+
+/* =========================================================
+   HEADER
+========================================================= */
+
+.admin-add-product-header {
+  margin-bottom: 28px;
+}
+
+.admin-add-product-header h1 {
+  margin: 18px 0 5px;
+
+  font-family: "Playfair Display", serif;
+  font-size: 30px;
+  color: #4a3032;
+}
+
+.admin-add-product-header p {
+  margin: 0;
+
+  color: #927e7f;
+  font-size: 14px;
+}
+
+.admin-back-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+
+  padding: 9px 13px;
+
+  border: 1px solid #eadbd6;
+  border-radius: 10px;
+
+  background: #ffffff;
+  color: #6e5355;
+
+  font-family: inherit;
+  font-size: 13px;
+  font-weight: 600;
+
+  cursor: pointer;
+
+  transition: 0.2s ease;
+}
+
+.admin-back-btn:hover {
+  background: #fff5f1;
+  border-color: #d8bfc0;
+}
+
+
+/* =========================================================
+   FORM CARD
+========================================================= */
+
+.admin-product-form {
+  display: flex;
+  flex-direction: column;
+  gap: 18px;
+}
+
+.admin-form-card {
+  padding: 24px;
+
+  background: #ffffff;
+
+  border: 1px solid #eee3df;
+  border-radius: 18px;
+
+  box-shadow: 0 5px 24px rgba(74, 48, 50, 0.04);
+}
+
+.admin-form-card-header {
+  margin-bottom: 22px;
+}
+
+.admin-form-card-header h2 {
+  margin: 0 0 5px;
+
+  color: #4a3032;
+
+  font-size: 17px;
+  font-weight: 700;
+}
+
+.admin-form-card-header p {
+  margin: 0;
+
+  color: #9a8586;
+  font-size: 13px;
+}
+
+
+/* =========================================================
+   GRID
+========================================================= */
+
+.admin-form-grid {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 20px;
+}
+
+.admin-form-group {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.admin-form-group.full {
+  grid-column: 1 / -1;
+}
+
+.admin-form-group label,
+.admin-image-field label {
+  color: #644b4d;
+
+  font-size: 13px;
+  font-weight: 600;
+}
+
+.admin-form-group input,
+.admin-form-group textarea,
+.admin-form-group select,
+.admin-feature-input input,
+.admin-image-field input {
+  width: 100%;
+
+  box-sizing: border-box;
+
+  padding: 12px 13px;
+
+  border: 1px solid #e6d9d5;
+  border-radius: 10px;
+
+  outline: none;
+
+  background: #fffaf7;
+  color: #4a3032;
+
+  font-family: inherit;
+  font-size: 14px;
+
+  transition: 0.2s ease;
+}
+
+.admin-form-group input:focus,
+.admin-form-group textarea:focus,
+.admin-form-group select:focus,
+.admin-feature-input input:focus,
+.admin-image-field input:focus {
+  border-color: #b58b8e;
+
+  background: #ffffff;
+
+  box-shadow: 0 0 0 3px rgba(181, 139, 142, 0.1);
+}
+
+.admin-form-group textarea {
+  resize: vertical;
+  min-height: 120px;
+}
+
+.admin-form-group input::placeholder,
+.admin-form-group textarea::placeholder,
+.admin-image-field input::placeholder,
+.admin-feature-input input::placeholder {
+  color: #b3a0a0;
+}
+
+
+/* =========================================================
+   PRICE PREFIX
+========================================================= */
+
+.admin-input-prefix {
+  display: flex;
+  align-items: stretch;
+
+  overflow: hidden;
+
+  border: 1px solid #e6d9d5;
+  border-radius: 10px;
+
+  background: #fffaf7;
+}
+
+.admin-input-prefix:focus-within {
+  border-color: #b58b8e;
+  box-shadow: 0 0 0 3px rgba(181, 139, 142, 0.1);
+}
+
+.admin-input-prefix span {
+  display: flex;
+  align-items: center;
+
+  padding: 0 12px;
+
+  border-right: 1px solid #e6d9d5;
+
+  color: #80696a;
+
+  font-size: 13px;
+  font-weight: 600;
+}
+
+.admin-input-prefix input {
+  border: none;
+  border-radius: 0;
+  box-shadow: none !important;
+  background: transparent;
+}
+
+
+/* =========================================================
+   IMAGE
+========================================================= */
+
+.admin-image-input {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+}
+
+.admin-image-icon {
+  width: 58px;
+  height: 58px;
+
+  flex-shrink: 0;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  border-radius: 14px;
+
+  background: #fff1eb;
+  color: #a97b7d;
+}
+
+.admin-image-field {
+  flex: 1;
+
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.admin-image-preview {
+  width: 130px;
+  height: 130px;
+
+  margin-top: 18px;
+
+  overflow: hidden;
+
+  border: 1px solid #eadbd6;
+  border-radius: 14px;
+
+  background: #fffaf7;
+}
+
+.admin-image-preview img {
+  width: 100%;
+  height: 100%;
+
+  object-fit: cover;
+}
+
+
+/* =========================================================
+   FEATURES
+========================================================= */
+
+.admin-feature-input {
+  display: flex;
+  gap: 10px;
+}
+
+.admin-feature-input input {
+  flex: 1;
+}
+
+.admin-feature-input button {
+  display: inline-flex;
+  align-items: center;
+  gap: 7px;
+
+  padding: 0 16px;
+
+  border: none;
+  border-radius: 10px;
+
+  background: #7d4f52;
+  color: #ffffff;
+
+  font-family: inherit;
+  font-size: 13px;
+  font-weight: 600;
+
+  cursor: pointer;
+}
+
+.admin-feature-input button:hover {
+  background: #684043;
+}
+
+.admin-features-list {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+
+  margin-top: 16px;
+}
+
+.admin-feature-tag {
+  display: inline-flex;
+  align-items: center;
+  gap: 7px;
+
+  padding: 7px 9px 7px 11px;
+
+  border-radius: 20px;
+
+  background: #f8efeb;
+  color: #725557;
+
+  font-size: 12px;
+}
+
+.admin-feature-tag button {
+  width: 20px;
+  height: 20px;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  padding: 0;
+
+  border: none;
+  border-radius: 50%;
+
+  background: #eadbd6;
+  color: #725557;
+
+  cursor: pointer;
+}
+
+
+/* =========================================================
+   STATUS
+========================================================= */
+
+.admin-form-status {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 20px;
+}
+
+.admin-form-status h2 {
+  margin: 0 0 5px;
+
+  color: #4a3032;
+
+  font-size: 17px;
+}
+
+.admin-form-status p {
+  margin: 0;
+
+  color: #9a8586;
+
+  font-size: 13px;
+}
+
+
+/* =========================================================
+   SWITCH
+========================================================= */
+
+.admin-switch {
+  position: relative;
+
+  width: 48px;
+  height: 27px;
+
+  flex-shrink: 0;
+}
+
+.admin-switch input {
+  opacity: 0;
+  width: 0;
+  height: 0;
+}
+
+.admin-switch span {
+  position: absolute;
+  inset: 0;
+
+  border-radius: 30px;
+
+  background: #d8cecc;
+
+  cursor: pointer;
+
+  transition: 0.2s ease;
+}
+
+.admin-switch span::before {
+  content: "";
+
+  position: absolute;
+
+  width: 21px;
+  height: 21px;
+
+  left: 3px;
+  top: 3px;
+
+  border-radius: 50%;
+
+  background: #ffffff;
+
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.12);
+
+  transition: 0.2s ease;
+}
+
+.admin-switch input:checked + span {
+  background: #7d4f52;
+}
+
+.admin-switch input:checked + span::before {
+  transform: translateX(21px);
+}
+
+
+/* =========================================================
+   MESSAGES
+========================================================= */
+
+.admin-form-error,
+.admin-form-success {
+  padding: 13px 15px;
+
+  border-radius: 11px;
+
+  font-size: 13px;
+}
+
+.admin-form-error {
+  border: 1px solid #edcccc;
+  background: #fff2f2;
+  color: #a34f4f;
+}
+
+.admin-form-success {
+  border: 1px solid #cce8d5;
+  background: #f0faf3;
+  color: #4b8a61;
+}
+
+
+/* =========================================================
+   ACTIONS
+========================================================= */
+
+.admin-form-actions {
+  display: flex;
+  justify-content: flex-end;
+  gap: 10px;
+
+  padding-bottom: 20px;
+}
+
+.admin-cancel-btn,
+.admin-submit-btn {
+  min-width: 130px;
+
+  padding: 12px 18px;
+
+  border-radius: 10px;
+
+  font-family: inherit;
+  font-size: 14px;
+  font-weight: 600;
+
+  cursor: pointer;
+}
+
+.admin-cancel-btn {
+  border: 1px solid #e4d8d4;
+  background: #ffffff;
+  color: #6e5355;
+}
+
+.admin-submit-btn {
+  border: none;
+  background: #7d4f52;
+  color: #ffffff;
+}
+
+.admin-cancel-btn:hover {
+  background: #fff7f4;
+}
+
+.admin-submit-btn:hover {
+  background: #684043;
+}
+
+.admin-submit-btn:disabled {
+  opacity: 0.6;
+  cursor: not-allowed;
+}
+
+
+/* =========================================================
+   RESPONSIVE
+========================================================= */
+
+@media (max-width: 700px) {
+  .admin-form-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .admin-form-group.full {
+    grid-column: auto;
+  }
+
+  .admin-image-input {
+    align-items: flex-start;
+    flex-direction: column;
+  }
+
+  .admin-image-field {
+    width: 100%;
+  }
+
+  .admin-feature-input {
+    flex-direction: column;
+  }
+
+  .admin-feature-input button {
+    min-height: 42px;
+    justify-content: center;
+  }
+
+  .admin-form-actions {
+    flex-direction: column-reverse;
+  }
+
+  .admin-cancel-btn,
+  .admin-submit-btn {
+    width: 100%;
+  }
+}

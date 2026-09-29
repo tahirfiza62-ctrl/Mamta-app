@@ -1,0 +1,2123 @@
+/* =========================================================
+   MAMTA — BABY PILLOWS
+   Premium • Soft • Elegant • Warm
+========================================================= */
+
+:root {
+  --mamta-pink: #d98f9a;
+  --mamta-pink-dark: #bd6f7c;
+  --mamta-blush: #f4d9dc;
+  --mamta-peach: #efc5b5;
+  --mamta-cocoa: #4a3032;
+  --mamta-ivory: #fff9f4;
+  --mamta-gold: #b9925a;
+  --mamta-white: #ffffff;
+  --mamta-muted: #827174;
+  --mamta-border: rgba(74, 48, 50, 0.12);
+}
+
+
+/* =========================================================
+   PAGE
+========================================================= */
+
+.baby-page {
+  width: 100%;
+  overflow: hidden;
+  background: var(--mamta-ivory);
+  color: var(--mamta-cocoa);
+  font-family:
+    "Inter",
+    "Segoe UI",
+    sans-serif;
+}
+
+
+/* =========================================================
+   HERO
+========================================================= */
+
+.baby-hero {
+  position: relative;
+  min-height: 570px;
+
+  display: flex;
+  align-items: center;
+background: radial-gradient(circle at 15% 25%, rgba(217, 143, 154, 0.14), transparent 30%), radial-gradient(circle at 85% 75%, rgba(239, 197, 181, 0.18), transparent 30%), #f6e0e2;
+
+ 
+
+
+  isolation: isolate;
+}
+
+
+/* Decorative background */
+
+.baby-hero::before {
+  content: "";
+
+  position: absolute;
+
+  width: 500px;
+  height: 500px;
+
+  right: -180px;
+  top: -180px;
+
+  border-radius: 50%;
+
+  border: 1px solid
+    rgba(189, 111, 124, 0.15);
+
+  z-index: -1;
+}
+
+
+.baby-hero::after {
+  content: "";
+
+  position: absolute;
+
+  width: 280px;
+  height: 280px;
+
+  left: -130px;
+  bottom: -140px;
+
+  border-radius: 50%;
+
+  background: rgba(244, 217, 220, 0.5);
+
+  filter: blur(10px);
+
+  z-index: -1;
+}
+
+
+/* =========================================================
+   HERO CONTAINER
+========================================================= */
+
+.baby-hero-container {
+  width: 100%;
+  max-width: 1380px;
+
+  margin: 0 auto;
+
+  display: grid;
+  grid-template-columns: 0.9fr 1.1fr;
+
+  align-items: center;
+
+  gap: 80px;
+}
+
+
+/* =========================================================
+   HERO CONTENT
+========================================================= */
+
+.baby-hero-content {
+  max-width: 700px;
+}
+
+
+.baby-eyebrow {
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+margin-left: 40px;
+  margin-bottom: 25px;
+
+  color: var(--mamta-pink-dark);
+
+  font-size: 10px;
+  font-weight: 800;
+
+  letter-spacing: 2.8px;
+  text-transform: uppercase;
+}
+
+
+.baby-eyebrow::before {
+  content: "";
+
+  width: 34px;
+  height: 1px;
+
+  background: var(--mamta-pink-dark);
+}
+
+
+.baby-hero-content h1 {
+  margin: 0;
+
+  color: var(--mamta-cocoa);
+margin-left: 50px;
+  font-family:
+    Georgia,
+    "Times New Roman",
+    serif;
+
+font-size: 80px;
+
+  font-weight: 400;
+
+  line-height: 0.94;
+
+  letter-spacing: -4px;
+}
+
+
+.baby-hero-content h1 span {
+  display: block;
+
+  margin-top: 8px;
+
+  color: var(--mamta-pink-dark);
+
+
+}
+
+
+.baby-hero-content p {
+  max-width: 700px;
+margin-left: 50px;
+margin-top: 20px;
+
+  color: var(--mamta-muted);
+
+  font-size: 15px;
+  line-height: 1.9;
+}
+
+
+/* =========================================================
+   HERO ACTIONS
+========================================================= */
+
+.baby-hero-actions {
+    margin-left: 50px;
+  display: flex;
+  align-items: center;
+  gap: 22px;
+
+  margin-top: 38px;
+}
+
+
+.baby-primary-button {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+
+  gap: 12px;
+
+  min-height: 52px;
+
+  padding: 0 25px;
+
+  background: var(--mamta-cocoa);
+  color: white;
+
+  text-decoration: none;
+
+  font-size: 10px;
+  font-weight: 800;
+
+  letter-spacing: 1.3px;
+  text-transform: uppercase;
+
+  transition:
+    transform 0.35s ease,
+    background 0.35s ease,
+    box-shadow 0.35s ease;
+}
+
+
+.baby-primary-button:hover {
+  background: var(--mamta-pink-dark);
+
+  transform: translateY(-4px);
+
+  box-shadow:
+    0 15px 35px
+    rgba(74, 48, 50, 0.18);
+}
+
+
+.baby-primary-button svg {
+  transition:
+    transform 0.35s ease;
+}
+
+
+.baby-primary-button:hover svg {
+  transform:
+    translate(3px, -3px);
+}
+
+
+.baby-hero-note {
+  color: var(--mamta-muted);
+
+  font-size: 10px;
+
+  letter-spacing: 1px;
+}
+
+
+/* =========================================================
+   HERO VISUAL
+========================================================= */
+
+.maternity-hero-visual {
+  position: relative;
+
+  min-height: 590px;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+
+.maternity-hero-circle {
+  position: absolute;
+
+  width: 480px;
+  height: 480px;
+
+  border-radius: 50%;
+
+  background:
+    linear-gradient(
+      145deg,
+      #f7e4e4,
+      #efc5b5
+    );
+
+  box-shadow:
+    0 30px 80px
+    rgba(189, 111, 124, 0.15);
+
+  animation:
+    babyFloatCircle 7s ease-in-out infinite;
+}
+
+
+@keyframes babyFloatCircle {
+
+  0%,
+  100% {
+    transform: translateY(0);
+  }
+
+  50% {
+    transform: translateY(-12px);
+  }
+}
+
+
+/* =========================================================
+   HERO GLOW
+========================================================= */
+
+.maternity-hero-glow {
+  position: absolute;
+
+  border-radius: 50%;
+
+  filter: blur(3px);
+
+  pointer-events: none;
+}
+
+
+.maternity-glow-one {
+  width: 100px;
+  height: 100px;
+
+  top: 70px;
+  right: 70px;
+
+  background:
+    rgba(217, 143, 154, 0.22);
+
+  animation:
+    babyGlowOne 5s ease-in-out infinite;
+}
+
+
+.maternity-glow-two {
+  width: 65px;
+  height: 65px;
+
+  bottom: 85px;
+  left: 55px;
+
+  background:
+    rgba(185, 146, 90, 0.18);
+
+  animation:
+    babyGlowTwo 6s ease-in-out infinite;
+}
+
+
+@keyframes babyGlowOne {
+
+  0%,
+  100% {
+    transform:
+      translate(0, 0)
+      scale(1);
+  }
+
+  50% {
+    transform:
+      translate(10px, -15px)
+      scale(1.12);
+  }
+}
+
+
+@keyframes babyGlowTwo {
+
+  0%,
+  100% {
+    transform:
+      translate(0, 0)
+      scale(1);
+  }
+
+  50% {
+    transform:
+      translate(-12px, 12px)
+      scale(1.15);
+  }
+}
+
+
+/* =========================================================
+   HERO IMAGE
+========================================================= */
+
+.maternity-main-image {
+  position: relative;
+
+  z-index: 2;
+
+  width: 440px;
+  height: 520px;
+
+  overflow: hidden;
+
+  border-radius:
+    220px 220px 16px 16px;
+
+  box-shadow:
+    0 35px 70px
+    rgba(74, 48, 50, 0.18);
+
+  transform:
+    rotate(2deg);
+
+  transition:
+    transform 0.6s ease,
+    box-shadow 0.6s ease;
+}
+
+
+.maternity-main-image:hover {
+  transform:
+    rotate(0deg)
+    translateY(-8px);
+
+  box-shadow:
+    0 45px 90px
+    rgba(74, 48, 50, 0.24);
+}
+
+
+.maternity-main-image img {
+  width: 100%;
+  height: 100%;
+
+  object-fit: cover;
+
+  display: block;
+
+  transition:
+    transform 0.8s
+    cubic-bezier(0.2, 0.8, 0.2, 1);
+}
+
+
+.maternity-main-image:hover img {
+  transform: scale(1.04);
+}
+
+
+/* =========================================================
+   FLOATING CARD
+========================================================= */
+
+.maternity-floating-card {
+  position: absolute;
+
+  right: 5px;
+  bottom: 55px;
+
+  z-index: 4;
+
+  width: 190px;
+
+  padding: 20px;
+
+  background:
+    rgba(255, 249, 244, 0.94);
+
+  backdrop-filter:
+    blur(14px);
+
+  border:
+    1px solid
+    rgba(255, 255, 255, 0.8);
+
+  box-shadow:
+    0 20px 50px
+    rgba(74, 48, 50, 0.15);
+
+  animation:
+    floatingCard 5s ease-in-out infinite;
+}
+
+
+@keyframes floatingCard {
+
+  0%,
+  100% {
+    transform: translateY(0);
+  }
+
+  50% {
+    transform: translateY(-9px);
+  }
+}
+
+
+.maternity-floating-card > span {
+  display: block;
+
+  margin-bottom: 10px;
+
+  color: var(--mamta-pink-dark);
+
+  font-size: 8px;
+  font-weight: 800;
+
+  letter-spacing: 1.5px;
+}
+
+
+.maternity-floating-card strong {
+  display: block;
+
+  color: var(--mamta-cocoa);
+
+  font-family:
+    Georgia,
+    serif;
+
+  font-size: 19px;
+  font-weight: 400;
+
+  line-height: 1.25;
+}
+
+
+.floating-check {
+  display: flex;
+  align-items: center;
+
+  gap: 7px;
+
+  margin-top: 15px;
+
+  color: var(--mamta-muted);
+
+  font-size: 8px;
+  letter-spacing: 0.5px;
+}
+
+
+.floating-check svg {
+  color: var(--mamta-pink-dark);
+}
+
+
+/* =========================================================
+   ROUND BADGE
+========================================================= */
+
+.maternity-round-badge {
+  position: absolute;
+
+  right: 50px;
+  bottom: 42px;
+
+  width: 105px;
+  height: 105px;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  border-radius: 50%;
+
+  background: var(--mamta-cocoa);
+
+  color: white;
+
+  z-index: 4;
+
+  animation:
+    badgeRotate 18s linear infinite;
+}
+
+
+.maternity-round-badge span {
+  width: 78px;
+
+  text-align: center;
+
+  font-size: 7px;
+  font-weight: 700;
+
+  line-height: 1.8;
+
+  letter-spacing: 1.3px;
+}
+
+
+@keyframes badgeRotate {
+
+  from {
+    transform: rotate(0deg);
+  }
+
+  to {
+    transform: rotate(360deg);
+  }
+
+}
+
+
+/* =========================================================
+   INTRODUCTION
+========================================================= */
+
+.baby-introduction {
+  padding: 135px 7%;
+
+  background: #ffffff;
+}
+
+
+.baby-intro-container {
+  max-width: 1250px;
+
+  margin: 0 auto;
+
+  display: grid;
+
+  grid-template-columns:
+    0.8fr 1.2fr;
+
+  gap: 100px;
+
+  align-items: start;
+}
+
+
+.baby-section-label {
+  display: inline-block;
+
+  margin-bottom: 20px;
+
+  color: var(--mamta-pink-dark);
+
+  font-size: 9px;
+  font-weight: 800;
+
+  letter-spacing: 2.5px;
+}
+
+
+.baby-intro-title h2 {
+  margin: 0;
+
+  font-family:
+    Georgia,
+    serif;
+
+  font-size: clamp(42px, 5vw, 68px);
+
+  font-weight: 400;
+
+  line-height: 1;
+
+  letter-spacing: -2px;
+}
+
+
+.baby-intro-title h2 span {
+  display: block;
+
+  color: var(--mamta-pink-dark);
+
+  font-style: italic;
+
+  margin-top: 7px;
+}
+
+
+.baby-intro-content {
+  padding-top: 15px;
+}
+
+
+.baby-intro-main {
+  margin: 0;
+
+  color: var(--mamta-cocoa);
+
+  font-family:
+    Georgia,
+    serif;
+
+  font-size: 25px;
+
+  line-height: 1.55;
+}
+
+
+.baby-intro-secondary {
+  max-width: 600px;
+
+  margin-top: 25px;
+
+  color: var(--mamta-muted);
+
+  font-size: 14px;
+
+  line-height: 1.9;
+}
+
+
+/* =========================================================
+   FEATURES
+========================================================= */
+
+.baby-features {
+  padding: 0 7% 120px;
+
+  background: #ffffff;
+}
+
+
+.baby-features-container {
+  max-width: 1250px;
+
+  margin: 0 auto;
+
+  display: grid;
+
+  grid-template-columns:
+    repeat(3, 1fr);
+
+  border-top:
+    1px solid var(--mamta-border);
+
+  border-bottom:
+    1px solid var(--mamta-border);
+}
+
+
+.baby-feature {
+  min-height: 190px;
+
+  display: flex;
+
+  gap: 20px;
+
+  padding: 38px 35px;
+
+  border-right:
+    1px solid var(--mamta-border);
+
+  transition:
+    background 0.4s ease,
+    transform 0.4s ease;
+}
+
+
+.baby-feature:last-child {
+  border-right: none;
+}
+
+
+.baby-feature:hover {
+  background: #fff8f6;
+
+  transform: translateY(-5px);
+}
+
+
+.baby-feature-icon {
+  flex: 0 0 45px;
+
+  width: 45px;
+  height: 45px;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  border-radius: 50%;
+
+  background: var(--mamta-blush);
+
+  color: var(--mamta-pink-dark);
+
+  transition:
+    transform 0.4s ease,
+    background 0.4s ease;
+}
+
+
+.baby-feature:hover
+.baby-feature-icon {
+  transform:
+    rotate(-8deg)
+    scale(1.08);
+
+  background: var(--mamta-peach);
+}
+
+
+.baby-feature > div:last-child > span {
+  color: var(--mamta-gold);
+
+  font-size: 9px;
+  font-weight: 800;
+
+  letter-spacing: 1.5px;
+}
+
+
+.baby-feature h3 {
+  margin: 9px 0 8px;
+
+  font-family:
+    Georgia,
+    serif;
+
+  font-size: 22px;
+
+  font-weight: 400;
+}
+
+
+.baby-feature p {
+  margin: 0;
+
+  color: var(--mamta-muted);
+
+  font-size: 12px;
+
+  line-height: 1.7;
+}
+
+
+/* =========================================================
+   PRODUCTS SECTION
+========================================================= */
+
+.baby-products {
+  padding: 130px 7% 140px;
+
+  background:
+    linear-gradient(
+      180deg,
+      var(--mamta-ivory) 0%,
+      #fff5f2 100%
+    );
+}
+
+
+.baby-products-container {
+  max-width: 1350px;
+
+  margin: 0 auto;
+}
+
+
+/* =========================================================
+   PRODUCTS HEADING
+========================================================= */
+
+.baby-products-heading {
+  display: flex;
+
+  align-items: end;
+  justify-content: space-between;
+
+  gap: 50px;
+
+  margin-bottom: 55px;
+}
+
+
+.baby-products-heading h2 {
+  margin: 0;
+
+  font-family:
+    Georgia,
+    serif;
+
+  font-size: clamp(45px, 5vw, 68px);
+
+  font-weight: 400;
+
+  line-height: 0.95;
+
+  letter-spacing: -2px;
+}
+
+
+.baby-products-heading h2 span {
+  margin-left: 12px;
+
+  color: var(--mamta-pink-dark);
+
+  font-style: italic;
+}
+
+
+.baby-products-heading > p {
+  max-width: 330px;
+
+  margin: 0;
+
+  color: var(--mamta-muted);
+
+  font-size: 12px;
+
+  line-height: 1.8;
+}
+
+
+/* =========================================================
+   PRODUCT GRID
+========================================================= */
+
+.baby-products-grid {
+  display: grid;
+
+  grid-template-columns:
+    repeat(4, 1fr);
+
+  gap: 22px;
+}
+
+
+/* =========================================================
+   PRODUCT CARD
+========================================================= */
+
+.baby-product-card {
+  position: relative;
+
+  background: #ffffff;
+height: 500px;
+  border:
+    1px solid
+    rgba(74, 48, 50, 0.08);
+
+  overflow: hidden;
+
+  transition:
+    transform 0.45s
+      cubic-bezier(0.2, 0.8, 0.2, 1),
+    box-shadow 0.45s ease,
+    border-color 0.45s ease;
+}
+
+
+.baby-product-card:hover {
+  transform: translateY(-10px);
+
+  border-color:
+    rgba(189, 111, 124, 0.25);
+
+  box-shadow:
+    0 25px 60px
+    rgba(74, 48, 50, 0.13);
+}
+
+
+/* =========================================================
+   PRODUCT IMAGE
+========================================================= */
+
+.baby-product-image {
+  position: relative;
+
+  height: 250px;
+
+  overflow: hidden;
+
+  background: var(--mamta-blush);
+}
+
+
+.baby-product-image::after {
+  content: "";
+
+  position: absolute;
+
+  inset: 0;
+
+  background:
+    linear-gradient(
+      180deg,
+      transparent 55%,
+      rgba(74, 48, 50, 0.25)
+    );
+
+  opacity: 0;
+
+  pointer-events: none;
+
+  transition:
+    opacity 0.4s ease;
+}
+
+
+.baby-product-card:hover
+.baby-product-image::after {
+  opacity: 1;
+}
+
+
+.baby-product-image img {
+  width: 100%;
+  height: 100%;
+
+  display: block;
+
+  object-fit: cover;
+
+  transition:
+    transform 0.7s
+      cubic-bezier(0.2, 0.8, 0.2, 1);
+}
+
+
+.baby-product-card:hover
+.baby-product-image img {
+  transform: scale(1.07);
+}
+
+
+/* =========================================================
+   PRODUCT TAG
+========================================================= */
+
+.baby-product-tag {
+  position: absolute;
+
+  top: 15px;
+  left: 15px;
+
+  z-index: 4;
+
+  padding: 7px 10px;
+
+  background:
+    rgba(255, 249, 244, 0.92);
+
+  color: var(--mamta-cocoa);
+
+  font-size: 8px;
+  font-weight: 800;
+
+  letter-spacing: 1.2px;
+
+  backdrop-filter: blur(8px);
+}
+
+
+/* =========================================================
+   WISHLIST
+========================================================= */
+
+.baby-wishlist {
+  position: absolute;
+
+  top: 13px;
+  right: 13px;
+
+  z-index: 5;
+
+  width: 38px;
+  height: 38px;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  border: none;
+
+  border-radius: 50%;
+
+  background:
+    rgba(255, 249, 244, 0.9);
+
+  color: var(--mamta-cocoa);
+
+  cursor: pointer;
+
+  backdrop-filter: blur(10px);
+
+  transition:
+    transform 0.35s ease,
+    background 0.35s ease,
+    color 0.35s ease;
+}
+
+
+.baby-wishlist:hover {
+  transform:
+    scale(1.08);
+
+  background:
+    var(--mamta-pink-dark);
+
+  color: white;
+}
+
+
+.baby-wishlist.active {
+  background:
+    var(--mamta-pink-dark);
+
+  color: white;
+
+  animation:
+    wishlistPop 0.45s
+      cubic-bezier(
+        0.34,
+        1.56,
+        0.64,
+        1
+      );
+}
+
+
+@keyframes wishlistPop {
+
+  0% {
+    transform: scale(0.75);
+  }
+
+  60% {
+    transform: scale(1.18);
+  }
+
+  100% {
+    transform: scale(1);
+  }
+
+}
+
+
+/* =========================================================
+   PRODUCT DETAILS BUTTON
+========================================================= */
+
+.baby-details-button {
+  position: absolute;
+
+  left: 16px;
+  right: 16px;
+  bottom: 16px;
+
+  z-index: 6;
+
+  min-height: 46px;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  gap: 9px;
+
+  background:
+    rgba(255, 249, 244, 0.96);
+
+  color: var(--mamta-cocoa);
+
+  text-decoration: none;
+
+  font-size: 9px;
+  font-weight: 800;
+
+  letter-spacing: 1.3px;
+
+  text-transform: uppercase;
+
+  box-shadow:
+    0 10px 30px
+    rgba(74, 48, 50, 0.13);
+
+  transform:
+    translateY(15px);
+
+  opacity: 0;
+
+  transition:
+    opacity 0.35s ease,
+    transform 0.45s
+      cubic-bezier(
+        0.2,
+        0.8,
+        0.2,
+        1
+      ),
+    background 0.35s ease,
+    color 0.35s ease;
+}
+
+
+.baby-product-card:hover
+.baby-details-button {
+  opacity: 1;
+
+  transform:
+    translateY(0);
+}
+
+
+.baby-details-button:hover {
+  background:
+    var(--mamta-cocoa);
+
+  color: white;
+}
+
+
+.baby-details-button svg {
+  transition:
+    transform 0.35s ease;
+}
+
+
+.baby-details-button:hover svg {
+  transform:
+    translate(3px, -3px);
+}
+
+
+/* =========================================================
+   PRODUCT INFO
+========================================================= */
+
+.baby-product-info {
+  padding: 22px 20px 24px;
+}
+
+
+.baby-product-category {
+  display: block;
+
+  margin-bottom: 8px;
+
+  color: var(--mamta-pink-dark);
+
+  font-size: 8px;
+  font-weight: 800;
+
+  letter-spacing: 1.5px;
+}
+
+
+.baby-product-info h3 {
+  min-height: 48px;
+
+  margin: 0;
+
+  color: var(--mamta-cocoa);
+
+  font-family:
+    Georgia,
+    serif;
+
+  font-size: 19px;
+
+  font-weight: 400;
+
+  line-height: 1.25;
+
+  transition:
+    color 0.3s ease;
+}
+
+
+.baby-product-card:hover
+.baby-product-info h3 {
+  color: var(--mamta-pink-dark);
+}
+
+
+/* =========================================================
+   RATING
+========================================================= */
+
+.baby-rating {
+  display: flex;
+  align-items: center;
+
+  gap: 9px;
+
+  margin-top: 13px;
+}
+
+
+.baby-stars {
+  display: flex;
+
+  gap: 2px;
+
+  color: var(--mamta-gold);
+}
+
+
+.baby-rating > span {
+  color: #988789;
+
+  font-size: 9px;
+}
+
+
+/* =========================================================
+   PRODUCT BOTTOM
+========================================================= */
+
+.baby-product-bottom {
+  display: flex;
+
+  align-items: center;
+  justify-content: space-between;
+
+  gap: 15px;
+
+  margin-top: 20px;
+
+  padding-top: 17px;
+
+  border-top:
+    1px solid
+    var(--mamta-border);
+}
+
+
+/* =========================================================
+   PRICE
+========================================================= */
+
+.baby-price {
+  display: flex;
+
+  align-items: center;
+
+  flex-wrap: wrap;
+
+  gap: 8px;
+}
+
+
+.baby-price strong {
+  color: var(--mamta-cocoa);
+
+  font-size: 15px;
+
+  font-weight: 800;
+}
+
+
+.baby-price del {
+  color: #aa999b;
+
+  font-size: 10px;
+}
+
+
+/* =========================================================
+   CART BUTTON
+========================================================= */
+
+.baby-cart {
+  flex: 0 0 43px;
+
+  width: 43px;
+  height: 43px;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  border: none;
+
+  background:
+    var(--mamta-cocoa);
+
+  color: white;
+
+  cursor: pointer;
+
+  transition:
+    transform 0.35s ease,
+    background 0.35s ease,
+    box-shadow 0.35s ease;
+}
+
+
+.baby-cart:hover {
+  background:
+    var(--mamta-pink-dark);
+
+  transform:
+    translateY(-3px);
+
+  box-shadow:
+    0 10px 25px
+    rgba(189, 111, 124, 0.28);
+}
+
+
+.baby-cart:active {
+  transform:
+    scale(0.94);
+}
+
+
+.baby-cart.adding {
+  background:
+    var(--mamta-pink-dark);
+
+  animation:
+    cartPulse 0.7s
+      ease-in-out infinite;
+}
+
+
+@keyframes cartPulse {
+
+  0%,
+  100% {
+    transform: scale(1);
+  }
+
+  50% {
+    transform: scale(1.08);
+  }
+
+}
+
+
+.baby-cart:disabled {
+  cursor: wait;
+}
+
+
+/* =========================================================
+   FINAL CTA
+========================================================= */
+
+.baby-final {
+  position: relative;
+
+  min-height: 520px;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  padding: 100px 7%;
+
+  background:
+    radial-gradient(
+      circle at 50% 20%,
+      rgba(217, 143, 154, 0.2),
+      transparent 30%
+    ),
+    var(--mamta-cocoa);
+
+  color: white;
+
+  text-align: center;
+
+  overflow: hidden;
+}
+
+
+.baby-final::before {
+  content: "";
+
+  position: absolute;
+
+  width: 500px;
+  height: 500px;
+
+  border-radius: 50%;
+
+  border:
+    1px solid
+    rgba(255, 255, 255, 0.08);
+
+  animation:
+    finalCircle 15s
+      linear infinite;
+}
+
+
+@keyframes finalCircle {
+
+  from {
+    transform:
+      rotate(0deg)
+      scale(1);
+  }
+
+  to {
+    transform:
+      rotate(360deg)
+      scale(1.08);
+  }
+
+}
+
+
+.baby-final-content {
+  position: relative;
+
+  z-index: 2;
+
+  max-width: 720px;
+}
+
+
+.baby-final-label {
+  display: inline-block;
+
+  margin-bottom: 22px;
+
+  color: var(--mamta-peach);
+
+  font-size: 9px;
+  font-weight: 800;
+
+  letter-spacing: 3px;
+}
+
+
+.baby-final h2 {
+  margin: 0;
+
+  font-family:
+    Georgia,
+    serif;
+
+font-size: 70px;
+
+  font-weight: 400;
+
+  line-height: 0.98;
+
+  letter-spacing: -2px;
+}
+
+
+.baby-final h2 span {
+  display: block;
+
+  color: var(--mamta-peach);
+
+  font-style: italic;
+
+  margin-top: 8px;
+}
+
+
+.baby-final p {
+  max-width: 510px;
+
+  margin: 28px auto 35px;
+
+  color:
+    rgba(255, 255, 255, 0.68);
+
+  font-size: 13px;
+
+  line-height: 1.8;
+}
+
+
+.baby-final-button {
+  display: inline-flex;
+
+  align-items: center;
+  justify-content: center;
+
+  gap: 11px;
+
+  min-height: 52px;
+
+  padding: 0 25px;
+
+  background: white;
+
+  color: var(--mamta-cocoa);
+
+  text-decoration: none;
+
+  font-size: 9px;
+  font-weight: 800;
+
+  letter-spacing: 1.3px;
+
+  text-transform: uppercase;
+
+  transition:
+    transform 0.35s ease,
+    background 0.35s ease,
+    color 0.35s ease;
+}
+
+
+.baby-final-button:hover {
+  background:
+    var(--mamta-pink);
+
+  color: white;
+
+  transform:
+    translateY(-4px);
+}
+
+
+.baby-final-button svg {
+  transition:
+    transform 0.35s ease;
+}
+
+
+.baby-final-button:hover svg {
+  transform:
+    translate(3px, -3px);
+}
+
+
+/* =========================================================
+   SCROLL REVEAL
+========================================================= */
+
+.scroll-reveal {
+  opacity: 0;
+
+  will-change:
+    transform,
+    opacity;
+
+  transition:
+    opacity 0.9s
+      cubic-bezier(
+        0.16,
+        1,
+        0.3,
+        1
+      ),
+    transform 0.9s
+      cubic-bezier(
+        0.16,
+        1,
+        0.3,
+        1
+      );
+}
+
+
+.reveal-up {
+  transform:
+    translate3d(
+      0,
+      70px,
+      0
+    );
+}
+
+
+.reveal-down {
+  transform:
+    translate3d(
+      0,
+      -70px,
+      0
+    );
+}
+
+
+.reveal-left {
+  transform:
+    translate3d(
+      -70px,
+      0,
+      0
+    );
+}
+
+
+.reveal-right {
+  transform:
+    translate3d(
+      70px,
+      0,
+      0
+    );
+}
+
+
+.scroll-reveal.is-visible {
+  opacity: 1;
+
+  transform:
+    translate3d(
+      0,
+      0,
+      0
+    );
+}
+
+
+/* =========================================================
+   STAGGER
+========================================================= */
+
+.scroll-reveal.stagger-1 {
+  transition-delay: 0.05s;
+}
+
+
+.scroll-reveal.stagger-2 {
+  transition-delay: 0.12s;
+}
+
+
+.scroll-reveal.stagger-3 {
+  transition-delay: 0.19s;
+}
+
+
+.scroll-reveal.stagger-4 {
+  transition-delay: 0.26s;
+}
+
+
+.scroll-reveal.stagger-5 {
+  transition-delay: 0.33s;
+}
+
+
+.scroll-reveal.stagger-6 {
+  transition-delay: 0.4s;
+}
+
+
+/* =========================================================
+   TABLET
+========================================================= */
+
+@media (max-width: 1100px) {
+
+  .baby-hero-container {
+    grid-template-columns: 1fr;
+
+    gap: 60px;
+  }
+
+  .baby-hero-content {
+    max-width: 750px;
+  }
+
+  .maternity-hero-visual {
+    min-height: 560px;
+  }
+
+  .baby-products-grid {
+    grid-template-columns:
+      repeat(2, 1fr);
+  }
+
+  .baby-intro-container {
+    gap: 50px;
+  }
+
+}
+
+
+/* =========================================================
+   TABLET SMALL
+========================================================= */
+
+@media (max-width: 800px) {
+
+  .baby-hero {
+    padding:
+      90px 6% 70px;
+  }
+
+  .baby-hero-content h1 {
+    font-size: 65px;
+  }
+
+  .maternity-main-image {
+    width: 370px;
+    height: 450px;
+  }
+
+  .maternity-hero-circle {
+    width: 420px;
+    height: 420px;
+  }
+
+  .baby-introduction {
+    padding:
+      90px 6%;
+  }
+
+  .baby-intro-container {
+    grid-template-columns: 1fr;
+
+    gap: 40px;
+  }
+
+  .baby-features {
+    padding:
+      0 6% 90px;
+  }
+
+  .baby-features-container {
+    grid-template-columns: 1fr;
+  }
+
+  .baby-feature {
+    border-right: none;
+
+    border-bottom:
+      1px solid
+      var(--mamta-border);
+  }
+
+  .baby-feature:last-child {
+    border-bottom: none;
+  }
+
+  .baby-products {
+    padding:
+      90px 6% 100px;
+  }
+
+}
+
+
+/* =========================================================
+   MOBILE
+========================================================= */
+
+@media (max-width: 600px) {
+
+  .baby-hero {
+    min-height: auto;
+
+    padding:
+      75px 20px 65px;
+  }
+
+
+  .baby-hero-container {
+    gap: 55px;
+  }
+
+
+  .baby-eyebrow {
+    font-size: 8px;
+
+    letter-spacing: 1.8px;
+  }
+
+
+  .baby-hero-content h1 {
+    font-size: 52px;
+
+    letter-spacing: -2px;
+  }
+
+
+  .baby-hero-content p {
+    font-size: 13px;
+
+    line-height: 1.8;
+  }
+
+
+  .baby-hero-actions {
+    align-items: flex-start;
+
+    flex-direction: column;
+
+    gap: 16px;
+  }
+
+
+  .baby-primary-button {
+    min-height: 49px;
+
+    padding:
+      0 20px;
+  }
+
+
+  .maternity-hero-visual {
+    min-height: 470px;
+  }
+
+
+  .maternity-hero-circle {
+    width: 330px;
+    height: 330px;
+  }
+
+
+  .maternity-main-image {
+    width: 285px;
+    height: 370px;
+
+    border-radius:
+      145px 145px 14px 14px;
+  }
+
+
+  .maternity-floating-card {
+    right: 0;
+
+    bottom: 30px;
+
+    width: 150px;
+
+    padding: 15px;
+  }
+
+
+  .maternity-floating-card strong {
+    font-size: 15px;
+  }
+
+
+
+
+  .maternity-round-badge span {
+    width: 60px;
+
+    font-size: 6px;
+  }
+
+
+  .baby-introduction {
+    padding:
+      75px 20px;
+  }
+
+
+  .baby-intro-title h2 {
+    font-size: 45px;
+  }
+
+
+  .baby-intro-main {
+    font-size: 20px;
+  }
+
+
+  .baby-features {
+    padding:
+      0 20px 75px;
+  }
+
+
+  .baby-feature {
+    padding:
+      30px 5px;
+  }
+
+
+  .baby-products {
+    padding:
+      75px 20px 85px;
+  }
+
+
+  .baby-products-heading {
+    align-items: flex-start;
+
+    flex-direction: column;
+
+    gap: 20px;
+
+    margin-bottom: 38px;
+  }
+
+
+  .baby-products-heading h2 {
+    font-size: 48px;
+  }
+
+
+  .baby-products-heading h2 span {
+    display: block;
+
+    margin-left: 0;
+
+    margin-top: 5px;
+  }
+
+
+  .baby-products-grid {
+    grid-template-columns: 1fr;
+
+    gap: 25px;
+  }
+
+
+  .baby-product-image {
+    height: 360px;
+  }
+
+
+  /*
+     On mobile there is no hover,
+     so keep View Details visible.
+  */
+
+  .baby-details-button {
+    opacity: 1;
+
+    transform:
+      translateY(0);
+  }
+
+
+  .baby-product-info {
+    padding:
+      20px 18px 22px;
+  }
+
+
+  .baby-product-info h3 {
+    min-height: auto;
+
+    font-size: 20px;
+  }
+
+
+  .baby-final {
+    min-height: 460px;
+
+    padding:
+      80px 20px;
+  }
+
+
+  .baby-final h2 {
+    font-size: 48px;
+  }
+
+
+  .baby-final p {
+    font-size: 12px;
+  }
+
+}
+
+
+/* =========================================================
+   EXTRA SMALL
+========================================================= */
+
+@media (max-width: 380px) {
+
+  .baby-hero-content h1 {
+    font-size: 45px;
+  }
+
+
+  .maternity-main-image {
+    width: 255px;
+    height: 340px;
+  }
+
+
+  .maternity-hero-circle {
+    width: 295px;
+    height: 295px;
+  }
+
+
+  .maternity-floating-card {
+    width: 135px;
+  }
+
+
+  .baby-products-heading h2 {
+    font-size: 43px;
+  }
+
+}
+
+
+/* =========================================================
+   ACCESSIBILITY
+========================================================= */
+
+@media (prefers-reduced-motion: reduce) {
+
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+
+    scroll-behavior: auto !important;
+
+    transition-duration: 0.01ms !important;
+  }
+
+  .scroll-reveal {
+    opacity: 1 !important;
+
+    transform: none !important;
+  }
+
+}

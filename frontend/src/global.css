@@ -1,0 +1,940 @@
+/* =========================================================
+   MAMTA GLOBAL ANIMATION SYSTEM
+   Premium • Soft • Elegant • Smooth
+========================================================= */
+
+
+/* =========================================================
+   GLOBAL SETTINGS
+========================================================= */
+
+html {
+  scroll-behavior: smooth;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+img {
+  backface-visibility: hidden;
+  -webkit-backface-visibility: hidden;
+}
+
+
+/* =========================================================
+   GLOBAL REVEAL SYSTEM
+========================================================= */
+
+/*
+   Add one of these classes to elements:
+
+   .reveal-up
+   .reveal-down
+   .reveal-left
+   .reveal-right
+   .reveal-fade
+*/
+
+.reveal-up,
+.reveal-down,
+.reveal-left,
+.reveal-right,
+.reveal-fade {
+  opacity: 0;
+  visibility: hidden;
+}
+
+
+/* =========================================================
+   BOTTOM → UP
+========================================================= */
+
+.reveal-up {
+  transform: translate3d(0, 55px, 0);
+}
+
+.is-visible .reveal-up,
+.reveal-up.is-visible {
+  animation:
+    mamtaBottomUp
+    1.4s
+    cubic-bezier(0.16, 1, 0.3, 1)
+    forwards;
+}
+
+@keyframes mamtaBottomUp {
+
+  from {
+    opacity: 0;
+    visibility: hidden;
+    transform: translate3d(0, 55px, 0);
+  }
+
+  to {
+    opacity: 1;
+    visibility: visible;
+    transform: translate3d(0, 0, 0);
+  }
+
+}
+
+
+/* =========================================================
+   TOP → DOWN
+========================================================= */
+
+.reveal-down {
+  transform: translate3d(0, -45px, 0);
+}
+
+.is-visible .reveal-down,
+.reveal-down.is-visible {
+  animation:
+    mamtaTopDown
+    1.4s
+    cubic-bezier(0.16, 1, 0.3, 1)
+    forwards;
+}
+
+@keyframes mamtaTopDown {
+
+  from {
+    opacity: 0;
+    visibility: hidden;
+    transform: translate3d(0, -45px, 0);
+  }
+
+  to {
+    opacity: 1;
+    visibility: visible;
+    transform: translate3d(0, 0, 0);
+  }
+
+}
+
+
+/* =========================================================
+   LEFT → RIGHT
+========================================================= */
+
+.reveal-left {
+  transform: translate3d(-45px, 0, 0);
+}
+
+.is-visible .reveal-left,
+.reveal-left.is-visible {
+  animation:
+    mamtaLeftReveal
+    1.4s
+    cubic-bezier(0.16, 1, 0.3, 1)
+    forwards;
+}
+
+@keyframes mamtaLeftReveal {
+
+  from {
+    opacity: 0;
+    visibility: hidden;
+    transform: translate3d(-45px, 0, 0);
+  }
+
+  to {
+    opacity: 1;
+    visibility: visible;
+    transform: translate3d(0, 0, 0);
+  }
+
+}
+
+
+/* =========================================================
+   RIGHT → LEFT
+========================================================= */
+
+.reveal-right {
+  transform: translate3d(45px, 0, 0);
+}
+
+.is-visible .reveal-right,
+.reveal-right.is-visible {
+  animation:
+    mamtaRightReveal
+    1.4s
+    cubic-bezier(0.16, 1, 0.3, 1)
+    forwards;
+}
+
+@keyframes mamtaRightReveal {
+
+  from {
+    opacity: 0;
+    visibility: hidden;
+    transform: translate3d(45px, 0, 0);
+  }
+
+  to {
+    opacity: 1;
+    visibility: visible;
+    transform: translate3d(0, 0, 0);
+  }
+
+}
+
+
+/* =========================================================
+   SIMPLE FADE
+========================================================= */
+
+.reveal-fade {
+  transform: translate3d(0, 0, 0);
+}
+
+.is-visible .reveal-fade,
+.reveal-fade.is-visible {
+  animation:
+    mamtaFade
+    1.5s
+    ease-out
+    forwards;
+}
+
+@keyframes mamtaFade {
+
+  from {
+    opacity: 0;
+    visibility: hidden;
+  }
+
+  to {
+    opacity: 1;
+    visibility: visible;
+  }
+
+}
+
+
+/* =========================================================
+   STAGGER SYSTEM
+========================================================= */
+
+.stagger-1 {
+  animation-delay: 0.10s !important;
+}
+
+.stagger-2 {
+  animation-delay: 0.22s !important;
+}
+
+.stagger-3 {
+  animation-delay: 0.34s !important;
+}
+
+.stagger-4 {
+  animation-delay: 0.46s !important;
+}
+
+.stagger-5 {
+  animation-delay: 0.58s !important;
+}
+
+.stagger-6 {
+  animation-delay: 0.70s !important;
+}
+
+
+/* =========================================================
+   PREMIUM SECTION HEADING
+========================================================= */
+
+.mamta-reveal-heading {
+  opacity: 0;
+  transform: translate3d(0, 40px, 0);
+}
+
+.mamta-section-visible .mamta-reveal-heading {
+  animation:
+    mamtaHeadingReveal
+    1.5s
+    cubic-bezier(0.16, 1, 0.3, 1)
+    forwards;
+}
+
+@keyframes mamtaHeadingReveal {
+
+  from {
+    opacity: 0;
+    transform: translate3d(0, 40px, 0);
+  }
+
+  to {
+    opacity: 1;
+    transform: translate3d(0, 0, 0);
+  }
+
+}
+
+
+/* =========================================================
+   EYEBROW REVEAL
+========================================================= */
+
+.mamta-reveal-eyebrow {
+  opacity: 0;
+  transform: translate3d(0, -18px, 0);
+}
+
+.mamta-section-visible .mamta-reveal-eyebrow {
+  animation:
+    mamtaEyebrowReveal
+    1.1s
+    0.12s
+    cubic-bezier(0.16, 1, 0.3, 1)
+    forwards;
+}
+
+@keyframes mamtaEyebrowReveal {
+
+  from {
+    opacity: 0;
+    transform: translate3d(0, -18px, 0);
+  }
+
+  to {
+    opacity: 1;
+    transform: translate3d(0, 0, 0);
+  }
+
+}
+
+
+/* =========================================================
+   GLOBAL IMAGE REVEAL
+========================================================= */
+
+.mamta-image-reveal {
+  overflow: hidden;
+}
+
+.mamta-image-reveal img {
+  transform: scale(1.06);
+
+  transition:
+    transform 1.6s
+    cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.mamta-section-visible .mamta-image-reveal img {
+  transform: scale(1);
+}
+
+
+/* =========================================================
+   PREMIUM IMAGE HOVER
+========================================================= */
+
+.mamta-image-hover {
+  overflow: hidden;
+}
+
+.mamta-image-hover img {
+  transition:
+    transform 1.2s
+    cubic-bezier(0.16, 1, 0.3, 1),
+    filter 0.8s ease;
+}
+
+.mamta-image-hover:hover img {
+  transform: scale(1.045);
+}
+
+
+/* =========================================================
+   PREMIUM BUTTON TRANSITION
+========================================================= */
+
+.mamta-button-transition {
+  transition:
+    transform 0.6s
+      cubic-bezier(0.16, 1, 0.3, 1),
+    background 0.5s ease,
+    color 0.5s ease,
+    border-color 0.5s ease,
+    box-shadow 0.6s ease;
+}
+
+.mamta-button-transition:hover {
+  transform: translateY(-3px);
+}
+
+
+/* =========================================================
+   PREMIUM CARD TRANSITION
+========================================================= */
+
+.mamta-card-transition {
+  transition:
+    transform 0.75s
+      cubic-bezier(0.16, 1, 0.3, 1),
+    box-shadow 0.75s ease,
+    background 0.6s ease,
+    border-color 0.6s ease;
+}
+
+.mamta-card-transition:hover {
+  transform: translateY(-7px);
+}
+
+
+/* =========================================================
+   SOFT ICON TRANSITION
+========================================================= */
+
+.mamta-icon-transition {
+  transition:
+    transform 0.6s
+      cubic-bezier(0.16, 1, 0.3, 1),
+    background 0.5s ease,
+    color 0.5s ease;
+}
+
+.mamta-icon-transition:hover {
+  transform: translateY(-2px) scale(1.03);
+}
+
+
+/* =========================================================
+   LINK ARROW
+========================================================= */
+
+.mamta-arrow {
+  transition:
+    transform 0.6s
+      cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+a:hover .mamta-arrow {
+  transform: translate3d(4px, -4px, 0);
+}
+
+
+/* =========================================================
+   SECTION DIVIDER REVEAL
+========================================================= */
+
+.mamta-line-reveal {
+  width: 0;
+  transition:
+    width 1.2s
+    cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.mamta-section-visible .mamta-line-reveal {
+  width: 100%;
+}
+
+
+/* =========================================================
+   SOFT FLOAT
+   Extremely subtle
+========================================================= */
+
+.mamta-soft-float {
+  animation:
+    mamtaSoftFloat
+    8s
+    ease-in-out
+    infinite;
+}
+
+@keyframes mamtaSoftFloat {
+
+  0%,
+  100% {
+    transform: translateY(0);
+  }
+
+  50% {
+    transform: translateY(-4px);
+  }
+
+}
+
+
+/* =========================================================
+   TESTIMONIAL CARDS
+========================================================= */
+
+.testimonial-card {
+  transition:
+    transform 0.7s
+      cubic-bezier(0.16, 1, 0.3, 1),
+    box-shadow 0.7s ease,
+    background 0.6s ease;
+}
+
+.testimonial-card:hover {
+  transform: translateY(-6px);
+}
+
+
+/* =========================================================
+   TESTIMONIAL STAR
+========================================================= */
+
+.testimonial-stars svg {
+  transition:
+    transform 0.4s ease;
+}
+
+.testimonial-card:hover .testimonial-stars svg {
+  transform: translateY(-1px);
+}
+
+
+/* =========================================================
+   CATEGORY CARDS
+========================================================= */
+
+.category-card {
+  transition:
+    transform 0.75s
+      cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.category-card:hover {
+  transform: translateY(-7px);
+}
+
+
+/* =========================================================
+   CATEGORY IMAGE
+========================================================= */
+
+.category-image {
+  overflow: hidden;
+
+  transition:
+    box-shadow 0.8s ease,
+    border-radius 0.8s
+      cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.category-image img {
+  transition:
+    transform 1.3s
+      cubic-bezier(0.16, 1, 0.3, 1),
+    filter 0.8s ease;
+}
+
+.category-card:hover .category-image img {
+  transform: scale(1.045);
+}
+
+
+/* =========================================================
+   FEATURED PRODUCT CARDS
+========================================================= */
+
+.product-card {
+  transition:
+    transform 0.75s
+      cubic-bezier(0.16, 1, 0.3, 1),
+    box-shadow 0.75s ease;
+}
+
+.product-card:hover {
+  transform: translateY(-7px);
+}
+
+
+/* =========================================================
+   FEATURED PRODUCT IMAGE
+========================================================= */
+
+.product-image {
+  overflow: hidden;
+}
+
+.product-image img {
+  transition:
+    transform 1.3s
+      cubic-bezier(0.16, 1, 0.3, 1),
+    filter 0.8s ease;
+}
+
+.product-card:hover .product-image img {
+  transform: scale(1.045);
+}
+
+
+/* =========================================================
+   QUICK VIEW
+========================================================= */
+
+.quick-view {
+  transition:
+    opacity 0.6s ease,
+    transform 0.7s
+      cubic-bezier(0.16, 1, 0.3, 1),
+    background 0.5s ease;
+}
+
+
+/* =========================================================
+   WISHLIST
+========================================================= */
+
+.wishlist-button {
+  transition:
+    transform 0.5s
+      cubic-bezier(0.16, 1, 0.3, 1),
+    background 0.5s ease,
+    color 0.5s ease;
+}
+
+.wishlist-button:hover {
+  transform: scale(1.06);
+}
+
+
+/* =========================================================
+   MOTHER BABY BANNER
+========================================================= */
+
+.mother-baby-image img {
+  transition:
+    transform 1.5s
+      cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.mother-baby-image:hover img {
+  transform: scale(1.035);
+}
+
+.mother-baby-button {
+  transition:
+    transform 0.65s
+      cubic-bezier(0.16, 1, 0.3, 1),
+    background 0.5s ease,
+    color 0.5s ease,
+    box-shadow 0.6s ease;
+}
+
+.mother-baby-button:hover {
+  transform: translateY(-3px);
+}
+
+
+/* =========================================================
+   WHY MAMTA CARDS
+========================================================= */
+
+.why-mamta-card {
+  transition:
+    transform 0.75s
+      cubic-bezier(0.16, 1, 0.3, 1),
+    box-shadow 0.7s ease,
+    border-color 0.5s ease;
+}
+
+.why-mamta-card:hover {
+  transform: translateY(-6px);
+}
+
+
+/* =========================================================
+   WHY MAMTA ICON
+========================================================= */
+
+.why-icon {
+  transition:
+    transform 0.65s
+      cubic-bezier(0.16, 1, 0.3, 1),
+    background 0.5s ease,
+    color 0.5s ease;
+}
+
+.why-mamta-card:hover .why-icon {
+  transform: scale(1.04);
+}
+
+
+/* =========================================================
+   NEWSLETTER
+========================================================= */
+
+.mamta-newsletter-section {
+  overflow: hidden;
+}
+
+.newsletter-glow {
+  transition:
+    transform 1.5s
+    ease;
+}
+
+.mamta-newsletter-section:hover .newsletter-glow-one {
+  transform: translate3d(8px, -5px, 0);
+}
+
+.mamta-newsletter-section:hover .newsletter-glow-two {
+  transform: translate3d(-8px, 5px, 0);
+}
+
+
+/* =========================================================
+   NEWSLETTER BUTTON
+========================================================= */
+
+.mamta-newsletter-form button {
+  transition:
+    transform 0.65s
+      cubic-bezier(0.16, 1, 0.3, 1),
+    background 0.5s ease,
+    box-shadow 0.6s ease;
+}
+
+.mamta-newsletter-form button:hover {
+  transform: translateY(-2px);
+}
+
+
+/* =========================================================
+   NEWSLETTER INPUT
+========================================================= */
+
+.newsletter-input-wrapper {
+  transition:
+    border-color 0.5s ease,
+    box-shadow 0.5s ease;
+}
+
+.newsletter-input-wrapper:focus-within {
+  border-color: #d98f9a;
+
+  box-shadow:
+    0 0 0 3px
+    rgba(217, 143, 154, 0.10);
+}
+
+
+/* =========================================================
+   TESTIMONIAL TRACK
+========================================================= */
+
+.testimonial-track {
+  will-change: transform;
+}
+
+
+/* =========================================================
+   PERFORMANCE
+========================================================= */
+
+.category-card,
+.product-card,
+.why-mamta-card,
+.mother-baby-image,
+.image-frame {
+  backface-visibility: hidden;
+  -webkit-backface-visibility: hidden;
+}
+
+
+/* =========================================================
+   REDUCED MOTION
+========================================================= */
+
+@media (prefers-reduced-motion: reduce) {
+
+  html {
+    scroll-behavior: auto;
+  }
+
+  .reveal-up,
+  .reveal-down,
+  .reveal-left,
+  .reveal-right,
+  .reveal-fade,
+  .mamta-reveal-heading,
+  .mamta-reveal-eyebrow {
+    opacity: 1;
+    visibility: visible;
+    transform: none;
+    animation: none !important;
+  }
+
+  .mamta-soft-float {
+    animation: none;
+  }
+
+  .category-card,
+  .product-card,
+  .why-mamta-card,
+  .category-image img,
+  .product-image img,
+  .mother-baby-image img {
+    transition: none;
+  }
+
+}
+/* =========================================================
+   SCROLL REVEAL SYSTEM
+   Works BOTH directions
+========================================================= */
+
+.scroll-reveal {
+  opacity: 0;
+  will-change: transform, opacity;
+
+  transition:
+    opacity 0.9s cubic-bezier(0.16, 1, 0.3, 1),
+    transform 0.9s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+
+/* =========================================================
+   BOTTOM → TOP
+========================================================= */
+
+.reveal-up {
+  transform: translate3d(0, 70px, 0);
+}
+
+.reveal-up.is-visible {
+  opacity: 1;
+  transform: translate3d(0, 0, 0);
+}
+
+
+/* =========================================================
+   TOP → BOTTOM
+========================================================= */
+
+.reveal-down {
+  transform: translate3d(0, -70px, 0);
+}
+
+.reveal-down.is-visible {
+  opacity: 1;
+  transform: translate3d(0, 0, 0);
+}
+
+
+/* =========================================================
+   LEFT → RIGHT
+========================================================= */
+
+.reveal-left {
+  transform: translate3d(-70px, 0, 0);
+}
+
+.reveal-left.is-visible {
+  opacity: 1;
+  transform: translate3d(0, 0, 0);
+}
+
+
+/* =========================================================
+   RIGHT → LEFT
+========================================================= */
+
+.reveal-right {
+  transform: translate3d(70px, 0, 0);
+}
+
+.reveal-right.is-visible {
+  opacity: 1;
+  transform: translate3d(0, 0, 0);
+}
+
+
+/* =========================================================
+   STAGGER
+========================================================= */
+
+.scroll-reveal.stagger-1 {
+  transition-delay: 0.05s;
+}
+
+.scroll-reveal.stagger-2 {
+  transition-delay: 0.12s;
+}
+
+.scroll-reveal.stagger-3 {
+  transition-delay: 0.19s;
+}
+
+.scroll-reveal.stagger-4 {
+  transition-delay: 0.26s;
+}
+
+.scroll-reveal.stagger-5 {
+  transition-delay: 0.33s;
+}
+
+.scroll-reveal.stagger-6 {
+  transition-delay: 0.40s;
+}
+
+
+/* =========================================================
+   REDUCED MOTION
+========================================================= */
+
+@media (prefers-reduced-motion: reduce) {
+  .scroll-reveal {
+    opacity: 1 !important;
+    transform: none !important;
+    transition: none !important;
+  }
+}
+
+/* =========================================================
+   TEMPORARY FULL-WIDTH FIX
+========================================================= */
+
+html,
+body,
+#root {
+  width: 100% !important;
+  min-width: 100% !important;
+  max-width: none !important;
+  margin: 0 !important;
+  padding: 0 !important;
+}
+
+body {
+  display: block !important;
+}
+
+#root {
+  display: block !important;
+}
+
+
+/* =========================================================
+   MAMTA - GLOBAL TEXT SELECTION
+   Pink highlight across the entire website
+========================================================= */
+
+::selection {
+  background: #e8a1b5;
+  color: #ffffff;
+}
+
+::-moz-selection {
+  background: #e8a1b5;
+  color: #ffffff;
+}
+
+::selection {
+  background: #f3b6c8;
+  color: #4a3032;
+}
+
+::-moz-selection {
+  background: #f3b6c8;
+  color: #4a3032;
+}

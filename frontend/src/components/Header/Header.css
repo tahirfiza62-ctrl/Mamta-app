@@ -1,0 +1,1124 @@
+
+/* =========================================================
+   MAMTA PREMIUM HEADER
+========================================================= */
+
+.site-header {
+  width: 100%;
+  background: #fff9f4;
+  position: relative;
+  z-index: 1000;
+}
+
+
+/* =========================================================
+   TOP ANNOUNCEMENT BAR
+   NOT STICKY
+========================================================= */
+
+.top-line {
+  width: 100%;
+  height: 46px;
+
+  display: flex;
+  align-items: center;
+
+  overflow: hidden;
+
+  background: #4a3032;
+  color: #fff9f4;
+
+  position: relative;
+  z-index: 10;
+
+  box-sizing: border-box;
+
+  font-family:
+    "Helvetica Neue",
+    Arial,
+    sans-serif;
+}
+
+
+/* =========================================================
+   MOVING TRACK
+========================================================= */
+
+.top-line-track {
+  display: flex;
+  width: max-content;
+
+  animation: topLineScroll 32s linear infinite;
+}
+
+
+/* =========================================================
+   CONTENT GROUP
+========================================================= */
+
+.top-line-content {
+  display: flex;
+  align-items: center;
+
+  flex-shrink: 0;
+
+  white-space: nowrap;
+}
+
+
+/* =========================================================
+   TOP LINE TEXT
+========================================================= */
+
+.top-line-content span {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+
+  font-family:
+    "DM Sans",
+    "Segoe UI",
+    sans-serif;
+
+  font-size: 14px;
+  font-weight: 500;
+
+  letter-spacing: 0.5px;
+
+  white-space: nowrap;
+
+  padding: 0 20px;
+}
+
+
+/* =========================================================
+   TOP LINE DIVIDERS
+========================================================= */
+
+.top-line-content .top-line-divider {
+  font-size: 13px;
+
+  opacity: 0.7;
+
+  padding: 0 4px;
+}
+
+
+/* =========================================================
+   SEAMLESS TOP LINE ANIMATION
+========================================================= */
+
+@keyframes topLineScroll {
+
+  from {
+    transform: translateX(0);
+  }
+
+  to {
+    transform: translateX(-50%);
+  }
+
+}
+
+
+/* =========================================================
+   PAUSE ON HOVER
+========================================================= */
+
+.top-line:hover .top-line-track {
+  animation-play-state: paused;
+}
+
+
+/* =========================================================
+   STICKY NAVBAR WRAPPER
+========================================================= */
+
+.navbar-sticky {
+  position: sticky;
+
+  top: 0;
+  left: 0;
+
+  width: 100%;
+
+  z-index: 2000;
+
+  background: #fff9f4;
+}
+
+
+/* =========================================================
+   MAIN HEADER / NAVBAR
+========================================================= */
+
+.main-header { width: 100%; height: 94px; display: flex; align-items: center; padding: 0 35px; position: sticky; top: 0; z-index: 5000; background: #fff9f4; border-bottom: 1px solid #eadbd8; box-sizing: border-box; box-shadow: 0 5px 20px rgba(74, 48, 50, 0.08); }
+
+/* =========================================================
+   COMBINED LOGO
+========================================================= */
+@media (max-width: 900px) { .main-header { height: 78px; padding: 0 22px; } .mobile-nav { position: absolute; top: 100%; left: 0; width: 100%; display: flex; flex-direction: column; background: #fff9f4; z-index: 5001; } } /* ========================================================= MOBILE OVERLAY ========================================================= */ .mobile-menu-overlay { position: fixed; inset: 0; background: rgba(55, 35, 38, 0.28); z-index: 4999; }
+.logo-group {
+  width: 210px;
+  height: 75px;
+
+  display: flex;
+  align-items: center;
+  justify-content: flex-start;
+
+  flex-shrink: 0;
+
+  text-decoration: none;
+
+  overflow: visible;
+}
+
+
+/* =========================================================
+   LOGO ONE
+========================================================= */
+
+.logo-one {
+  width: 155px;
+  height: 78px;
+
+  object-fit: contain;
+
+  display: block;
+
+  flex-shrink: 0;
+
+  margin-right: -12px;
+
+  position: relative;
+
+  z-index: 2;
+}
+
+
+/* =========================================================
+   LOGO TWO
+========================================================= */
+
+.logo-two {
+  width: 95px;
+  height: 82px;
+
+  object-fit: contain;
+
+  display: block;
+
+  flex-shrink: 0;
+
+  margin-left: -12px;
+
+  position: relative;
+
+  z-index: 1;
+}
+
+
+/* =========================================================
+   LOGO HOVER
+========================================================= */
+
+.logo-group {
+  transition: transform 0.4s ease;
+}
+
+.logo-group:hover {
+  transform: translateY(-1px);
+}
+
+.logo-one,
+.logo-two {
+  transition: transform 0.45s ease;
+}
+
+.logo-group:hover .logo-one {
+  transform: translateX(-1px);
+}
+
+.logo-group:hover .logo-two {
+  transform: translateX(1px);
+}
+
+
+/* =========================================================
+   NAVIGATION
+========================================================= */
+
+.main-nav {
+  flex: 1;
+
+  height: 100%;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  gap: 25px;
+
+  margin: 0 18px;
+}
+
+
+.main-nav a {
+  height: 100%;
+
+  position: relative;
+
+  display: flex;
+  align-items: center;
+
+  color: #4a3032;
+
+  text-decoration: none;
+
+  font-family:
+    "Helvetica Neue",
+    Arial,
+    sans-serif;
+
+  font-size: 14px;
+
+  letter-spacing: 0.2px;
+
+  white-space: nowrap;
+
+  opacity: 0;
+
+  animation: navSoftIn 0.55s ease-out forwards;
+
+  transition:
+    color 0.3s ease,
+    transform 0.3s ease;
+}
+
+
+/* =========================================================
+   NAVIGATION ANIMATION DELAYS
+========================================================= */
+
+.main-nav a:nth-child(1) {
+  animation-delay: 0.12s;
+}
+
+.main-nav a:nth-child(2) {
+  animation-delay: 0.16s;
+}
+
+.main-nav a:nth-child(3) {
+  animation-delay: 0.20s;
+}
+
+.main-nav a:nth-child(4) {
+  animation-delay: 0.24s;
+}
+
+.main-nav a:nth-child(5) {
+  animation-delay: 0.28s;
+}
+
+.main-nav a:nth-child(6) {
+  animation-delay: 0.32s;
+}
+
+
+@keyframes navSoftIn {
+
+  from {
+    opacity: 0;
+    transform: translateY(-5px);
+  }
+
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+
+}
+
+
+/* =========================================================
+   NAVIGATION UNDERLINE
+========================================================= */
+
+.main-nav a::after {
+  content: "";
+
+  position: absolute;
+
+  left: 50%;
+  bottom: 23px;
+
+  width: 0;
+  height: 2px;
+
+  background: #d98f9a;
+
+  border-radius: 20px;
+
+  transform: translateX(-50%);
+
+  transition: width 0.35s ease;
+}
+
+
+.main-nav a:hover {
+  color: #bd6f7c;
+
+  transform: translateY(-1px);
+}
+
+
+.main-nav a:hover::after {
+  width: 100%;
+}
+
+
+/* =========================================================
+   HEADER ACTIONS
+========================================================= */
+
+.header-actions {
+  width: 190px;
+
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+
+  gap: 5px;
+
+  flex-shrink: 0;
+
+  animation: actionsSoftIn 0.65s 0.2s ease-out both;
+}
+
+
+@keyframes actionsSoftIn {
+
+  from {
+    opacity: 0;
+    transform: translateY(5px);
+  }
+
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+
+}
+
+
+/* =========================================================
+   ICON BUTTONS
+========================================================= */
+
+.header-icon {
+  width: 38px;
+  height: 38px;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  position: relative;
+
+  padding: 0;
+
+  border: none;
+
+  background: transparent;
+
+  color: #4a3032;
+
+  border-radius: 50%;
+
+  text-decoration: none;
+
+  cursor: pointer;
+
+  transition:
+    background 0.3s ease,
+    color 0.3s ease,
+    transform 0.3s ease;
+}
+
+
+.header-icon:hover {
+  background: #f4d9dc;
+
+  color: #bd6f7c;
+
+  transform: translateY(-1px);
+}
+
+
+/* =========================================================
+   LOGIN BUTTON
+========================================================= */
+
+.header-login-btn {
+  display: inline-flex;
+
+  align-items: center;
+  justify-content: center;
+
+  min-width: 76px;
+  height: 36px;
+
+  padding: 0 17px;
+
+  border: 1px solid #d98f9a;
+
+  border-radius: 3px;
+
+  background: transparent;
+
+  color: #4a3032;
+
+  font-size: 11px;
+  font-weight: 700;
+
+  letter-spacing: 1.5px;
+
+  text-decoration: none;
+
+  transition:
+    background 0.3s ease,
+    color 0.3s ease,
+    border-color 0.3s ease,
+    transform 0.3s ease;
+}
+
+
+.header-login-btn:hover {
+  background: #d98f9a;
+
+  border-color: #d98f9a;
+
+  color: #ffffff;
+
+  transform: translateY(-1px);
+}
+
+
+/* =========================================================
+   ACCOUNT
+========================================================= */
+
+.account-icon {
+  position: relative;
+}
+
+
+.account-icon:hover {
+  color: #bd6f7c;
+}
+
+
+/* =========================================================
+   CART
+========================================================= */
+
+.cart-action {
+  position: relative;
+
+  display: inline-flex;
+
+  align-items: center;
+  justify-content: center;
+
+  width: 36px;
+  height: 36px;
+
+  color: #4a3032;
+
+  text-decoration: none;
+
+  border: none;
+
+  background: transparent;
+
+  cursor: pointer;
+
+  border-radius: 50%;
+
+  transition:
+    background 0.3s ease,
+    transform 0.3s ease;
+}
+
+
+.cart-action:hover {
+  background: #f4d9dc;
+
+  transform: translateY(-1px);
+}
+
+
+.cart-action svg {
+  transition: transform 0.3s ease;
+}
+
+
+.cart-action:hover svg {
+  transform: translateY(-1px);
+}
+
+
+/* =========================================================
+   CART ICON
+========================================================= */
+
+.action-icon {
+  font-size: 25px;
+
+  line-height: 1;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  transform: translateY(-1px);
+
+  transition: transform 0.3s ease;
+}
+
+
+.cart-action:hover .action-icon {
+  transform: translateY(-2px);
+}
+
+
+/* =========================================================
+   CART COUNT
+========================================================= */
+
+.cart-count {
+  position: absolute;
+
+  top: -2px;
+  right: -3px;
+
+  min-width: 16px;
+  height: 16px;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  padding: 0 4px;
+
+  border-radius: 50%;
+
+  background: #bd6f7c;
+
+  color: #ffffff;
+
+  border: 2px solid #fff9f4;
+
+  font-family: Arial, sans-serif;
+
+  font-size: 9px;
+
+  font-weight: 700;
+
+  line-height: 1;
+
+  transition:
+    background 0.25s ease,
+    transform 0.25s ease;
+}
+
+
+.cart-action:hover .cart-count {
+  transform: scale(1.04);
+
+  background: #a85f6b;
+}
+
+
+/* =========================================================
+   MOBILE MENU BUTTON
+========================================================= */
+
+.mobile-menu {
+  width: 38px;
+  height: 38px;
+
+  display: none;
+
+  align-items: center;
+  justify-content: center;
+
+  padding: 6px;
+
+  border: none;
+
+  background: transparent;
+
+  color: #4a3032;
+
+  border-radius: 50%;
+
+  cursor: pointer;
+
+  transition:
+    background 0.3s ease,
+    color 0.3s ease,
+    transform 0.3s ease;
+}
+
+
+.mobile-menu:hover {
+  background: #f4d9dc;
+
+  color: #bd6f7c;
+
+  transform: translateY(-1px);
+}
+
+
+/* =========================================================
+   MOBILE NAV
+========================================================= */
+
+.mobile-nav {
+  display: none;
+}
+
+
+/* =========================================================
+   MOBILE OVERLAY
+========================================================= */
+
+.mobile-menu-overlay {
+  position: fixed;
+
+  inset: 0;
+
+  background: rgba(55, 35, 38, 0.28);
+
+  z-index: 1998;
+
+  animation: mobileOverlayFade 0.25s ease;
+}
+
+
+@keyframes mobileOverlayFade {
+
+  from {
+    opacity: 0;
+  }
+
+  to {
+    opacity: 1;
+  }
+
+}
+
+
+/* =========================================================
+   LARGE TABLET
+========================================================= */
+
+@media (max-width: 1200px) {
+
+  .main-header {
+    padding: 0 25px;
+  }
+
+  .logo-group {
+    width: 175px;
+  }
+
+  .logo-one {
+    width: 105px;
+    height: 62px;
+  }
+
+  .logo-two {
+    width: 65px;
+    height: 56px;
+  }
+
+  .main-nav {
+    gap: 16px;
+    margin: 0 10px;
+  }
+
+  .main-nav a {
+    font-size: 11px;
+  }
+
+  .header-actions {
+    width: 165px;
+  }
+
+}
+
+
+/* =========================================================
+   TABLET
+========================================================= */
+
+@media (max-width: 1050px) {
+
+  .main-header {
+    height: 82px;
+  }
+
+  .logo-group {
+    width: 145px;
+    height: 65px;
+  }
+
+  .logo-one {
+    width: 88px;
+    height: 57px;
+  }
+
+  .logo-two {
+    width: 57px;
+    height: 52px;
+  }
+
+  .main-nav {
+    gap: 11px;
+  }
+
+  .main-nav a {
+    font-size: 10px;
+  }
+
+  .header-actions {
+    width: 145px;
+  }
+
+  .header-icon {
+    width: 34px;
+    height: 34px;
+  }
+
+}
+
+
+/* =========================================================
+   MOBILE / SMALL TABLET
+========================================================= */
+
+@media (max-width: 900px) {
+
+  .main-nav {
+    display: none;
+  }
+
+  .main-header {
+    height: 78px;
+
+    padding: 0 22px;
+  }
+
+  .logo-group {
+    width: 170px;
+  }
+
+  .logo-one {
+    width: 105px;
+    height: 62px;
+  }
+
+  .logo-two {
+    width: 65px;
+    height: 57px;
+  }
+
+  .header-actions {
+    flex: 1;
+
+    width: auto;
+
+    justify-content: flex-end;
+
+    gap: 10px;
+  }
+
+  .mobile-menu {
+    display: flex;
+  }
+
+
+  /* Mobile dropdown */
+
+  .mobile-nav {
+    position: absolute;
+
+    top: 100%;
+    left: 0;
+
+    width: 100%;
+
+    box-sizing: border-box;
+
+    display: flex;
+    flex-direction: column;
+
+    background: #fff9f4;
+
+    padding: 12px 20px 20px;
+
+    border-top: 1px solid #eadbd6;
+
+    box-shadow:
+      0 15px 35px rgba(74, 48, 50, 0.12);
+
+    transform: translateY(-15px);
+
+    opacity: 0;
+
+    visibility: hidden;
+
+    pointer-events: none;
+
+    transition:
+      opacity 0.25s ease,
+      transform 0.25s ease,
+      visibility 0.25s ease;
+
+    z-index: 2002;
+  }
+
+
+  .mobile-nav-open {
+    transform: translateY(0);
+
+    opacity: 1;
+
+    visibility: visible;
+
+    pointer-events: auto;
+  }
+
+
+  .mobile-nav a {
+    display: block;
+
+    padding: 14px 8px;
+
+    color: #4a3032;
+
+    text-decoration: none;
+
+    font-family:
+      "DM Sans",
+      "Segoe UI",
+      sans-serif;
+
+    font-size: 15px;
+
+    font-weight: 500;
+
+    border-bottom: 1px solid #eee2dd;
+
+    transition:
+      color 0.2s ease,
+      padding-left 0.2s ease;
+  }
+
+
+  .mobile-nav a:last-child {
+    border-bottom: none;
+  }
+
+
+  .mobile-nav a:hover {
+    color: #9a5a63;
+
+    padding-left: 14px;
+  }
+
+}
+
+
+/* =========================================================
+   MOBILE
+========================================================= */
+
+@media (max-width: 600px) {
+
+  .top-line {
+    height: 40px;
+  }
+
+  .top-line-content span {
+    font-size: 12px;
+
+    padding: 0 12px;
+  }
+
+  .top-line-content .top-line-divider {
+    font-size: 10px;
+
+    padding: 0 2px;
+  }
+
+  .top-line-track {
+    animation-duration: 23s;
+  }
+
+
+  .main-header {
+    height: 70px;
+
+    padding: 0 12px;
+  }
+
+  .logo-group {
+    width: 120px;
+
+    height: 58px;
+  }
+
+  .logo-one {
+    width: 74px;
+
+    height: 52px;
+  }
+
+  .logo-two {
+    width: 46px;
+
+    height: 48px;
+  }
+
+  .header-actions {
+    gap: 0;
+  }
+
+  .header-icon,
+  .cart-action,
+  .mobile-menu {
+    width: 32px;
+
+    height: 32px;
+  }
+
+  .cart-count {
+    min-width: 14px;
+
+    height: 14px;
+
+    font-size: 6px;
+
+    top: 0;
+
+    right: 0;
+  }
+
+
+  .mobile-nav {
+    padding: 10px 16px 16px;
+  }
+
+  .mobile-nav a {
+    padding: 13px 6px;
+
+    font-size: 14px;
+  }
+
+  .mobile-menu {
+    padding: 5px;
+  }
+
+}
+
+
+/* =========================================================
+   VERY SMALL MOBILE
+========================================================= */
+
+@media (max-width: 400px) {
+
+  .top-line {
+    font-size: 7px;
+
+    letter-spacing: 0.3px;
+  }
+
+  .top-line-divider {
+    display: none;
+  }
+
+  .main-header {
+    padding: 0 8px;
+  }
+
+  .logo-group {
+    width: 105px;
+  }
+
+  .logo-one {
+    width: 65px;
+  }
+
+  .logo-two {
+    width: 40px;
+  }
+
+  .header-icon,
+  .cart-action,
+  .mobile-menu {
+    width: 29px;
+
+    height: 29px;
+  }
+
+}
+
+
+/* =========================================================
+   BUTTON PRESS
+========================================================= */
+
+.header-icon:active,
+.header-action:active,
+.cart-action:active,
+.mobile-menu:active {
+  transform: scale(0.97);
+}
+
+
+/* =========================================================
+   REDUCED MOTION
+========================================================= */
+
+@media (prefers-reduced-motion: reduce) {
+
+  .site-header,
+  .logo-group,
+  .main-nav a,
+  .header-actions {
+    animation: none;
+  }
+
+  .logo-group,
+  .logo-one,
+  .logo-two,
+  .main-nav a,
+  .header-icon,
+  .header-action,
+  .cart-action,
+  .mobile-menu,
+  .action-icon,
+  .cart-count {
+    transition: none;
+  }
+
+  .top-line-track {
+    animation: none;
+  }
+
+}
+
