@@ -9,7 +9,7 @@ const categories = [
     title: "Maternity Pillows",
     text: "Comfort designed for beautiful motherhood moments.",
     image:
-      "https://res.cloudinary.com/iysbraru/image/upload/v1790352591/image1.jpg",
+      "https://res.cloudinary.com/iysbraru/image/upload/v1791132152/hello.jpg",
     link: "/maternity-pillows",
   },
   {
@@ -20,7 +20,7 @@ const categories = [
     link: "/baby-pillows",
   },
   {
-    title: "Nursing Pillows",
+    title: "Nursing Products",
     text: "Gentle support for feeding and bonding time.",
     image:
       "https://res.cloudinary.com/iysbraru/image/upload/v1790352591/image3.jpg",
@@ -28,10 +28,17 @@ const categories = [
   },
   {
     title: "Elders Pillows",
-    text: "Sweet, soft companions for elders.",
+    text: "Sweet, soft companions created for everyday comfort.",
     image:
       "https://res.cloudinary.com/iysbraru/image/upload/v1790352591/iamge4.jpg",
     link: "/elder-pillows",
+  },
+  {
+    title: "Accessories",
+    text: "Beautiful little essentials made to add comfort and softness to your everyday routine.",
+    image:
+      "https://res.cloudinary.com/iysbraru/image/upload/v1790788491/scruchies.jpg",
+    link: "/accessories",
   },
 ];
 

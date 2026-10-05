@@ -1,6 +1,5 @@
 const mongoose = require("mongoose");
 
-
 /* =========================================================
    ORDER ITEM
 ========================================================= */
@@ -36,26 +35,31 @@ const orderItemSchema = new mongoose.Schema(
       min: 1,
     },
 
-    // Selected color name
+    /* -------------------------------------------------------
+       SELECTED COLOR
+    ------------------------------------------------------- */
+
     color: {
       type: String,
       default: "",
       trim: true,
     },
 
-    // Exact selected color code
     colorCode: {
       type: String,
       default: "",
       trim: true,
     },
 
-    // Exact image belonging to selected color
     colorImage: {
       type: String,
       default: "",
       trim: true,
     },
+
+    /* -------------------------------------------------------
+       ITEM TOTAL
+    ------------------------------------------------------- */
 
     total: {
       type: Number,
@@ -68,18 +72,25 @@ const orderItemSchema = new mongoose.Schema(
   }
 );
 
-
 /* =========================================================
    ORDER
 ========================================================= */
 
 const orderSchema = new mongoose.Schema(
   {
+    /* -------------------------------------------------------
+       USER
+    ------------------------------------------------------- */
+
     userId: {
       type: mongoose.Schema.Types.ObjectId,
       ref: "User",
       required: true,
     },
+
+    /* -------------------------------------------------------
+       ORDER NUMBER
+    ------------------------------------------------------- */
 
     orderNumber: {
       type: String,
@@ -88,10 +99,18 @@ const orderSchema = new mongoose.Schema(
       trim: true,
     },
 
+    /* -------------------------------------------------------
+       PRODUCTS
+    ------------------------------------------------------- */
+
     items: {
       type: [orderItemSchema],
       default: [],
     },
+
+    /* -------------------------------------------------------
+       CUSTOMER
+    ------------------------------------------------------- */
 
     customer: {
       name: {
@@ -115,6 +134,10 @@ const orderSchema = new mongoose.Schema(
       },
     },
 
+    /* -------------------------------------------------------
+       PRICING
+    ------------------------------------------------------- */
+
     subtotal: {
       type: Number,
       required: true,
@@ -133,6 +156,10 @@ const orderSchema = new mongoose.Schema(
       min: 0,
     },
 
+    /* -------------------------------------------------------
+       PAYMENT
+    ------------------------------------------------------- */
+
     paymentMethod: {
       type: String,
       default: "Cash on Delivery",
@@ -142,6 +169,10 @@ const orderSchema = new mongoose.Schema(
       type: String,
       default: "Pending",
     },
+
+    /* -------------------------------------------------------
+       ORDER STATUS
+    ------------------------------------------------------- */
 
     orderStatus: {
       type: String,
@@ -160,7 +191,6 @@ const orderSchema = new mongoose.Schema(
     timestamps: true,
   }
 );
-
 
 module.exports = mongoose.model(
   "Order",

@@ -1,8 +1,11 @@
-
 const mongoose = require("mongoose");
 
 const userSchema = new mongoose.Schema(
   {
+    // =====================================================
+    // BASIC USER INFORMATION
+    // =====================================================
+
     name: {
       type: String,
       required: true,
@@ -22,22 +25,35 @@ const userSchema = new mongoose.Schema(
       required: true,
     },
 
+    // =====================================================
+    // ROLE
+    // =====================================================
+
     role: {
       type: String,
       enum: ["customer", "admin"],
       default: "customer",
     },
 
+    // =====================================================
+    // ACCOUNT STATUS
+    // =====================================================
+
     active: {
       type: Boolean,
       default: true,
     },
+
+    // =====================================================
+    // EMAIL VERIFICATION
+    // =====================================================
+
     isVerified: {
       type: Boolean,
       default: false,
     },
 
-    emailVerificationToken: {
+    emailVerificationCode: {
       type: String,
       default: null,
     },
@@ -53,4 +69,3 @@ const userSchema = new mongoose.Schema(
 );
 
 module.exports = mongoose.model("User", userSchema);
-

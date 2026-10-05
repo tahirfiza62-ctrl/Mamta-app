@@ -20,13 +20,14 @@ import MaternityPillows from "./pages/MaternityPillows/MaternityPillows";
 import BabyPillows from "./pages/BabyPillows/BabyPillows";
 import NursingPillows from "./pages/NursingPillows/NursingPillows";
 import ElderPillows from "./pages/ElderPillows/ElderPillows";
+import Accessories from "./pages/Accessories/Accessories";
 import About from "./pages/About/About";
 import Contact from "./pages/Contact/Contact";
 import Login from "./pages/Login/Login";
 import Register from "./pages/Register/Register";
 import EmailSent from "./pages/EmailSent/EmailSent";
 import VerifyEmail from "./pages/VerifyEmail/VerifyEmail";
-import VerifyPhone from "./pages/VerifyPhone/VerifyPhone";
+
 import ProductDetails from "./pages/ProductDetails/ProductDetails";
 import Account from "./pages/Account/Account";
 import Cart from "./pages/Cart/Cart";
@@ -350,6 +351,7 @@ function AppContent() {
   path="/elder-pillows"
   element={<ElderPillows />}
 />
+<Route path="/accessories" element={<Accessories />} />
         {/* =================================================
             ABOUT
         ================================================= */}
@@ -420,12 +422,7 @@ function AppContent() {
             VERIFY PHONE
         ================================================= */}
 
-        <Route
-          path="/verify-phone"
-          element={
-            <VerifyPhone />
-          }
-        />
+      
 
         {/* =================================================
             PROFILE / ACCOUNT

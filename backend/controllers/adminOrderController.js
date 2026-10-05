@@ -239,6 +239,87 @@ const updateOrderStatus = async (
 
 
 /* =========================================================
+   DELETE ORDER
+   DELETE /api/admin/orders/:id
+========================================================= */
+
+const deleteOrder = async (
+  req,
+  res
+) => {
+  try {
+    const {
+      id,
+    } = req.params;
+
+    console.log(
+      "ADMIN DELETE ORDER"
+    );
+
+    console.log(
+      "Order ID:",
+      id
+    );
+
+
+    /* -----------------------------------------------------
+       FIND ORDER
+    ----------------------------------------------------- */
+
+    const order =
+      await Order.findById(id);
+
+    if (!order) {
+      return res.status(404).json({
+        success: false,
+        message:
+          "Order not found.",
+      });
+    }
+
+
+    /* -----------------------------------------------------
+       DELETE ORDER
+    ----------------------------------------------------- */
+
+    await Order.findByIdAndDelete(id);
+
+
+    console.log(
+      "ORDER DELETED:",
+      id
+    );
+
+
+    return res.status(200).json({
+      success: true,
+
+      message:
+        "Order deleted successfully.",
+
+      orderId: id,
+    });
+
+  } catch (error) {
+    console.error(
+      "DELETE ORDER ERROR:",
+      error
+    );
+
+    return res.status(500).json({
+      success: false,
+
+      message:
+        "Failed to delete order.",
+
+      error:
+        error.message,
+    });
+  }
+};
+
+
+/* =========================================================
    EXPORTS
 ========================================================= */
 
@@ -246,4 +327,5 @@ module.exports = {
   getAllOrders,
   getOrderById,
   updateOrderStatus,
+  deleteOrder,
 };

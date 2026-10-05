@@ -29,7 +29,7 @@ const EmailSent = () => {
         </h1>
 
         <p>
-          We've sent a verification link to
+          We've sent a 6-digit verification code to
         </p>
 
         <strong className="email-sent-address">
@@ -37,20 +37,21 @@ const EmailSent = () => {
         </strong>
 
         <p className="email-sent-description">
-          Click the button inside the email to
-          activate your MAMTA account.
+          Enter the code from the email to activate
+          your MAMTA account.
         </p>
 
         <div className="email-sent-note">
-          The verification link expires in
+          The verification code expires in
           <strong> 24 hours.</strong>
         </div>
 
         <Link
-          to="/login"
+          to="/verify-email"
+          state={{ email }}
           className="email-sent-button"
         >
-          GO TO LOGIN
+          ENTER VERIFICATION CODE
         </Link>
 
         <Link

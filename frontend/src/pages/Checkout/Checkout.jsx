@@ -1,3 +1,4 @@
+
 import { useEffect, useState } from "react";
 import {
   Link,
@@ -41,9 +42,6 @@ const Checkout = () => {
 
   const [paymentMethod, setPaymentMethod] =
     useState("Cash on Delivery");
-
-  const [phoneVerified, setPhoneVerified] =
-    useState(false);
 
   const [formData, setFormData] =
     useState({
@@ -128,83 +126,6 @@ const Checkout = () => {
       cancelled = true;
     };
   }, []);
-
-  /* =========================================================
-     CHECK PHONE VERIFICATION
-  ========================================================= */
-
-  useEffect(() => {
-    let cancelled = false;
-
-    const checkVerifiedPhone = () => {
-      const verifiedPhone =
-        sessionStorage.getItem(
-          "mamta_phone_verified"
-        );
-
-      setTimeout(() => {
-        if (cancelled) {
-          return;
-        }
-
-        if (!verifiedPhone) {
-          setPhoneVerified(false);
-          return;
-        }
-
-        setFormData(
-          (current) => ({
-            ...current,
-
-            phone:
-              verifiedPhone ||
-              current.phone,
-          })
-        );
-
-        setPhoneVerified(true);
-      }, 0);
-    };
-
-    checkVerifiedPhone();
-
-    return () => {
-      cancelled = true;
-    };
-  }, []);
-
-  /* =========================================================
-     CHECK PHONE WHEN USER RETURNS TO CHECKOUT
-  ========================================================= */
-
-  useEffect(() => {
-    const handleFocus = () => {
-      const verifiedPhone =
-        sessionStorage.getItem(
-          "mamta_phone_verified"
-        );
-
-      if (
-        verifiedPhone &&
-        formData.phone ===
-          verifiedPhone
-      ) {
-        setPhoneVerified(true);
-      }
-    };
-
-    window.addEventListener(
-      "focus",
-      handleFocus
-    );
-
-    return () => {
-      window.removeEventListener(
-        "focus",
-        handleFocus
-      );
-    };
-  }, [formData.phone]);
 
   /* =========================================================
      FETCH CART
@@ -306,63 +227,6 @@ const Checkout = () => {
         ...current,
         [name]: value,
       })
-    );
-
-    /* ---------------------------------------------------------
-       If phone number changes, it is no longer verified.
-    --------------------------------------------------------- */
-
-    if (name === "phone") {
-      setPhoneVerified(false);
-
-      sessionStorage.removeItem(
-        "mamta_phone_verified"
-      );
-    }
-  };
-
-  /* =========================================================
-     PHONE VERIFICATION
-  ========================================================= */
-
-  const handleVerifyPhone = () => {
-    const phone =
-      formData.phone.trim();
-
-    if (!phone) {
-      alert(
-        "Please enter your phone number first."
-      );
-
-      return;
-    }
-
-    /* ---------------------------------------------------------
-       Pakistani mobile number validation
-
-       Examples:
-       03001234567
-       03111234567
-       03221234567
-    --------------------------------------------------------- */
-
-    const phoneRegex =
-      /^03\d{9}$/;
-
-    if (
-      !phoneRegex.test(phone)
-    ) {
-      alert(
-        "Please enter a valid Pakistani mobile number, e.g. 03001234567"
-      );
-
-      return;
-    }
-
-    navigate(
-      `/verify-phone?phone=${encodeURIComponent(
-        phone
-      )}`
     );
   };
 
@@ -475,41 +339,6 @@ const Checkout = () => {
       ) {
         alert(
           "Please enter your phone number."
-        );
-
-        return;
-      }
-
-      /* ---------------------------------------------
-         PHONE VERIFICATION
-      --------------------------------------------- */
-
-      if (!phoneVerified) {
-        alert(
-          "Please verify your phone number before placing the order."
-        );
-
-        return;
-      }
-
-      /* ---------------------------------------------
-         MAKE SURE VERIFIED PHONE MATCHES CURRENT PHONE
-      --------------------------------------------- */
-
-      const verifiedPhone =
-        sessionStorage.getItem(
-          "mamta_phone_verified"
-        );
-
-      if (
-        !verifiedPhone ||
-        verifiedPhone !==
-          formData.phone.trim()
-      ) {
-        setPhoneVerified(false);
-
-        alert(
-          "Your phone number is not verified. Please verify it again."
         );
 
         return;
@@ -661,14 +490,6 @@ const Checkout = () => {
             new Event(
               "cartChanged"
             )
-          );
-
-          /* ------------------------------------------------
-             Clear verified phone after successful order
-          ------------------------------------------------ */
-
-          sessionStorage.removeItem(
-            "mamta_phone_verified"
           );
 
           const createdOrder =
@@ -1018,45 +839,6 @@ const Checkout = () => {
 
                 </div>
 
-                {/* VERIFY PHONE BUTTON */}
-
-                <div className="checkout-phone-verification">
-
-                  <button
-                    type="button"
-                    className={
-                      phoneVerified
-                        ? "checkout-verify-phone checkout-phone-verified"
-                        : "checkout-verify-phone"
-                    }
-                    onClick={
-                      handleVerifyPhone
-                    }
-                    disabled={
-                      phoneVerified
-                    }
-                  >
-
-                    <CheckCircle2
-                      size={17}
-                    />
-
-                    {phoneVerified
-                      ? "Phone Verified"
-                      : "Verify Phone Number"}
-
-                  </button>
-
-                  {phoneVerified && (
-                    <span className="checkout-phone-success">
-
-                      Your phone number has been verified.
-
-                    </span>
-                  )}
-
-                </div>
-
               </div>
 
             </div>
@@ -1329,16 +1111,13 @@ const Checkout = () => {
             type="submit"
             className="checkout-place-order"
             disabled={
-              placingOrder ||
-              !phoneVerified
+              placingOrder
             }
           >
 
             {placingOrder
               ? "PROCESSING ORDER..."
-              : !phoneVerified
-                ? "VERIFY PHONE NUMBER FIRST"
-                : "PLACE ORDER"}
+              : "PLACE ORDER"}
 
           </button>
 
@@ -1617,3 +1396,4 @@ const TruckIcon = () => {
 };
 
 export default Checkout;
+

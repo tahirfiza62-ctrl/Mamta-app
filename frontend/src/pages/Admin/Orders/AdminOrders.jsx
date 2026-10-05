@@ -5,12 +5,12 @@ import {
   ShoppingBag,
   Eye,
   Filter,
+  Trash2,
 } from "lucide-react";
 import { useNavigate } from "react-router-dom";
 import "./AdminOrders.css";
 
-const API_URL =
-  "http://localhost:3000/api/admin/orders";
+const API_URL = "http://localhost:3000/api/admin/orders";
 
 const AdminOrders = () => {
   const navigate = useNavigate();
@@ -18,10 +18,10 @@ const AdminOrders = () => {
   const [orders, setOrders] = useState([]);
   const [loading, setLoading] = useState(true);
   const [refreshing, setRefreshing] = useState(false);
+  const [deletingOrderId, setDeletingOrderId] = useState(null);
 
   const [search, setSearch] = useState("");
-  const [statusFilter, setStatusFilter] =
-    useState("All");
+  const [statusFilter, setStatusFilter] = useState("All");
 
   /* =========================================================
      INITIAL FETCH
@@ -36,10 +36,7 @@ const AdminOrders = () => {
           setLoading(true);
         }
 
-        const token =
-          localStorage.getItem(
-            "mamta_admin_token"
-          );
+        const token = localStorage.getItem("mamta_admin_token");
 
         if (!token) {
           if (!cancelled) {
@@ -49,30 +46,16 @@ const AdminOrders = () => {
           return;
         }
 
-        const response = await fetch(
-          API_URL,
-          {
-            method: "GET",
+        const response = await fetch(API_URL, {
+          method: "GET",
+          headers: {
+            Authorization: `Bearer ${token}`,
+            "Content-Type": "application/json",
+          },
+        });
 
-            headers: {
-              Authorization:
-                `Bearer ${token}`,
-              "Content-Type":
-                "application/json",
-            },
-          }
-        );
-
-        /*
-         * TOKEN EXPIRED / UNAUTHORIZED
-         */
-
-        if (
-          response.status === 401
-        ) {
-          localStorage.removeItem(
-            "mamta_admin_token"
-          );
+        if (response.status === 401) {
+          localStorage.removeItem("mamta_admin_token");
 
           if (!cancelled) {
             navigate("/admin/login");
@@ -81,63 +64,27 @@ const AdminOrders = () => {
           return;
         }
 
-        /*
-         * OTHER API ERROR
-         */
-
         if (!response.ok) {
-          throw new Error(
-            "Unable to fetch orders."
-          );
+          throw new Error("Unable to fetch orders.");
         }
 
-        const data =
-          await response.json();
+        const data = await response.json();
 
-        console.log(
-          "ADMIN ORDERS:",
-          data
-        );
-
-        /*
-         * API MAY RETURN:
-         *
-         * [
-         *   ...
-         * ]
-         *
-         * OR
-         *
-         * {
-         *   orders: [...]
-         * }
-         */
+        console.log("ADMIN ORDERS:", data);
 
         let fetchedOrders = [];
 
-        if (
-          Array.isArray(data)
-        ) {
+        if (Array.isArray(data)) {
           fetchedOrders = data;
-        } else if (
-          Array.isArray(
-            data?.orders
-          )
-        ) {
-          fetchedOrders =
-            data.orders;
+        } else if (Array.isArray(data?.orders)) {
+          fetchedOrders = data.orders;
         }
 
         if (!cancelled) {
-          setOrders(
-            fetchedOrders
-          );
+          setOrders(fetchedOrders);
         }
       } catch (error) {
-        console.error(
-          "ADMIN ORDERS ERROR:",
-          error
-        );
+        console.error("ADMIN ORDERS ERROR:", error);
 
         if (!cancelled) {
           setOrders([]);
@@ -148,17 +95,6 @@ const AdminOrders = () => {
         }
       }
     };
-
-    /*
-     * Run initial fetch.
-     *
-     * The function is declared inside
-     * the effect, so there is no:
-     *
-     * react-hooks/exhaustive-deps
-     *
-     * warning.
-     */
 
     fetchOrders();
 
@@ -175,89 +111,140 @@ const AdminOrders = () => {
     try {
       setRefreshing(true);
 
-      const token =
-        localStorage.getItem(
-          "mamta_admin_token"
-        );
+      const token = localStorage.getItem("mamta_admin_token");
 
       if (!token) {
         navigate("/admin/login");
         return;
       }
 
-      const response = await fetch(
-        API_URL,
-        {
-          method: "GET",
+      const response = await fetch(API_URL, {
+        method: "GET",
+        headers: {
+          Authorization: `Bearer ${token}`,
+          "Content-Type": "application/json",
+        },
+      });
 
-          headers: {
-            Authorization:
-              `Bearer ${token}`,
-            "Content-Type":
-              "application/json",
-          },
-        }
-      );
-
-      /*
-       * UNAUTHORIZED
-       */
-
-      if (
-        response.status === 401
-      ) {
-        localStorage.removeItem(
-          "mamta_admin_token"
-        );
+      if (response.status === 401) {
+        localStorage.removeItem("mamta_admin_token");
 
         navigate("/admin/login");
 
         return;
       }
 
-      /*
-       * API ERROR
-       */
-
       if (!response.ok) {
-        throw new Error(
-          "Unable to refresh orders."
-        );
+        throw new Error("Unable to refresh orders.");
       }
 
-      const data =
-        await response.json();
+      const data = await response.json();
 
-      console.log(
-        "REFRESHED ADMIN ORDERS:",
-        data
-      );
+      console.log("REFRESHED ADMIN ORDERS:", data);
 
       let refreshedOrders = [];
 
-      if (
-        Array.isArray(data)
-      ) {
+      if (Array.isArray(data)) {
         refreshedOrders = data;
-      } else if (
-        Array.isArray(
-          data?.orders
-        )
-      ) {
-        refreshedOrders =
-          data.orders;
+      } else if (Array.isArray(data?.orders)) {
+        refreshedOrders = data.orders;
       }
 
-      setOrders(
-        refreshedOrders
-      );
+      setOrders(refreshedOrders);
     } catch (error) {
-      console.error(
-        "REFRESH ORDERS ERROR:",
-        error
-      );
+      console.error("REFRESH ORDERS ERROR:", error);
     } finally {
       setRefreshing(false);
+    }
+  };
+
+  /* =========================================================
+     DELETE ORDER
+  ========================================================= */
+
+  const handleDeleteOrder = async (orderId) => {
+    if (!orderId) {
+      return;
+    }
+
+    const confirmed = window.confirm(
+      "Are you sure you want to delete this order? This action cannot be undone."
+    );
+
+    if (!confirmed) {
+      return;
+    }
+
+    try {
+      setDeletingOrderId(orderId);
+
+      const token = localStorage.getItem("mamta_admin_token");
+
+      if (!token) {
+        navigate("/admin/login");
+        return;
+      }
+
+      const response = await fetch(`${API_URL}/${orderId}`, {
+        method: "DELETE",
+
+        headers: {
+          Authorization: `Bearer ${token}`,
+          "Content-Type": "application/json",
+        },
+      });
+
+      /* =====================================================
+         UNAUTHORIZED
+      ====================================================== */
+
+      if (response.status === 401) {
+        localStorage.removeItem("mamta_admin_token");
+
+        navigate("/admin/login");
+
+        return;
+      }
+
+      /* =====================================================
+         DELETE ERROR
+      ====================================================== */
+
+      if (!response.ok) {
+        let errorMessage = "Unable to delete order.";
+
+        try {
+          const errorData = await response.json();
+
+          errorMessage =
+            errorData?.message || errorMessage;
+        } catch {
+          // Ignore invalid JSON response
+        }
+
+        throw new Error(errorMessage);
+      }
+
+      /* =====================================================
+         REMOVE FROM UI
+      ====================================================== */
+
+      setOrders((currentOrders) =>
+        currentOrders.filter(
+          (order) =>
+            String(order._id || order.id) !== String(orderId)
+        )
+      );
+
+      console.log("ORDER DELETED:", orderId);
+
+      alert("Order deleted successfully.");
+    } catch (error) {
+      console.error("DELETE ORDER ERROR:", error);
+
+      alert(error.message || "Unable to delete order.");
+    } finally {
+      setDeletingOrderId(null);
     }
   };
 
@@ -265,78 +252,56 @@ const AdminOrders = () => {
      FILTER ORDERS
   ========================================================= */
 
-  const filteredOrders =
-    orders.filter(
-      (order) => {
-        const searchValue =
-          search
-            .trim()
-            .toLowerCase();
+  const filteredOrders = orders.filter((order) => {
+    const searchValue = search.trim().toLowerCase();
 
-        const customerName =
-          order.customer?.name ||
-          order.name ||
-          order.customerName ||
-          "";
+    const customerName =
+      order.customer?.name ||
+      order.name ||
+      order.customerName ||
+      "";
 
-        const customerEmail =
-          order.customer?.email ||
-          order.email ||
-          "";
+    const customerEmail =
+      order.customer?.email ||
+      order.email ||
+      "";
 
-        const orderId =
-          order._id ||
-          order.id ||
-          "";
+    const orderId = order._id || order.id || "";
 
-        const matchesSearch =
-          !searchValue ||
-          String(
-            customerName
-          )
-            .toLowerCase()
-            .includes(
-              searchValue
-            ) ||
-          String(
-            customerEmail
-          )
-            .toLowerCase()
-            .includes(
-              searchValue
-            ) ||
-          String(
-            orderId
-          )
-            .toLowerCase()
-            .includes(
-              searchValue
-            );
+    const matchesSearch =
+      !searchValue ||
+      String(customerName)
+        .toLowerCase()
+        .includes(searchValue) ||
+      String(customerEmail)
+        .toLowerCase()
+        .includes(searchValue) ||
+      String(orderId)
+        .toLowerCase()
+        .includes(searchValue);
 
-        const orderStatus =
-          order.status ||
-          "Pending";
+    /* =====================================================
+       IMPORTANT:
+       BACKEND USES orderStatus
+       ===================================================== */
 
-        const matchesStatus =
-          statusFilter ===
-            "All" ||
-          orderStatus ===
-            statusFilter;
+    const orderStatus =
+      order.orderStatus ||
+      order.status ||
+      "Pending";
 
-        return (
-          matchesSearch &&
-          matchesStatus
-        );
-      }
-    );
+    const matchesStatus =
+      statusFilter === "All" ||
+      orderStatus === statusFilter;
+
+    return matchesSearch && matchesStatus;
+  });
 
   /* =========================================================
      HELPERS
   ========================================================= */
 
-  const getCustomerName = (
-    order
-  ) => {
+  const getCustomerName = (order) => {
     return (
       order.customer?.name ||
       order.name ||
@@ -345,9 +310,7 @@ const AdminOrders = () => {
     );
   };
 
-  const getCustomerEmail = (
-    order
-  ) => {
+  const getCustomerEmail = (order) => {
     return (
       order.customer?.email ||
       order.email ||
@@ -364,9 +327,7 @@ const AdminOrders = () => {
     );
   };
 
-  const getPaymentMethod = (
-    order
-  ) => {
+  const getPaymentMethod = (order) => {
     return (
       order.paymentMethod ||
       order.payment?.method ||
@@ -374,8 +335,16 @@ const AdminOrders = () => {
     );
   };
 
+  /* =========================================================
+     STATUS
+     
+     IMPORTANT:
+     Backend stores status in `orderStatus`
+     ========================================================= */
+
   const getStatus = (order) => {
     return (
+      order.orderStatus ||
       order.status ||
       "Pending"
     );
@@ -392,9 +361,7 @@ const AdminOrders = () => {
     }
 
     try {
-      return new Date(
-        date
-      ).toLocaleDateString(
+      return new Date(date).toLocaleDateString(
         "en-PK",
         {
           day: "2-digit",
@@ -407,23 +374,14 @@ const AdminOrders = () => {
     }
   };
 
-  const getItemCount = (
-    order
-  ) => {
-    if (
-      !Array.isArray(
-        order.items
-      )
-    ) {
+  const getItemCount = (order) => {
+    if (!Array.isArray(order.items)) {
       return 0;
     }
 
     return order.items.reduce(
       (total, item) =>
-        total +
-        Number(
-          item.quantity || 0
-        ),
+        total + Number(item.quantity || 0),
       0
     );
   };
@@ -432,14 +390,8 @@ const AdminOrders = () => {
      GET COLORS
   ========================================================= */
 
-  const getOrderColors = (
-    order
-  ) => {
-    if (
-      !Array.isArray(
-        order.items
-      )
-    ) {
+  const getOrderColors = (order) => {
+    if (!Array.isArray(order.items)) {
       return [];
     }
 
@@ -449,9 +401,7 @@ const AdminOrders = () => {
           return null;
         }
 
-        return String(
-          item.color
-        );
+        return String(item.color);
       })
       .filter(Boolean);
   };
@@ -460,31 +410,22 @@ const AdminOrders = () => {
      STATUS CLASS
   ========================================================= */
 
-  const getStatusClass = (
-    status
-  ) => {
+  const getStatusClass = (status) => {
     return String(status)
       .toLowerCase()
-      .replace(
-        /\s+/g,
-        "-"
-      );
+      .replace(/\s+/g, "-");
   };
 
   /* =========================================================
      OPEN ORDER
   ========================================================= */
 
-  const handleViewOrder = (
-    orderId
-  ) => {
+  const handleViewOrder = (orderId) => {
     if (!orderId) {
       return;
     }
 
-    navigate(
-      `/admin/orders/${orderId}`
-    );
+    navigate(`/admin/orders/${orderId}`);
   };
 
   /* =========================================================
@@ -494,20 +435,14 @@ const AdminOrders = () => {
   if (loading) {
     return (
       <div className="admin-orders-page">
-
         <div className="admin-orders-loading">
-
           <RefreshCw
             size={28}
             className="admin-orders-spinner"
           />
 
-          <p>
-            Loading orders...
-          </p>
-
+          <p>Loading orders...</p>
         </div>
-
       </div>
     );
   }
@@ -526,33 +461,23 @@ const AdminOrders = () => {
       <div className="admin-orders-header">
 
         <div>
-
           <span className="admin-orders-eyebrow">
             MAMTA ADMIN
           </span>
 
-          <h1>
-            Orders
-          </h1>
+          <h1>Orders</h1>
 
           <p>
             Manage and review customer orders.
           </p>
-
         </div>
-
 
         <button
           type="button"
           className="admin-refresh-button"
-          onClick={
-            handleRefresh
-          }
-          disabled={
-            refreshing
-          }
+          onClick={handleRefresh}
+          disabled={refreshing}
         >
-
           <RefreshCw
             size={17}
             className={
@@ -565,19 +490,14 @@ const AdminOrders = () => {
           {refreshing
             ? "Refreshing..."
             : "Refresh"}
-
         </button>
-
       </div>
-
 
       {/* =====================================================
           FILTER BAR
       ====================================================== */}
 
       <div className="admin-orders-toolbar">
-
-        {/* SEARCH */}
 
         <div className="admin-orders-search">
 
@@ -588,38 +508,31 @@ const AdminOrders = () => {
             placeholder="Search orders, customer name or email..."
             value={search}
             onChange={(event) =>
-              setSearch(
-                event.target.value
-              )
+              setSearch(event.target.value)
             }
           />
-
         </div>
-
-
-        {/* STATUS */}
 
         <div className="admin-orders-filter">
 
           <Filter size={17} />
 
           <select
-            value={
-              statusFilter
-            }
+            value={statusFilter}
             onChange={(event) =>
-              setStatusFilter(
-                event.target.value
-              )
+              setStatusFilter(event.target.value)
             }
           >
-
             <option value="All">
               All Status
             </option>
 
             <option value="Pending">
               Pending
+            </option>
+
+            <option value="Confirmed">
+              Confirmed
             </option>
 
             <option value="Processing">
@@ -637,13 +550,9 @@ const AdminOrders = () => {
             <option value="Cancelled">
               Cancelled
             </option>
-
           </select>
-
         </div>
-
       </div>
-
 
       {/* =====================================================
           ORDER COUNT
@@ -654,9 +563,7 @@ const AdminOrders = () => {
         Showing{" "}
 
         <strong>
-          {
-            filteredOrders.length
-          }
+          {filteredOrders.length}
         </strong>
 
         {" "}of{" "}
@@ -669,23 +576,19 @@ const AdminOrders = () => {
 
       </div>
 
-
       {/* =====================================================
           TABLE
       ====================================================== */}
 
       <div className="admin-orders-table-wrapper">
 
-        {filteredOrders.length ===
-        0 ? (
+        {filteredOrders.length === 0 ? (
 
           <div className="admin-orders-empty">
 
             <div className="admin-orders-empty-icon">
 
-              <ShoppingBag
-                size={28}
-              />
+              <ShoppingBag size={28} />
 
             </div>
 
@@ -743,14 +646,10 @@ const AdminOrders = () => {
 
             </thead>
 
-
             <tbody>
 
               {filteredOrders.map(
-                (
-                  order,
-                  index
-                ) => {
+                (order, index) => {
 
                   const orderId =
                     order._id ||
@@ -758,19 +657,24 @@ const AdminOrders = () => {
                     "";
 
                   const colors =
-                    getOrderColors(
-                      order
-                    );
+                    getOrderColors(order);
 
                   const itemCount =
-                    getItemCount(
-                      order
-                    );
+                    getItemCount(order);
+
+                  /* =================================================
+                     IMPORTANT:
+                     ALWAYS GET CURRENT STATUS FROM orderStatus
+                  ================================================== */
 
                   const status =
-                    getStatus(
-                      order
-                    );
+                    getStatus(order);
+
+                  const isDeleting =
+                    String(
+                      deletingOrderId
+                    ) ===
+                    String(orderId);
 
                   return (
 
@@ -781,7 +685,9 @@ const AdminOrders = () => {
                       }
                     >
 
-                      {/* ORDER */}
+                      {/* =================================================
+                          ORDER
+                      ================================================== */}
 
                       <td>
 
@@ -799,8 +705,9 @@ const AdminOrders = () => {
 
                       </td>
 
-
-                      {/* CUSTOMER */}
+                      {/* =================================================
+                          CUSTOMER
+                      ================================================== */}
 
                       <td>
 
@@ -826,38 +733,27 @@ const AdminOrders = () => {
 
                       </td>
 
-
-                      {/* ITEMS */}
+                      {/* =================================================
+                          ITEMS
+                      ================================================== */}
 
                       <td>
 
                         <div className="admin-order-items-cell">
 
                           <strong>
-                            {
-                              itemCount
-                            }{" "}
-                            {
-                              itemCount ===
-                              1
-                                ? "item"
-                                : "items"
-                            }
+                            {itemCount}{" "}
+                            {itemCount === 1
+                              ? "item"
+                              : "items"}
                           </strong>
 
-
-                          {/* COLOR PREVIEW */}
-
-                          {colors.length >
-                            0 && (
+                          {colors.length > 0 && (
 
                             <div className="admin-order-colors-preview">
 
                               {colors
-                                .slice(
-                                  0,
-                                  2
-                                )
+                                .slice(0, 2)
                                 .map(
                                   (
                                     color,
@@ -871,18 +767,14 @@ const AdminOrders = () => {
 
                                       <span className="admin-order-color-dot"></span>
 
-                                      {
-                                        color
-                                      }
+                                      {color}
 
                                     </span>
 
                                   )
                                 )}
 
-
-                              {colors.length >
-                                2 && (
+                              {colors.length > 2 && (
 
                                 <span className="admin-order-more-colors">
 
@@ -904,8 +796,9 @@ const AdminOrders = () => {
 
                       </td>
 
-
-                      {/* TOTAL */}
+                      {/* =================================================
+                          TOTAL
+                      ================================================== */}
 
                       <td>
 
@@ -913,18 +806,17 @@ const AdminOrders = () => {
 
                           Rs.{" "}
 
-                          {
-                            getTotal(
-                              order
-                            ).toLocaleString()
-                          }
+                          {getTotal(
+                            order
+                          ).toLocaleString()}
 
                         </strong>
 
                       </td>
 
-
-                      {/* PAYMENT */}
+                      {/* =================================================
+                          PAYMENT
+                      ================================================== */}
 
                       <td>
 
@@ -940,8 +832,9 @@ const AdminOrders = () => {
 
                       </td>
 
-
-                      {/* STATUS */}
+                      {/* =================================================
+                          STATUS
+                      ================================================== */}
 
                       <td>
 
@@ -957,8 +850,9 @@ const AdminOrders = () => {
 
                       </td>
 
-
-                      {/* DATE */}
+                      {/* =================================================
+                          DATE
+                      ================================================== */}
 
                       <td>
 
@@ -974,28 +868,60 @@ const AdminOrders = () => {
 
                       </td>
 
-
-                      {/* ACTION */}
+                      {/* =================================================
+                          ACTION
+                      ================================================== */}
 
                       <td>
 
-                        <button
-                          type="button"
-                          className="admin-view-order-button"
-                          onClick={() =>
-                            handleViewOrder(
-                              orderId
-                            )
-                          }
-                        >
+                        <div className="admin-order-actions">
 
-                          <Eye
-                            size={16}
-                          />
+                          {/* VIEW */}
 
-                          View
+                          <button
+                            type="button"
+                            className="admin-view-order-button"
+                            onClick={() =>
+                              handleViewOrder(
+                                orderId
+                              )
+                            }
+                            disabled={
+                              isDeleting
+                            }
+                          >
 
-                        </button>
+                            <Eye size={16} />
+
+                            View
+
+                          </button>
+
+                          {/* DELETE */}
+
+                          <button
+                            type="button"
+                            className="admin-delete-order-button"
+                            onClick={() =>
+                              handleDeleteOrder(
+                                orderId
+                              )
+                            }
+                            disabled={
+                              isDeleting
+                            }
+                            title="Delete order"
+                          >
+
+                            <Trash2 size={16} />
+
+                            {isDeleting
+                              ? "Deleting..."
+                              : "Delete"}
+
+                          </button>
+
+                        </div>
 
                       </td>
 

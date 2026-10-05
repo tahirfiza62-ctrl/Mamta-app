@@ -33,6 +33,298 @@ console.log("🔥 CUSTOMER PRODUCT DETAILS FILE LOADED");
 
 const API_URL = "http://localhost:3000/api";
 
+const PLACEHOLDER_IMAGE =
+  "https://placehold.co/900x900/F4D9DC/4A3032?text=MAMTA";
+
+const THUMBNAIL_PLACEHOLDER =
+  "https://placehold.co/200x200/F4D9DC/4A3032?text=MAMTA";
+
+/* =========================================================
+   COLOR MAP
+========================================================= */
+
+const COLOR_MAP = {
+  pink: "#F4A6B8",
+  "blush-pink": "#E8A0A8",
+  "dusty-rose": "#C98B91",
+  rose: "#D96C7B",
+  mauve: "#B7848C",
+
+  lavender: "#B8A1D9",
+  purple: "#8B5CF6",
+  lilac: "#C8A2E8",
+
+  blue: "#6FA8DC",
+  "baby-blue": "#A7D8F0",
+  "sky-blue": "#87CEEB",
+  "navy-blue": "#243B53",
+  "royal-blue": "#4169E1",
+
+  teal: "#4DB6AC",
+  mint: "#A8D5BA",
+  green: "#6FAF7B",
+  "sage-green": "#A3B18A",
+  olive: "#808000",
+
+  cream: "#FFF1D0",
+  ivory: "#FFFFF0",
+  white: "#FFFFFF",
+  "off-white": "#F8F5F0",
+
+  beige: "#D8C3A5",
+  nude: "#D8A98B",
+  camel: "#C19A6B",
+
+  brown: "#8B5E3C",
+  chocolate: "#5C4033",
+
+  grey: "#9E9E9E",
+  "light-grey": "#D3D3D3",
+  charcoal: "#36454F",
+  black: "#111111",
+
+  yellow: "#F4D35E",
+  mustard: "#D4A017",
+  orange: "#F28C28",
+  peach: "#FFCBA4",
+  coral: "#FF7F7F",
+
+  red: "#D71920",
+  maroon: "#800000",
+  wine: "#722F37",
+  burgundy: "#800020",
+
+  turquoise: "#40E0D0",
+  "sea-green": "#2E8B57",
+  "peacock-blue": "#007C91",
+  denim: "#1560BD",
+
+  terracotta: "#C76B4A",
+  khaki: "#C3B091",
+};
+
+/* =========================================================
+   HELPER FUNCTIONS
+========================================================= */
+
+const normalizeImage = (image) => {
+  if (typeof image === "string") {
+    return image.trim();
+  }
+
+  if (
+    typeof image === "object" &&
+    image !== null
+  ) {
+    const url =
+      image.url ||
+      image.image ||
+      image.src ||
+      "";
+
+    return typeof url === "string"
+      ? url.trim()
+      : "";
+  }
+
+  return "";
+};
+
+/* =========================================================
+   COLOR VALUE
+========================================================= */
+
+const getColorValue = (color) => {
+  if (!color) {
+    return "";
+  }
+
+  if (typeof color === "object") {
+    return (
+      color.value ||
+      color.name ||
+      color.colorName ||
+      color.label ||
+      ""
+    );
+  }
+
+  return String(color);
+};
+
+/* =========================================================
+   COLOR NAME
+========================================================= */
+
+const getColorName = (color) => {
+  if (!color) {
+    return "";
+  }
+
+  if (typeof color === "object") {
+    return (
+      color.name ||
+      color.colorName ||
+      color.label ||
+      color.value ||
+      ""
+    );
+  }
+
+  return String(color);
+};
+
+/* =========================================================
+   COLOR CODE
+========================================================= */
+
+const getColorCode = (color) => {
+  if (!color) {
+    return "#d8c4c7";
+  }
+
+  if (typeof color === "object") {
+    return (
+      color.code ||
+      color.colorCode ||
+      color.hex ||
+      "#d8c4c7"
+    );
+  }
+
+  const normalized = String(color)
+    .toLowerCase()
+    .trim()
+    .replace(/\s+/g, "-");
+
+  return (
+    COLOR_MAP[normalized] ||
+    "#d8c4c7"
+  );
+};
+
+/* =========================================================
+   PRODUCT COLORS
+========================================================= */
+
+const getProductColors = (product) => {
+  if (!product) {
+    return [];
+  }
+
+  if (Array.isArray(product.colors)) {
+    return product.colors.slice(0, 10);
+  }
+
+  return [];
+};
+
+/* =========================================================
+   COLOR IMAGES
+========================================================= */
+
+const getColorImages = (color) => {
+  if (!color || typeof color !== "object") {
+    return [];
+  }
+
+  const images = [];
+
+  /* SINGLE COLOR IMAGE */
+
+  if (
+    typeof color.image === "string" &&
+    color.image.trim()
+  ) {
+    images.push(
+      color.image.trim()
+    );
+  }
+
+  /* COLOR IMAGE ARRAY */
+
+  if (Array.isArray(color.images)) {
+    color.images.forEach((image) => {
+      const imageUrl =
+        normalizeImage(image);
+
+      if (
+        imageUrl &&
+        !images.includes(imageUrl)
+      ) {
+        images.push(imageUrl);
+      }
+    });
+  }
+
+  return [
+    ...new Set(
+      images.filter(Boolean)
+    ),
+  ].slice(0, 10);
+};
+
+/* =========================================================
+   NORMAL PRODUCT SLIDER IMAGES
+
+   Main image + additional images
+
+   Example:
+   product.image
+   product.images[0]
+   product.images[1]
+   product.images[2]
+   product.images[3]
+
+   = automatic slider
+
+   These are NOT side thumbnails.
+========================================================= */
+
+const getProductSliderImages = (product) => {
+  if (!product) {
+    return [];
+  }
+
+  const images = [];
+
+  /* MAIN IMAGE FIRST */
+
+  const mainImage =
+    normalizeImage(
+      product.image
+    );
+
+  if (mainImage) {
+    images.push(mainImage);
+  }
+
+  /* ADDITIONAL IMAGES */
+
+  if (Array.isArray(product.images)) {
+    product.images.forEach((image) => {
+      const imageUrl =
+        normalizeImage(image);
+
+      if (
+        imageUrl &&
+        !images.includes(imageUrl)
+      ) {
+        images.push(imageUrl);
+      }
+    });
+  }
+
+  /*
+     MAIN IMAGE + MAX 4 ADDITIONAL
+     = MAX 5 SLIDER IMAGES
+  */
+
+  return [
+    ...new Set(images),
+  ].slice(0, 5);
+};
+
 /* =========================================================
    PRODUCT DETAILS
 ========================================================= */
@@ -55,9 +347,24 @@ const ProductDetails = () => {
 
   const [wishlist, setWishlist] = useState(false);
 
-  const [selectedColor, setSelectedColor] = useState("");
+  const [selectedColor, setSelectedColor] =
+    useState("");
 
-  const [selectedImage, setSelectedImage] = useState("");
+  const [selectedImage, setSelectedImage] =
+    useState("");
+
+  const [currentImageIndex, setCurrentImageIndex] =
+    useState(0);
+
+  /*
+     TRUE = user is viewing a
+     color-specific image.
+
+     Normal product slider pauses.
+  */
+
+  const [isColorImageSelected, setIsColorImageSelected] =
+    useState(false);
 
   /* =======================================================
      FETCH PRODUCT
@@ -68,10 +375,18 @@ const ProductDetails = () => {
       try {
         setLoading(true);
 
-        console.log("====================================");
-        console.log("FETCHING PRODUCT:");
-        console.log(`${API_URL}/products/${id}`);
-        console.log("====================================");
+        console.log(
+          "===================================="
+        );
+
+        console.log(
+          "FETCHING PRODUCT:",
+          `${API_URL}/products/${id}`
+        );
+
+        console.log(
+          "===================================="
+        );
 
         const response = await axios.get(
           `${API_URL}/products/${id}`,
@@ -97,6 +412,11 @@ const ProductDetails = () => {
         console.log(
           "🎨 PRODUCT COLORS:",
           productData?.colors
+        );
+
+        console.log(
+          "🖼️ ADDITIONAL IMAGES:",
+          productData?.images
         );
 
         if (productData?._id) {
@@ -147,378 +467,286 @@ const ProductDetails = () => {
   }, [id]);
 
   /* =======================================================
-     COLOR VALUE
+     DERIVED PRODUCT DATA
+
+     These are normal calculated values instead of useMemo.
+
+     This removes the exhaustive-deps errors caused by
+     getProductColors being recreated on every render.
   ======================================================== */
 
-  const getColorValue = (color) => {
-    if (!color) {
-      return "";
-    }
+  const productColors =
+    getProductColors(product);
 
-    if (typeof color === "object") {
-      return (
-        color.value ||
-        color.name ||
-        color.colorName ||
-        color.label ||
-        ""
-      );
-    }
+  const productImages =
+    getProductSliderImages(product);
 
-    return String(color);
-  };
-
-  /* =======================================================
-     COLOR NAME
-  ======================================================== */
-
-  const getColorName = (color) => {
-    if (!color) {
-      return "";
-    }
-
-    if (typeof color === "object") {
-      return (
-        color.name ||
-        color.colorName ||
-        color.label ||
-        color.value ||
-        ""
-      );
-    }
-
-    return String(color);
-  };
-
-  /* =======================================================
-     COLOR CODE
-  ======================================================== */
-
-  const getColorCode = (color) => {
-    if (!color) {
-      return "#d8c4c7";
-    }
-
-    if (typeof color === "object") {
-      return (
-        color.code ||
-        color.colorCode ||
-        color.hex ||
-        "#d8c4c7"
-      );
-    }
-
-    const colorMap = {
-      pink: "#F4A6B8",
-      "blush-pink": "#E8A0A8",
-      "dusty-rose": "#C98B91",
-      rose: "#D96C7B",
-      mauve: "#B7848C",
-
-      lavender: "#B8A1D9",
-      purple: "#8B5CF6",
-      lilac: "#C8A2E8",
-
-      blue: "#6FA8DC",
-      "baby-blue": "#A7D8F0",
-      "sky-blue": "#87CEEB",
-      "navy-blue": "#243B53",
-      "royal-blue": "#4169E1",
-
-      teal: "#4DB6AC",
-      mint: "#A8D5BA",
-      green: "#6FAF7B",
-      "sage-green": "#A3B18A",
-      olive: "#808000",
-
-      cream: "#FFF1D0",
-      ivory: "#FFFFF0",
-      white: "#FFFFFF",
-      "off-white": "#F8F5F0",
-
-      beige: "#D8C3A5",
-      nude: "#D8A98B",
-      camel: "#C19A6B",
-
-      brown: "#8B5E3C",
-      chocolate: "#5C4033",
-
-      grey: "#9E9E9E",
-      "light-grey": "#D3D3D3",
-      charcoal: "#36454F",
-      black: "#111111",
-
-      yellow: "#F4D35E",
-      mustard: "#D4A017",
-      orange: "#F28C28",
-      peach: "#FFCBA4",
-      coral: "#FF7F7F",
-
-      red: "#D71920",
-      maroon: "#800000",
-      wine: "#722F37",
-      burgundy: "#800020",
-
-      turquoise: "#40E0D0",
-      "sea-green": "#2E8B57",
-      "peacock-blue": "#007C91",
-      denim: "#1560BD",
-
-      terracotta: "#C76B4A",
-      khaki: "#C3B091",
-    };
-
-    const normalized = String(color)
-      .toLowerCase()
-      .trim()
-      .replace(/\s+/g, "-");
-
-    return (
-      colorMap[normalized] ||
-      "#d8c4c7"
+  const mainProductImage =
+    normalizeImage(
+      product?.image
     );
-  };
-
-  /* =======================================================
-     PRODUCT COLORS
-  ======================================================== */
-
-  const getProductColors = () => {
-    if (!product) {
-      return [];
-    }
-
-    if (
-      Array.isArray(product.colors)
-    ) {
-      return product.colors.slice(0, 10);
-    }
-
-    return [];
-  };
-
-  /* =======================================================
-     COLOR IMAGES
-  ======================================================== */
-
-  const getColorImages = (color) => {
-    if (!color) {
-      return [];
-    }
-
-    if (
-      typeof color === "object"
-    ) {
-      const images = [];
-
-      /*
-         SINGLE IMAGE
-      */
-
-      if (
-        typeof color.image ===
-          "string" &&
-        color.image.trim() !== ""
-      ) {
-        images.push(
-          color.image.trim()
-        );
-      }
-
-      /*
-         IMAGE ARRAY
-      */
-
-      if (
-        Array.isArray(
-          color.images
-        )
-      ) {
-        color.images.forEach(
-          (image) => {
-            if (
-              typeof image ===
-              "string"
-            ) {
-              const cleanImage =
-                image.trim();
-
-              if (
-                cleanImage &&
-                !images.includes(
-                  cleanImage
-                )
-              ) {
-                images.push(
-                  cleanImage
-                );
-              }
-
-              return;
-            }
-
-            if (
-              typeof image ===
-                "object" &&
-              image !== null
-            ) {
-              const imageUrl =
-                image.url ||
-                image.image ||
-                image.src ||
-                "";
-
-              if (
-                imageUrl &&
-                !images.includes(
-                  imageUrl
-                )
-              ) {
-                images.push(
-                  imageUrl
-                );
-              }
-            }
-          }
-        );
-      }
-
-      return images
-        .filter(Boolean)
-        .slice(0, 10);
-    }
-
-    return [];
-  };
-
-  /* =======================================================
-     NORMAL PRODUCT IMAGES
-  ======================================================== */
-
-  const getProductImages = () => {
-    if (!product) {
-      return [];
-    }
-
-    let images = [];
-
-    if (
-      Array.isArray(
-        product.images
-      )
-    ) {
-      images =
-        product.images
-          .map((image) => {
-            if (
-              typeof image ===
-              "string"
-            ) {
-              return image.trim();
-            }
-
-            if (
-              typeof image ===
-                "object" &&
-              image !== null
-            ) {
-              return (
-                image.url ||
-                image.image ||
-                image.src ||
-                ""
-              );
-            }
-
-            return "";
-          })
-          .filter(Boolean);
-    }
-
-    if (
-      product.image &&
-      !images.includes(
-        product.image
-      )
-    ) {
-      images.unshift(
-        product.image
-      );
-    }
-
-    return images
-      .filter(Boolean)
-      .slice(0, 4);
-  };
 
   /* =======================================================
      COLOR GALLERY
+
+     ONLY color-specific images appear
+     as side thumbnails.
+
+     Normal additional images DO NOT
+     appear here.
   ======================================================== */
 
-  const getColorGallery = () => {
-    const colors =
-      getProductColors();
+  const colorGallery = product
+    ? productColors
+        .map((color) => {
+          const images =
+            getColorImages(color);
 
-    return colors
-      .map((color) => {
-        const images =
-          getColorImages(
-            color
-          );
+          if (images.length === 0) {
+            return null;
+          }
 
-        if (
-          images.length === 0
-        ) {
-          return null;
-        }
+          /*
+             Do not duplicate main product
+             image inside color gallery.
+          */
 
-        return {
-          color,
-          image: images[0],
-          images,
-          value:
-            getColorValue(
-              color
-            ),
-          name:
-            getColorName(
-              color
-            ),
-        };
-      })
-      .filter(Boolean)
-      .slice(0, 10);
-  };
+          const uniqueColorImages =
+            images.filter(
+              (image) =>
+                image !==
+                mainProductImage
+            );
+
+          if (
+            uniqueColorImages.length === 0
+          ) {
+            return null;
+          }
+
+          return {
+            color,
+            image:
+              uniqueColorImages[0],
+            images:
+              uniqueColorImages,
+            value:
+              getColorValue(color),
+            name:
+              getColorName(color),
+          };
+        })
+        .filter(Boolean)
+        .slice(0, 10)
+    : [];
 
   /* =======================================================
      ACTIVE COLOR
   ======================================================== */
 
-  const getActiveColor = () => {
-    const colors =
-      getProductColors();
-
-    return colors.find(
+  const activeColor =
+    productColors.find(
       (color) => {
         const value =
-          getColorValue(
-            color
-          );
+          getColorValue(color);
 
         const name =
-          getColorName(
-            color
-          );
+          getColorName(color);
 
         return (
-          value ===
-            selectedColor ||
-          name ===
-            selectedColor
+          value === selectedColor ||
+          name === selectedColor
         );
       }
     );
-  };
+
+  /* =======================================================
+     DEFAULT IMAGE WHEN PRODUCT LOADS
+
+     IMPORTANT:
+     State updates are inside setTimeout,
+     not directly inside the effect body.
+
+     This removes:
+     react-hooks/set-state-in-effect
+  ======================================================== */
+
+  useEffect(() => {
+    if (!product) {
+      return;
+    }
+
+    const firstImage =
+      getProductSliderImages(
+        product
+      )[0] ||
+      normalizeImage(
+        product.image
+      ) ||
+      "";
+
+    const colors =
+      getProductColors(product);
+
+    const firstColor =
+      colors[0];
+
+    const firstColorValue =
+      firstColor
+        ? getColorValue(
+            firstColor
+          )
+        : "";
+
+    const timeoutId =
+      setTimeout(() => {
+        setSelectedImage(
+          firstImage
+        );
+
+        setCurrentImageIndex(0);
+
+        setIsColorImageSelected(
+          false
+        );
+
+        if (firstColorValue) {
+          setSelectedColor(
+            firstColorValue
+          );
+        } else {
+          setSelectedColor("");
+        }
+      }, 0);
+
+    return () => {
+      clearTimeout(
+        timeoutId
+      );
+    };
+  }, [product]);
+
+  /* =======================================================
+     AUTOMATIC IMAGE SLIDER
+
+     Main image + additional images
+     automatically change every 3 seconds.
+  ======================================================== */
+
+  useEffect(() => {
+    if (!product) {
+      return;
+    }
+
+    const images =
+      getProductSliderImages(
+        product
+      );
+
+    if (images.length <= 1) {
+      return;
+    }
+
+    /*
+       Color-specific image selected:
+       pause normal slider.
+    */
+
+    if (isColorImageSelected) {
+      return;
+    }
+
+    console.log(
+      "🎞️ AUTOMATIC IMAGE SLIDER STARTED"
+    );
+
+    const intervalId =
+      setInterval(() => {
+        setCurrentImageIndex(
+          (previousIndex) => {
+            const nextIndex =
+              (previousIndex + 1) %
+              images.length;
+
+            setSelectedImage(
+              images[nextIndex]
+            );
+
+            console.log(
+              "🎞️ AUTO SLIDE:",
+              nextIndex + 1,
+              "/",
+              images.length
+            );
+
+            return nextIndex;
+          }
+        );
+      }, 3000);
+
+    return () => {
+      clearInterval(
+        intervalId
+      );
+
+      console.log(
+        "🎞️ AUTOMATIC IMAGE SLIDER STOPPED"
+      );
+    };
+  }, [
+    product,
+    isColorImageSelected,
+  ]);
+
+  /* =======================================================
+     WISHLIST CHECK
+  ======================================================== */
+
+  useEffect(() => {
+    if (!product?._id) {
+      return;
+    }
+
+    let exists = false;
+
+    try {
+      const savedWishlist =
+        JSON.parse(
+          localStorage.getItem(
+            "mamta_wishlist"
+          )
+        ) || [];
+
+      exists =
+        Array.isArray(
+          savedWishlist
+        ) &&
+        savedWishlist.some(
+          (item) =>
+            (item._id ||
+              item.id) ===
+            product._id
+        );
+    } catch (error) {
+      console.error(
+        "CHECK WISHLIST ERROR:",
+        error
+      );
+
+      exists = false;
+    }
+
+    const timeoutId =
+      setTimeout(() => {
+        setWishlist(exists);
+      }, 0);
+
+    return () => {
+      clearTimeout(
+        timeoutId
+      );
+    };
+  }, [product]);
 
   /* =======================================================
      WHATSAPP
@@ -532,13 +760,13 @@ const ProductDetails = () => {
     const phoneNumber =
       "923431516875";
 
-    const activeColor =
-      getActiveColor();
+    const currentActiveColor =
+      activeColor;
 
     const colorText =
-      activeColor
+      currentActiveColor
         ? `Color: ${getColorName(
-            activeColor
+            currentActiveColor
           )}`
         : "";
 
@@ -565,396 +793,13 @@ I would like to know more about this product.`
   };
 
   /* =======================================================
-     DEFAULT COLOR + IMAGE
-
-     ESLINT SAFE
-  ======================================================== */
-
-  useEffect(() => {
-    if (!product) {
-      return;
-    }
-
-    /*
-       GET COLORS DIRECTLY
-       FROM PRODUCT
-
-       This prevents exhaustive-deps
-       warnings for getProductColors().
-    */
-
-    const colors = Array.isArray(
-      product.colors
-    )
-      ? product.colors.slice(0, 10)
-      : [];
-
-    /*
-       GET PRODUCT IMAGES DIRECTLY
-       FROM PRODUCT
-    */
-
-    let productImages = [];
-
-    if (
-      Array.isArray(
-        product.images
-      )
-    ) {
-      productImages =
-        product.images
-          .map((image) => {
-            if (
-              typeof image ===
-              "string"
-            ) {
-              return image.trim();
-            }
-
-            if (
-              typeof image ===
-                "object" &&
-              image !== null
-            ) {
-              return (
-                image.url ||
-                image.image ||
-                image.src ||
-                ""
-              );
-            }
-
-            return "";
-          })
-          .filter(Boolean);
-    }
-
-    /*
-       ADD MAIN PRODUCT IMAGE
-    */
-
-    if (
-      product.image &&
-      !productImages.includes(
-        product.image
-      )
-    ) {
-      productImages.unshift(
-        product.image
-      );
-    }
-
-    /*
-       MAX 4 NORMAL IMAGES
-    */
-
-    productImages =
-      productImages
-        .filter(Boolean)
-        .slice(0, 4);
-
-    console.log(
-      "===================================="
-    );
-
-    console.log(
-      "🎨 PRODUCT COLOR SETUP"
-    );
-
-    console.log(
-      "🎨 TOTAL COLORS:",
-      colors.length
-    );
-
-    console.log(
-      "🖼️ NORMAL IMAGES:",
-      productImages
-    );
-
-    console.log(
-      "===================================="
-    );
-
-    /*
-       PRODUCT HAS COLORS
-    */
-
-    if (
-      colors.length > 0
-    ) {
-      const firstColor =
-        colors[0];
-
-      /*
-         FIRST COLOR VALUE
-      */
-
-      const firstColorValue =
-        typeof firstColor ===
-        "object"
-          ? (
-              firstColor.value ||
-              firstColor.name ||
-              firstColor.colorName ||
-              firstColor.label ||
-              ""
-            )
-          : String(firstColor);
-
-      /*
-         FIRST COLOR IMAGES
-      */
-
-      const firstColorImages =
-        [];
-
-      if (
-        typeof firstColor ===
-          "object" &&
-        firstColor !== null
-      ) {
-        /*
-           SINGLE IMAGE
-        */
-
-        if (
-          typeof firstColor.image ===
-            "string" &&
-          firstColor.image.trim() !==
-            ""
-        ) {
-          firstColorImages.push(
-            firstColor.image.trim()
-          );
-        }
-
-        /*
-           IMAGE ARRAY
-        */
-
-        if (
-          Array.isArray(
-            firstColor.images
-          )
-        ) {
-          firstColor.images.forEach(
-            (image) => {
-              if (
-                typeof image ===
-                "string"
-              ) {
-                const cleanImage =
-                  image.trim();
-
-                if (
-                  cleanImage &&
-                  !firstColorImages.includes(
-                    cleanImage
-                  )
-                ) {
-                  firstColorImages.push(
-                    cleanImage
-                  );
-                }
-
-                return;
-              }
-
-              if (
-                typeof image ===
-                    "object" &&
-                image !== null
-              ) {
-                const imageUrl =
-                  image.url ||
-                  image.image ||
-                  image.src ||
-                  "";
-
-                if (
-                  imageUrl &&
-                  !firstColorImages.includes(
-                    imageUrl
-                  )
-                ) {
-                  firstColorImages.push(
-                    imageUrl
-                  );
-                }
-              }
-            }
-          );
-        }
-      }
-
-      /*
-         MAX 10 COLOR IMAGES
-      */
-
-      const limitedColorImages =
-        firstColorImages
-          .filter(Boolean)
-          .slice(0, 10);
-
-      /*
-         UPDATE AFTER EFFECT
-      */
-
-      const timeoutId =
-        setTimeout(() => {
-          /*
-             DEFAULT COLOR
-          */
-
-          setSelectedColor(
-            firstColorValue
-          );
-
-          /*
-             NORMAL PRODUCT IMAGE
-             HAS PRIORITY
-          */
-
-          if (
-            productImages.length >
-            0
-          ) {
-            setSelectedImage(
-              productImages[0]
-            );
-
-            console.log(
-              "✅ DEFAULT MAIN IMAGE:",
-              productImages[0]
-            );
-          }
-
-          /*
-             COLOR IMAGE FALLBACK
-          */
-
-          else if (
-            limitedColorImages.length >
-            0
-          ) {
-            setSelectedImage(
-              limitedColorImages[0]
-            );
-
-            console.log(
-              "✅ DEFAULT COLOR IMAGE:",
-              limitedColorImages[0]
-            );
-          }
-
-          /*
-             NOTHING AVAILABLE
-          */
-
-          else {
-            setSelectedImage("");
-          }
-        }, 0);
-
-      return () => {
-        clearTimeout(
-          timeoutId
-        );
-      };
-    }
-
-    /*
-       NO COLORS
-    */
-
-    const timeoutId =
-      setTimeout(() => {
-        setSelectedColor("");
-
-        setSelectedImage(
-          productImages[0] ||
-            product.image ||
-            ""
-        );
-      }, 0);
-
-    return () => {
-      clearTimeout(
-        timeoutId
-      );
-    };
-  }, [product]);
-
-  /* =======================================================
-     WISHLIST CHECK
-  ======================================================== */
-
-  useEffect(() => {
-    if (!product?._id) {
-      return;
-    }
-
-    let cancelled = false;
-
-    const checkWishlist = () => {
-      let exists = false;
-
-      try {
-        const savedWishlist =
-          JSON.parse(
-            localStorage.getItem(
-              "mamta_wishlist"
-            )
-          ) || [];
-
-        exists =
-          Array.isArray(
-            savedWishlist
-          ) &&
-          savedWishlist.some(
-            (item) =>
-              (item._id ||
-                item.id) ===
-              product._id
-          );
-      } catch (error) {
-        console.error(
-          "CHECK WISHLIST ERROR:",
-          error
-        );
-
-        exists = false;
-      }
-
-      const timeoutId =
-        setTimeout(() => {
-          if (!cancelled) {
-            setWishlist(exists);
-          }
-        }, 0);
-
-      return timeoutId;
-    };
-
-    const timeoutId =
-      checkWishlist();
-
-    return () => {
-      cancelled = true;
-
-      if (timeoutId) {
-        clearTimeout(timeoutId);
-      }
-    };
-  }, [product]);
-
-  /* =======================================================
      LOADING
   ======================================================== */
 
   if (loading) {
     return (
       <main className="product-details-page">
+
         <section className="product-not-found">
 
           <div className="product-not-found-icon">
@@ -975,6 +820,7 @@ I would like to know more about this product.`
           </p>
 
         </section>
+
       </main>
     );
   }
@@ -986,6 +832,7 @@ I would like to know more about this product.`
   if (!product) {
     return (
       <main className="product-details-page">
+
         <section className="product-not-found">
 
           <div className="product-not-found-icon">
@@ -1014,45 +861,16 @@ I would like to know more about this product.`
           </Link>
 
         </section>
+
       </main>
     );
   }
 
   /* =======================================================
-     PRODUCT COLORS
-  ======================================================== */
-
-  const productColors =
-    getProductColors();
-
-  /* =======================================================
-     COLOR GALLERY
-  ======================================================== */
-
-  const colorGallery =
-    getColorGallery();
-
-  /* =======================================================
-     NORMAL PRODUCT IMAGES
-  ======================================================== */
-
-  const productImages =
-    getProductImages();
-
-  /* =======================================================
-     ACTIVE COLOR
-  ======================================================== */
-
-  const activeColor =
-    getActiveColor();
-
-  /* =======================================================
      PRICE
   ======================================================== */
 
-  const formatPrice = (
-    price
-  ) => {
+  const formatPrice = (price) => {
     return `Rs. ${Number(
       price || 0
     ).toLocaleString()}`;
@@ -1106,27 +924,23 @@ I would like to know more about this product.`
       "===================================="
     );
 
-    /*
-       SAVE COLOR
-    */
-
     setSelectedColor(
       colorValue
     );
 
     /*
-       COLOR HAS IMAGE
+       Color has its own image.
+       Pause normal slider.
     */
 
     if (
       colorImages.length > 0
     ) {
-      setSelectedImage(
-        colorImages[0]
+      setIsColorImageSelected(
+        true
       );
 
-      console.log(
-        "✅ SELECTED COLOR IMAGE:",
+      setSelectedImage(
         colorImages[0]
       );
 
@@ -1134,17 +948,22 @@ I would like to know more about this product.`
     }
 
     /*
-       COLOR DOES NOT HAVE IMAGE
+       No color-specific image.
+
+       Return to normal product
+       image slider.
     */
+
+    setIsColorImageSelected(
+      false
+    );
+
+    setCurrentImageIndex(0);
 
     setSelectedImage(
       productImages[0] ||
-        product.image ||
+        mainProductImage ||
         ""
-    );
-
-    console.log(
-      "⚠️ COLOR HAS NO IMAGE"
     );
   };
 
@@ -1158,38 +977,8 @@ I would like to know more about this product.`
     const colorValue =
       getColorValue(color);
 
-    const colorName =
-      getColorName(color);
-
     const colorImages =
       getColorImages(color);
-
-    console.log(
-      "===================================="
-    );
-
-    console.log(
-      "🖼️ COLOR IMAGE CLICKED"
-    );
-
-    console.log(
-      "COLOR:",
-      colorName
-    );
-
-    console.log(
-      "VALUE:",
-      colorValue
-    );
-
-    console.log(
-      "IMAGES:",
-      colorImages
-    );
-
-    console.log(
-      "===================================="
-    );
 
     setSelectedColor(
       colorValue
@@ -1198,6 +987,10 @@ I would like to know more about this product.`
     if (
       colorImages.length > 0
     ) {
+      setIsColorImageSelected(
+        true
+      );
+
       setSelectedImage(
         colorImages[0]
       );
@@ -1205,21 +998,117 @@ I would like to know more about this product.`
       return;
     }
 
+    setIsColorImageSelected(
+      false
+    );
+
+    setCurrentImageIndex(0);
+
     setSelectedImage(
       productImages[0] ||
-        product.image ||
+        mainProductImage ||
         ""
     );
   };
 
   /* =======================================================
-     CHANGE IMAGE
+     CHANGE NORMAL PRODUCT IMAGE
+
+     Used by slider dots.
+
+     Additional images are NOT shown
+     as side thumbnails.
   ======================================================== */
 
   const handleImageChange = (
     image
   ) => {
-    setSelectedImage(image);
+    const imageIndex =
+      productImages.findIndex(
+        (item) =>
+          item === image
+      );
+
+    if (
+      imageIndex >= 0
+    ) {
+      setCurrentImageIndex(
+        imageIndex
+      );
+
+      setIsColorImageSelected(
+        false
+      );
+    }
+
+    setSelectedImage(
+      image
+    );
+  };
+
+  /* =======================================================
+     PREVIOUS IMAGE
+  ======================================================== */
+
+  const handlePreviousImage = () => {
+    if (
+      productImages.length <= 1
+    ) {
+      return;
+    }
+
+    setIsColorImageSelected(
+      false
+    );
+
+    setCurrentImageIndex(
+      (previousIndex) => {
+        const nextIndex =
+          previousIndex === 0
+            ? productImages.length - 1
+            : previousIndex - 1;
+
+        setSelectedImage(
+          productImages[
+            nextIndex
+          ]
+        );
+
+        return nextIndex;
+      }
+    );
+  };
+
+  /* =======================================================
+     NEXT IMAGE
+  ======================================================== */
+
+  const handleNextImage = () => {
+    if (
+      productImages.length <= 1
+    ) {
+      return;
+    }
+
+    setIsColorImageSelected(
+      false
+    );
+
+    setCurrentImageIndex(
+      (previousIndex) => {
+        const nextIndex =
+          (previousIndex + 1) %
+          productImages.length;
+
+        setSelectedImage(
+          productImages[
+            nextIndex
+          ]
+        );
+
+        return nextIndex;
+      }
+    );
   };
 
   /* =======================================================
@@ -1320,9 +1209,7 @@ I would like to know more about this product.`
           "mamta_user_token"
         );
 
-      /*
-         LOGIN CHECK
-      */
+      /* LOGIN CHECK */
 
       if (!token) {
         toast.error(
@@ -1334,9 +1221,7 @@ I would like to know more about this product.`
         return;
       }
 
-      /*
-         PRODUCT CHECK
-      */
+      /* PRODUCT CHECK */
 
       if (!product?._id) {
         toast.error(
@@ -1346,12 +1231,10 @@ I would like to know more about this product.`
         return;
       }
 
-      /*
-         ACTIVE COLOR
-      */
+      /* ACTIVE COLOR */
 
       const currentActiveColor =
-        getActiveColor();
+        activeColor;
 
       const selectedColorName =
         currentActiveColor
@@ -1360,9 +1243,7 @@ I would like to know more about this product.`
             )
           : "";
 
-      /*
-         COLOR REQUIRED
-      */
+      /* COLOR REQUIRED */
 
       if (
         productColors.length > 0 &&
@@ -1378,9 +1259,7 @@ I would like to know more about this product.`
       try {
         setAdding(true);
 
-        /*
-           SELECTED COLOR IMAGE
-        */
+        /* COLOR IMAGE */
 
         const activeColorImages =
           currentActiveColor
@@ -1389,16 +1268,15 @@ I would like to know more about this product.`
               )
             : [];
 
+        /* CART IMAGE */
+
         const cartImage =
           activeColorImages.length >
           0
             ? activeColorImages[0]
-            : product.image ||
-              "";
+            : mainProductImage;
 
-        /*
-           CART DATA
-        */
+        /* CART DATA */
 
         const cartData = {
           productId:
@@ -1438,9 +1316,7 @@ I would like to know more about this product.`
           }
         );
 
-        /*
-           CART EVENT
-        */
+        /* CART EVENT */
 
         window.dispatchEvent(
           new Event(
@@ -1448,9 +1324,7 @@ I would like to know more about this product.`
           )
         );
 
-        /*
-           SUCCESS
-        */
+        /* SUCCESS */
 
         setAdded(true);
 
@@ -1467,9 +1341,7 @@ I would like to know more about this product.`
           error
         );
 
-        /*
-           EXPIRED TOKEN
-        */
+        /* EXPIRED TOKEN */
 
         if (
           error.response?.status ===
@@ -1580,66 +1452,18 @@ I would like to know more about this product.`
           <div className="product-gallery">
 
             {/* =============================================
-                THUMBNAILS
+                SIDE THUMBNAILS
+
+                IMPORTANT:
+
+                ONLY COLOR IMAGES ARE SHOWN HERE.
+
+                Main product image and additional
+                product images are NOT rendered
+                as thumbnails.
             ============================================== */}
 
             <div className="product-image-thumbnails">
-
-              {/* ===========================================
-                  NORMAL PRODUCT IMAGES
-              ============================================ */}
-
-              {productImages
-                .slice(0, 4)
-                .map(
-                  (
-                    image,
-                    index
-                  ) => {
-
-                    const isActive =
-                      selectedImage ===
-                      image;
-
-                    return (
-                      <button
-                        type="button"
-                        key={`product-${image}-${index}`}
-                        className={
-                          isActive
-                            ? "product-image-thumbnail active"
-                            : "product-image-thumbnail"
-                        }
-                        onClick={() =>
-                          handleImageChange(
-                            image
-                          )
-                        }
-                        aria-label={`View product image ${
-                          index + 1
-                        }`}
-                      >
-
-                        <img
-                          src={image}
-                          alt={`${product.name} ${
-                            index + 1
-                          }`}
-                          onError={(e) => {
-                            e.currentTarget.src =
-                              "https://placehold.co/200x200/F4D9DC/4A3032?text=MAMTA";
-                          }}
-                        />
-
-                      </button>
-                    );
-                  }
-                )}
-
-
-              {/* ===========================================
-                  COLOR IMAGES
-              ============================================ */}
 
               {colorGallery.map(
                 (
@@ -1676,7 +1500,7 @@ I would like to know more about this product.`
                         alt={`${product.name} - ${item.name}`}
                         onError={(e) => {
                           e.currentTarget.src =
-                            "https://placehold.co/200x200/F4D9DC/4A3032?text=MAMTA";
+                            THUMBNAIL_PLACEHOLDER;
                         }}
                       />
 
@@ -1693,7 +1517,7 @@ I would like to know more about this product.`
 
 
             {/* =============================================
-                LARGE SELECTED IMAGE
+                MAIN IMAGE SLIDER
             ============================================== */}
 
             <div className="product-details-image">
@@ -1701,8 +1525,9 @@ I would like to know more about this product.`
               <img
                 src={
                   selectedImage ||
-                  product.image ||
-                  "https://placehold.co/900x900/F4D9DC/4A3032?text=MAMTA"
+                  productImages[0] ||
+                  mainProductImage ||
+                  PLACEHOLDER_IMAGE
                 }
                 alt={
                   product.name ||
@@ -1710,9 +1535,95 @@ I would like to know more about this product.`
                 }
                 onError={(e) => {
                   e.currentTarget.src =
-                    "https://placehold.co/900x900/F4D9DC/4A3032?text=MAMTA";
+                    PLACEHOLDER_IMAGE;
                 }}
               />
+
+
+              {/* =========================================
+                  PREVIOUS BUTTON
+              ========================================== */}
+
+              {productImages.length > 1 &&
+                !isColorImageSelected && (
+                  <button
+                    type="button"
+                    className="product-slider-arrow product-slider-arrow-left"
+                    onClick={
+                      handlePreviousImage
+                    }
+                    aria-label="Previous product image"
+                  >
+                    <ArrowLeft
+                      size={20}
+                    />
+                  </button>
+                )}
+
+
+              {/* =========================================
+                  NEXT BUTTON
+              ========================================== */}
+
+              {productImages.length > 1 &&
+                !isColorImageSelected && (
+                  <button
+                    type="button"
+                    className="product-slider-arrow product-slider-arrow-right"
+                    onClick={
+                      handleNextImage
+                    }
+                    aria-label="Next product image"
+                  >
+                    <ArrowRight
+                      size={20}
+                    />
+                  </button>
+                )}
+
+
+              {/* =========================================
+                  SLIDER DOTS
+
+                  Main image + additional images
+                  are represented here.
+
+                  These are the ONLY controls for
+                  normal product images.
+              ========================================== */}
+
+              {productImages.length > 1 &&
+                !isColorImageSelected && (
+                  <div className="product-image-slider-dots">
+
+                    {productImages.map(
+                      (
+                        image,
+                        index
+                      ) => (
+                        <button
+                          type="button"
+                          key={`dot-${index}`}
+                          className={
+                            index ===
+                            currentImageIndex
+                              ? "slider-dot active"
+                              : "slider-dot"
+                          }
+                          onClick={() =>
+                            handleImageChange(
+                              image
+                            )
+                          }
+                          aria-label={`Show product image ${
+                            index + 1
+                          }`}
+                        />
+                      )
+                    )}
+
+                  </div>
+                )}
 
             </div>
 
@@ -1722,18 +1633,6 @@ I would like to know more about this product.`
           {/* ===============================================
               IMAGE CAPTION
           ================================================ */}
-
-          <div className="image-caption">
-
-            <span>
-              MAMTA
-            </span>
-
-            <span>
-              COMFORT • CARE • LOVE
-            </span>
-
-          </div>
 
         </div>
 
@@ -1911,7 +1810,7 @@ I would like to know more about this product.`
                           colorImages.length >
                           0
                             ? `${colorName} - Image available`
-                            : `${colorName} - No color image`
+                            : `${colorName} - Uses main product image`
                         }
                       >
 

@@ -472,7 +472,7 @@ const AdminDashboard = () => {
           </div>
 
           <strong className="revenue-value">
-            {formatCurrency(stats.revenue ?? 0)}
+            {formatCurrency(stats.totalRevenue ?? 0)}
           </strong>
 
           <div className="stat-card-bottom">
@@ -655,15 +655,13 @@ const AdminDashboard = () => {
                 {stats.totalCustomers ?? 0}
               </strong>
             </div>
+<div className="quick-summary-row revenue-row">
+  <span>Paid Revenue</span>
 
-            <div className="quick-summary-row revenue-row">
-              <span>Delivered Revenue</span>
-
-              <strong>
-                {formatCurrency(stats.revenue ?? 0)}
-              </strong>
-            </div>
-
+  <strong>
+    {formatCurrency(stats.totalRevenue ?? 0)}
+  </strong>
+</div>
           </div>
 
         </div>

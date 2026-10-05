@@ -1,4 +1,3 @@
-
 const Product = require("../models/Product");
 const Order = require("../models/Order");
 const User = require("../models/User");
@@ -68,13 +67,18 @@ const getAdminDashboard = async (req, res) => {
 
     /* =====================================================
        REVENUE
-       Only delivered orders are counted
+
+       Revenue is calculated from successfully paid orders.
+
+       IMPORTANT:
+       Admin Payments also uses paymentStatus === "Paid",
+       so both pages will now show the same revenue.
     ===================================================== */
 
     const revenueResult = await Order.aggregate([
       {
         $match: {
-          orderStatus: "Delivered",
+          paymentStatus: "Paid",
         },
       },
       {
@@ -89,7 +93,7 @@ const getAdminDashboard = async (req, res) => {
 
     const totalRevenue =
       revenueResult.length > 0
-        ? revenueResult[0].totalRevenue
+        ? Number(revenueResult[0].totalRevenue || 0)
         : 0;
 
     /* =====================================================
@@ -145,9 +149,13 @@ const getAdminDashboard = async (req, res) => {
         totalProducts,
         activeProducts,
         inactiveProducts,
+
         totalCustomers,
         activeCustomers,
+
         totalOrders,
+
+        // Same revenue definition as Admin Payments
         totalRevenue,
       },
 
@@ -184,4 +192,3 @@ const getAdminDashboard = async (req, res) => {
 module.exports = {
   getAdminDashboard,
 };
-

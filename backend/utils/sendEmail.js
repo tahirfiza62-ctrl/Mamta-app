@@ -1,33 +1,49 @@
+
 const nodemailer = require("nodemailer");
 
 const transporter = nodemailer.createTransport({
   service: "gmail",
+
   auth: {
     user: process.env.EMAIL_USER,
     pass: process.env.EMAIL_PASSWORD,
   },
 });
 
-const sendVerificationEmail = async (email, name, token) => {
-  const verificationUrl =
-    `${process.env.FRONTEND_URL}/verify-email?token=${token}`;
+
+const sendVerificationEmail = async (
+  email,
+  name,
+  code
+) => {
 
   const mailOptions = {
     from: `"MAMTA" <${process.env.EMAIL_USER}>`,
+
     to: email,
-    subject: "Verify your MAMTA account",
+
+    subject: "Your MAMTA verification code",
 
     html: `
       <!DOCTYPE html>
+
       <html>
+
         <head>
+
           <meta charset="UTF-8" />
+
           <meta
             name="viewport"
             content="width=device-width, initial-scale=1.0"
           />
-          <title>Verify your MAMTA account</title>
+
+          <title>
+            Your MAMTA verification code
+          </title>
+
         </head>
+
 
         <body
           style="
@@ -46,7 +62,9 @@ const sendVerificationEmail = async (email, name, token) => {
               background: #ffffff;
               border-radius: 22px;
               overflow: hidden;
-              box-shadow: 0 15px 50px rgba(74, 48, 50, 0.08);
+              box-shadow:
+                0 15px 50px
+                rgba(74, 48, 50, 0.08);
             "
           >
 
@@ -59,6 +77,7 @@ const sendVerificationEmail = async (email, name, token) => {
                 background: #4a3032;
               "
             >
+
               <div
                 style="
                   color: #ffffff;
@@ -80,7 +99,9 @@ const sendVerificationEmail = async (email, name, token) => {
               >
                 THOUGHTFUL COMFORT
               </div>
+
             </div>
+
 
             <!-- CONTENT -->
 
@@ -107,6 +128,7 @@ const sendVerificationEmail = async (email, name, token) => {
                 ♡
               </div>
 
+
               <h1
                 style="
                   margin: 0 0 15px;
@@ -115,8 +137,9 @@ const sendVerificationEmail = async (email, name, token) => {
                   font-weight: 600;
                 "
               >
-                Welcome to MAMTA
+                Verify your email
               </h1>
+
 
               <p
                 style="
@@ -128,9 +151,10 @@ const sendVerificationEmail = async (email, name, token) => {
                 Hi ${name},
               </p>
 
+
               <p
                 style="
-                  margin: 0 auto 30px;
+                  margin: 0 auto 25px;
                   max-width: 440px;
                   color: #806a6e;
                   font-size: 14px;
@@ -138,37 +162,42 @@ const sendVerificationEmail = async (email, name, token) => {
                 "
               >
                 Thank you for creating your MAMTA account.
-                Please verify your email address to complete
-                your registration.
+                Enter the verification code below to
+                complete your registration.
               </p>
 
-              <a
-                href="${verificationUrl}"
+
+              <!-- CODE -->
+
+              <div
                 style="
                   display: inline-block;
-                  padding: 15px 30px;
-                  background: #4a3032;
-                  color: #ffffff;
-                  text-decoration: none;
-                  border-radius: 10px;
-                  font-size: 12px;
-                  font-weight: 600;
-                  letter-spacing: 1px;
+                  padding: 18px 35px;
+                  margin: 5px 0 25px;
+                  background: #f8ebe5;
+                  border-radius: 12px;
+                  color: #4a3032;
+                  font-size: 32px;
+                  font-weight: 700;
+                  letter-spacing: 8px;
                 "
               >
-                VERIFY MY EMAIL
-              </a>
+                ${code}
+              </div>
+
 
               <p
                 style="
-                  margin: 30px 0 0;
+                  margin: 0;
                   color: #9a8588;
                   font-size: 12px;
                   line-height: 1.7;
                 "
               >
-                This verification link expires in 24 hours.
+                This verification code expires in
+                <strong>24 hours.</strong>
               </p>
+
 
               <p
                 style="
@@ -184,6 +213,7 @@ const sendVerificationEmail = async (email, name, token) => {
 
             </div>
 
+
             <!-- FOOTER -->
 
             <div
@@ -195,20 +225,25 @@ const sendVerificationEmail = async (email, name, token) => {
                 font-size: 11px;
               "
             >
-              © ${new Date().getFullYear()} MAMTA.
+              © ${new Date().getFullYear()}
+              MAMTA.
               All rights reserved.
             </div>
 
           </div>
 
         </body>
+
       </html>
     `,
   };
 
+
   await transporter.sendMail(mailOptions);
 };
+
 
 module.exports = {
   sendVerificationEmail,
 };
+

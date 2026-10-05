@@ -1,4 +1,4 @@
-const crypto = require("crypto");
+
 const bcrypt = require("bcryptjs");
 const jwt = require("jsonwebtoken");
 
@@ -28,12 +28,28 @@ const generateToken = (user) => {
 
 
 // =========================================================
+// GENERATE 6-DIGIT VERIFICATION CODE
+// =========================================================
+
+const generateVerificationCode = () => {
+  return Math.floor(
+    100000 + Math.random() * 900000
+  ).toString();
+};
+
+
+// =========================================================
 // REGISTER
 // =========================================================
 
 const register = async (req, res) => {
   try {
-    const { name, email, password } = req.body;
+    const {
+      name,
+      email,
+      password,
+    } = req.body;
+
 
     // -------------------------
     // VALIDATION
@@ -46,14 +62,20 @@ const register = async (req, res) => {
       });
     }
 
+
     const cleanName = name.trim();
-    const cleanEmail = email.trim().toLowerCase();
+
+    const cleanEmail =
+      email.trim().toLowerCase();
+
 
     if (!cleanName) {
       return res.status(400).json({
-        message: "Name is required.",
+        message:
+          "Name is required.",
       });
     }
+
 
     if (password.length < 6) {
       return res.status(400).json({
@@ -63,46 +85,54 @@ const register = async (req, res) => {
     }
 
 
-    // -------------------------
+    // =====================================================
     // CHECK EXISTING USER
-    // -------------------------
+    // =====================================================
 
-    const existingUser = await User.findOne({
-      email: cleanEmail,
-    });
+    const existingUser =
+      await User.findOne({
+        email: cleanEmail,
+      });
+
 
     if (existingUser) {
 
-      // Existing but NOT verified
-      // Send a fresh verification email
+      // ---------------------------------------------------
+      // EXISTING BUT NOT VERIFIED
+      // ---------------------------------------------------
 
       if (!existingUser.isVerified) {
 
-        const verificationToken =
-          crypto.randomBytes(32).toString("hex");
+        const verificationCode =
+          generateVerificationCode();
 
-        const hashedVerificationToken =
-          crypto
-            .createHash("sha256")
-            .update(verificationToken)
-            .digest("hex");
 
-        existingUser.emailVerificationToken =
-          hashedVerificationToken;
-
-        existingUser.emailVerificationExpires =
+        const verificationExpires =
           new Date(
-            Date.now() + 24 * 60 * 60 * 1000
+            Date.now() +
+            24 * 60 * 60 * 1000
           );
 
+
+        existingUser.emailVerificationCode =
+          verificationCode;
+
+
+        existingUser.emailVerificationExpires =
+          verificationExpires;
+
+
         await existingUser.save();
+
+
+        // Send fresh code
 
         try {
 
           await sendVerificationEmail(
             existingUser.email,
             existingUser.name,
-            verificationToken
+            verificationCode
           );
 
         } catch (emailError) {
@@ -114,19 +144,27 @@ const register = async (req, res) => {
 
           return res.status(500).json({
             message:
-              "Account exists but verification email could not be sent. Please try again.",
+              "Account exists but verification code could not be sent. Please try again.",
           });
         }
 
+
         return res.status(200).json({
+
           message:
-            "This email is already registered but not verified. A new verification email has been sent.",
+            "This email is already registered but not verified. A new verification code has been sent.",
+
           needsVerification: true,
+
+          email: existingUser.email,
+
         });
       }
 
 
-      // Existing AND verified
+      // ---------------------------------------------------
+      // EXISTING AND VERIFIED
+      // ---------------------------------------------------
 
       return res.status(400).json({
         message:
@@ -140,25 +178,24 @@ const register = async (req, res) => {
     // =====================================================
 
     const hashedPassword =
-      await bcrypt.hash(password, 10);
+      await bcrypt.hash(
+        password,
+        10
+      );
 
 
     // =====================================================
-    // CREATE VERIFICATION TOKEN
+    // GENERATE 6-DIGIT CODE
     // =====================================================
 
-    const verificationToken =
-      crypto.randomBytes(32).toString("hex");
+    const verificationCode =
+      generateVerificationCode();
 
-    const hashedVerificationToken =
-      crypto
-        .createHash("sha256")
-        .update(verificationToken)
-        .digest("hex");
 
     const verificationExpires =
       new Date(
-        Date.now() + 24 * 60 * 60 * 1000
+        Date.now() +
+        24 * 60 * 60 * 1000
       );
 
 
@@ -167,17 +204,21 @@ const register = async (req, res) => {
     // =====================================================
 
     const user = await User.create({
+
       name: cleanName,
+
       email: cleanEmail,
+
       password: hashedPassword,
 
       isVerified: false,
 
-      emailVerificationToken:
-        hashedVerificationToken,
+      emailVerificationCode:
+        verificationCode,
 
       emailVerificationExpires:
         verificationExpires,
+
     });
 
 
@@ -190,7 +231,7 @@ const register = async (req, res) => {
       await sendVerificationEmail(
         user.email,
         user.name,
-        verificationToken
+        verificationCode
       );
 
     } catch (emailError) {
@@ -200,11 +241,14 @@ const register = async (req, res) => {
         emailError
       );
 
-      // Remove account if email couldn't be sent
+
+      // Remove account if email could
+      // not be sent
 
       await User.findByIdAndDelete(
         user._id
       );
+
 
       return res.status(500).json({
         message:
@@ -218,10 +262,14 @@ const register = async (req, res) => {
     // =====================================================
 
     return res.status(201).json({
+
       message:
-        "Registration successful. Please check your email to verify your account.",
+        "Registration successful. Please check your email for the 6-digit verification code.",
 
       needsVerification: true,
+
+      email: user.email,
+
     });
 
   } catch (error) {
@@ -240,65 +288,155 @@ const register = async (req, res) => {
 
 
 // =========================================================
-// VERIFY EMAIL
+// VERIFY EMAIL USING 6-DIGIT CODE
 // =========================================================
 
 const verifyEmail = async (req, res) => {
   try {
 
-    const { token } = req.query;
+    const {
+      email,
+      code,
+    } = req.body;
 
-    if (!token) {
+
+    // -------------------------
+    // VALIDATION
+    // -------------------------
+
+    if (!email || !code) {
       return res.status(400).json({
         message:
-          "Verification token is missing.",
+          "Email and verification code are required.",
       });
     }
 
 
-    // Hash token received from email
-
-    const hashedToken =
-      crypto
-        .createHash("sha256")
-        .update(token)
-        .digest("hex");
+    const cleanEmail =
+      email.trim().toLowerCase();
 
 
-    // Find matching user
+    const cleanCode =
+      code.toString().trim();
 
-    const user = await User.findOne({
-      emailVerificationToken:
-        hashedToken,
 
-      emailVerificationExpires: {
-        $gt: new Date(),
-      },
-    });
+    // Make sure code is exactly 6 digits
+
+    if (!/^\d{6}$/.test(cleanCode)) {
+
+      return res.status(400).json({
+        message:
+          "Verification code must be exactly 6 digits.",
+      });
+
+    }
+
+
+    // =====================================================
+    // FIND USER
+    // =====================================================
+
+    const user =
+      await User.findOne({
+        email: cleanEmail,
+      });
 
 
     if (!user) {
-      return res.status(400).json({
+
+      return res.status(404).json({
         message:
-          "This verification link is invalid or has expired.",
+          "User not found.",
       });
+
     }
 
 
-    // Mark verified
+    // =====================================================
+    // ALREADY VERIFIED
+    // =====================================================
+
+    if (user.isVerified) {
+
+      return res.status(400).json({
+        message:
+          "Email is already verified.",
+      });
+
+    }
+
+
+    // =====================================================
+    // CHECK CODE EXISTS
+    // =====================================================
+
+    if (!user.emailVerificationCode) {
+
+      return res.status(400).json({
+        message:
+          "No verification code found. Please request a new code.",
+      });
+
+    }
+
+
+    // =====================================================
+    // CHECK EXPIRY
+    // =====================================================
+
+    if (
+      user.emailVerificationExpires &&
+      user.emailVerificationExpires < new Date()
+    ) {
+
+      return res.status(400).json({
+        message:
+          "Verification code has expired. Please request a new code.",
+      });
+
+    }
+
+
+    // =====================================================
+    // CHECK CODE
+    // =====================================================
+
+    if (
+      user.emailVerificationCode !==
+      cleanCode
+    ) {
+
+      return res.status(400).json({
+        message:
+          "Invalid verification code.",
+      });
+
+    }
+
+
+    // =====================================================
+    // VERIFY USER
+    // =====================================================
 
     user.isVerified = true;
 
-    user.emailVerificationToken = null;
+    user.emailVerificationCode = null;
 
     user.emailVerificationExpires = null;
+
 
     await user.save();
 
 
+    // =====================================================
+    // SUCCESS
+    // =====================================================
+
     return res.status(200).json({
+
       message:
         "Email verified successfully. You can now log in.",
+
     });
 
   } catch (error) {
@@ -317,93 +455,133 @@ const verifyEmail = async (req, res) => {
 
 
 // =========================================================
-// RESEND VERIFICATION EMAIL
+// RESEND VERIFICATION CODE
 // =========================================================
 
 const resendVerificationEmail = async (
   req,
   res
 ) => {
+
   try {
 
-    const { email } = req.body;
+    const {
+      email,
+    } = req.body;
+
+
+    // -------------------------
+    // VALIDATION
+    // -------------------------
 
     if (!email) {
+
       return res.status(400).json({
         message:
           "Email address is required.",
       });
+
     }
+
 
     const cleanEmail =
       email.trim().toLowerCase();
 
 
-    const user = await User.findOne({
-      email: cleanEmail,
-    });
+    // =====================================================
+    // FIND USER
+    // =====================================================
+
+    const user =
+      await User.findOne({
+        email: cleanEmail,
+      });
 
 
-    // Don't reveal whether an email exists
+    // Don't reveal whether account exists
 
     if (!user) {
+
       return res.status(200).json({
+
         message:
-          "If an account exists with this email, a verification email has been sent.",
+          "If an account exists with this email, a verification code has been sent.",
+
       });
+
     }
 
 
-    // Already verified
+    // =====================================================
+    // ALREADY VERIFIED
+    // =====================================================
 
     if (user.isVerified) {
+
       return res.status(400).json({
+
         message:
           "This email is already verified. You can log in.",
 
         alreadyVerified: true,
+
       });
+
     }
 
 
-    // Generate new token
+    // =====================================================
+    // GENERATE NEW 6-DIGIT CODE
+    // =====================================================
 
-    const verificationToken =
-      crypto.randomBytes(32).toString("hex");
-
-
-    const hashedVerificationToken =
-      crypto
-        .createHash("sha256")
-        .update(verificationToken)
-        .digest("hex");
+    const verificationCode =
+      generateVerificationCode();
 
 
-    user.emailVerificationToken =
-      hashedVerificationToken;
+    const verificationExpires =
+      new Date(
+        Date.now() +
+        24 * 60 * 60 * 1000
+      );
+
+
+    // =====================================================
+    // SAVE NEW CODE
+    // =====================================================
+
+    user.emailVerificationCode =
+      verificationCode;
 
 
     user.emailVerificationExpires =
-      new Date(
-        Date.now() + 24 * 60 * 60 * 1000
-      );
+      verificationExpires;
 
 
     await user.save();
 
 
-    // Send email
+    // =====================================================
+    // SEND EMAIL
+    // =====================================================
 
     await sendVerificationEmail(
       user.email,
       user.name,
-      verificationToken
+      verificationCode
     );
 
 
+    // =====================================================
+    // SUCCESS
+    // =====================================================
+
     return res.status(200).json({
+
       message:
-        "A new verification email has been sent.",
+        "A new 6-digit verification code has been sent.",
+
+      email: user.email,
+
     });
 
   } catch (error) {
@@ -414,9 +592,12 @@ const resendVerificationEmail = async (
     );
 
     return res.status(500).json({
+
       message:
-        "Unable to resend verification email. Please try again.",
+        "Unable to resend verification code. Please try again.",
+
     });
+
   }
 };
 
@@ -428,53 +609,72 @@ const resendVerificationEmail = async (
 const login = async (req, res) => {
   try {
 
-    const { email, password } = req.body;
+    const {
+      email,
+      password,
+    } = req.body;
+
 
     if (!email || !password) {
+
       return res.status(400).json({
         message:
           "Email and password are required.",
       });
+
     }
 
 
-    const user = await User.findOne({
-      email:
-        email.trim().toLowerCase(),
-    });
+    const user =
+      await User.findOne({
+        email:
+          email.trim().toLowerCase(),
+      });
 
 
     if (!user) {
+
       return res.status(401).json({
         message:
           "Invalid email or password.",
       });
+
     }
 
 
     if (!user.active) {
+
       return res.status(403).json({
         message:
           "Account is inactive.",
       });
+
     }
 
 
-    // Email verification required
+    // =====================================================
+    // EMAIL VERIFICATION REQUIRED
+    // =====================================================
 
     if (!user.isVerified) {
+
       return res.status(403).json({
+
         message:
           "Please verify your email before logging in.",
 
         needsVerification: true,
 
         email: user.email,
+
       });
+
     }
 
 
-    // Compare password
+    // =====================================================
+    // COMPARE PASSWORD
+    // =====================================================
 
     const passwordMatch =
       await bcrypt.compare(
@@ -484,31 +684,42 @@ const login = async (req, res) => {
 
 
     if (!passwordMatch) {
+
       return res.status(401).json({
         message:
           "Invalid email or password.",
       });
+
     }
 
 
-    // Generate JWT
+    // =====================================================
+    // GENERATE JWT
+    // =====================================================
 
     const token =
       generateToken(user);
 
 
     return res.json({
+
       message:
         "Login successful.",
 
       token,
 
       user: {
+
         id: user._id,
+
         name: user.name,
+
         email: user.email,
+
         role: user.role,
+
       },
+
     });
 
   } catch (error) {
@@ -522,6 +733,7 @@ const login = async (req, res) => {
       message:
         "Server error.",
     });
+
   }
 };
 
@@ -540,10 +752,12 @@ const getMe = async (req, res) => {
 
 
     if (!user) {
+
       return res.status(404).json({
         message:
           "User not found.",
       });
+
     }
 
 
@@ -562,6 +776,7 @@ const getMe = async (req, res) => {
       message:
         "Server error.",
     });
+
   }
 };
 
@@ -574,6 +789,7 @@ const changePassword = async (
   req,
   res
 ) => {
+
   try {
 
     const {
@@ -586,18 +802,22 @@ const changePassword = async (
       !currentPassword ||
       !newPassword
     ) {
+
       return res.status(400).json({
         message:
           "Current password and new password are required.",
       });
+
     }
 
 
     if (newPassword.length < 6) {
+
       return res.status(400).json({
         message:
           "New password must be at least 6 characters.",
       });
+
     }
 
 
@@ -608,10 +828,12 @@ const changePassword = async (
 
 
     if (!user) {
+
       return res.status(404).json({
         message:
           "User not found.",
       });
+
     }
 
 
@@ -623,10 +845,12 @@ const changePassword = async (
 
 
     if (!passwordMatch) {
+
       return res.status(400).json({
         message:
           "Current password is incorrect.",
       });
+
     }
 
 
@@ -660,6 +884,7 @@ const changePassword = async (
       message:
         "Unable to change password.",
     });
+
   }
 };
 
@@ -669,10 +894,18 @@ const changePassword = async (
 // =========================================================
 
 module.exports = {
+
   register,
+
   login,
+
   verifyEmail,
+
   resendVerificationEmail,
+
   getMe,
+
   changePassword,
+
 };
+

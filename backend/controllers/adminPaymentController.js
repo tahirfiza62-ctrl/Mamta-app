@@ -1,6 +1,4 @@
-
 const Order = require("../models/Order");
-
 
 /* =========================================================
    GET ALL PAYMENTS
@@ -37,22 +35,25 @@ const getAdminPayments = async (req, res) => {
       (order) => order.paymentStatus === "Cancelled"
     ).length;
 
-
     /* -------------------------------------------------------
        TOTAL PAID REVENUE
+
+       IMPORTANT:
+       Revenue is based ONLY on paymentStatus === "Paid".
+
+       This is the SAME calculation used by the
+       Admin Dashboard.
     ------------------------------------------------------- */
 
     const totalRevenue = orders
       .filter(
-        (order) =>
-          order.paymentStatus === "Paid"
+        (order) => order.paymentStatus === "Paid"
       )
       .reduce(
         (sum, order) =>
           sum + Number(order.total || 0),
         0
       );
-
 
     /* -------------------------------------------------------
        TOTAL PENDING AMOUNT
@@ -60,15 +61,13 @@ const getAdminPayments = async (req, res) => {
 
     const pendingAmount = orders
       .filter(
-        (order) =>
-          order.paymentStatus === "Pending"
+        (order) => order.paymentStatus === "Pending"
       )
       .reduce(
         (sum, order) =>
           sum + Number(order.total || 0),
         0
       );
-
 
     /* -------------------------------------------------------
        RESPONSE
@@ -85,13 +84,14 @@ const getAdminPayments = async (req, res) => {
         pendingPayments,
         failedPayments,
         cancelledPayments,
+
+        // Same revenue calculation as dashboard
         totalRevenue,
+
         pendingAmount,
       },
     });
-
   } catch (error) {
-
     console.error(
       "ADMIN PAYMENTS ERROR:",
       error
@@ -105,14 +105,12 @@ const getAdminPayments = async (req, res) => {
   }
 };
 
-
 /* =========================================================
    GET SINGLE PAYMENT / ORDER
 ========================================================= */
 
 const getAdminPaymentById = async (req, res) => {
   try {
-
     const payment = await Order.findById(
       req.params.id
     )
@@ -121,24 +119,18 @@ const getAdminPaymentById = async (req, res) => {
       )
       .lean();
 
-
     if (!payment) {
-
       return res.status(404).json({
         success: false,
         message: "Payment not found.",
       });
-
     }
-
 
     res.status(200).json({
       success: true,
       payment,
     });
-
   } catch (error) {
-
     console.error(
       "ADMIN PAYMENT DETAILS ERROR:",
       error
@@ -152,9 +144,7 @@ const getAdminPaymentById = async (req, res) => {
   }
 };
 
-
 module.exports = {
   getAdminPayments,
   getAdminPaymentById,
 };
-

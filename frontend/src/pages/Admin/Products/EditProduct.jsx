@@ -22,7 +22,6 @@ const API_URL =
 
 /* =========================================================
    ALL AVAILABLE PRODUCT COLORS
-   SAME COLORS AS ADD PRODUCT
 ========================================================= */
 
 const AVAILABLE_COLORS = [
@@ -51,7 +50,6 @@ const AVAILABLE_COLORS = [
     value: "mauve",
     hex: "#B7848C",
   },
-
   {
     name: "Lavender",
     value: "lavender",
@@ -67,7 +65,6 @@ const AVAILABLE_COLORS = [
     value: "lilac",
     hex: "#C8A2E8",
   },
-
   {
     name: "Blue",
     value: "blue",
@@ -93,7 +90,6 @@ const AVAILABLE_COLORS = [
     value: "royal-blue",
     hex: "#4169E1",
   },
-
   {
     name: "Teal",
     value: "teal",
@@ -119,7 +115,6 @@ const AVAILABLE_COLORS = [
     value: "olive",
     hex: "#808000",
   },
-
   {
     name: "Cream",
     value: "cream",
@@ -140,7 +135,6 @@ const AVAILABLE_COLORS = [
     value: "off-white",
     hex: "#F8F5F0",
   },
-
   {
     name: "Beige",
     value: "beige",
@@ -156,7 +150,6 @@ const AVAILABLE_COLORS = [
     value: "camel",
     hex: "#C19A6B",
   },
-
   {
     name: "Brown",
     value: "brown",
@@ -167,7 +160,6 @@ const AVAILABLE_COLORS = [
     value: "chocolate",
     hex: "#5C4033",
   },
-
   {
     name: "Grey",
     value: "grey",
@@ -188,7 +180,6 @@ const AVAILABLE_COLORS = [
     value: "black",
     hex: "#111111",
   },
-
   {
     name: "Yellow",
     value: "yellow",
@@ -214,7 +205,6 @@ const AVAILABLE_COLORS = [
     value: "coral",
     hex: "#FF7F7F",
   },
-
   {
     name: "Red",
     value: "red",
@@ -235,7 +225,6 @@ const AVAILABLE_COLORS = [
     value: "burgundy",
     hex: "#800020",
   },
-
   {
     name: "Turquoise",
     value: "turquoise",
@@ -256,7 +245,6 @@ const AVAILABLE_COLORS = [
     value: "denim",
     hex: "#1560BD",
   },
-
   {
     name: "Terracotta",
     value: "terracotta",
@@ -270,11 +258,13 @@ const AVAILABLE_COLORS = [
 ];
 
 /* =========================================================
-   FIND COLOR FROM VALUE / NAME
+   FIND COLOR
 ========================================================= */
 
 const findAvailableColor = (value) => {
-  if (!value) return null;
+  if (!value) {
+    return null;
+  }
 
   return (
     AVAILABLE_COLORS.find(
@@ -291,15 +281,10 @@ const findAvailableColor = (value) => {
 };
 
 /* =========================================================
-   NORMALIZE PRODUCT COLOR
-   Supports:
-   1. New object format
-   2. Old string format
+   NORMALIZE COLOR
 ========================================================= */
 
 const normalizeColor = (color) => {
-  /* New object format */
-
   if (
     color &&
     typeof color === "object"
@@ -332,8 +317,6 @@ const normalizeColor = (color) => {
     };
   }
 
-  /* Old string format */
-
   const available =
     findAvailableColor(color);
 
@@ -347,6 +330,55 @@ const normalizeColor = (color) => {
   }
 
   return null;
+};
+
+/* =========================================================
+   NORMALIZE ADDITIONAL IMAGES
+
+   Supports:
+   - string
+   - { url }
+   - { image }
+   - { src }
+========================================================= */
+
+const normalizeImages = (images) => {
+  if (!Array.isArray(images)) {
+    return [];
+  }
+
+  return [
+    ...new Set(
+      images
+        .map((image) => {
+          if (
+            typeof image === "string"
+          ) {
+            return image.trim();
+          }
+
+          if (
+            typeof image === "object" &&
+            image !== null
+          ) {
+            return (
+              image.url ||
+              image.image ||
+              image.src ||
+              ""
+            );
+          }
+
+          return "";
+        })
+        .map((image) =>
+          typeof image === "string"
+            ? image.trim()
+            : ""
+        )
+        .filter(Boolean)
+    ),
+  ].slice(0, 4);
 };
 
 /* =========================================================
@@ -375,7 +407,7 @@ const EditProduct = () => {
 
   /* =======================================================
      FORM DATA
-  ======================================================= */
+  ======================================================== */
 
   const [formData, setFormData] =
     useState({
@@ -385,6 +417,12 @@ const EditProduct = () => {
       oldPrice: "",
       category: "",
       image: "",
+
+      /* NEW:
+         Additional product gallery images
+      */
+      images: [],
+
       stock: "",
       active: true,
       colors: [],
@@ -392,7 +430,7 @@ const EditProduct = () => {
 
   /* =======================================================
      GET PRODUCT
-  ======================================================= */
+  ======================================================== */
 
   useEffect(() => {
     let cancelled = false;
@@ -423,7 +461,9 @@ const EditProduct = () => {
             }
           );
 
-        if (cancelled) return;
+        if (cancelled) {
+          return;
+        }
 
         const product =
           response.data.product;
@@ -432,12 +472,13 @@ const EditProduct = () => {
           setError(
             "Product not found."
           );
+
           return;
         }
 
         /* =================================================
            NORMALIZE COLORS
-        ================================================= */
+        ================================================== */
 
         const normalizedColors =
           Array.isArray(
@@ -451,8 +492,17 @@ const EditProduct = () => {
             : [];
 
         /* =================================================
+           NORMALIZE ADDITIONAL IMAGES
+        ================================================== */
+
+        const normalizedImages =
+          normalizeImages(
+            product.images
+          );
+
+        /* =================================================
            LOAD PRODUCT DATA
-        ================================================= */
+        ================================================== */
 
         setFormData({
           name:
@@ -468,10 +518,16 @@ const EditProduct = () => {
             product.oldPrice ?? "",
 
           category:
-            product.category || "",
+            product.category ===
+              "Newborn & Kids"
+              ? "Nursing Products"
+              : product.category || "",
 
           image:
             product.image || "",
+
+          images:
+            normalizedImages,
 
           stock:
             product.stock ?? "",
@@ -485,7 +541,7 @@ const EditProduct = () => {
 
         /* =================================================
            LOAD FEATURES
-        ================================================= */
+        ================================================== */
 
         setFeatures(
           Array.isArray(
@@ -495,8 +551,22 @@ const EditProduct = () => {
             : []
         );
 
+        console.log(
+          "EDIT PRODUCT LOADED:",
+          {
+            name: product.name,
+            mainImage: product.image,
+            additionalImages:
+              normalizedImages,
+            colors:
+              normalizedColors,
+          }
+        );
+
       } catch (error) {
-        if (cancelled) return;
+        if (cancelled) {
+          return;
+        }
 
         console.error(
           "GET PRODUCT ERROR:",
@@ -560,10 +630,82 @@ const EditProduct = () => {
   };
 
   /* =======================================================
+     ADD ADDITIONAL IMAGE
+  ======================================================= */
+
+  const addImage = () => {
+    if (
+      formData.images.length >= 4
+    ) {
+      setError(
+        "You can add a maximum of 4 additional images."
+      );
+
+      return;
+    }
+
+    setFormData((prev) => ({
+      ...prev,
+
+      images: [
+        ...prev.images,
+        "",
+      ],
+    }));
+
+    setError("");
+  };
+
+  /* =======================================================
+     UPDATE ADDITIONAL IMAGE
+  ======================================================= */
+
+  const updateImage = (
+    index,
+    value
+  ) => {
+    setFormData((prev) => {
+      const updatedImages = [
+        ...prev.images,
+      ];
+
+      updatedImages[index] =
+        value;
+
+      return {
+        ...prev,
+        images:
+          updatedImages,
+      };
+    });
+  };
+
+  /* =======================================================
+     REMOVE ADDITIONAL IMAGE
+  ======================================================= */
+
+  const removeImage = (
+    index
+  ) => {
+    setFormData((prev) => ({
+      ...prev,
+
+      images:
+        prev.images.filter(
+          (_, imageIndex) =>
+            imageIndex !==
+            index
+        ),
+    }));
+  };
+
+  /* =======================================================
      TOGGLE COLOR
   ======================================================= */
 
-  const toggleColor = (color) => {
+  const toggleColor = (
+    color
+  ) => {
     setFormData((prev) => {
       const alreadySelected =
         prev.colors.some(
@@ -590,10 +732,17 @@ const EditProduct = () => {
 
         colors: [
           ...prev.colors,
+
           {
-            name: color.name,
-            value: color.value,
-            code: color.hex,
+            name:
+              color.name,
+
+            value:
+              color.value,
+
+            code:
+              color.hex,
+
             image: "",
           },
         ],
@@ -654,7 +803,28 @@ const EditProduct = () => {
     const value =
       featureInput.trim();
 
-    if (!value) return;
+    if (!value) {
+      return;
+    }
+
+    /* Prevent duplicate features */
+
+    const exists =
+      features.some(
+        (feature) =>
+          String(feature)
+            .trim()
+            .toLowerCase() ===
+          value.toLowerCase()
+      );
+
+    if (exists) {
+      setError(
+        "This feature has already been added."
+      );
+
+      return;
+    }
 
     setFeatures((prev) => [
       ...prev,
@@ -662,6 +832,7 @@ const EditProduct = () => {
     ]);
 
     setFeatureInput("");
+    setError("");
   };
 
   /* =======================================================
@@ -703,8 +874,25 @@ const EditProduct = () => {
       }
 
       /* =================================================
+         VALIDATE ADDITIONAL IMAGES
+      ================================================== */
+
+      const cleanedImages = [
+        ...new Set(
+          formData.images
+            .map((image) =>
+              typeof image ===
+              "string"
+                ? image.trim()
+                : ""
+            )
+            .filter(Boolean)
+        ),
+      ].slice(0, 4);
+
+      /* =================================================
          VALIDATE COLOR IMAGES
-      ================================================= */
+      ================================================== */
 
       for (const color of formData.colors) {
         if (
@@ -723,7 +911,7 @@ const EditProduct = () => {
 
       /* =================================================
          CLEAN COLORS
-      ================================================= */
+      ================================================== */
 
       const cleanedColors =
         formData.colors.map(
@@ -743,11 +931,40 @@ const EditProduct = () => {
         );
 
       /* =================================================
+         NORMALIZE CATEGORY
+      ================================================== */
+
+      let normalizedCategory =
+        String(
+          formData.category || ""
+        ).trim();
+
+      if (
+        normalizedCategory ===
+          "Newborn & Kids" ||
+        normalizedCategory ===
+          "Nursing Product" ||
+        normalizedCategory ===
+          "Nursing Pillow" ||
+        normalizedCategory ===
+          "Nursing Pillows" ||
+        normalizedCategory.toLowerCase() ===
+          "nursing products"
+      ) {
+        normalizedCategory =
+          "Nursing Products";
+      }
+
+      /* =================================================
          PRODUCT DATA
       ================================================= */
 
       const data = {
-        ...formData,
+        name:
+          formData.name.trim(),
+
+        description:
+          formData.description.trim(),
 
         price:
           Number(
@@ -762,25 +979,74 @@ const EditProduct = () => {
                 formData.oldPrice
               ),
 
+        category:
+          normalizedCategory,
+
+        image:
+          formData.image.trim(),
+
+        /* IMPORTANT:
+           Save additional images
+        */
+
+        images:
+          cleanedImages,
+
         stock:
           Number(
             formData.stock || 0
           ),
 
-        features,
+        active:
+          formData.active,
+
+        features:
+          features
+            .map((feature) =>
+              String(feature)
+                .trim()
+            )
+            .filter(Boolean),
 
         colors:
           cleanedColors,
       };
 
       console.log(
-        "UPDATING PRODUCT:",
-        data
+        "===================================="
+      );
+
+      console.log(
+        "UPDATING PRODUCT:"
+      );
+
+      console.log(
+        "MAIN IMAGE:",
+        data.image
+      );
+
+      console.log(
+        "ADDITIONAL IMAGES:",
+        data.images
+      );
+
+      console.log(
+        "CATEGORY:",
+        data.category
+      );
+
+      console.log(
+        "COLORS:",
+        data.colors
+      );
+
+      console.log(
+        "===================================="
       );
 
       /* =================================================
          UPDATE PRODUCT
-      ================================================= */
+      ================================================== */
 
       await axios.put(
         `${API_URL}/${id}`,
@@ -1044,8 +1310,8 @@ const EditProduct = () => {
                 Baby Pillows
               </option>
 
-              <option value="Newborn & Kids">
-                Newborn & Kids
+              <option value="Nursing Products">
+                Nursing Products
               </option>
 
               <option value="Elders Pillows">
@@ -1169,21 +1435,25 @@ const EditProduct = () => {
             <div>
 
               <h2>
-                Product Image
+                Product Images
               </h2>
 
               <p>
-                Update the main product image URL.
+                The main image is used as the primary product image. Additional images appear in the product gallery and on hover in the shop.
               </p>
 
             </div>
 
           </div>
 
+          {/* =================================================
+              MAIN IMAGE
+          ================================================== */}
+
           <div className="add-product-field">
 
             <label>
-              Image URL
+              Main Image URL
             </label>
 
             <input
@@ -1195,7 +1465,7 @@ const EditProduct = () => {
               onChange={
                 handleChange
               }
-              placeholder="https://example.com/image.jpg"
+              placeholder="https://example.com/main-image.jpg"
             />
 
           </div>
@@ -1218,6 +1488,143 @@ const EditProduct = () => {
 
             </div>
           )}
+
+          {/* =================================================
+              ADDITIONAL IMAGES
+          ================================================== */}
+
+          <div className="additional-images-section">
+
+            <div className="additional-images-header">
+
+              <div>
+
+                <h3>
+                  Additional Images
+                </h3>
+
+                <p>
+                  Add up to 4 additional product images.
+                </p>
+
+              </div>
+
+              <button
+                type="button"
+                className="add-additional-image-btn"
+                onClick={
+                  addImage
+                }
+                disabled={
+                  formData.images.length >=
+                  4
+                }
+              >
+
+                <Plus size={16} />
+
+                Add Image
+
+              </button>
+
+            </div>
+
+            {formData.images.length ===
+              0 && (
+
+              <div className="additional-images-empty">
+
+                <ImagePlus
+                  size={24}
+                />
+
+                <span>
+                  No additional images added yet.
+                </span>
+
+              </div>
+
+            )}
+
+            {formData.images.map(
+              (
+                image,
+                index
+              ) => (
+
+                <div
+                  className="additional-image-row"
+                  key={`additional-image-${index}`}
+                >
+
+                  <div className="additional-image-input">
+
+                    <label>
+                      Additional Image{" "}
+                      {index + 1}
+                    </label>
+
+                    <input
+                      type="text"
+                      value={
+                        image
+                      }
+                      onChange={(
+                        e
+                      ) =>
+                        updateImage(
+                          index,
+                          e.target
+                            .value
+                        )
+                      }
+                      placeholder="https://example.com/additional-image.jpg"
+                    />
+
+                  </div>
+
+                  {/* PREVIEW */}
+
+                  {image && (
+                    <div className="additional-image-preview">
+
+                      <img
+                        src={image}
+                        alt={`${formData.name} additional ${index + 1}`}
+                        onError={(e) => {
+                          e.currentTarget.style.opacity =
+                            "0.3";
+                        }}
+                      />
+
+                    </div>
+                  )}
+
+                  {/* REMOVE */}
+
+                  <button
+                    type="button"
+                    className="remove-additional-image-btn"
+                    onClick={() =>
+                      removeImage(
+                        index
+                      )
+                    }
+                    title="Remove image"
+                  >
+
+                    <X
+                      size={17}
+                    />
+
+                  </button>
+
+                </div>
+
+              )
+            )}
+
+          </div>
 
         </section>
 
@@ -1431,9 +1838,11 @@ const EditProduct = () => {
                       }
                       title={`Remove ${color.name}`}
                     >
+
                       <X
                         size={17}
                       />
+
                     </button>
 
                   </div>
@@ -1487,9 +1896,11 @@ const EditProduct = () => {
                       }
                       title={`Remove ${color.name}`}
                     >
+
                       <X
                         size={13}
                       />
+
                     </button>
 
                   </span>
@@ -1558,9 +1969,11 @@ const EditProduct = () => {
                 addFeature
               }
             >
+
               <Plus size={17} />
 
               Add
+
             </button>
 
           </div>
@@ -1593,9 +2006,11 @@ const EditProduct = () => {
                         )
                       }
                     >
+
                       <X
                         size={15}
                       />
+
                     </button>
 
                   </div>

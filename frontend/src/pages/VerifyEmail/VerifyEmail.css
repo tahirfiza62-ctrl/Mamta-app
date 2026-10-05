@@ -1,95 +1,144 @@
+
+/* =========================================================
+   MAMTA EMAIL VERIFICATION
+========================================================= */
+
 .verify-email-page {
   min-height: 100vh;
+  width: 100%;
 
   display: flex;
   align-items: center;
   justify-content: center;
 
-  padding: 30px;
+  padding: 40px 20px;
 
-  background: #fff9f4;
+  background:
+    radial-gradient(
+      circle at top left,
+      rgba(248, 235, 229, 0.9),
+      transparent 35%
+    ),
+    radial-gradient(
+      circle at bottom right,
+      rgba(244, 221, 214, 0.7),
+      transparent 35%
+    ),
+    #fff9f4;
 
-  font-family:
-    "Poppins",
-    "DM Sans",
-    sans-serif;
+  font-family: "Poppins", sans-serif;
+
+  box-sizing: border-box;
 }
+
+
+/* =========================================================
+   CARD
+========================================================= */
 
 .verify-email-card {
   width: 100%;
-  max-width: 520px;
+  max-width: 480px;
 
-  padding: 55px 45px;
-
-  text-align: center;
+  padding: 48px 42px;
 
   background: #ffffff;
 
-  border: 1px solid rgba(74, 48, 50, 0.08);
-
   border-radius: 24px;
 
+  text-align: center;
+
   box-shadow:
-    0 25px 70px rgba(74, 48, 50, 0.1);
+    0 20px 60px rgba(74, 48, 50, 0.08),
+    0 4px 15px rgba(74, 48, 50, 0.04);
+
+  border: 1px solid rgba(74, 48, 50, 0.06);
+
+  animation: verifyCardIn 0.65s ease forwards;
+
+  box-sizing: border-box;
 }
 
-.verify-icon {
-  width: 64px;
-  height: 64px;
 
-  margin-bottom: 24px;
+/* =========================================================
+   ICON
+========================================================= */
+
+.verify-mail-icon,
+.verify-success-icon {
+  width: 72px;
+  height: 72px;
+
+  margin: 0 auto 24px;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  border-radius: 50%;
+
+  background: #f8ebe5;
+
+  color: #4a3032;
+
+  animation: verifyIconIn 0.7s ease 0.1s both;
 }
 
-.verify-icon.success {
-  color: #5b8c72;
+.verify-success-icon {
+  background: #edf8f1;
+  color: #3b8060;
 }
 
-.verify-icon.error {
-  color: #c86b6b;
-}
 
-.verify-icon.spinning {
-  color: #d39a76;
+/* =========================================================
+   LABEL
+========================================================= */
 
-  animation: verifySpin 1s linear infinite;
-}
-
-@keyframes verifySpin {
-  to {
-    transform: rotate(360deg);
-  }
-}
-
-.verify-label {
+.verify-email-label {
   display: block;
 
   margin-bottom: 12px;
 
-  color: #9b7b7d;
+  color: #806a6e;
 
   font-size: 11px;
-
-  font-weight: 700;
+  font-weight: 600;
 
   letter-spacing: 2.5px;
 }
 
+
+/* =========================================================
+   HEADING
+========================================================= */
+
 .verify-email-card h1 {
-  margin: 0 0 15px;
+  margin: 0 0 16px;
 
   color: #4a3032;
 
-  font-family: Georgia, serif;
+  font-family: Georgia, "Times New Roman", serif;
 
-  font-size: 38px;
-
+  font-size: 34px;
   font-weight: 500;
+
+  line-height: 1.2;
 }
 
-.verify-email-card p {
+.verify-email-card h1 em {
+  font-style: italic;
+  font-weight: 400;
+}
+
+
+/* =========================================================
+   DESCRIPTION
+========================================================= */
+
+.verify-description {
   max-width: 390px;
 
-  margin: 0 auto 30px;
+  margin: 0 auto 10px;
 
   color: #806a6e;
 
@@ -98,49 +147,395 @@
   line-height: 1.8;
 }
 
-.verify-button {
-  display: inline-flex;
 
+/* =========================================================
+   EMAIL
+========================================================= */
+
+.verify-email-address {
+  display: block;
+
+  margin: 0 auto 30px;
+
+  color: #4a3032;
+
+  font-size: 14px;
+  font-weight: 600;
+
+  word-break: break-word;
+}
+
+
+/* =========================================================
+   FORM
+========================================================= */
+
+.verify-form {
+  width: 100%;
+
+  position: relative;
+}
+
+
+/* =========================================================
+   LABEL
+========================================================= */
+
+.verify-code-label {
+  display: block;
+
+  margin-bottom: 10px;
+
+  color: #4a3032;
+
+  font-size: 10px;
+  font-weight: 600;
+
+  letter-spacing: 1.8px;
+
+  text-align: left;
+}
+
+
+/* =========================================================
+   CODE INPUT
+========================================================= */
+
+.verify-code-input {
+  width: 100%;
+
+  height: 64px;
+
+  padding: 0 55px 0 20px;
+
+  border: 1px solid #eadbd5;
+
+  border-radius: 12px;
+
+  outline: none;
+
+  background: #fffdfb;
+
+  color: #4a3032;
+
+  font-family: "Poppins", sans-serif;
+
+  font-size: 25px;
+  font-weight: 600;
+
+  letter-spacing: 9px;
+
+  text-align: center;
+
+  box-sizing: border-box;
+
+  transition:
+    border-color 0.25s ease,
+    box-shadow 0.25s ease,
+    background 0.25s ease,
+    transform 0.25s ease;
+}
+
+.verify-code-input::placeholder {
+  color: #cdbdc0;
+
+  letter-spacing: 9px;
+}
+
+.verify-code-input:focus {
+  border-color: #4a3032;
+
+  background: #ffffff;
+
+  box-shadow:
+    0 0 0 4px rgba(74, 48, 50, 0.08);
+
+  transform: translateY(-1px);
+}
+
+.verify-code-input.input-error {
+  border-color: #c45d68;
+
+  box-shadow:
+    0 0 0 4px rgba(196, 93, 104, 0.08);
+}
+
+
+/* =========================================================
+   CODE COUNT
+========================================================= */
+
+.verify-code-count {
+  position: absolute;
+
+  right: 14px;
+  top: 39px;
+
+  color: #aa9699;
+
+  font-size: 10px;
+
+  pointer-events: none;
+}
+
+
+/* =========================================================
+   ERROR
+========================================================= */
+
+.verify-error-message {
+  display: flex;
   align-items: center;
   justify-content: center;
+  gap: 7px;
 
-  min-height: 48px;
+  margin-top: 13px;
 
-  padding: 0 28px;
+  color: #b34f5b;
 
-  border-radius: 10px;
+  font-size: 12px;
+
+  line-height: 1.5;
+
+  animation: verifyShake 0.35s ease;
+}
+
+
+/* =========================================================
+   VERIFY BUTTON
+========================================================= */
+
+.verify-button {
+  width: 100%;
+
+  min-height: 54px;
+
+  margin-top: 22px;
+
+  padding: 15px 20px;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 9px;
+
+  border: none;
+  border-radius: 11px;
 
   background: #4a3032;
 
   color: #ffffff;
 
-  text-decoration: none;
+  font-family: "Poppins", sans-serif;
 
   font-size: 11px;
-
-  font-weight: 700;
+  font-weight: 600;
 
   letter-spacing: 1.5px;
 
-  transition: 0.25s ease;
+  cursor: pointer;
+
+  text-decoration: none;
+
+  transition:
+    background 0.3s ease,
+    transform 0.3s ease,
+    box-shadow 0.3s ease,
+    opacity 0.3s ease;
 }
 
 .verify-button:hover {
-  background: #392326;
+  background: #362225;
 
   transform: translateY(-2px);
+
+  box-shadow:
+    0 10px 25px rgba(74, 48, 50, 0.18);
 }
+
+.verify-button:active {
+  transform: translateY(0);
+}
+
+.verify-button:disabled {
+  opacity: 0.65;
+
+  cursor: not-allowed;
+
+  transform: none;
+
+  box-shadow: none;
+}
+
+
+/* =========================================================
+   SPINNER
+========================================================= */
+
+.verify-spinner {
+  animation: verifySpin 0.9s linear infinite;
+}
+
+
+/* =========================================================
+   NOTE
+========================================================= */
+
+.verify-note {
+  margin-top: 22px;
+
+  color: #9a8588;
+
+  font-size: 11px;
+
+  line-height: 1.7;
+}
+
+.verify-note strong {
+  color: #806a6e;
+}
+
+
+/* =========================================================
+   BACK LINK
+========================================================= */
+
+.verify-back {
+  display: inline-block;
+
+  margin-top: 22px;
+
+  color: #806a6e;
+
+  font-size: 11px;
+
+  text-decoration: none;
+
+  transition:
+    color 0.25s ease,
+    transform 0.25s ease;
+}
+
+.verify-back:hover {
+  color: #4a3032;
+
+  transform: translateX(-2px);
+}
+
+
+/* =========================================================
+   ANIMATIONS
+========================================================= */
+
+@keyframes verifyCardIn {
+  from {
+    opacity: 0;
+    transform: translateY(25px);
+  }
+
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+
+@keyframes verifyIconIn {
+  from {
+    opacity: 0;
+    transform: scale(0.75);
+  }
+
+  to {
+    opacity: 1;
+    transform: scale(1);
+  }
+}
+
+
+@keyframes verifySpin {
+  from {
+    transform: rotate(0deg);
+  }
+
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+
+@keyframes verifyShake {
+  0%,
+  100% {
+    transform: translateX(0);
+  }
+
+  25% {
+    transform: translateX(-5px);
+  }
+
+  75% {
+    transform: translateX(5px);
+  }
+}
+
+
+/* =========================================================
+   RESPONSIVE
+========================================================= */
 
 @media (max-width: 600px) {
   .verify-email-page {
-    padding: 20px;
+    padding: 25px 15px;
   }
 
   .verify-email-card {
-    padding: 40px 25px;
+    padding: 38px 25px;
+
+    border-radius: 20px;
   }
 
   .verify-email-card h1 {
-    font-size: 30px;
+    font-size: 29px;
+  }
+
+  .verify-mail-icon,
+  .verify-success-icon {
+    width: 64px;
+    height: 64px;
+  }
+
+  .verify-code-input {
+    height: 58px;
+
+    font-size: 22px;
+
+    letter-spacing: 7px;
+  }
+
+  .verify-code-input::placeholder {
+    letter-spacing: 7px;
   }
 }
+
+
+@media (max-width: 380px) {
+  .verify-email-card {
+    padding: 32px 20px;
+  }
+
+  .verify-email-card h1 {
+    font-size: 27px;
+  }
+
+  .verify-code-input {
+    font-size: 20px;
+
+    letter-spacing: 5px;
+  }
+
+  .verify-code-input::placeholder {
+    letter-spacing: 5px;
+  }
+}
+

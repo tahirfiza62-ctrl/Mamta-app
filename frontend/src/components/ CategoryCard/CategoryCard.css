@@ -1,5 +1,6 @@
 /* =========================================================
    MAMTA — CATEGORY SECTION
+
    Premium • Soft • Elegant • Modern
 ========================================================= */
 
@@ -35,6 +36,10 @@
   pointer-events: none;
   border: 1px solid rgba(189, 111, 124, 0.1);
   border-radius: 50%;
+
+  transition:
+    transform 1s ease,
+    opacity 0.8s ease;
 }
 
 .category-section::before {
@@ -51,6 +56,14 @@
   bottom: -170px;
 }
 
+.category-section:hover::before {
+  transform: scale(1.04) rotate(5deg);
+}
+
+.category-section:hover::after {
+  transform: scale(1.05) rotate(-5deg);
+}
+
 /* =========================================================
    SECTION HEADING
 ========================================================= */
@@ -60,6 +73,14 @@
   max-width: 720px;
   margin: 0 auto 65px;
   text-align: center;
+
+  transition:
+    transform 0.6s cubic-bezier(0.2, 0.8, 0.2, 1),
+    opacity 0.6s ease;
+}
+
+.category-heading:hover {
+  transform: translateY(-3px);
 }
 
 /* =========================================================
@@ -68,17 +89,22 @@
 
 .category-heading::before {
   content: "";
-
   position: absolute;
   top: -28px;
   left: 50%;
-
   width: 45px;
   height: 1px;
-
   background: #bd6f7c;
-
   transform: translateX(-50%);
+
+  transition:
+    width 0.5s cubic-bezier(0.2, 0.8, 0.2, 1),
+    background 0.3s ease;
+}
+
+.category-heading:hover::before {
+  width: 75px;
+  background: #a95766;
 }
 
 /* =========================================================
@@ -99,16 +125,35 @@
   letter-spacing: 3px;
   line-height: 1;
   text-transform: uppercase;
+
+  transition:
+    color 0.35s ease,
+    letter-spacing 0.45s ease,
+    transform 0.45s ease;
+}
+
+.category-heading:hover .category-eyebrow {
+  color: #a95766;
+  letter-spacing: 3.5px;
+  transform: translateY(-2px);
 }
 
 .category-eyebrow::before,
 .category-eyebrow::after {
   content: "";
-
   width: 25px;
   height: 1px;
-
   background: #d9a3aa;
+
+  transition:
+    width 0.45s ease,
+    background 0.35s ease;
+}
+
+.category-heading:hover .category-eyebrow::before,
+.category-heading:hover .category-eyebrow::after {
+  width: 38px;
+  background: #bd6f7c;
 }
 
 /* =========================================================
@@ -125,13 +170,38 @@
   font-weight: 500;
   line-height: 1.05;
   letter-spacing: -1.8px;
+
+  transition:
+    color 0.45s ease,
+    letter-spacing 0.5s ease,
+    transform 0.5s cubic-bezier(0.2, 0.8, 0.2, 1);
 }
+
+.category-heading:hover h2 {
+  letter-spacing: -1.3px;
+  transform: translateY(-2px);
+}
+
+/* =========================================================
+   HEADING HIGHLIGHT
+========================================================= */
 
 .category-heading h2 span {
   display: block;
 
   color: #bd6f7c;
   font-weight: 400;
+
+  transition:
+    color 0.4s ease,
+    letter-spacing 0.5s ease,
+    transform 0.5s cubic-bezier(0.2, 0.8, 0.2, 1);
+}
+
+.category-heading:hover h2 span {
+  color: #a95766;
+  letter-spacing: 0.2px;
+  transform: translateY(-2px);
 }
 
 /* =========================================================
@@ -148,6 +218,16 @@
   font-size: 22px;
   font-weight: 400;
   line-height: 1.9;
+
+  transition:
+    color 0.4s ease,
+    transform 0.5s ease,
+    opacity 0.4s ease;
+}
+
+.category-heading:hover p {
+  color: #75696c;
+  transform: translateY(-1px);
 }
 
 /* =========================================================
@@ -155,9 +235,22 @@
 ========================================================= */
 
 .category-grid {
-  display: grid;
-  grid-template-columns: repeat(4, minmax(0, 1fr));
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
   gap: 24px;
+}
+
+/*
+   Four cards fit in the first row.
+
+   The fifth card automatically moves to the
+   second row and justify-content: center
+   keeps it perfectly centered.
+*/
+
+.category-grid > * {
+  width: calc((100% - 72px) / 4);
 }
 
 /* =========================================================
@@ -166,7 +259,6 @@
 
 .category-card {
   position: relative;
-
   display: block;
 
   color: inherit;
@@ -174,7 +266,8 @@
   text-decoration: none;
 
   transition:
-    transform 0.5s cubic-bezier(0.2, 0.8, 0.2, 1);
+    transform 0.5s cubic-bezier(0.2, 0.8, 0.2, 1),
+    opacity 0.4s ease;
 }
 
 .category-card:hover {
@@ -202,7 +295,8 @@
 
   transition:
     box-shadow 0.5s ease,
-    border-radius 0.5s ease;
+    border-radius 0.5s ease,
+    transform 0.5s ease;
 }
 
 .category-card:hover .category-image {
@@ -246,7 +340,6 @@
 
   position: absolute;
   z-index: 2;
-
   inset: 0;
 
   background:
@@ -256,7 +349,8 @@
       rgba(40, 25, 32, 0.2) 100%
     );
 
-  transition: background 0.5s ease;
+  transition:
+    background 0.5s ease;
 }
 
 .category-card:hover .category-image::after {
@@ -299,12 +393,14 @@
 
   transform:
     translate(-50%, -50%)
-    rotate(-10deg);
+    rotate(-10deg)
+    scale(0.85);
 
   transition:
     opacity 0.3s ease,
     transform 0.4s ease,
-    background 0.3s ease;
+    background 0.3s ease,
+    box-shadow 0.3s ease;
 }
 
 .category-card:hover .category-arrow {
@@ -312,15 +408,20 @@
 
   transform:
     translate(-50%, -50%)
-    rotate(0);
+    rotate(0)
+    scale(1);
 }
 
 .category-arrow:hover {
   background: #a95766;
 
+  box-shadow:
+    0 8px 20px rgba(189, 111, 124, 0.3);
+
   transform:
     translate(-50%, -50%)
-    rotate(45deg) !important;
+    rotate(45deg)
+    scale(1.05) !important;
 }
 
 /* =========================================================
@@ -343,7 +444,9 @@
 
   transform: translateX(-50%);
 
-  transition: width 0.4s ease;
+  transition:
+    width 0.4s ease,
+    opacity 0.3s ease;
 }
 
 .category-card:hover .category-image::before {
@@ -356,6 +459,13 @@
 
 .category-info {
   padding-top: 21px;
+
+  transition:
+    transform 0.4s ease;
+}
+
+.category-card:hover .category-info {
+  transform: translateY(-2px);
 }
 
 /* =========================================================
@@ -374,12 +484,14 @@
 
   transition:
     color 0.3s ease,
-    letter-spacing 0.3s ease;
+    letter-spacing 0.3s ease,
+    transform 0.3s ease;
 }
 
 .category-card:hover .category-info h3 {
   color: #bd6f7c;
   letter-spacing: 0.2px;
+  transform: translateY(-1px);
 }
 
 /* =========================================================
@@ -398,6 +510,15 @@
   font-size: 15px;
   font-weight: 400;
   line-height: 1.7;
+
+  transition:
+    color 0.3s ease,
+    transform 0.35s ease;
+}
+
+.category-card:hover .category-info p {
+  color: #75696c;
+  transform: translateY(-1px);
 }
 
 /* =========================================================
@@ -417,6 +538,7 @@
   font-size: 12px;
   font-weight: 600;
   letter-spacing: 1.7px;
+
   text-transform: uppercase;
 
   opacity: 0;
@@ -425,7 +547,8 @@
 
   transition:
     opacity 0.35s ease,
-    transform 0.35s ease;
+    transform 0.35s ease,
+    color 0.3s ease;
 }
 
 .category-link::after {
@@ -441,7 +564,9 @@
 
   background: #bd6f7c;
 
-  transition: width 0.35s ease;
+  transition:
+    width 0.35s ease,
+    background 0.3s ease;
 }
 
 .category-card:hover .category-link {
@@ -453,6 +578,14 @@
   width: 100%;
 }
 
+.category-link:hover {
+  color: #a95766;
+}
+
+.category-link:hover::after {
+  background: #a95766;
+}
+
 /* =========================================================
    VIEW ALL BUTTON
 ========================================================= */
@@ -462,10 +595,18 @@
   justify-content: center;
 
   margin-top: 65px;
+
+  transition:
+    transform 0.4s ease;
+}
+
+.category-view-all:hover {
+  transform: translateY(-2px);
 }
 
 .category-view-all a {
   display: inline-flex;
+
   align-items: center;
   justify-content: center;
 
@@ -482,6 +623,7 @@
   font-size: 10px;
   font-weight: 600;
   letter-spacing: 1.5px;
+
   text-transform: uppercase;
   text-decoration: none;
 
@@ -489,15 +631,21 @@
     background 0.35s ease,
     color 0.35s ease,
     border-color 0.35s ease,
-    transform 0.35s ease;
+    transform 0.35s ease,
+    box-shadow 0.35s ease;
 }
 
 .category-view-all a:hover {
   background: #bd6f7c;
+
   border-color: #bd6f7c;
+
   color: #fff9f4;
 
   transform: translateY(-3px);
+
+  box-shadow:
+    0 10px 25px rgba(189, 111, 124, 0.2);
 }
 
 /* =========================================================
@@ -510,8 +658,11 @@
   }
 
   .category-grid {
-    grid-template-columns: repeat(2, minmax(0, 1fr));
     gap: 50px 25px;
+  }
+
+  .category-grid > * {
+    width: calc((100% - 25px) / 2);
   }
 
   .category-image {
@@ -563,6 +714,10 @@
     width: 38px;
   }
 
+  .category-heading:hover::before {
+    width: 60px;
+  }
+
   .category-eyebrow {
     font-size: 10px;
     letter-spacing: 2.5px;
@@ -573,36 +728,54 @@
     width: 20px;
   }
 
+  .category-heading:hover .category-eyebrow {
+    letter-spacing: 2.8px;
+  }
+
+  .category-heading:hover .category-eyebrow::before,
+  .category-heading:hover .category-eyebrow::after {
+    width: 30px;
+  }
+
   .category-heading h2 {
     margin-top: 14px;
-
     font-size: 42px;
     letter-spacing: -1px;
   }
 
+  .category-heading:hover h2 {
+    letter-spacing: -0.7px;
+  }
+
   .category-heading > p {
     max-width: 480px;
-
     font-size: 13px;
     line-height: 1.8;
   }
 
   .category-grid {
-    grid-template-columns: 1fr;
     gap: 48px;
+  }
+
+  .category-grid > * {
+    width: 100%;
   }
 
   .category-image {
     height: 420px;
 
-    border-radius: 180px 180px 20px 20px;
+    border-radius:
+      180px 180px 20px 20px;
   }
 
   .category-card:hover .category-image {
-    border-radius: 180px 180px 28px 28px;
+    border-radius:
+      180px 180px 28px 28px;
   }
 
-  /* Keep arrow visible on mobile */
+  /* =======================================================
+     KEEP ARROW VISIBLE ON MOBILE
+  ======================================================= */
 
   .category-arrow {
     top: 10%;
@@ -614,7 +787,8 @@
 
     transform:
       translate(-50%, -50%)
-      rotate(0);
+      rotate(0)
+      scale(1);
   }
 
   .category-link {
@@ -659,11 +833,13 @@
   .category-image {
     height: 360px;
 
-    border-radius: 160px 160px 18px 18px;
+    border-radius:
+      160px 160px 18px 18px;
   }
 
   .category-card:hover .category-image {
-    border-radius: 160px 160px 24px 24px;
+    border-radius:
+      160px 160px 24px 24px;
   }
 
   .category-info h3 {
@@ -685,14 +861,59 @@
 ========================================================= */
 
 @media (prefers-reduced-motion: reduce) {
+  .category-section::before,
+  .category-section::after,
+  .category-heading,
+  .category-heading::before,
+  .category-eyebrow,
+  .category-eyebrow::before,
+  .category-eyebrow::after,
+  .category-heading h2,
+  .category-heading h2 span,
+  .category-heading p,
   .category-card,
   .category-image,
   .category-image img,
+  .category-image::before,
+  .category-image::after,
   .category-arrow,
+  .category-info,
+  .category-info h3,
+  .category-info p,
   .category-link,
   .category-link::after,
+  .category-view-all,
   .category-view-all a {
     transition: none;
+  }
+
+  .category-section:hover::before,
+  .category-section:hover::after {
+    transform: none;
+  }
+
+  .category-heading:hover {
+    transform: none;
+  }
+
+  .category-heading:hover::before {
+    width: 45px;
+  }
+
+  .category-heading:hover .category-eyebrow {
+    transform: none;
+    letter-spacing: 3px;
+  }
+
+  .category-heading:hover .category-eyebrow::before,
+  .category-heading:hover .category-eyebrow::after {
+    width: 25px;
+  }
+
+  .category-heading:hover h2,
+  .category-heading:hover h2 span,
+  .category-heading:hover p {
+    transform: none;
   }
 
   .category-card:hover {
@@ -700,6 +921,23 @@
   }
 
   .category-card:hover .category-image img {
+    transform: none;
+  }
+
+  .category-card:hover .category-info {
+    transform: none;
+  }
+
+  .category-card:hover .category-info h3,
+  .category-card:hover .category-info p {
+    transform: none;
+  }
+
+  .category-view-all:hover {
+    transform: none;
+  }
+
+  .category-view-all a:hover {
     transform: none;
   }
 }

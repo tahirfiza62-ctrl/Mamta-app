@@ -14,33 +14,47 @@ const {
   adminLogin,
 } = require("../controllers/adminController");
 
-const authMiddleware = require("../middleware/authMiddleware");
+const authMiddleware =
+  require("../middleware/authMiddleware");
 
 const router = express.Router();
 
-/* =========================================================
-   CUSTOMER AUTH
-========================================================= */
+
+// =========================================================
+// CUSTOMER AUTH
+// =========================================================
 
 router.post(
   "/register",
   register
 );
 
+
 router.post(
   "/login",
   login
 );
 
-router.get(
+
+// =========================================================
+// EMAIL VERIFICATION
+// =========================================================
+
+router.post(
   "/verify-email",
   verifyEmail
 );
+
 
 router.post(
   "/resend-verification",
   resendVerificationEmail
 );
+
+
+// =========================================================
+// USER
+// =========================================================
 
 router.get(
   "/me",
@@ -48,20 +62,23 @@ router.get(
   getMe
 );
 
+
 router.put(
   "/change-password",
   authMiddleware,
   changePassword
 );
 
-/* =========================================================
-   ADMIN AUTH
-========================================================= */
+
+// =========================================================
+// ADMIN AUTH
+// =========================================================
 
 router.post(
   "/admin",
   adminLogin
 );
+
 
 module.exports = router;
 

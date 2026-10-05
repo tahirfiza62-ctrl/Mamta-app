@@ -4,6 +4,7 @@ const {
   getAllOrders,
   getOrderById,
   updateOrderStatus,
+  deleteOrder,
 } = require("../controllers/adminOrderController");
 
 const router = express.Router();
@@ -11,6 +12,7 @@ const router = express.Router();
 
 /* =========================================================
    GET ALL ORDERS
+   GET /api/admin/orders
 ========================================================= */
 
 router.get(
@@ -21,6 +23,7 @@ router.get(
 
 /* =========================================================
    GET SINGLE ORDER
+   GET /api/admin/orders/:id
 ========================================================= */
 
 router.get(
@@ -31,11 +34,23 @@ router.get(
 
 /* =========================================================
    UPDATE ORDER STATUS
+   PUT /api/admin/orders/:id/status
 ========================================================= */
 
 router.put(
   "/:id/status",
   updateOrderStatus
+);
+
+
+/* =========================================================
+   DELETE ORDER
+   DELETE /api/admin/orders/:id
+========================================================= */
+
+router.delete(
+  "/:id",
+  deleteOrder
 );
 
 

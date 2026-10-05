@@ -287,7 +287,7 @@
 
   border-color: rgba(255, 255, 255, 0.06);
 
-  color: #ffffff;
+color:#3e292c;
 
   transform: translateX(2px);
 }
@@ -314,7 +314,7 @@
 
   border-color: #f4d8dc;
 
-  color: #4a3032;
+  color: #4a3032!important;
 
   font-weight: 700;
 
@@ -322,7 +322,11 @@
     0 7px 18px rgba(0, 0, 0, 0.09);
 }
 
-
+.admin-nav-link:hover,
+.admin-nav-link:hover span,
+.admin-nav-link:hover svg {
+  color: #4a3032 !important;
+}
 .admin-nav-link.active svg {
   color: #b96773;
 

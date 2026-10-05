@@ -85,6 +85,7 @@ const createColorObject = (color) => ({
   value: color.value,
   code: color.hex,
   image: "",
+  useMainImage: true,
 });
 
 /* =========================================================
@@ -142,15 +143,18 @@ const AddProduct = () => {
 
   const toggleColor = (color) => {
     setForm((prev) => {
-      const alreadySelected = prev.colors.some(
-        (item) => item.value === color.value
-      );
+      const alreadySelected =
+        prev.colors.some(
+          (item) =>
+            item.value === color.value
+        );
 
       if (alreadySelected) {
         return {
           ...prev,
           colors: prev.colors.filter(
-            (item) => item.value !== color.value
+            (item) =>
+              item.value !== color.value
           ),
         };
       }
@@ -166,6 +170,26 @@ const AddProduct = () => {
   };
 
   /* =========================================================
+     TOGGLE USE MAIN IMAGE
+  ========================================================= */
+
+  const toggleUseMainImage = (colorValue) => {
+    setForm((prev) => ({
+      ...prev,
+      colors: prev.colors.map(
+        (color) =>
+          color.value === colorValue
+            ? {
+                ...color,
+                useMainImage:
+                  !color.useMainImage,
+              }
+            : color
+      ),
+    }));
+  };
+
+  /* =========================================================
      UPDATE COLOR IMAGE
   ========================================================= */
 
@@ -175,13 +199,15 @@ const AddProduct = () => {
   ) => {
     setForm((prev) => ({
       ...prev,
-      colors: prev.colors.map((color) =>
-        color.value === colorValue
-          ? {
-              ...color,
-              image: imageValue,
-            }
-          : color
+      colors: prev.colors.map(
+        (color) =>
+          color.value === colorValue
+            ? {
+                ...color,
+                image: imageValue,
+                useMainImage: false,
+              }
+            : color
       ),
     }));
   };
@@ -194,7 +220,8 @@ const AddProduct = () => {
     setForm((prev) => ({
       ...prev,
       colors: prev.colors.filter(
-        (color) => color.value !== colorValue
+        (color) =>
+          color.value !== colorValue
       ),
     }));
   };
@@ -210,6 +237,11 @@ const AddProduct = () => {
       return;
     }
 
+    if (form.features.includes(value)) {
+      setError("This feature has already been added.");
+      return;
+    }
+
     setForm((prev) => ({
       ...prev,
       features: [
@@ -219,6 +251,7 @@ const AddProduct = () => {
     }));
 
     setFeature("");
+    setError("");
   };
 
   /* =========================================================
@@ -235,13 +268,32 @@ const AddProduct = () => {
   };
 
   /* =========================================================
-     ADD IMAGE
+     ADD ADDITIONAL IMAGE
+     
+     Main image is separate.
+     These images become the automatic
+     product gallery on ProductDetails.
   ========================================================= */
 
   const addImage = () => {
     const value = imageUrl.trim();
 
     if (!value) {
+      setError("Please enter an image URL.");
+      return;
+    }
+
+    if (form.images.length >= 4) {
+      setError(
+        "You can add up to 4 additional images."
+      );
+      return;
+    }
+
+    if (form.images.includes(value)) {
+      setError(
+        "This image has already been added."
+      );
       return;
     }
 
@@ -254,6 +306,7 @@ const AddProduct = () => {
     }));
 
     setImageUrl("");
+    setError("");
   };
 
   /* =========================================================
@@ -284,7 +337,9 @@ const AddProduct = () => {
     ----------------------------------------- */
 
     if (!form.name.trim()) {
-      setError("Product name is required.");
+      setError(
+        "Product name is required."
+      );
       return;
     }
 
@@ -293,7 +348,9 @@ const AddProduct = () => {
     ----------------------------------------- */
 
     if (!form.category.trim()) {
-      setError("Category is required.");
+      setError(
+        "Category is required."
+      );
       return;
     }
 
@@ -305,8 +362,40 @@ const AddProduct = () => {
       form.price === "" ||
       Number(form.price) < 0
     ) {
-      setError("Enter a valid price.");
+      setError(
+        "Enter a valid price."
+      );
       return;
+    }
+
+    /* -----------------------------------------
+       OLD PRICE
+    ----------------------------------------- */
+
+    if (
+      form.oldPrice !== "" &&
+      Number(form.oldPrice) < 0
+    ) {
+      setError(
+        "Old price cannot be negative."
+      );
+      return;
+    }
+
+    /* -----------------------------------------
+       MAIN IMAGE
+    ----------------------------------------- */
+
+    for (const color of form.colors) {
+      if (
+        color.useMainImage &&
+        !form.image.trim()
+      ) {
+        setError(
+          `Please add a main product image for ${color.name}.`
+        );
+        return;
+      }
     }
 
     /* -----------------------------------------
@@ -315,8 +404,9 @@ const AddProduct = () => {
 
     for (const color of form.colors) {
       if (
-        !color.image ||
-        !color.image.trim()
+        !color.useMainImage &&
+        (!color.image ||
+          !color.image.trim())
       ) {
         setError(
           `Please add an image for ${color.name}.`
@@ -342,15 +432,61 @@ const AddProduct = () => {
           name: color.name,
           value: color.value,
           code: color.code,
-          image: color.image.trim(),
+          image:
+            color.useMainImage
+              ? form.image.trim()
+              : color.image.trim(),
         }));
+
+      /* -----------------------------------------
+         NORMALIZE CATEGORY
+      ----------------------------------------- */
+
+      let normalizedCategory =
+        form.category.trim();
+
+      if (
+        normalizedCategory ===
+          "Newborn & Kids" ||
+        normalizedCategory ===
+          "Nursing Product" ||
+        normalizedCategory ===
+          "Nursing Pillow" ||
+        normalizedCategory ===
+          "Nursing Pillows" ||
+        normalizedCategory.toLowerCase() ===
+          "nursing products"
+      ) {
+        normalizedCategory =
+          "Nursing Products";
+      }
+
+      /* -----------------------------------------
+         CLEAN ADDITIONAL IMAGES
+         
+         Remove empty values and duplicates.
+         Maximum 4 gallery images.
+      ----------------------------------------- */
+
+      const cleanedImages = [
+        ...new Set(
+          form.images
+            .map((image) =>
+              typeof image === "string"
+                ? image.trim()
+                : ""
+            )
+            .filter(Boolean)
+        ),
+      ].slice(0, 4);
 
       /* -----------------------------------------
          PRODUCT DATA
       ----------------------------------------- */
 
       const productData = {
-        name: form.name.trim(),
+        name:
+          form.name.trim(),
 
         description:
           form.description.trim(),
@@ -364,13 +500,18 @@ const AddProduct = () => {
             : Number(form.oldPrice),
 
         category:
-          form.category,
+          normalizedCategory,
 
         image:
           form.image.trim(),
 
+        /*
+          IMPORTANT:
+          These are the additional images
+          used by ProductDetails automatic slider.
+        */
         images:
-          form.images,
+          cleanedImages,
 
         stock:
           form.stock === ""
@@ -388,8 +529,44 @@ const AddProduct = () => {
       };
 
       console.log(
-        "ADDING PRODUCT:",
+        "===================================="
+      );
+
+      console.log(
+        "ADDING PRODUCT:"
+      );
+
+      console.log(
         productData
+      );
+
+      console.log(
+        "PRODUCT CATEGORY:",
+        productData.category
+      );
+
+      console.log(
+        "MAIN IMAGE:",
+        productData.image
+      );
+
+      console.log(
+        "ADDITIONAL IMAGES:",
+        productData.images
+      );
+
+      console.log(
+        "TOTAL GALLERY IMAGES:",
+        productData.images.length
+      );
+
+      console.log(
+        "COLORS:",
+        productData.colors
+      );
+
+      console.log(
+        "===================================="
       );
 
       /* -----------------------------------------
@@ -412,7 +589,9 @@ const AddProduct = () => {
       );
 
       setTimeout(() => {
-        navigate("/admin/products");
+        navigate(
+          "/admin/products"
+        );
       }, 800);
 
     } catch (err) {
@@ -448,14 +627,18 @@ const AddProduct = () => {
           type="button"
           className="admin-back-button"
           onClick={() =>
-            navigate("/admin/products")
+            navigate(
+              "/admin/products"
+            )
           }
         >
           <ArrowLeft size={18} />
+
           Back to Products
         </button>
 
         <div>
+
           <p className="admin-page-label">
             PRODUCT MANAGEMENT
           </p>
@@ -465,8 +648,10 @@ const AddProduct = () => {
           </h1>
 
           <p className="admin-page-description">
-            Add a new product to the MAMTA store.
+            Add a new product to the
+            MAMTA store.
           </p>
+
         </div>
 
       </div>
@@ -487,8 +672,11 @@ const AddProduct = () => {
 
       {success && (
         <div className="admin-product-alert admin-product-success">
+
           <Check size={18} />
+
           {success}
+
         </div>
       )}
 
@@ -508,7 +696,9 @@ const AddProduct = () => {
         <div className="admin-product-card">
 
           <div className="admin-card-heading">
+
             <div>
+
               <span className="admin-card-eyebrow">
                 BASIC INFORMATION
               </span>
@@ -518,10 +708,12 @@ const AddProduct = () => {
               </h2>
 
               <p>
-                Enter the main information about
-                your product.
+                Enter the main information
+                about your product.
               </p>
+
             </div>
+
           </div>
 
           {/* PRODUCT NAME */}
@@ -565,8 +757,6 @@ const AddProduct = () => {
 
           <div className="admin-form-grid">
 
-            {/* PRICE */}
-
             <div className="admin-form-group">
 
               <label>
@@ -584,8 +774,6 @@ const AddProduct = () => {
               />
 
             </div>
-
-            {/* OLD PRICE */}
 
             <div className="admin-form-group">
 
@@ -608,7 +796,7 @@ const AddProduct = () => {
 
           {/* =================================================
               CATEGORY
-          ================================================= */}
+          ================================================== */}
 
           <div className="admin-form-group">
 
@@ -622,6 +810,7 @@ const AddProduct = () => {
               value={form.category}
               onChange={handleChange}
             >
+
               <option value="">
                 Select Category
               </option>
@@ -634,11 +823,9 @@ const AddProduct = () => {
                 Baby Pillows
               </option>
 
-              <option value="Newborn & Kids">
-                Newborn & Kids
+              <option value="Nursing Products">
+                Nursing Products
               </option>
-
-              {/* FIXED CATEGORY */}
 
               <option value="Elders Pillows">
                 Elders Pillows
@@ -685,9 +872,11 @@ const AddProduct = () => {
               />
 
               <span className="admin-custom-checkbox">
+
                 {form.active && (
                   <Check size={14} />
                 )}
+
               </span>
 
               <span>
@@ -709,6 +898,7 @@ const AddProduct = () => {
           <div className="admin-card-heading">
 
             <div>
+
               <span className="admin-card-eyebrow">
                 PRODUCT IMAGE
               </span>
@@ -718,8 +908,10 @@ const AddProduct = () => {
               </h2>
 
               <p>
-                Add the primary image for this product.
+                Add the primary image for
+                this product.
               </p>
+
             </div>
 
           </div>
@@ -745,7 +937,10 @@ const AddProduct = () => {
 
               <img
                 src={form.image}
-                alt={form.name || "Product"}
+                alt={
+                  form.name ||
+                  "Product"
+                }
                 onError={(e) => {
                   e.currentTarget.style.display =
                     "none";
@@ -766,6 +961,7 @@ const AddProduct = () => {
           <div className="admin-card-heading">
 
             <div>
+
               <span className="admin-card-eyebrow">
                 PRODUCT GALLERY
               </span>
@@ -775,8 +971,16 @@ const AddProduct = () => {
               </h2>
 
               <p>
-                Add additional product images.
+                Add up to 4 additional images.
+                These images will automatically
+                rotate in the main product image
+                slider.
               </p>
+
+            </div>
+
+            <div className="admin-selected-count">
+              {form.images.length} / 4
             </div>
 
           </div>
@@ -787,18 +991,39 @@ const AddProduct = () => {
               type="text"
               value={imageUrl}
               onChange={(e) =>
-                setImageUrl(e.target.value)
+                setImageUrl(
+                  e.target.value
+                )
               }
+              onKeyDown={(e) => {
+                if (
+                  e.key === "Enter"
+                ) {
+                  e.preventDefault();
+                  addImage();
+                }
+              }}
               placeholder="Paste image URL"
+              disabled={
+                form.images.length >= 4
+              }
             />
 
             <button
               type="button"
               className="admin-add-small-button"
               onClick={addImage}
+              disabled={
+                form.images.length >= 4
+              }
             >
+
               <Plus size={18} />
-              Add
+
+              {form.images.length >= 4
+                ? "Maximum"
+                : "Add"}
+
             </button>
 
           </div>
@@ -817,7 +1042,9 @@ const AddProduct = () => {
 
                       <img
                         src={image}
-                        alt={`Product ${index + 1}`}
+                        alt={`Product ${
+                          index + 1
+                        }`}
                         onError={(e) => {
                           e.currentTarget.style.display =
                             "none";
@@ -827,6 +1054,10 @@ const AddProduct = () => {
                     </div>
 
                     <div className="admin-image-url">
+                      <span>
+                        Image {index + 1}
+                      </span>
+
                       {image}
                     </div>
 
@@ -834,10 +1065,14 @@ const AddProduct = () => {
                       type="button"
                       className="admin-remove-button"
                       onClick={() =>
-                        removeImage(index)
+                        removeImage(
+                          index
+                        )
                       }
                     >
+
                       <X size={17} />
+
                     </button>
 
                   </div>
@@ -858,6 +1093,7 @@ const AddProduct = () => {
           <div className="admin-card-heading">
 
             <div>
+
               <span className="admin-card-eyebrow">
                 PRODUCT FEATURES
               </span>
@@ -867,8 +1103,10 @@ const AddProduct = () => {
               </h2>
 
               <p>
-                Add important features of this product.
+                Add important features of
+                this product.
               </p>
+
             </div>
 
           </div>
@@ -879,10 +1117,14 @@ const AddProduct = () => {
               type="text"
               value={feature}
               onChange={(e) =>
-                setFeature(e.target.value)
+                setFeature(
+                  e.target.value
+                )
               }
               onKeyDown={(e) => {
-                if (e.key === "Enter") {
+                if (
+                  e.key === "Enter"
+                ) {
                   e.preventDefault();
                   addFeature();
                 }
@@ -895,8 +1137,11 @@ const AddProduct = () => {
               className="admin-add-small-button"
               onClick={addFeature}
             >
+
               <Plus size={18} />
+
               Add
+
             </button>
 
           </div>
@@ -912,7 +1157,9 @@ const AddProduct = () => {
                   >
 
                     <div className="admin-feature-check">
+
                       <Check size={15} />
+
                     </div>
 
                     <span>
@@ -923,10 +1170,14 @@ const AddProduct = () => {
                       type="button"
                       className="admin-remove-button"
                       onClick={() =>
-                        removeFeature(index)
+                        removeFeature(
+                          index
+                        )
                       }
                     >
+
                       <X size={17} />
+
                     </button>
 
                   </div>
@@ -947,6 +1198,7 @@ const AddProduct = () => {
           <div className="admin-card-heading">
 
             <div>
+
               <span className="admin-card-eyebrow">
                 PRODUCT COLORS
               </span>
@@ -956,19 +1208,24 @@ const AddProduct = () => {
               </h2>
 
               <p>
-                Select the colors available for
-                this product. Each selected color
-                must have its own product image.
+                Select the colors available
+                for this product. You can
+                use the main image or add
+                a separate image for each
+                color.
               </p>
+
             </div>
 
             <div className="admin-selected-count">
-              {form.colors.length} selected
+
+              {form.colors.length}
+              {" "}
+              selected
+
             </div>
 
           </div>
-
-          {/* COLOR OPTIONS */}
 
           <div className="admin-color-grid">
 
@@ -985,14 +1242,18 @@ const AddProduct = () => {
                 return (
                   <button
                     type="button"
-                    key={color.value}
+                    key={
+                      color.value
+                    }
                     className={`admin-color-option ${
                       selected
                         ? "selected"
                         : ""
                     }`}
                     onClick={() =>
-                      toggleColor(color)
+                      toggleColor(
+                        color
+                      )
                     }
                   >
 
@@ -1010,7 +1271,11 @@ const AddProduct = () => {
 
                     {selected && (
                       <span className="admin-color-check">
-                        <Check size={13} />
+
+                        <Check
+                          size={13}
+                        />
+
                       </span>
                     )}
 
@@ -1020,10 +1285,6 @@ const AddProduct = () => {
             )}
 
           </div>
-
-          {/* =================================================
-              SELECTED COLORS
-          ================================================= */}
 
           {form.colors.length > 0 && (
             <div className="admin-selected-colors">
@@ -1036,10 +1297,10 @@ const AddProduct = () => {
                 (color) => (
                   <div
                     className="admin-selected-color-card"
-                    key={color.value}
+                    key={
+                      color.value
+                    }
                   >
-
-                    {/* COLOR HEADER */}
 
                     <div className="admin-selected-color-header">
 
@@ -1060,7 +1321,9 @@ const AddProduct = () => {
                           </strong>
 
                           <small>
-                            {color.value}
+                            {
+                              color.value
+                            }
                           </small>
 
                         </div>
@@ -1076,47 +1339,138 @@ const AddProduct = () => {
                           )
                         }
                       >
+
                         <X size={17} />
+
                       </button>
 
                     </div>
 
-                    {/* COLOR IMAGE */}
-
                     <div className="admin-color-image-section">
 
                       <label>
-                        <ImagePlus size={17} />
-                        Image for {color.name}
+                        <ImagePlus
+                          size={17}
+                        />
+
+                        Image for{" "}
+                        {color.name}
+
                         <span>*</span>
                       </label>
 
-                      <input
-                        type="text"
-                        value={color.image}
-                        onChange={(e) =>
-                          updateColorImage(
-                            color.value,
-                            e.target.value
-                          )
-                        }
-                        placeholder={`Paste ${color.name} product image URL`}
-                      />
+                      <label className="admin-use-main-image">
 
-                      {color.image && (
-                        <div className="admin-color-image-preview">
+                        <input
+                          type="checkbox"
+                          checked={
+                            color.useMainImage
+                          }
+                          onChange={() =>
+                            toggleUseMainImage(
+                              color.value
+                            )
+                          }
+                        />
 
-                          <img
-                            src={color.image}
-                            alt={color.name}
-                            onError={(e) => {
-                              e.currentTarget.style.display =
-                                "none";
-                            }}
+                        <span className="admin-custom-checkbox">
+
+                          {color.useMainImage && (
+                            <Check
+                              size={14}
+                            />
+                          )}
+
+                        </span>
+
+                        <span>
+                          Use Main Product Image
+                        </span>
+
+                      </label>
+
+                      {!color.useMainImage && (
+                        <>
+
+                          <input
+                            type="text"
+                            value={
+                              color.image
+                            }
+                            onChange={(e) =>
+                              updateColorImage(
+                                color.value,
+                                e.target.value
+                              )
+                            }
+                            placeholder={`Paste ${color.name} product image URL`}
                           />
 
-                        </div>
+                          {color.image && (
+                            <div className="admin-color-image-preview">
+
+                              <img
+                                src={
+                                  color.image
+                                }
+                                alt={
+                                  color.name
+                                }
+                                onError={(e) => {
+                                  e.currentTarget.style.display =
+                                    "none";
+                                }}
+                              />
+
+                            </div>
+                          )}
+
+                        </>
                       )}
+
+                      {color.useMainImage &&
+                        form.image && (
+                          <div className="admin-color-image-preview">
+
+                            <img
+                              src={
+                                form.image
+                              }
+                              alt={`${color.name} product`}
+                              onError={(e) => {
+                                e.currentTarget.style.display =
+                                  "none";
+                              }}
+                            />
+
+                            <span className="admin-main-image-used">
+
+                              <Check
+                                size={14}
+                              />
+
+                              Using main product
+                              image
+
+                            </span>
+
+                          </div>
+                        )}
+
+                      {color.useMainImage &&
+                        !form.image && (
+                          <div className="admin-color-image-warning">
+
+                            <ImagePlus
+                              size={16}
+                            />
+
+                            Add the main product
+                            image above to use
+                            it for this color.
+
+                          </div>
+                        )}
 
                     </div>
 
@@ -1139,7 +1493,9 @@ const AddProduct = () => {
             type="button"
             className="admin-cancel-button"
             onClick={() =>
-              navigate("/admin/products")
+              navigate(
+                "/admin/products"
+              )
             }
             disabled={loading}
           >
@@ -1155,11 +1511,13 @@ const AddProduct = () => {
             {loading ? (
               <>
                 <span className="admin-button-spinner" />
+
                 Adding Product...
               </>
             ) : (
               <>
                 <Check size={18} />
+
                 Add Product
               </>
             )}
