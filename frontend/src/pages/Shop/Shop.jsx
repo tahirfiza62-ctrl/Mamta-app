@@ -1072,7 +1072,7 @@ const Shop = () => {
               <div className="hero-image-main">
 
                 <img
-                  src="https://res.cloudinary.com/iysbraru/image/upload/v1790503813/image12_jpg.jpg"
+                  src="https://res.cloudinary.com/iysbraru/image/upload/v1791402609/ChatGPT_Image_Oct_8_2026_12_48_07_AM.png"
                   alt="MAMTA comfort collection"
                 />
 
@@ -1108,19 +1108,7 @@ const Shop = () => {
 
         </div>
 
-        <div className="shop-hero-bottom">
-
-          <span>
-            01
-          </span>
-
-          <div></div>
-
-          <span>
-            SHOP COLLECTION
-          </span>
-
-        </div>
+     
 
       </section>
 

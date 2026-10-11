@@ -35,9 +35,10 @@ const Footer = () => {
 
           <Link to="/" className="footer-logo">
             <img
-              src="/images/mamta-logo.png"
+              src="https://res.cloudinary.com/iysbraru/image/upload/v1791674408/Mamta_Circle_Mother_and_Baby_Emblem_1.png"
               alt="Mamta"
             />
+            <h2>Maamta Circle</h2>
           </Link>
 
           <p className="brand-description">

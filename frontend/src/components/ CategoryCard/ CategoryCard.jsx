@@ -59,8 +59,8 @@ const CategoryCard = () => {
               </span>
 
               <h2>
-                Made for Every
-                <span>Little Moments</span>
+                Made for Every <span>Little Moments</span>
+                
               </h2>
             </div>
 

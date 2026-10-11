@@ -651,10 +651,10 @@ const BabyPillows = () => {
 
               </div>
 
-              <div className="maternity-round-badge">
+              <div className="ma-round-badge">
 
                 <span>
-                  COMFORT · CARE · LOVE · MAMTA ·
+                  COMFORT   <br />. CARE .  MAMTA 
                 </span>
 
               </div>

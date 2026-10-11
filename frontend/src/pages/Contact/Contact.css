@@ -836,7 +836,7 @@ background: radial-gradient(circle at 15% 25%, rgba(217, 143, 154, 0.14), transp
   }
 
   .contact-hero-image {
-    height: 440px;
+    height: 350px;
   }
 
   .contact-circle {
@@ -909,5 +909,1202 @@ background: radial-gradient(circle at 15% 25%, rgba(217, 143, 154, 0.14), transp
 
   .contact-final h2 {
     font-size: 42px;
+  }
+}
+/* =========================================================
+   CUSTOMER REVIEW SECTION
+   ========================================================= */
+
+.customer-review-section {
+  width: 100%;
+  padding: 115px 0;
+  background:
+    radial-gradient(
+      circle at 10% 20%,
+      rgba(217, 143, 154, 0.10),
+      transparent 28%
+    ),
+    radial-gradient(
+      circle at 90% 80%,
+      rgba(239, 197, 181, 0.16),
+      transparent 30%
+    ),
+    #fff9f4;
+}
+
+
+/* =========================================================
+   REVIEW CONTAINER
+   ========================================================= */
+
+.customer-review-container {
+  width: 88%;
+  max-width: 1120px;
+  margin: auto;
+
+  display: grid;
+  grid-template-columns: 0.8fr 1.2fr;
+
+  gap: 90px;
+  align-items: start;
+}
+
+
+/* =========================================================
+   REVIEW HEADING
+   ========================================================= */
+
+.customer-review-heading {
+  max-width: 420px;
+  position: sticky;
+  top: 100px;
+}
+
+.customer-review-heading h2 {
+  margin: 20px 0;
+
+  font-family:
+    "Playfair Display",
+    Georgia,
+    serif;
+
+  font-size: clamp(40px, 4vw, 55px);
+
+  font-weight: 500;
+
+  line-height: 1.05;
+
+  letter-spacing: -1.5px;
+
+  color: #4a3032;
+}
+
+.customer-review-heading h2 span {
+  display: block;
+
+  color: #bd6f7c;
+
+  font-weight: 400;
+}
+
+.customer-review-heading p {
+  max-width: 440px;
+
+  margin: 0;
+
+  color: #806d6f;
+
+  font-size: 17px;
+
+  line-height: 1.9;
+}
+
+
+/* =========================================================
+   REVIEW FORM
+   ========================================================= */
+
+.customer-review-form {
+  position: relative;
+
+  padding: 40px;
+
+  background: #ffffff;
+
+  border:
+    1px solid
+    rgba(189, 111, 124, 0.12);
+
+  box-shadow:
+    0 25px 65px
+    rgba(74, 48, 50, 0.07);
+
+  transition:
+    box-shadow 0.35s ease,
+    transform 0.35s ease;
+}
+
+.customer-review-form:hover {
+  box-shadow:
+    0 30px 75px
+    rgba(74, 48, 50, 0.10);
+}
+
+
+/* =========================================================
+   REVIEW FORM INPUTS
+   ========================================================= */
+
+.customer-review-form .form-group {
+  margin-bottom: 24px;
+}
+
+.customer-review-form .form-group label {
+  display: block;
+
+  margin-bottom: 9px;
+
+  color: #b9925a;
+
+  font-size: 12px;
+
+  font-weight: 800;
+
+  letter-spacing: 1.8px;
+}
+
+.customer-review-form .form-group input,
+.customer-review-form .form-group textarea {
+  width: 100%;
+
+  box-sizing: border-box;
+
+  padding: 14px 15px;
+
+  border:
+    1px solid
+    rgba(74, 48, 50, 0.13);
+
+  outline: none;
+
+  background: #fff9f4;
+
+  color: #4a3032;
+
+  font-family:
+    "Poppins",
+    "Segoe UI",
+    sans-serif;
+
+  font-size: 13px;
+
+  transition:
+    border-color 0.25s ease,
+    background 0.25s ease,
+    box-shadow 0.25s ease,
+    transform 0.25s ease;
+}
+
+.customer-review-form
+  .form-group
+  input:hover,
+.customer-review-form
+  .form-group
+  textarea:hover {
+  border-color:
+    rgba(189, 111, 124, 0.35);
+}
+
+.customer-review-form
+  .form-group
+  input:focus,
+.customer-review-form
+  .form-group
+  textarea:focus {
+  border-color: #bd6f7c;
+
+  background: #ffffff;
+
+  box-shadow:
+    0 0 0 3px
+    rgba(189, 111, 124, 0.08);
+
+  transform: translateY(-1px);
+}
+
+.customer-review-form
+  .form-group
+  input::placeholder,
+.customer-review-form
+  .form-group
+  textarea::placeholder {
+  color: #ad9a9b;
+
+  font-size: 13px;
+}
+
+.customer-review-form
+  .form-group
+  textarea {
+  min-height: 155px;
+
+  resize: vertical;
+}
+
+
+/* =========================================================
+   STAR RATING
+   ========================================================= */
+
+.review-rating-group {
+  margin-bottom: 25px;
+}
+
+.review-rating-group > label {
+  display: block;
+
+  margin-bottom: 12px;
+
+  color: #b9925a;
+
+  font-size: 12px;
+
+  font-weight: 800;
+
+  letter-spacing: 1.8px;
+}
+
+
+/* =========================================================
+   STAR BUTTONS
+   ========================================================= */
+
+.review-stars {
+  display: flex;
+
+  align-items: center;
+
+  gap: 7px;
+}
+
+.review-star {
+  width: 42px;
+  height: 42px;
+
+  display: flex;
+
+  align-items: center;
+  justify-content: center;
+
+  padding: 0;
+
+  border:
+    1px solid
+    rgba(189, 111, 124, 0.18);
+
+  border-radius: 50%;
+
+  background: #fff9f4;
+
+  color: #d6b9bd;
+
+  cursor: pointer;
+
+  transition:
+    transform 0.25s ease,
+    background 0.25s ease,
+    color 0.25s ease,
+    border-color 0.25s ease,
+    box-shadow 0.25s ease;
+}
+
+.review-star:hover {
+  transform: translateY(-3px) scale(1.06);
+
+  color: #bd6f7c;
+
+  border-color: #bd6f7c;
+
+  background: #fdf0f1;
+
+  box-shadow:
+    0 8px 18px
+    rgba(189, 111, 124, 0.12);
+}
+
+.review-star.active {
+  color: #bd6f7c;
+
+  background: #f4d9dc;
+
+  border-color: #bd6f7c;
+
+  box-shadow:
+    0 7px 18px
+    rgba(189, 111, 124, 0.12);
+}
+
+.review-star:active {
+  transform: scale(0.94);
+}
+
+
+/* =========================================================
+   RATING TEXT
+   ========================================================= */
+
+.rating-text {
+  display: block;
+
+  margin-top: 10px;
+
+  color: #8c7072;
+
+  font-size: 12px;
+
+  font-weight: 500;
+
+  letter-spacing: 0.5px;
+}
+
+
+/* =========================================================
+   REVIEW CHARACTER COUNT
+   ========================================================= */
+
+.review-character-count {
+  display: block;
+
+  margin-top: 7px;
+
+  text-align: right;
+
+  color: #a58e90;
+
+  font-size: 11px;
+}
+
+
+/* =========================================================
+   REVIEW SUBMIT BUTTON
+   ========================================================= */
+
+.review-submit {
+  margin-top: 5px;
+
+  background: #4a3032;
+}
+
+.review-submit:hover {
+  background: #bd6f7c;
+
+  transform: translateY(-3px);
+
+  box-shadow:
+    0 12px 28px
+    rgba(189, 111, 124, 0.18);
+}
+
+.review-submit:disabled {
+  opacity: 0.65;
+
+  cursor: not-allowed;
+
+  transform: none;
+
+  box-shadow: none;
+}
+
+
+/* =========================================================
+   REVIEW SECTION DECORATION
+   ========================================================= */
+
+.customer-review-section {
+  position: relative;
+  overflow: hidden;
+}
+
+.customer-review-section::before {
+  content: "MAMTA";
+
+  position: absolute;
+
+  top: 50%;
+
+  right: -80px;
+
+  transform:
+    translateY(-50%)
+    rotate(90deg);
+
+  font-family:
+    "Playfair Display",
+    Georgia,
+    serif;
+
+  font-size: 120px;
+
+  font-weight: 500;
+
+  letter-spacing: 8px;
+
+  color: rgba(189, 111, 124, 0.035);
+
+  pointer-events: none;
+}
+
+
+/* =========================================================
+   REVIEW FORM TOP DETAIL
+   ========================================================= */
+
+.customer-review-form::before {
+  content: "";
+
+  position: absolute;
+
+  top: 0;
+  left: 0;
+
+  width: 100%;
+  height: 3px;
+
+  background:
+    linear-gradient(
+      90deg,
+      #bd6f7c,
+      #d98f9a,
+      #efc5b5,
+      #bd6f7c
+    );
+}
+
+
+/* =========================================================
+   RESPONSIVE — TABLET
+   ========================================================= */
+
+@media (max-width: 950px) {
+
+  .customer-review-section {
+    padding: 95px 0;
+  }
+
+  .customer-review-container {
+    width: 88%;
+
+    grid-template-columns: 1fr;
+
+    gap: 50px;
+  }
+
+  .customer-review-heading {
+    max-width: 650px;
+
+    position: static;
+  }
+
+  .customer-review-heading h2 {
+    font-size: 48px;
+  }
+
+  .customer-review-heading p {
+    max-width: 600px;
+  }
+
+  .customer-review-form {
+    width: 100%;
+
+    box-sizing: border-box;
+  }
+
+}
+
+
+/* =========================================================
+   RESPONSIVE — MOBILE
+   ========================================================= */
+
+@media (max-width: 600px) {
+
+  .customer-review-section {
+    padding: 75px 0;
+  }
+
+  .customer-review-container {
+    width: 90%;
+
+    gap: 38px;
+  }
+
+  .customer-review-heading h2 {
+    font-size: 39px;
+
+    letter-spacing: -1px;
+  }
+
+  .customer-review-heading p {
+    font-size: 15px;
+
+    line-height: 1.8;
+  }
+
+  .customer-review-form {
+    padding: 25px 20px;
+  }
+
+  .customer-review-form
+    .form-group
+    input,
+  .customer-review-form
+    .form-group
+    textarea {
+    padding: 13px;
+
+    font-size: 13px;
+  }
+
+  .review-stars {
+    gap: 6px;
+  }
+
+  .review-star {
+    width: 39px;
+    height: 39px;
+  }
+
+  .review-star svg {
+    width: 19px;
+    height: 19px;
+  }
+
+  .customer-review-section::before {
+    display: none;
+  }
+
+}
+
+/* =========================================================
+   MAMTA CONTACT PAGE — PREMIUM ANIMATIONS
+========================================================= */
+
+/* Smooth scrolling */
+html {
+  scroll-behavior: smooth;
+}
+
+/* Main page entrance */
+.mamta-contact {
+  animation: contactPageEnter 0.8s ease both;
+}
+
+@keyframes contactPageEnter {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+
+/* Hero content entrance */
+.contact-hero-content {
+  animation: contactSlideRight 0.9s ease both;
+}
+
+@keyframes contactSlideRight {
+  from {
+    opacity: 0;
+    transform: translateX(-35px);
+  }
+  to {
+    opacity: 1;
+    transform: translateX(0);
+  }
+}
+
+/* Hero image entrance */
+.contact-hero-image {
+  animation: contactSlideLeft 1s ease both;
+}
+
+@keyframes contactSlideLeft {
+  from {
+    opacity: 0;
+    transform: translateX(35px);
+  }
+  to {
+    opacity: 1;
+    transform: translateX(0);
+  }
+}
+
+/* Decorative circle gently floats */
+.contact-circle {
+  animation: contactCircleFloat 6s ease-in-out infinite;
+}
+
+@keyframes contactCircleFloat {
+  0%, 100% {
+    transform: translateY(0);
+  }
+  50% {
+    transform: translateY(-12px);
+  }
+}
+
+/* Hero image hover */
+.contact-image-frame {
+  transition:
+    transform 0.5s ease,
+    box-shadow 0.5s ease;
+}
+
+.contact-image-frame:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 35px 75px rgba(74, 48, 50, 0.19);
+}
+
+.contact-image-frame img {
+  transition: transform 0.8s cubic-bezier(0.2, 0.7, 0.3, 1);
+}
+
+.contact-image-frame:hover img {
+  transform: scale(1.06);
+}
+
+/* Floating information card */
+.contact-floating-card {
+  animation: contactCardFloat 4.5s ease-in-out infinite;
+  transition:
+    box-shadow 0.35s ease,
+    transform 0.35s ease;
+}
+
+.contact-floating-card:hover {
+  animation-play-state: paused;
+  transform: translateY(-6px);
+  box-shadow: 0 24px 55px rgba(74, 48, 50, 0.17);
+}
+
+@keyframes contactCardFloat {
+  0%, 100% {
+    transform: translateY(0);
+  }
+  50% {
+    transform: translateY(-8px);
+  }
+}
+
+/* Section headings */
+.contact-heading,
+.contact-form-content,
+.customer-review-heading {
+  animation: contactFadeUp 0.8s ease both;
+}
+
+@keyframes contactFadeUp {
+  from {
+    opacity: 0;
+    transform: translateY(22px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+/* Contact information cards */
+.contact-info-card {
+  overflow: hidden;
+  transition:
+    transform 0.35s ease,
+    box-shadow 0.35s ease,
+    background 0.35s ease,
+    border-color 0.35s ease;
+}
+
+.contact-info-card:hover {
+  transform: translateY(-8px);
+  background: #fff;
+  border-color: rgba(189, 111, 124, 0.35);
+  box-shadow: 0 22px 45px rgba(74, 48, 50, 0.11);
+}
+
+.contact-icon {
+  transition:
+    transform 0.35s ease,
+    background 0.35s ease,
+    color 0.35s ease;
+}
+
+.contact-info-card:hover .contact-icon {
+  transform: rotate(-6deg) scale(1.1);
+  background: #bd6f7c;
+  color: #fff;
+}
+
+.contact-info-card > svg {
+  transition: transform 0.3s ease;
+}
+
+.contact-info-card:hover > svg {
+  transform: translate(4px, -4px);
+}
+
+/* Form panel */
+.mamta-contact-form,
+.customer-review-form {
+  transition:
+    box-shadow 0.35s ease,
+    transform 0.35s ease;
+}
+
+.mamta-contact-form:hover,
+.customer-review-form:hover {
+  box-shadow: 0 28px 70px rgba(74, 48, 50, 0.11);
+}
+
+/* Form fields */
+.form-group input,
+.form-group textarea {
+  transition:
+    border-color 0.25s ease,
+    background 0.25s ease,
+    box-shadow 0.25s ease,
+    transform 0.25s ease;
+}
+
+.form-group input:hover,
+.form-group textarea:hover {
+  border-color: rgba(189, 111, 124, 0.45);
+}
+
+.form-group input:focus,
+.form-group textarea:focus {
+  border-color: #bd6f7c;
+  background: #fff;
+  box-shadow: 0 0 0 4px rgba(189, 111, 124, 0.12);
+  transform: translateY(-1px);
+}
+
+/* Buttons */
+.contact-hero-button,
+.contact-submit,
+.contact-final-button,
+.review-submit {
+  position: relative;
+  overflow: hidden;
+  transition:
+    background 0.3s ease,
+    color 0.3s ease,
+    transform 0.3s ease,
+    box-shadow 0.3s ease;
+}
+
+.contact-hero-button:hover,
+.contact-submit:hover,
+.contact-final-button:hover,
+.review-submit:not(:disabled):hover {
+  transform: translateY(-3px);
+  box-shadow: 0 12px 26px rgba(189, 111, 124, 0.2);
+}
+
+.contact-hero-button:active,
+.contact-submit:active,
+.contact-final-button:active,
+.review-submit:not(:disabled):active {
+  transform: translateY(-1px) scale(0.99);
+}
+
+/* Review star interaction */
+.review-star {
+  transition:
+    transform 0.25s ease,
+    background 0.25s ease,
+    color 0.25s ease,
+    box-shadow 0.25s ease;
+}
+
+.review-star:hover {
+  transform: translateY(-3px) scale(1.08);
+}
+
+/* Final section entrance */
+.contact-final-content {
+  animation: contactFadeUp 0.9s ease both;
+}
+
+/* Respect reduced-motion preferences */
+@media (prefers-reduced-motion: reduce) {
+  .mamta-contact *,
+  .mamta-contact *::before,
+  .mamta-contact *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
+}
+
+/* =========================================================
+   MAMTA CONTACT PAGE — COMPLETE ANIMATION SYSTEM
+========================================================= */
+
+/* 1. GLOBAL SMOOTH TRANSITIONS */
+.mamta-contact,
+.mamta-contact * {
+  box-sizing: border-box;
+}
+
+.mamta-contact a,
+.mamta-contact button,
+.mamta-contact input,
+.mamta-contact textarea,
+.mamta-contact .contact-info-card,
+.mamta-contact .contact-image-frame,
+.mamta-contact .contact-floating-card {
+  -webkit-tap-highlight-color: transparent;
+}
+
+.mamta-contact a,
+.mamta-contact button {
+  transition:
+    color 0.3s ease,
+    background-color 0.3s ease,
+    border-color 0.3s ease,
+    box-shadow 0.35s ease,
+    transform 0.35s ease;
+}
+
+/* 2. PAGE LOAD */
+.mamta-contact {
+  animation: mamtaPageFade 0.8s ease both;
+}
+
+@keyframes mamtaPageFade {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+
+/* 3. HERO TEXT ENTRANCE */
+.contact-hero-content {
+  animation: mamtaHeroText 0.9s ease both;
+}
+
+.contact-hero-content .contact-eyebrow {
+  animation: mamtaHeroText 0.7s ease both;
+  animation-delay: 0.1s;
+}
+
+.contact-hero-content h1 {
+  animation: mamtaHeroText 0.85s ease both;
+  animation-delay: 0.15s;
+}
+
+.contact-hero-content p {
+  animation: mamtaHeroText 0.85s ease both;
+  animation-delay: 0.3s;
+}
+
+.contact-hero-button {
+  animation: mamtaHeroText 0.85s ease both;
+  animation-delay: 0.4s;
+}
+
+@keyframes mamtaHeroText {
+  from {
+    opacity: 0;
+    transform: translateY(28px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+/* 4. HERO IMAGE ENTRANCE */
+.contact-hero-image {
+  animation: mamtaHeroImage 1s cubic-bezier(0.2, 0.7, 0.3, 1) both;
+  animation-delay: 0.2s;
+}
+
+@keyframes mamtaHeroImage {
+  from {
+    opacity: 0;
+    transform: translateX(35px) scale(0.97);
+  }
+  to {
+    opacity: 1;
+    transform: translateX(0) scale(1);
+  }
+}
+
+/* 5. FLOATING DECORATIVE CIRCLE */
+.contact-circle {
+  animation: mamtaCircleFloat 7s ease-in-out infinite;
+  will-change: transform;
+}
+
+@keyframes mamtaCircleFloat {
+  0%, 100% {
+    transform: translateY(0) rotate(0);
+  }
+  50% {
+    transform: translateY(-12px) rotate(2deg);
+  }
+}
+
+/* 6. HERO IMAGE HOVER */
+.contact-image-frame {
+  transition:
+    transform 0.55s ease,
+    box-shadow 0.55s ease;
+}
+
+.contact-image-frame img {
+  transition: transform 0.9s cubic-bezier(0.2, 0.7, 0.3, 1);
+}
+
+.contact-image-frame:hover {
+  transform: translateY(-6px);
+  box-shadow: 0 35px 75px rgba(74, 48, 50, 0.18);
+}
+
+.contact-image-frame:hover img {
+  transform: scale(1.06);
+}
+
+/* 7. FLOATING CARD */
+.contact-floating-card {
+  animation: mamtaFloatingCard 5s ease-in-out infinite;
+  transition:
+    box-shadow 0.35s ease,
+    border-color 0.35s ease;
+}
+
+.contact-floating-card:hover {
+  box-shadow: 0 25px 55px rgba(74, 48, 50, 0.17);
+  border-color: rgba(189, 111, 124, 0.4);
+}
+
+@keyframes mamtaFloatingCard {
+  0%, 100% {
+    translate: 0 0;
+  }
+  50% {
+    translate: 0 -7px;
+  }
+}
+
+/* 8. CONTACT SECTION HEADINGS */
+.contact-heading h2,
+.contact-form-content h2,
+.customer-review-heading h2,
+.contact-final h2 {
+  transition: color 0.35s ease;
+}
+
+.contact-heading h2 span,
+.contact-form-content h2 span,
+.customer-review-heading h2 span {
+  transition: color 0.35s ease;
+}
+
+/* 9. CONTACT INFORMATION CARDS */
+.contact-info-card {
+  overflow: hidden;
+  transition:
+    transform 0.4s cubic-bezier(0.2, 0.7, 0.3, 1),
+    box-shadow 0.4s ease,
+    background-color 0.35s ease,
+    border-color 0.35s ease;
+}
+
+.contact-info-card:hover {
+  transform: translateY(-8px);
+  background-color: #fff;
+  border-color: rgba(189, 111, 124, 0.35);
+  box-shadow: 0 22px 45px rgba(74, 48, 50, 0.1);
+}
+
+.contact-icon {
+  transition:
+    transform 0.4s ease,
+    background-color 0.35s ease,
+    color 0.35s ease;
+}
+
+.contact-info-card:hover .contact-icon {
+  transform: rotate(-7deg) scale(1.08);
+  background-color: #bd6f7c;
+  color: #fff;
+}
+
+.contact-info-card > svg {
+  transition: transform 0.35s ease;
+}
+
+.contact-info-card:hover > svg {
+  transform: translate(4px, -4px);
+}
+
+/* 10. CONTACT FORM CARD */
+.mamta-contact-form {
+  transition:
+    box-shadow 0.4s ease,
+    transform 0.4s ease;
+}
+
+.mamta-contact-form:hover {
+  box-shadow: 0 28px 65px rgba(74, 48, 50, 0.11);
+}
+
+/* 11. FORM INPUTS */
+.mamta-contact-form input,
+.mamta-contact-form textarea,
+.customer-review-form input,
+.customer-review-form textarea {
+  transition:
+    border-color 0.3s ease,
+    background-color 0.3s ease,
+    box-shadow 0.3s ease,
+    transform 0.3s ease;
+}
+
+.mamta-contact-form input:hover,
+.mamta-contact-form textarea:hover,
+.customer-review-form input:hover,
+.customer-review-form textarea:hover {
+  border-color: rgba(189, 111, 124, 0.45);
+}
+
+.mamta-contact-form input:focus,
+.mamta-contact-form textarea:focus,
+.customer-review-form input:focus,
+.customer-review-form textarea:focus {
+  border-color: #bd6f7c;
+  background-color: #fff;
+  box-shadow: 0 0 0 4px rgba(189, 111, 124, 0.11);
+  transform: translateY(-1px);
+}
+
+/* 12. BUTTON ANIMATIONS */
+.contact-hero-button,
+.contact-submit,
+.contact-final-button,
+.review-submit {
+  position: relative;
+  overflow: hidden;
+  isolation: isolate;
+  transition:
+    background-color 0.35s ease,
+    color 0.35s ease,
+    transform 0.3s ease,
+    box-shadow 0.35s ease;
+}
+
+.contact-hero-button:hover,
+.contact-submit:hover,
+.contact-final-button:hover,
+.review-submit:not(:disabled):hover {
+  transform: translateY(-3px);
+  box-shadow: 0 12px 28px rgba(189, 111, 124, 0.2);
+}
+
+.contact-hero-button:active,
+.contact-submit:active,
+.contact-final-button:active,
+.review-submit:not(:disabled):active {
+  transform: scale(0.98);
+}
+
+/* 13. CUSTOMER REVIEW FORM */
+.customer-review-form {
+  transition:
+    box-shadow 0.4s ease,
+    transform 0.4s ease;
+}
+
+.customer-review-form:hover {
+  box-shadow: 0 30px 70px rgba(74, 48, 50, 0.11);
+}
+
+/* Animated top line */
+.customer-review-form::before {
+  background-size: 200% 100%;
+  animation: mamtaGradientMove 5s linear infinite;
+}
+
+@keyframes mamtaGradientMove {
+  from {
+    background-position: 0% 50%;
+  }
+  to {
+    background-position: 200% 50%;
+  }
+}
+
+/* 14. STAR RATING */
+.review-star {
+  transition:
+    transform 0.25s ease,
+    background-color 0.25s ease,
+    color 0.25s ease,
+    box-shadow 0.25s ease;
+}
+
+.review-star:hover {
+  transform: translateY(-3px) scale(1.08);
+}
+
+.review-star:active {
+  transform: scale(0.94);
+}
+
+/* 15. FINAL CALL-TO-ACTION SECTION */
+.contact-final {
+  transition: background-color 0.5s ease;
+}
+
+.contact-final-button:hover {
+  box-shadow: 0 14px 30px rgba(255, 255, 255, 0.12);
+}
+
+/* 16. LINKS AND INTERACTIVE ELEMENTS */
+.mamta-contact a:focus-visible,
+.mamta-contact button:focus-visible {
+  outline: 2px solid #bd6f7c;
+  outline-offset: 4px;
+}
+
+/* 17. TABLET AND MOBILE */
+@media (max-width: 950px) {
+  .contact-hero-content,
+  .contact-hero-image {
+    animation-duration: 0.75s;
+  }
+
+  .contact-info-card:hover {
+    transform: translateY(-4px);
+  }
+}
+
+@media (max-width: 600px) {
+  .contact-image-frame:hover {
+    transform: none;
+  }
+
+  .contact-image-frame:hover img {
+    transform: scale(1.025);
+  }
+
+  .contact-info-card:hover {
+    transform: translateY(-3px);
+  }
+
+  .contact-floating-card {
+    animation-duration: 6s;
+  }
+
+  .mamta-contact-form:hover,
+  .customer-review-form:hover {
+    transform: none;
+  }
+}
+
+/* 18. ACCESSIBILITY */
+@media (prefers-reduced-motion: reduce) {
+  .mamta-contact *,
+  .mamta-contact *::before,
+  .mamta-contact *::after {
+    animation: none !important;
+    transition: none !important;
+    scroll-behavior: auto !important;
   }
 }

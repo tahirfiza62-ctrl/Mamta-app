@@ -1,4 +1,13 @@
+
 const mongoose = require("mongoose");
+
+const PRODUCT_CATEGORIES = [
+  "Maternity Pillows",
+  "Baby Pillows",
+  "Nursing Products",
+  "Elders Pillows",
+  "Accessories",
+];
 
 const productSchema = new mongoose.Schema(
   {
@@ -30,11 +39,16 @@ const productSchema = new mongoose.Schema(
       type: String,
       required: true,
       trim: true,
+      enum: {
+        values: PRODUCT_CATEGORIES,
+        message: "Please select a valid product category.",
+      },
     },
 
     image: {
       type: String,
       default: "",
+      trim: true,
     },
 
     images: {
@@ -90,7 +104,6 @@ const productSchema = new mongoose.Schema(
           },
         },
       ],
-
       default: [],
     },
   },
@@ -99,4 +112,7 @@ const productSchema = new mongoose.Schema(
   }
 );
 
-module.exports = mongoose.model("Product", productSchema);
+module.exports = mongoose.model(
+  "Product",
+  productSchema
+);

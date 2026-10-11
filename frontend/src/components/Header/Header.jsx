@@ -365,7 +365,7 @@ const Header = () => {
             </span>
 
             <span>
-                 15% Off on Every Order
+                 20% Off on Every Order
             </span>
 
             <span className="top-line-divider">
@@ -389,7 +389,7 @@ const Header = () => {
             </span>
 
             <span>
-              15% Off on Every Order
+              20% Off on Every Order
             </span>
 
             <span className="top-line-divider">
@@ -443,16 +443,12 @@ const Header = () => {
         >
 
           <img
-            src="/logo.jpg"
+            src="https://res.cloudinary.com/iysbraru/image/upload/v1791674408/Mamta_Circle_Mother_and_Baby_Emblem_1.png"
             alt="MAMTA Logo"
             className="logo-one"
           />
 
-          <img
-            src="/logo2.jpg"
-            alt="MAMTA Brand Logo"
-            className="logo-two"
-          />
+        
 
         </Link>
 

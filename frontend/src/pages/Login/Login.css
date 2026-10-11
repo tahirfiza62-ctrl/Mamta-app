@@ -541,3 +541,25 @@
     gap: 10px;
   }
 }
+
+/* Google reCAPTCHA */
+
+.auth-captcha {
+  display: flex;
+  justify-content: center;
+  width: 100%;
+  margin: 8px 0 18px;
+  overflow: hidden;
+}
+
+.auth-captcha-error {
+  color: #bd6f7c;
+  font-size: 12px;
+  line-height: 1.6;
+  overflow-wrap: anywhere;
+}
+
+.auth-submit:disabled {
+  opacity: 0.6;
+  cursor: not-allowed;
+}

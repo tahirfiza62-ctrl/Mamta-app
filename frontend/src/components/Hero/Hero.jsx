@@ -31,7 +31,7 @@ const slides = [
 
   {
     image:
-      "https://res.cloudinary.com/iysbraru/image/upload/v1790683769/hey1.jpg",
+      "https://res.cloudinary.com/iysbraru/image/upload/v1791613648/her3.jpg",
 
     alt: "Sleeping baby",
 
@@ -53,7 +53,7 @@ const slides = [
 
   {
     image:
-      "https://res.cloudinary.com/iysbraru/image/upload/v1790683770/hey3.jpg",
+      "https://res.cloudinary.com/iysbraru/image/upload/v1791402609/ChatGPT_Image_Oct_8_2026_12_48_07_AM.png",
 
     alt: "Mother with child",
 

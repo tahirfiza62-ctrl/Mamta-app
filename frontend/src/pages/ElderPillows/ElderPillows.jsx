@@ -41,20 +41,20 @@ const ElderPillows = () => {
           ? response.data
           : response.data.products || [];
 
-        const elderProducts =
-          allProducts.filter((product) => {
-            const category = String(
-              product.category || ""
-            )
-              .trim()
-              .toLowerCase();
+      
+const elderProducts = allProducts.filter((product) => {
+  const category = String(product.category || "")
+    .trim()
+    .toLowerCase()
+    .replace(/\s+/g, " ");
 
-            return (
-              category === "elders pillows" ||
-              category === "elder pillows" ||
-              category === "elders"
-            );
-          });
+  return [
+    "elders pillows",
+    "elder pillows",
+    "elders",
+  ].includes(category);
+});
+
 
         if (!cancelled) {
           setProducts(elderProducts);

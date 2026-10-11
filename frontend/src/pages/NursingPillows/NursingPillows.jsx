@@ -41,19 +41,21 @@ const NursingPillows = () => {
           ? response.data
           : response.data?.products || [];
 
-        const nursingProducts =
-          allProducts.filter((product) => {
-            const category = String(
-              product.category || ""
-            )
-              .trim()
-              .toLowerCase();
+      
+const nursingProducts = allProducts.filter((product) => {
+  const category = String(product.category || "")
+    .trim()
+    .toLowerCase()
+    .replace(/\s+/g, " ");
 
-            return (
-              category === "nursing" ||
-              category === "newborn & kids"
-            );
-          });
+  return [
+    "nursing products",
+    "nursing",
+    "nursing pillows",
+    "newborn & kids",
+  ].includes(category);
+});
+
 
         if (!cancelled) {
           setProducts(nursingProducts);

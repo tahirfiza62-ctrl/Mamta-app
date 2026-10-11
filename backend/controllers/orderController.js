@@ -1,6 +1,7 @@
 const Cart = require("../models/Cart");
 const Order = require("../models/Order");
-
+const sendPushNotification = require("../utils/sendPushNotification");
+const sendOrderEmail = require("../utils/sendOrderEmail");
 
 /* =========================================================
    CREATE ORDER
@@ -13,218 +14,311 @@ const createOrder = async (req, res) => {
       email,
       phone,
       address,
+      city,
       paymentMethod,
     } = req.body;
 
+    /* =====================================================
+       VALIDATION
+    ===================================================== */
+
     if (!name || !name.trim()) {
       return res.status(400).json({
-        success: false,
-        message: "Customer name is required.",
+        message: "Name is required.",
       });
     }
 
     if (!email || !email.trim()) {
       return res.status(400).json({
-        success: false,
-        message: "Customer email is required.",
+        message: "Email is required.",
       });
     }
 
     if (!phone || !phone.trim()) {
       return res.status(400).json({
-        success: false,
-        message: "Customer phone is required.",
+        message: "Phone number is required.",
       });
     }
 
     if (!address || !address.trim()) {
       return res.status(400).json({
-        success: false,
-        message: "Delivery address is required.",
+        message: "Address is required.",
       });
     }
 
+    if (!city || !city.trim()) {
+      return res.status(400).json({
+        message: "City is required.",
+      });
+    }
 
     /* =====================================================
-       GET CART
+       EMAIL VALIDATION
+    ===================================================== */
+
+    const emailRegex =
+      /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+
+    if (!emailRegex.test(email.trim())) {
+      return res.status(400).json({
+        message: "Please enter a valid email address.",
+      });
+    }
+
+    /* =====================================================
+       PHONE VALIDATION
+    ===================================================== */
+
+    const phoneRegex = /^03\d{9}$/;
+
+    if (!phoneRegex.test(phone.trim())) {
+      return res.status(400).json({
+        message:
+          "Please enter a valid Pakistani phone number.",
+      });
+    }
+
+    /* =====================================================
+       FIND USER CART
     ===================================================== */
 
     const cart = await Cart.findOne({
       userId: req.user._id,
     });
 
-    if (
-      !cart ||
-      !Array.isArray(cart.items) ||
-      cart.items.length === 0
-    ) {
+    if (!cart) {
+      return res.status(404).json({
+        message: "Cart not found.",
+      });
+    }
+
+    if (!cart.items || cart.items.length === 0) {
       return res.status(400).json({
-        success: false,
         message: "Your cart is empty.",
       });
     }
 
-
     /* =====================================================
-       SUBTOTAL
+       CALCULATE SUBTOTAL
     ===================================================== */
 
     const subtotal = cart.items.reduce(
-      (total, item) => {
-        return (
-          total +
-          Number(item.price || 0) *
-            Number(item.quantity || 0)
-        );
+      (sum, item) => {
+        const price = Number(item.price) || 0;
+        const quantity = Number(item.quantity) || 0;
+
+        return sum + price * quantity;
       },
       0
     );
-
 
     /* =====================================================
        SHIPPING
     ===================================================== */
 
-    const shipping =
-      subtotal >= 5000
-        ? 0
-        : 250;
+    const shipping = subtotal >= 5000 ? 0 : 250;
 
-
-    /* =====================================================
-       TOTAL
-    ===================================================== */
-
-    const total =
-      subtotal + shipping;
-
+    const total = subtotal + shipping;
 
     /* =====================================================
        ORDER NUMBER
     ===================================================== */
 
-    const orderNumber =
-      `MAMTA-${Date.now()}`;
-
+    const orderNumber = `MAMTA-${Date.now()}`;
 
     /* =====================================================
        ORDER ITEMS
-
-       IMPORTANT:
-       Keep selected color + exact color code +
-       selected color image.
     ===================================================== */
 
-    const orderItems =
-      cart.items.map((item) => {
-        const itemPrice =
-          Number(item.price || 0);
+    const orderItems = cart.items.map((item) => {
+      const price = Number(item.price) || 0;
+      const quantity = Number(item.quantity) || 1;
 
-        const itemQuantity =
-          Number(item.quantity || 0);
+      return {
+        productId: String(item.productId),
 
-        return {
-          productId:
-            String(item.productId),
+        name: item.name || "Product",
 
-          name:
-            String(item.name || "").trim(),
+        image: item.image || "",
 
-          image:
-            item.image || "",
+        price,
 
-          price:
-            itemPrice,
+        quantity,
 
-          quantity:
-            itemQuantity,
+        color: item.color || "",
 
-          color:
-            typeof item.color === "string"
-              ? item.color.trim()
-              : "",
+        colorCode: item.colorCode || "",
 
-          colorCode:
-            typeof item.colorCode === "string"
-              ? item.colorCode.trim()
-              : "",
+        colorImage: item.colorImage || "",
 
-          colorImage:
-            typeof item.colorImage === "string"
-              ? item.colorImage.trim()
-              : "",
-
-          total:
-            itemPrice * itemQuantity,
-        };
-      });
-
+        total: price * quantity,
+      };
+    });
 
     /* =====================================================
        CREATE ORDER
     ===================================================== */
 
-    const order =
-      await Order.create({
-        userId: req.user._id,
+    const order = await Order.create({
+      userId: req.user._id,
 
-        orderNumber,
+      orderNumber,
 
-        items: orderItems,
+      items: orderItems,
 
-        customer: {
-          name: name.trim(),
-          email: email.trim(),
-          phone: phone.trim(),
-          address: address.trim(),
-        },
+      customer: {
+        name: name.trim(),
 
-        subtotal,
+        email: email.trim().toLowerCase(),
 
-        shipping,
+        phone: phone.trim(),
 
-        total,
+        address: address.trim(),
 
-        paymentMethod:
-          paymentMethod ||
-          "Cash on Delivery",
+        city: city.trim(),
+      },
 
-        paymentStatus:
-          "Pending",
+      subtotal,
 
-        orderStatus:
-          "Pending",
+      shipping,
+
+      total,
+
+      paymentMethod:
+        paymentMethod || "Cash on Delivery",
+
+      paymentStatus: "Pending",
+
+      orderStatus: "Pending",
+    });
+
+    console.log(
+      `✅ ORDER CREATED: ${order.orderNumber}`
+    );
+
+    /* =====================================================
+       SEND EMAIL IN BACKGROUND
+       
+       IMPORTANT:
+       Do NOT use await here.
+       
+       This prevents Gmail/Nodemailer from delaying
+       the customer's order confirmation.
+    ===================================================== */
+
+    sendOrderEmail(order)
+      .then(() => {
+        console.log(
+          `📧 ORDER EMAIL SENT: ${order.orderNumber}`
+        );
+      })
+      .catch((error) => {
+        console.error(
+          `❌ ORDER EMAIL FAILED: ${order.orderNumber}`
+        );
+
+        console.error(error);
       });
 
+    /* =====================================================
+       PUSH NOTIFICATION
+       
+       Also runs in background so it cannot delay
+       the customer's order response.
+    ===================================================== */
+
+    if (req.user._id) {
+      Promise.resolve(
+        sendPushNotification({
+          userId: req.user._id,
+          title: "Order Placed Successfully",
+          body: `Your MAMTA order ${order.orderNumber} has been placed successfully.`,
+          data: {
+            orderId: order._id.toString(),
+            orderNumber: order.orderNumber,
+          },
+        })
+      )
+        .then(() => {
+          console.log(
+            `🔔 PUSH NOTIFICATION SENT: ${order.orderNumber}`
+          );
+        })
+        .catch((error) => {
+          console.error(
+            "❌ PUSH NOTIFICATION FAILED:",
+            error
+          );
+        });
+    }
 
     /* =====================================================
        CLEAR CART
+       
+       Clear immediately after order creation.
+       We do NOT wait for email or notification.
     ===================================================== */
 
-    cart.items = [];
+    await Cart.findOneAndUpdate(
+      {
+        userId: req.user._id,
+      },
+      {
+        $set: {
+          items: [],
+        },
+      }
+    );
 
-    await cart.save();
-
+    console.log(
+      `🛒 CART CLEARED: ${order.orderNumber}`
+    );
 
     /* =====================================================
-       RESPONSE
+       RETURN SUCCESS IMMEDIATELY
     ===================================================== */
 
-    res.status(201).json({
+    return res.status(201).json({
       success: true,
-      message: "Order placed successfully.",
-      order,
-    });
 
+      message: "Order placed successfully.",
+
+      order: {
+        _id: order._id,
+
+        orderNumber: order.orderNumber,
+
+        customer: order.customer,
+
+        items: order.items,
+
+        subtotal: order.subtotal,
+
+        shipping: order.shipping,
+
+        total: order.total,
+
+        paymentMethod: order.paymentMethod,
+
+        paymentStatus: order.paymentStatus,
+
+        orderStatus: order.orderStatus,
+
+        createdAt: order.createdAt,
+      },
+    });
   } catch (error) {
     console.error(
-      "CREATE ORDER ERROR:",
+      "❌ CREATE ORDER ERROR:",
       error
     );
 
-    res.status(500).json({
+    return res.status(500).json({
       success: false,
-      message: "Unable to create order.",
+
+      message:
+        error.message ||
+        "Failed to create order.",
     });
   }
 };
@@ -236,43 +330,40 @@ const createOrder = async (req, res) => {
 
 const getMyOrders = async (req, res) => {
   try {
-    const orders =
-      await Order.find({
-        userId: req.user._id,
-      }).sort({
-        createdAt: -1,
-      });
+    const orders = await Order.find({
+      userId: req.user._id,
+    }).sort({
+      createdAt: -1,
+    });
 
-    res.status(200).json({
+    return res.status(200).json({
       success: true,
       orders,
     });
-
   } catch (error) {
     console.error(
-      "GET MY ORDERS ERROR:",
+      "❌ GET MY ORDERS ERROR:",
       error
     );
 
-    res.status(500).json({
+    return res.status(500).json({
       success: false,
-      message: "Unable to fetch orders.",
+      message: "Failed to fetch orders.",
     });
   }
 };
 
 
 /* =========================================================
-   GET ORDER BY ID
+   GET SINGLE ORDER
 ========================================================= */
 
 const getOrderById = async (req, res) => {
   try {
-    const order =
-      await Order.findOne({
-        _id: req.params.id,
-        userId: req.user._id,
-      });
+    const order = await Order.findOne({
+      _id: req.params.id,
+      userId: req.user._id,
+    });
 
     if (!order) {
       return res.status(404).json({
@@ -281,20 +372,19 @@ const getOrderById = async (req, res) => {
       });
     }
 
-    res.status(200).json({
+    return res.status(200).json({
       success: true,
       order,
     });
-
   } catch (error) {
     console.error(
-      "GET ORDER BY ID ERROR:",
+      "❌ GET ORDER ERROR:",
       error
     );
 
-    res.status(500).json({
+    return res.status(500).json({
       success: false,
-      message: "Unable to fetch order.",
+      message: "Failed to fetch order.",
     });
   }
 };
@@ -306,11 +396,10 @@ const getOrderById = async (req, res) => {
 
 const cancelOrder = async (req, res) => {
   try {
-    const order =
-      await Order.findOne({
-        _id: req.params.id,
-        userId: req.user._id,
-      });
+    const order = await Order.findOne({
+      _id: req.params.id,
+      userId: req.user._id,
+    });
 
     if (!order) {
       return res.status(404).json({
@@ -320,8 +409,8 @@ const cancelOrder = async (req, res) => {
     }
 
     if (
-      ["Shipped", "Delivered", "Cancelled"]
-        .includes(order.orderStatus)
+      order.orderStatus === "Delivered" ||
+      order.orderStatus === "Cancelled"
     ) {
       return res.status(400).json({
         success: false,
@@ -330,26 +419,26 @@ const cancelOrder = async (req, res) => {
       });
     }
 
-    order.orderStatus =
-      "Cancelled";
+    order.orderStatus = "Cancelled";
 
     await order.save();
 
-    res.status(200).json({
+    return res.status(200).json({
       success: true,
-      message: "Order cancelled.",
+
+      message: "Order cancelled successfully.",
+
       order,
     });
-
   } catch (error) {
     console.error(
-      "CANCEL ORDER ERROR:",
+      "❌ CANCEL ORDER ERROR:",
       error
     );
 
-    res.status(500).json({
+    return res.status(500).json({
       success: false,
-      message: "Unable to cancel order.",
+      message: "Failed to cancel order.",
     });
   }
 };
@@ -359,14 +448,9 @@ const cancelOrder = async (req, res) => {
    UPDATE ORDER STATUS
 ========================================================= */
 
-const updateOrderStatus = async (
-  req,
-  res
-) => {
+const updateOrderStatus = async (req, res) => {
   try {
-    const {
-      status,
-    } = req.body;
+    const { status } = req.body;
 
     const allowedStatuses = [
       "Pending",
@@ -377,19 +461,23 @@ const updateOrderStatus = async (
       "Cancelled",
     ];
 
-    if (
-      !allowedStatuses.includes(status)
-    ) {
+    if (!status) {
+      return res.status(400).json({
+        success: false,
+        message: "Order status is required.",
+      });
+    }
+
+    if (!allowedStatuses.includes(status)) {
       return res.status(400).json({
         success: false,
         message: "Invalid order status.",
       });
     }
 
-    const order =
-      await Order.findById(
-        req.params.id
-      );
+    const order = await Order.findById(
+      req.params.id
+    );
 
     if (!order) {
       return res.status(404).json({
@@ -398,32 +486,36 @@ const updateOrderStatus = async (
       });
     }
 
-    order.orderStatus =
-      status;
+    order.orderStatus = status;
 
     await order.save();
 
-    res.status(200).json({
+    return res.status(200).json({
       success: true,
+
       message:
         "Order status updated successfully.",
+
       order,
     });
-
   } catch (error) {
     console.error(
-      "UPDATE ORDER STATUS ERROR:",
+      "❌ UPDATE ORDER STATUS ERROR:",
       error
     );
 
-    res.status(500).json({
+    return res.status(500).json({
       success: false,
       message:
-        "Unable to update order status.",
+        "Failed to update order status.",
     });
   }
 };
 
+
+/* =========================================================
+   EXPORTS
+========================================================= */
 
 module.exports = {
   createOrder,

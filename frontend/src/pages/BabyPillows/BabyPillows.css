@@ -560,12 +560,10 @@ margin-top: 20px;
 /* =========================================================
    ROUND BADGE
 ========================================================= */
-
-.maternity-round-badge {
+.ma-round-badge {
   position: absolute;
-
-  right: 50px;
-  bottom: 42px;
+  right: 130px!important; /* Moved left */
+top: 35px;
 
   width: 105px;
   height: 105px;
@@ -575,32 +573,23 @@ margin-top: 20px;
   justify-content: center;
 
   border-radius: 50%;
-
   background: var(--mamta-cocoa);
-
   color: white;
 
   z-index: 4;
 
-  animation:
-    badgeRotate 18s linear infinite;
+  animation: badgeRotate 18s linear infinite;
 }
 
-
-.maternity-round-badge span {
+.ma-round-badge span {
   width: 78px;
-
   text-align: center;
-
-  font-size: 7px;
+  font-size: 10px;
   font-weight: 700;
-
   line-height: 1.8;
-
   letter-spacing: 1.3px;
+  
 }
-
-
 @keyframes badgeRotate {
 
   from {
@@ -1289,7 +1278,7 @@ height: 500px;
 .baby-rating {
   display: flex;
   align-items: center;
-
+margin-top: 10px;
   gap: 9px;
 
  
@@ -1762,9 +1751,7 @@ font-size: 70px;
     max-width: 750px;
   }
 
-  .maternity-hero-visual {
-    min-height: 560px;
-  }
+ 
 
   .baby-products-grid {
     grid-template-columns:
@@ -1778,491 +1765,660 @@ font-size: 70px;
 }
 
 
-/* =========================================================
-   TABLET SMALL
-========================================================= */
-
-@media (max-width: 800px) {
-
-  .baby-hero {
-    padding:
-      90px 6% 70px;
-  }
-
-  .baby-hero-content h1 {
-    font-size: 65px;
-  }
-
-  .maternity-main-image {
-    width: 370px;
-    height: 450px;
-  }
-
-  .maternity-hero-circle {
-    width: 420px;
-    height: 420px;
-  }
-
-  .baby-introduction {
-    padding:
-      90px 6%;
-  }
-
-  .baby-intro-container {
-    grid-template-columns: 1fr;
-
-    gap: 40px;
-  }
-
-  .baby-features {
-    padding:
-      0 6% 90px;
-  }
-
-  .baby-features-container {
-    grid-template-columns: 1fr;
-  }
-
-  .baby-feature {
-    border-right: none;
-
-    border-bottom:
-      1px solid
-      var(--mamta-border);
-  }
-
-  .baby-feature:last-child {
-    border-bottom: none;
-  }
-
-  .baby-products {
-    padding:
-      90px 6% 100px;
-  }
-
-}
-
 
 /* =========================================================
-   MOBILE
+   MAMTA BABY PILLOWS — PREMIUM MOBILE RESPONSIVE DESIGN
 ========================================================= */
 
-@media (max-width: 600px) {
+@media (max-width: 768px) {
+
+  /* PAGE */
+  .baby-page {
+    width: 100%;
+    overflow: hidden;
+  }
+
+  /* ================= HERO ================= */
 
   .baby-hero {
     min-height: auto;
-
-    padding:
-      75px 20px 65px;
+    padding: 55px 20px 35px;
+    background:
+      radial-gradient(
+        circle at 15% 15%,
+        rgba(217, 143, 154, 0.16),
+        transparent 35%
+      ),
+      radial-gradient(
+        circle at 85% 75%,
+        rgba(239, 197, 181, 0.2),
+        transparent 35%
+      ),
+      #f6e0e2;
   }
-
 
   .baby-hero-container {
-    gap: 55px;
+    width: 100%;
+    grid-template-columns: minmax(0, 1fr);
+    gap: 30px;
   }
 
+  .baby-hero-content {
+    width: 100%;
+    max-width: 100%;
+    text-align: center;
+  }
 
   .baby-eyebrow {
-    font-size: 8px;
-
-    letter-spacing: 1.8px;
+    justify-content: center;
+    margin: 0 0 20px;
+    gap: 8px;
+    font-size: 10px;
+    letter-spacing: 2px;
   }
 
+  .baby-eyebrow::before {
+    width: 23px;
+  }
 
   .baby-hero-content h1 {
-    font-size: 52px;
-
+    margin: 0;
+    font-size: clamp(43px, 11vw, 64px);
+    line-height: 1.02;
     letter-spacing: -2px;
   }
 
+  .baby-hero-content h1 span {
+    margin-top: 5px;
+  }
 
   .baby-hero-content p {
-    font-size: 13px;
-
+    max-width: 440px;
+    margin: 17px auto 0;
+    font-size: 14px;
     line-height: 1.8;
   }
 
-
   .baby-hero-actions {
-    align-items: flex-start;
-
+    margin: 24px 0 0;
     flex-direction: column;
-
-    gap: 16px;
+    align-items: center;
+    gap: 13px;
   }
-
 
   .baby-primary-button {
-    min-height: 49px;
-
-    padding:
-      0 20px;
+    width: min(100%, 280px);
+    min-height: 48px;
+    padding: 0 18px;
+    box-sizing: border-box;
+    font-size: 11px;
+    letter-spacing: 1px;
   }
 
-
-  .maternity-hero-visual {
-    min-height: 470px;
+  .baby-hero-note {
+    font-size: 10px;
+    text-align: center;
   }
 
+  /* ================= HERO IMAGE ================= */
+
+  
 
   .maternity-hero-circle {
-    width: 330px;
-    height: 330px;
+    width: min(84vw, 340px);
+    height: min(84vw, 340px);
   }
 
+  
 
-  .maternity-main-image {
-    width: 285px;
-    height: 370px;
-
-    border-radius:
-      145px 145px 14px 14px;
+  .maternity-main-image img {
+    object-fit: cover;
   }
-
 
   .maternity-floating-card {
     right: 0;
-
-    bottom: 30px;
-
-    width: 150px;
-
-    padding: 15px;
+    bottom: 35px;
+    width: 135px;
+    padding: 13px;
+    box-sizing: border-box;
   }
 
+  .maternity-floating-card > span {
+    margin-bottom: 6px;
+    font-size: 7px;
+    letter-spacing: 1px;
+  }
 
   .maternity-floating-card strong {
     font-size: 15px;
   }
 
-
-
-
-  .maternity-round-badge span {
-    width: 60px;
-
-    font-size: 6px;
+  .floating-check {
+    gap: 5px;
+    margin-top: 9px;
+    font-size: 7px;
+    letter-spacing: 0;
   }
 
+  .ma-round-badge {
+    top: 0;
+    right: 8px !important;
+    width: 76px;
+    height: 76px;
+  }
+
+  .ma-round-badge span {
+    width: 60px;
+    font-size: 7px;
+    line-height: 1.7;
+    letter-spacing: 0.8px;
+  }
+
+  .maternity-glow-one {
+    width: 65px;
+    height: 65px;
+    top: 25px;
+    right: 15px;
+  }
+
+  .maternity-glow-two {
+    width: 45px;
+    height: 45px;
+    bottom: 35px;
+    left: 10px;
+  }
+
+  /* ================= INTRODUCTION ================= */
 
   .baby-introduction {
-    padding:
-      75px 20px;
+    padding: 65px 22px 45px;
   }
 
+  .baby-intro-container {
+    grid-template-columns: minmax(0, 1fr);
+    gap: 22px;
+  }
+
+  .baby-section-label {
+    margin-bottom: 14px;
+    font-size: 11px;
+    letter-spacing: 2px;
+  }
 
   .baby-intro-title h2 {
-    font-size: 45px;
+    font-size: clamp(37px, 9vw, 52px);
+    line-height: 1.06;
+    letter-spacing: -1.5px;
   }
 
-
-  .baby-intro-main {
-    font-size: 20px;
-  }
-
-
-  .baby-features {
-    padding:
-      0 20px 75px;
-  }
-
-
-  .baby-feature {
-    padding:
-      30px 5px;
-  }
-
-
-  .baby-products {
-    padding:
-      75px 20px 85px;
-  }
-
-
-  .baby-products-heading {
-    align-items: flex-start;
-
-    flex-direction: column;
-
-    gap: 20px;
-
-    margin-bottom: 38px;
-  }
-
-
-  .baby-products-heading h2 {
-    font-size: 48px;
-  }
-
-
-  .baby-products-heading h2 span {
-    display: block;
-
-    margin-left: 0;
-
+  .baby-intro-title h2 span {
     margin-top: 5px;
   }
 
-
-  .baby-products-grid {
-    grid-template-columns: 1fr;
-
-    gap: 25px;
+  .baby-intro-content {
+    padding-top: 0;
   }
 
-
-  .baby-product-image {
-    height: 360px;
+  .baby-intro-main {
+    font-size: 19px;
+    line-height: 1.55;
   }
 
-
-  /*
-     On mobile there is no hover,
-     so keep View Details visible.
-  */
-
-  .baby-details-button {
-    opacity: 1;
-
-    transform:
-      translateY(0);
+  .baby-intro-secondary {
+    margin-top: 14px;
+    font-size: 13px;
+    line-height: 1.85;
   }
 
+  /* ================= FEATURES ================= */
 
-  .baby-product-info {
-    padding:
-      20px 18px 22px;
+  .baby-features {
+    padding: 0 22px 65px;
   }
 
+  .baby-features-container {
+    grid-template-columns: minmax(0, 1fr);
+    border-bottom: none;
+  }
 
-  .baby-product-info h3 {
+  .baby-feature {
     min-height: auto;
-
-    font-size: 20px;
+    gap: 15px;
+    padding: 23px 5px;
+    border-right: none;
+    border-bottom: 1px solid var(--mamta-border);
   }
 
-
-  .baby-final {
-    min-height: 460px;
-
-    padding:
-      80px 20px;
+  .baby-feature-icon {
+    flex: 0 0 40px;
+    width: 40px;
+    height: 40px;
   }
 
-
-  .baby-final h2 {
-    font-size: 48px;
+  .baby-feature > div:last-child {
+    min-width: 0;
   }
 
-
-  .baby-final p {
-    font-size: 12px;
+  .baby-feature > div:last-child > span {
+    font-size: 8px;
+    letter-spacing: 1.2px;
   }
 
+  .baby-feature h3 {
+    margin: 6px 0;
+    font-size: 21px;
+  }
+
+  .baby-feature p {
+    font-size: 13px;
+    line-height: 1.7;
+  }
+
+  /* ================= PRODUCTS ================= */
+
+  .baby-products {
+    padding: 70px 16px 75px;
+  }
+
+  .baby-products-container {
+    width: 100%;
+    max-width: 100%;
+  }
+
+  .baby-products-heading {
+    align-items: flex-start;
+    flex-direction: column;
+    gap: 15px;
+    margin-bottom: 30px;
+  }
+
+  .baby-products-heading h2 {
+    font-size: clamp(37px, 9vw, 52px);
+    line-height: 1.05;
+    letter-spacing: -1.5px;
+  }
+
+  .baby-products-heading h2 span {
+    margin-left: 5px;
+  }
+
+  .baby-products-heading > p {
+    max-width: 100%;
+    font-size: 13px;
+    line-height: 1.8;
+  }
+
+  /* Wider product cards — two per row */
+
+.baby-products-grid {
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 18px 8px;
+  width: 100%;
 }
 
+.baby-product-card {
+  width: 100%;
+  min-width: 0;
+  height: auto;
+  border-radius: 12px;
+  display: flex;
+  flex-direction: column;
+  box-sizing: border-box;
+}
+
+.baby-product-card:hover {
+  transform: translateY(-3px);
+}
+
+/* Product image */
+
+.baby-product-image {
+  width: 100%;
+  height: auto;
+  aspect-ratio: 4 / 4.5;
+  flex-shrink: 0;
+}
+
+.baby-product-image img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+/* Mobile spacing */
+
+@media (max-width: 480px) {
+  .baby-products-grid {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 12px 6px;
+  }
+
+  .baby-product-card {
+    border-radius: 10px;
+  }
+}
+
+  .baby-product-tag {
+    top: 8px;
+    left: 8px;
+    max-width: calc(100% - 48px);
+    padding: 5px 7px;
+    font-size: 8px;
+    letter-spacing: 0.5px;
+  }
+
+  .baby-wishlist {
+    top: 7px;
+    right: 7px;
+    width: 31px;
+    height: 31px;
+  }
+
+  /* Details button stays visible on touch screens */
+  .baby-details-button {
+    left: 6px;
+    right: 6px;
+    bottom: 6px;
+    min-height: 34px;
+    gap: 4px;
+    padding: 5px 3px;
+    box-sizing: border-box;
+    border-radius: 5px;
+    font-size: 9px;
+    letter-spacing: 0.2px;
+    opacity: 1;
+    visibility: visible;
+    transform: translateY(0);
+    box-shadow: 0 3px 10px rgba(74, 48, 50, 0.08);
+  }
+
+  .baby-details-button svg {
+    width: 13px;
+    height: 13px;
+    flex-shrink: 0;
+  }
+
+  .baby-product-image::after {
+    opacity: 0;
+  }
+
+  /* Product information */
+  .baby-product-info {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    padding: 12px 10px 11px;
+  }
+
+  .baby-product-category {
+    margin-bottom: 6px;
+    font-size: 8px;
+    line-height: 1.5;
+    letter-spacing: 0.7px;
+  }
+
+  .baby-product-info h3 {
+    min-height: 0;
+    margin: 0;
+    font-size: 16px;
+    line-height: 1.35;
+    overflow-wrap: anywhere;
+  }
+
+  .baby-rating {
+    flex-wrap: wrap;
+    gap: 4px;
+    margin-top: 8px;
+  }
+
+  .baby-stars {
+    gap: 1px;
+    font-size: 11px;
+  }
+
+  .baby-rating > span {
+    font-size: 10px;
+  }
+
+  .baby-product-bottom {
+    align-items: center;
+    gap: 5px;
+    margin-top: auto;
+    padding-top: 11px;
+    padding-bottom: 1px;
+  }
+
+  .baby-price {
+    gap: 4px;
+    min-width: 0;
+  }
+
+  .baby-price strong {
+    font-size: clamp(12px, 3.4vw, 16px);
+    overflow-wrap: anywhere;
+  }
+
+  .baby-price del {
+    font-size: 10px;
+  }
+
+  .baby-cart {
+    flex: 0 0 34px;
+    width: 34px;
+    height: 34px;
+    border-radius: 5px;
+  }
+
+  .baby-cart svg {
+    width: 16px;
+    height: 16px;
+  }
+
+  /* ================= FINAL CTA ================= */
+
+  .baby-final {
+    min-height: auto;
+    padding: 75px 22px;
+  }
+
+  .baby-final::before {
+    width: 290px;
+    height: 290px;
+  }
+
+  .baby-final-content {
+    width: 100%;
+  }
+
+  .baby-final-label {
+    margin-bottom: 18px;
+    font-size: 12px;
+    letter-spacing: 2px;
+  }
+
+  .baby-final h2 {
+    font-size: clamp(40px, 10vw, 58px);
+    line-height: 1.04;
+    letter-spacing: -1.5px;
+  }
+
+  .baby-final h2 span {
+    margin-top: 5px;
+  }
+
+  .baby-final p {
+    margin: 20px auto 25px;
+    font-size: 13px;
+    line-height: 1.8;
+  }
+
+  .baby-final-button {
+    width: min(100%, 280px);
+    min-height: 48px;
+    padding: 0 15px;
+    box-sizing: border-box;
+    font-size: 11px;
+    letter-spacing: 0.8px;
+  }
+
+  /* Scroll reveal: avoid large movements on small screens */
+  .reveal-up {
+    transform: translate3d(0, 28px, 0);
+  }
+
+  .reveal-down {
+    transform: translate3d(0, -28px, 0);
+  }
+
+  .reveal-left {
+    transform: translate3d(-25px, 0, 0);
+  }
+
+  .reveal-right {
+    transform: translate3d(25px, 0, 0);
+  }
+}
 
 /* =========================================================
-   EXTRA SMALL
+   EXTRA SMALL PHONES
 ========================================================= */
 
 @media (max-width: 380px) {
+  .baby-hero {
+    padding: 42px 15px 28px;
+  }
 
   .baby-hero-content h1 {
-    font-size: 45px;
+    font-size: 42px;
+    letter-spacing: -1.7px;
   }
 
-
-  .maternity-main-image {
-    width: 255px;
-    height: 340px;
-  }
-
-
-  .maternity-hero-circle {
-    width: 295px;
-    height: 295px;
-  }
-
-
+ 
   .maternity-floating-card {
-    width: 135px;
+    right: -2px;
+    bottom: 27px;
+    width: 120px;
+    padding: 10px;
   }
 
-
-  .baby-products-heading h2 {
-    font-size: 43px;
+  .ma-round-badge {
+    right: 0 !important;
+    width: 80px;
+    height: 80px;
+    margin-top: 30px;
   }
 
+  .ma-round-badge span {
+    width: 53px;
+    font-size: 9px;
+  }
+
+  .baby-products {
+    padding-right: 12px;
+    padding-left: 12px;
+  }
+
+  .baby-products-grid {
+    gap: 12px 8px;
+  }
+
+  .baby-product-info {
+    padding: 10px 8px;
+  }
+
+  .baby-product-info h3 {
+    font-size: 14px;
+  }
+
+  .baby-product-bottom {
+    gap: 3px;
+  }
+
+  .baby-cart {
+    flex-basis: 31px;
+    width: 31px;
+    height: 31px;
+  }
+
+  .baby-price strong {
+    font-size: 12px;
+  }
+
+  .baby-details-button {
+    font-size: 8px;
+  }
 }
 
-
 /* =========================================================
-   ACCESSIBILITY
+   TOUCH DEVICES
 ========================================================= */
 
-@media (prefers-reduced-motion: reduce) {
+@media (hover: none) {
+  .baby-product-card:hover {
+    transform: none;
+    box-shadow: none;
+  }
 
-  *,
-  *::before,
-  *::after {
+  .baby-product-card:hover .baby-product-image img {
+    transform: none;
+  }
+
+  .baby-product-card:hover .baby-product-info h3 {
+    color: var(--mamta-cocoa);
+  }
+
+  .baby-feature:hover {
+    transform: none;
+  }
+
+  .baby-primary-button:hover,
+  .baby-final-button:hover,
+  .baby-cart:hover {
+    transform: none;
+  }
+}
+
+/* Respect reduced-motion preferences */
+@media (prefers-reduced-motion: reduce) {
+  .baby-page *,
+  .baby-page *::before,
+  .baby-page *::after {
     animation-duration: 0.01ms !important;
     animation-iteration-count: 1 !important;
-
     scroll-behavior: auto !important;
-
     transition-duration: 0.01ms !important;
   }
+}
+/* =========================================
+   BABY PILLOWS — BIGGER MOBILE HERO IMAGE
+========================================= */
 
-  .scroll-reveal {
-    opacity: 1 !important;
-
-    transform: none !important;
+@media (max-width: 768px) {
+  .maternity-hero-visual {
+    width: 100% !important;
+    max-width: 420px !important;
+    min-height: 380px !important;
+    margin: 20px auto 0 !important;
   }
 
-}
-/* =========================================================
-   MAMTA — BABY PILLOWS
-   SMOOTH FLY TO CART
-========================================================= */
-
-.mamta-flying-cart-item {
-  position: fixed;
-
-  left: 0;
-  top: 0;
-
-  width: 58px;
-  height: 58px;
-
-  z-index: 999999;
-
-  pointer-events: none;
-
-  border-radius: 16px;
-
-  display: flex;
-  align-items: center;
-  justify-content: center;
-
-  background: linear-gradient(
-    145deg,
-    #f7b8c4 0%,
-    #ed91a4 100%
-  );
-
-  box-shadow:
-    0 14px 35px rgba(74, 48, 50, 0.18),
-    0 5px 14px rgba(237, 145, 164, 0.28);
-
-  overflow: hidden;
-
-  will-change:
-    transform,
-    opacity;
+  .maternity-main-image {
+    width: 400px !important;
+    height: 400px !important;
+    max-width: 90vw !important;
+    object-fit: cover !important;
+    margin: 0 auto !important;
+  }
 }
 
-/* =========================================================
-   SOFT SHINE
-========================================================= */
-
-.mamta-flying-cart-item::before {
-  content: "";
-
-  position: absolute;
-
-  top: -35%;
-  left: -25%;
-
-  width: 70%;
-  height: 170%;
-
-  background: rgba(
-    255,
-    255,
-    255,
-    0.2
-  );
-
-  transform: rotate(25deg);
-
-  pointer-events: none;
-}
-
-/* =========================================================
-   M LOGO
-========================================================= */
-
-.mamta-flying-cart-item span {
-  position: relative;
-
-  z-index: 2;
-
-  color: #ffffff;
-
-  font-family:
-    Georgia,
-    "Times New Roman",
-    serif;
-
-  font-size: 27px;
-
-  font-weight: 600;
-
-  line-height: 1;
-
-  user-select: none;
-}
-
-/* =========================================================
-   CART POP
-========================================================= */
-
-.cart-flying-pop {
-  animation:
-    mamta-cart-pop
-    450ms
-    cubic-bezier(
-      0.16,
-      1,
-      0.3,
-      1
-    );
-}
-
-@keyframes mamta-cart-pop {
-
-  0% {
-    transform: scale(1);
+@media (max-width: 480px) {
+  .maternity-hero-visual {
+    max-width: 450px !important;
+    min-height: 450px !important;
   }
 
-  40% {
-    transform: scale(1.18);
+  .maternity-main-image {
+    width: 450px !important;
+    height: 450px !important;
+    max-width: 88vw !important;
   }
-
-  70% {
-    transform: scale(0.94);
-  }
-
-  100% {
-    transform: scale(1);
-  }
-
-}
-
-/* =========================================================
-   REDUCED MOTION
-========================================================= */
-
-@media (prefers-reduced-motion: reduce) {
-
-  .mamta-flying-cart-item {
-    animation: none !important;
-    transition: none !important;
-  }
-
-  .cart-flying-pop {
-    animation: none !important;
-  }
-
 }

@@ -517,11 +517,30 @@ const EditProduct = () => {
           oldPrice:
             product.oldPrice ?? "",
 
-          category:
-            product.category ===
-              "Newborn & Kids"
-              ? "Nursing Products"
-              : product.category || "",
+        
+category: (() => {
+  const category = String(
+    product.category || ""
+  ).trim();
+
+  const categoryMap = {
+    "newborn & kids": "Nursing Products",
+    "nursing product": "Nursing Products",
+    "nursing pillow": "Nursing Products",
+    "nursing pillows": "Nursing Products",
+    "nursing products": "Nursing Products",
+    "maternity pillows": "Maternity Pillows",
+    "baby pillows": "Baby Pillows",
+    "elders pillows": "Elders Pillows",
+    "accessories": "Accessories",
+  };
+
+  return (
+    categoryMap[category.toLowerCase()] ||
+    category
+  );
+})(),
+
 
           image:
             product.image || "",
@@ -934,26 +953,24 @@ const EditProduct = () => {
          NORMALIZE CATEGORY
       ================================================== */
 
-      let normalizedCategory =
-        String(
-          formData.category || ""
-        ).trim();
+    
+const normalizedCategory = String(
+  formData.category || ""
+).trim();
 
-      if (
-        normalizedCategory ===
-          "Newborn & Kids" ||
-        normalizedCategory ===
-          "Nursing Product" ||
-        normalizedCategory ===
-          "Nursing Pillow" ||
-        normalizedCategory ===
-          "Nursing Pillows" ||
-        normalizedCategory.toLowerCase() ===
-          "nursing products"
-      ) {
-        normalizedCategory =
-          "Nursing Products";
-      }
+const allowedCategories = [
+  "Maternity Pillows",
+  "Baby Pillows",
+  "Nursing Products",
+  "Elders Pillows",
+  "Accessories",
+];
+
+if (!allowedCategories.includes(normalizedCategory)) {
+  setError("Please select a valid product category.");
+  setSaving(false);
+  return;
+}
 
       /* =================================================
          PRODUCT DATA

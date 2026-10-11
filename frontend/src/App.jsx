@@ -66,7 +66,7 @@ import OrderStatusPage from "./pages/Admin/Orders/OrderStatusPage";
 import AdminCustomers from "./pages/Admin/Customers/AdminCustomers";
 import AdminCustomerDetails from "./pages/Admin/Customers/AdminCustomerDetails";
 import AdminPayments from "./pages/Admin/AdminPayments";
-
+import AdminReviews from "./pages/Admin/Reviews/AdminReviews";
 /* =========================================================
    APP CONTENT
 ========================================================= */
@@ -255,7 +255,10 @@ function AppContent() {
               <AdminPayments />
             }
           />
-
+<Route
+  path="/admin/reviews"
+  element={<AdminReviews />}
+/>
         </Route>
 
       </Routes>

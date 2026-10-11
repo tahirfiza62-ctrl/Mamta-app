@@ -721,10 +721,11 @@ const MaternityPillows = () => {
 
               <div className="maternity-main-image">
 
-                <img
-                  src="https://res.cloudinary.com/iysbraru/image/upload/v1790504967/Screenshot_2026-09-27_at_3.28.57_PM.png"
-                  alt="MAMTA maternity pillow"
-                />
+               <img
+  src="https://res.cloudinary.com/iysbraru/image/upload/v1791675547/Golden_Mother-Child_Memory_Collage.png"
+  alt="Mother and baby"
+  className="maternity-hero-image"
+/>
 
               </div>
 
@@ -772,19 +773,7 @@ const MaternityPillows = () => {
             HERO BOTTOM
         ================================================== */}
 
-        <div className="maternity-hero-bottom">
-
-          <span>
-            01
-          </span>
-
-          <div></div>
-
-          <span>
-            MATERNITY COLLECTION
-          </span>
-
-        </div>
+        
 
       </section>
 

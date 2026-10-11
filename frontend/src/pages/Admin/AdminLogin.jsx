@@ -1,6 +1,9 @@
 
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
+import {
+  registerPushNotifications,
+} from "../../utils/pushNotifications";
 import axios from "axios";
 import {
   LockKeyhole,
@@ -129,7 +132,7 @@ const AdminLogin = () => {
         "mamta_admin_token",
         token
       );
-
+await registerPushNotifications();
       if (admin) {
         localStorage.setItem(
           "mamta_admin",

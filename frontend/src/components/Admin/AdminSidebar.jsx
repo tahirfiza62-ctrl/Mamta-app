@@ -8,8 +8,8 @@ import {
   CreditCard,
   LogOut,
   MessageCircle,
+  Star,
   X,
-  
 } from "lucide-react";
 
 import "./AdminSidebar.css";
@@ -225,7 +225,14 @@ const AdminSidebar = ({ mobileOpen, setMobileOpen }) => {
   <MessageCircle size={18} />
   <span>Messages</span>
 </NavLink>
-
+<NavLink
+  to="/admin/reviews"
+  className={linkClass}
+  onClick={closeMobile}
+>
+  <Star size={19} />
+  <span>Reviews</span>
+</NavLink>
           </div>
 
         </nav>

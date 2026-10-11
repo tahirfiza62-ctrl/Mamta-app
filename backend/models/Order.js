@@ -72,6 +72,7 @@ const orderItemSchema = new mongoose.Schema(
   }
 );
 
+
 /* =========================================================
    ORDER
 ========================================================= */
@@ -88,6 +89,7 @@ const orderSchema = new mongoose.Schema(
       required: true,
     },
 
+
     /* -------------------------------------------------------
        ORDER NUMBER
     ------------------------------------------------------- */
@@ -99,6 +101,7 @@ const orderSchema = new mongoose.Schema(
       trim: true,
     },
 
+
     /* -------------------------------------------------------
        PRODUCTS
     ------------------------------------------------------- */
@@ -108,6 +111,7 @@ const orderSchema = new mongoose.Schema(
       default: [],
     },
 
+
     /* -------------------------------------------------------
        CUSTOMER
     ------------------------------------------------------- */
@@ -115,24 +119,36 @@ const orderSchema = new mongoose.Schema(
     customer: {
       name: {
         type: String,
-        default: "",
+        required: true,
+        trim: true,
       },
 
       email: {
         type: String,
-        default: "",
+        required: true,
+        trim: true,
+        lowercase: true,
       },
 
       phone: {
         type: String,
-        default: "",
+        required: true,
+        trim: true,
       },
 
       address: {
         type: String,
-        default: "",
+        required: true,
+        trim: true,
+      },
+
+      city: {
+        type: String,
+        required: true,
+        trim: true,
       },
     },
+
 
     /* -------------------------------------------------------
        PRICING
@@ -156,6 +172,7 @@ const orderSchema = new mongoose.Schema(
       min: 0,
     },
 
+
     /* -------------------------------------------------------
        PAYMENT
     ------------------------------------------------------- */
@@ -163,12 +180,15 @@ const orderSchema = new mongoose.Schema(
     paymentMethod: {
       type: String,
       default: "Cash on Delivery",
+      trim: true,
     },
 
     paymentStatus: {
       type: String,
       default: "Pending",
+      trim: true,
     },
+
 
     /* -------------------------------------------------------
        ORDER STATUS
@@ -176,6 +196,7 @@ const orderSchema = new mongoose.Schema(
 
     orderStatus: {
       type: String,
+
       enum: [
         "Pending",
         "Confirmed",
@@ -184,13 +205,20 @@ const orderSchema = new mongoose.Schema(
         "Delivered",
         "Cancelled",
       ],
+
       default: "Pending",
     },
   },
+
   {
     timestamps: true,
   }
 );
+
+
+/* =========================================================
+   EXPORT
+========================================================= */
 
 module.exports = mongoose.model(
   "Order",

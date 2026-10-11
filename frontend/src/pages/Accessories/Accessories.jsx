@@ -10,36 +10,57 @@ const Accessories = () => {
   const [products, setProducts] = useState([]);
   const [loading, setLoading] = useState(true);
 
-  useEffect(() => {
-    const fetchAccessories = async () => {
-      try {
-        const response = await fetch(
-          `${API_URL}/products?category=Accessories`
-        );
+ 
+useEffect(() => {
+  let cancelled = false;
 
-        if (!response.ok) {
-          throw new Error("Failed to fetch accessories");
-        }
+  const fetchAccessories = async () => {
+    try {
+      setLoading(true);
 
-        const data = await response.json();
+      const response = await fetch(`${API_URL}/products`);
 
-        // Supports APIs returning either an array
-        // or { products: [...] }
-        const productList = Array.isArray(data)
-          ? data
-          : data.products || [];
+      if (!response.ok) {
+        throw new Error("Failed to fetch products");
+      }
 
-        setProducts(productList);
-      } catch (error) {
-        console.error("Accessories fetch error:", error);
+      const data = await response.json();
+
+      const allProducts = Array.isArray(data)
+        ? data
+        : data.products || [];
+
+      const accessoriesOnly = allProducts.filter((product) => {
+        const category = String(product.category || "")
+          .trim()
+          .toLowerCase()
+          .replace(/\s+/g, " ");
+
+        return category === "accessories";
+      });
+
+      if (!cancelled) {
+        setProducts(accessoriesOnly);
+      }
+    } catch (error) {
+      console.error("Accessories fetch error:", error);
+
+      if (!cancelled) {
         setProducts([]);
-      } finally {
+      }
+    } finally {
+      if (!cancelled) {
         setLoading(false);
       }
-    };
+    }
+  };
 
-    fetchAccessories();
-  }, []);
+  fetchAccessories();
+
+  return () => {
+    cancelled = true;
+  };
+}, []);
 
   return (
     <main className="accessories-page">

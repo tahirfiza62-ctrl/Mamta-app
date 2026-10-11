@@ -191,7 +191,7 @@
 
 .shop-hero-content h1 em {
   color: #c77c87;
-
+font-style: normal!important;
   font-weight: 400;
 }
 
@@ -303,8 +303,8 @@
 
   z-index: 3;
 
-  width: 365px;
-  height: 430px;
+  width: 420px;
+  height: 490px;
 
   overflow: hidden;
 
@@ -358,7 +358,7 @@
   z-index: 6;
 
   left: 0;
-  bottom: 45px;
+  bottom: 25px;
 
   width: 175px;
 
@@ -413,18 +413,14 @@
 .hero-decor-circle {
   position: absolute;
 
-  z-index: 1;
-
-  width: 425px;
-  height: 425px;
+  width: 450px;
+  height: 450px;
 
   border-radius: 50%;
 
   background: #f4d9dc;
 
-  opacity: 0.65;
-
-  transform: translate(45px, -5px);
+  opacity: 0.75;
 }
 
 .hero-decor-circle::before {
@@ -432,12 +428,11 @@
 
   position: absolute;
 
-  inset: 25px;
+  inset: 22px;
 
   border-radius: 50%;
 
-  border:
-    1px solid rgba(189, 111, 124, 0.25);
+  border: 1px solid rgba(189, 111, 124, 0.25);
 }
 
 .hero-decor-circle::after {
@@ -449,8 +444,7 @@
 
   border-radius: 50%;
 
-  border:
-    1px solid rgba(185, 146, 90, 0.18);
+  border: 1px solid rgba(185, 146, 90, 0.18);
 }
 
 /* =========================================================
@@ -498,6 +492,34 @@
 
   line-height: 1.5;
 }
+
+.hero-round-text {
+  position: absolute;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  animation: heroTextRotate 12s linear infinite;
+  transform-origin: center;
+  will-change: transform;
+}
+
+.hero-round-text span {
+  display: block;
+  text-align: center;
+}
+
+/* Continuous rotation */
+@keyframes heroTextRotate {
+  from {
+    transform: rotate(0deg);
+  }
+
+  to {
+    transform: rotate(360deg);
+  }
+}
+
 
 /* =========================================================
    BACKGROUND GLOW
@@ -632,7 +654,7 @@
 
   color: #b9925a;
 
-  font-size: 12px;
+  font-size: 17px;
 
   font-weight: 800;
 
@@ -665,7 +687,7 @@
     Georgia,
     serif;
 
-  font-size: 50px;
+  font-size: 55px;
 
   font-weight: 500;
 
@@ -1004,14 +1026,14 @@
    PRODUCTS GRID
 ========================================================= */
 
+
 .shop-products-grid {
   display: grid;
-
-  grid-template-columns:
-    repeat(4, minmax(0, 1fr));
-
-  gap: 28px 20px;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 28px 24px;
+  width: 100%;
 }
+
 
 /* =========================================================
    MAMTA — PREMIUM PRODUCT CARDS
@@ -1029,7 +1051,7 @@
     1px solid rgba(74, 48, 50, 0.08);
 
   border-radius: 22px;
-
+box-sizing: border-box;
   background: #ffffff;
 
   overflow: hidden;
@@ -2369,7 +2391,6 @@
     overflow-x: hidden;
   }
 
-
   /* -------------------------------------------------------
      HERO
   ------------------------------------------------------- */
@@ -2377,6 +2398,9 @@
   .shop-hero {
     min-height: auto;
   }
+.hero-eyebrow{
+  font-size:9px;
+}
 
   .shop-hero-inner {
     width: 90%;
@@ -2396,7 +2420,7 @@
   .shop-hero-label {
     gap: 8px;
     margin-bottom: 18px;
-    font-size: 11px;
+    font-size: 15px;
     letter-spacing: 2.2px;
   }
 
@@ -2405,7 +2429,7 @@
   }
 
   .shop-hero-content h1 {
-    font-size: clamp(43px, 13vw, 62px);
+    font-size: 50px;
     line-height: 1;
     letter-spacing: -2px;
   }
@@ -2540,7 +2564,7 @@
 
   .category-heading > p {
     max-width: 330px;
-    font-size: 14px;
+    font-size: 17px;
     line-height: 1.7;
   }
 
@@ -2562,7 +2586,7 @@
     min-height: 40px;
     padding: 9px 11px;
     border-radius: 8px;
-    font-size: 11px;
+    font-size: 13px!important;
   }
 
   .active-dot {

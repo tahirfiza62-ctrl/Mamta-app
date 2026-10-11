@@ -61,7 +61,8 @@ const adminOrderRoutes = require("./routes/adminOrderRoutes");
 const adminProductRoutes = require("./routes/adminProductRoutes");
 const adminCustomerRoutes = require("./routes/adminCustomerRoutes");
 const adminPaymentRoutes = require("./routes/adminPaymentRoutes");
-
+const pushRoutes = require("./routes/pushRoutes");
+const reviewRoutes = require("./routes/reviewRoutes");
 /* =========================================================
    API ROUTES
 ========================================================= */
@@ -109,7 +110,7 @@ app.use(
   "/api/admin/orders",
   adminOrderRoutes
 );
-
+app.use("/api/push", pushRoutes);
 app.use(
   "/api/admin/products",
   adminProductRoutes
@@ -124,7 +125,7 @@ app.use(
   "/api/admin/payments",
   adminPaymentRoutes
 );
-
+app.use("/api/reviews", reviewRoutes);
 /* =========================================================
    ROOT
 ========================================================= */

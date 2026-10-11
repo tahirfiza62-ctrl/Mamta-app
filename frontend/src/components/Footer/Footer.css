@@ -75,31 +75,100 @@
    LOGO
 ========================================================= */
 
-.footer-logo {
-  display: inline-flex;
-  align-items: center;
-  text-decoration: none;
-
-  margin-bottom: 22px;
-
-  transition:
-    transform 0.35s ease,
-    opacity 0.35s ease;
-}
 
 .footer-logo:hover {
   transform: translateY(-2px);
   opacity: 0.88;
 }
 
+
+.footer-logo {
+  display: inline-flex;
+  align-items: center;
+  gap: 18px;
+
+  text-decoration: none;
+  width: fit-content;
+  position: relative;
+
+  transition: transform 0.3s ease;
+}
+
+/* Bigger brand emblem */
 .footer-logo img {
-  display: block;
-
-  width: auto;
-  max-width: 155px;
-  height: auto;
-
+  width: 100px;
+  height: 100px;
   object-fit: contain;
+  display: block;
+  flex-shrink: 0;
+
+  transition:
+    transform 0.35s ease,
+    filter 0.35s ease;
+}
+
+/* Premium brand typography */
+.footer-logo h2 {
+  margin: 0;
+
+ font-family: 'Times New Roman', Times, serif;
+  font-size: 27px;
+  font-weight: 500;
+  letter-spacing: 0.6px;
+  line-height: 1.15;
+
+  color: #713f3d;
+
+  position: relative;
+  display: inline-block;
+
+  text-shadow: 0 2px 8px rgba(113, 63, 61, 0.08);
+
+  transition:
+    color 0.3s ease,
+    transform 0.3s ease;
+}
+
+/* Subtle decorative underline */
+
+
+/* Smooth hover animation */
+.footer-logo:hover img {
+  transform: scale(1.07) rotate(-2deg);
+  filter: drop-shadow(0 5px 8px rgba(113, 63, 61, 0.15));
+}
+
+.footer-logo:hover h2 {
+  color: #c47780;
+  transform: translateY(-1px);
+}
+
+.footer-logo:hover h2::after {
+  width: 100%;
+}
+
+/* Keyboard accessibility */
+.footer-logo:focus-visible {
+  outline: 2px solid #c47780;
+  outline-offset: 6px;
+  border-radius: 6px;
+}
+
+/* Responsive design */
+@media (max-width: 480px) {
+  .footer-logo {
+    gap: 12px;
+  }
+
+  .footer-logo img {
+    width: 66px;
+    height: 66px;
+  }
+
+  .footer-logo h2 {
+    font-size: 25px;
+    letter-spacing: 0.3px;
+  }
 }
 
 /* =========================================================
@@ -134,8 +203,8 @@
 }
 
 .social-link {
-  width: 42px;
-  height: 42px;
+  width: 50px;
+  height: 50px;
 
   display: inline-flex;
   align-items: center;
@@ -177,6 +246,7 @@
 ========================================================= */
 
 .footer-navigation {
+  margin-top: 40px;
   display: grid;
 
   grid-template-columns:
@@ -319,7 +389,7 @@
   color: #927c80;
 
   font-family: "Poppins", sans-serif;
-  font-size: 10.5px;
+  font-size: 16px;
   font-weight: 400;
 
   letter-spacing: 0.1px;
@@ -338,7 +408,7 @@
   border: 1px solid rgba(74, 48, 50, 0.14);
   border-radius: 50%;
 
-  font-size: 10px;
+  font-size: 15px;
 }
 
 /* =========================================================
@@ -359,7 +429,7 @@
   color: #806a6e;
 
   font-family: "Poppins", sans-serif;
-  font-size: 10.5px;
+  font-size: 14px;
   font-weight: 500;
 
   text-decoration: none;
@@ -398,7 +468,7 @@
   color: #806a6e;
 
   font-family: "Poppins", sans-serif;
-  font-size: 10px;
+  font-size: 15px;
   font-weight: 600;
 
   letter-spacing: 0.8px;
@@ -516,117 +586,269 @@
 }
 
 /* =========================================================
-   MOBILE
+   MAMTA FOOTER — PREMIUM RESPONSIVE MOBILE DESIGN
 ========================================================= */
 
-@media (max-width: 560px) {
-
-  .mamta-footer-content {
-    width: 88%;
-
-    padding: 60px 0 45px;
-
-    gap: 45px;
+@media (max-width: 768px) {
+  .mamta-footer {
+    width: 100%;
+    overflow: hidden;
   }
 
+  .mamta-footer::before {
+    width: 240px;
+    height: 240px;
+    top: -120px;
+    left: -120px;
+    filter: blur(16px);
+  }
+
+  .mamta-footer::after {
+    width: 220px;
+    height: 220px;
+    bottom: -120px;
+    right: -110px;
+    filter: blur(16px);
+  }
+
+  /* Main layout */
+  .mamta-footer-content {
+    width: 100%;
+    max-width: 100%;
+    grid-template-columns: minmax(0, 1fr);
+    gap: 34px;
+    padding: 42px 22px 32px;
+    box-sizing: border-box;
+  }
+
+  /* Brand */
   .footer-brand-area {
     align-items: center;
-
     text-align: center;
+    min-width: 0;
   }
 
   .footer-logo {
-    margin-bottom: 18px;
+    justify-content: center;
+    gap: 12px;
+    max-width: 100%;
   }
 
   .footer-logo img {
-    max-width: 135px;
+    width: 72px;
+    height: 72px;
+    object-fit: contain;
+  }
+
+  .footer-logo h2 {
+    font-size: 24px;
+    line-height: 1.2;
+    letter-spacing: 0.3px;
   }
 
   .brand-description {
+    width: 100%;
     max-width: 330px;
-
-    font-size: 12.5px;
-    line-height: 1.8;
+    margin: 15px auto 0;
+    font-size: 13px;
+    line-height: 1.85;
+    text-align: center;
   }
 
+  /* Social icons */
   .footer-socials {
-    margin-top: 24px;
+    justify-content: center;
+    flex-wrap: wrap;
+    gap: 12px;
+    margin-top: 22px;
   }
 
   .social-link {
-    width: 40px;
-    height: 40px;
+    width: 42px;
+    height: 42px;
+    flex-shrink: 0;
+    box-shadow: 0 4px 14px rgba(74, 48, 50, 0.06);
   }
 
+  /* Navigation columns */
   .footer-navigation {
-    grid-template-columns: 1fr 1fr;
-
-    column-gap: 35px;
-    row-gap: 35px;
+    width: 100%;
+    margin-top: 0;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 28px 20px;
   }
 
   .footer-nav-group {
-    align-items: flex-start;
+    min-width: 0;
   }
 
   .footer-nav-title {
-    font-size: 9px;
-    letter-spacing: 1.5px;
-    margin-bottom: 19px;
+    margin-bottom: 18px;
+    font-size: 12px;
+    line-height: 1.5;
+    letter-spacing: 1.2px;
+     margin-left: 20px;
+  }
+
+  .footer-nav-title::after {
+    bottom: -7px;
+    width: 24px;
   }
 
   .footer-nav-group a {
-    font-size: 11.5px;
-    margin-bottom: 11px;
+    max-width: 100%;
+    margin-bottom: 13px;
+    font-size: 13px;
+    line-height: 1.65;
+    margin-left: 20px;
+    overflow-wrap: anywhere;
   }
 
-  .footer-bottom {
-    width: 88%;
+  .footer-nav-group a:hover {
+    transform: translateX(2px);
+  }
 
-    padding: 24px 0 28px;
+  /* Bottom bar */
+  .footer-bottom {
+    width: calc(100% - 44px);
+    min-height: auto;
+    grid-template-columns: minmax(0, 1fr);
+    justify-items: center;
+    gap: 18px;
+    padding: 22px 0 26px;
+    box-sizing: border-box;
+    text-align: center;
   }
 
   .footer-copyright {
-    font-size: 9.5px;
+    justify-content: center;
+    flex-wrap: wrap;
+    gap: 7px;
+    font-size: 12px;
+    line-height: 1.7;
     text-align: center;
   }
 
+  .footer-copyright-symbol {
+    width: 18px;
+    height: 18px;
+    flex-shrink: 0;
+    font-size: 12px;
+  }
+
   .footer-legal {
-    gap: 7px;
-
+    justify-content: center;
+    flex-wrap: wrap;
+    gap: 9px;
     white-space: normal;
-
-    text-align: center;
   }
 
   .footer-legal a {
-    font-size: 9.5px;
+    font-size: 12px;
+    line-height: 1.7;
   }
 
-  .footer-top-button {
+  .footer-legal-divider {
     font-size: 9px;
   }
 
+  .footer-top-button {
+    justify-self: center;
+    justify-content: center;
+    gap: 9px;
+    font-size: 12px;
+    letter-spacing: 0.6px;
+  }
+
+  .footer-top-arrow {
+    width: 30px;
+    height: 30px;
+  }
 }
 
 /* =========================================================
-   VERY SMALL MOBILE
+   SMALL MOBILE SCREENS
 ========================================================= */
 
 @media (max-width: 380px) {
+  .mamta-footer-content {
+    padding: 34px 16px 26px;
+    gap: 28px;
+  }
+
+  .footer-logo {
+    gap: 8px;
+  }
+
+  .footer-logo img {
+    width: 60px;
+    height: 60px;
+  }
+
+  .footer-logo h2 {
+    font-size: 21px;
+  }
+
+  .brand-description {
+    font-size: 12px;
+  }
 
   .footer-navigation {
-    grid-template-columns: 1fr;
-    gap: 30px;
+    gap: 24px 14px;
   }
 
-  .footer-nav-group {
-    width: 100%;
+  .footer-nav-title {
+    font-size: 11px;
+    letter-spacing: 0.8px;
   }
 
-  .footer-legal {
-    gap: 6px;
+  .footer-nav-group a {
+    font-size: 12px;
   }
 
+  .footer-bottom {
+    width: calc(100% - 32px);
+  }
+}
+
+/* =========================================================
+   TOUCH DEVICES — REMOVE STICKY HOVER EFFECTS
+========================================================= */
+
+@media (hover: none) {
+  .footer-logo:hover {
+    transform: none;
+    opacity: 1;
+  }
+
+  .footer-logo:hover img {
+    transform: none;
+    filter: none;
+  }
+
+  .footer-logo:hover h2 {
+    transform: none;
+    color: #713f3d;
+  }
+
+  .footer-nav-group a:hover {
+    transform: none;
+  }
+
+  .social-link:hover {
+    transform: none;
+  }
+}
+
+/* Accessibility */
+@media (prefers-reduced-motion: reduce) {
+  .footer-logo,
+  .footer-logo img,
+  .footer-logo h2,
+  .social-link,
+  .footer-nav-group a,
+  .footer-top-button,
+  .footer-top-arrow {
+    transition: none;
+  }
 }

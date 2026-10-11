@@ -236,17 +236,7 @@
    MOBILE
 ========================================================= */
 
-@media (max-width: 600px) {
-  .maternity-product-overlay {
-    gap: 7px;
-  }
 
-  .maternity-details-button,
-  .maternity-add-cart-button {
-    min-height: 40px;
-    font-size: 9px;
-  }
-}
 .maternity-primary-btn {
   display: inline-flex;
   align-items: center;
@@ -264,7 +254,7 @@
 
   text-decoration: none;
 
-  font-size: 11px;
+  font-size: 17px;
   font-weight: 700;
   letter-spacing: 0.3px;
 
@@ -288,7 +278,7 @@
 .maternity-hero-note {
   color: #a58f90;
 
-  font-size: 9px;
+  font-size: 13px;
   font-weight: 600;
 
   letter-spacing: 1.5px;
@@ -358,8 +348,8 @@
   position: relative;
   z-index: 3;
 
-  width: 370px;
-  height: 465px;
+  width: 300px;
+  height: 370px;
 
   overflow: hidden;
 
@@ -373,87 +363,78 @@
 }
 
 .maternity-main-image img {
-  width: 100%;
-  height: 100%;
+  width: 250px;
+  height: 350px;
 
   display: block;
 
-  object-fit: cover;
+  
 
   transition: transform 0.7s ease;
 }
 
-.maternity-hero:hover .maternity-main-image img {
-  transform: scale(1.04);
-}
+
 
 /* =========================================================
    FLOATING CARD
 ========================================================= */
 
+
 .maternity-floating-card {
   position: absolute;
   z-index: 6;
-
   left: 5px;
   bottom: 50px;
 
-  width: 180px;
+  width: max-content !important;
+  min-width: 180px;
+  max-width: none !important;
 
   padding: 20px;
+  box-sizing: border-box;
 
   background: rgba(255, 255, 255, 0.94);
-
   border: 1px solid rgba(189, 111, 124, 0.12);
-
   box-shadow: 0 18px 45px rgba(74, 48, 50, 0.11);
-
   backdrop-filter: blur(10px);
 }
 
 .maternity-floating-card > span {
   display: block;
-
   margin-bottom: 9px;
-
   color: #b9925a;
-
   font-size: 8px;
   font-weight: 800;
-
   letter-spacing: 1.7px;
 }
 
 .maternity-floating-card strong {
-  display: block;
+  display: block !important;
+  width: max-content !important;
+  max-width: none !important;
+
+  white-space: nowrap !important;
+  word-break: normal !important;
+  overflow-wrap: normal !important;
 
   color: #4a3032;
-
   font-family: "Playfair Display", Georgia, serif;
-
-  font-size: 20px;
-  font-weight: 500;
-
-  line-height: 1.2;
+  font-size: 20px !important;
+  font-weight: 400;
 }
 
 .floating-check {
   display: flex;
   align-items: center;
-
   gap: 7px;
-
   margin-top: 15px;
-
   color: #8c7072;
-
-  font-size: 9px;
 }
 
 .floating-check svg {
+  flex-shrink: 0;
   color: #bd6f7c;
 }
-
 /* =========================================================
    ROUND BADGE
 ========================================================= */
@@ -461,9 +442,8 @@
 .maternity-round-badge {
   position: absolute;
   z-index: 7;
-
   top: 35px;
-  right: 12px;
+  right: 50px!important; /* Moved right */
 
   width: 108px;
   height: 108px;
@@ -473,9 +453,7 @@
   justify-content: center;
 
   border-radius: 50%;
-
-  background: #d98f9a;
-
+  background: #3d0f16;
   color: #ffffff;
 
   box-shadow: 0 15px 35px rgba(189, 111, 124, 0.22);
@@ -485,12 +463,9 @@
 
 .maternity-round-badge span {
   width: 67px;
-
   text-align: center;
-
-  font-size: 15px;
+  font-size: 10px;
   font-weight: 800;
-
   line-height: 1.6;
   letter-spacing: 1.2px;
 }
@@ -599,7 +574,7 @@
 
   color: #b9925a;
 
-  font-size: 15px;
+  font-size: 25px;
   font-weight: 800;
 
   letter-spacing: 2.8px;
@@ -633,11 +608,18 @@
 
   color: #806a6c;
 
-  font-size: 17px;
+  font-size: 20px;
 
   line-height: 1.9;
 }
-
+.maternity-hero-image {
+  width: 100%;
+  aspect-ratio: 1 / 1;
+  object-fit: cover;
+  object-position: center;
+  display: block;
+  border-radius: 20px;
+}
 /* =========================================================
    BENEFITS
 ========================================================= */
@@ -787,11 +769,10 @@
 ========================================================= */
 
 .maternity-products-grid {
-  display: grid;
-
-  grid-template-columns: repeat(4, 1fr);
-
-  gap: 22px;
+display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 28px 24px;
+  width: 100%;
 }
 
 /* =========================================================
@@ -1171,95 +1152,352 @@
    TABLET
 ========================================================= */
 
-@media (max-width: 1050px) {
-  .maternity-hero-inner {
-    grid-template-columns: 1fr 0.85fr;
 
+/* =========================================================
+   MAMTA MATERNITY PILLOWS — COMPLETE MOBILE RESPONSIVE CSS
+   Soft Luxury • Elegant • Mobile Friendly
+   Add this at the END of your existing CSS file
+========================================================= */
+
+/* =========================================================
+   TABLET — 1024px
+========================================================= */
+
+@media (max-width: 1024px) {
+  .maternity-hero-inner {
+    width: 90%;
+    grid-template-columns: 1fr 0.85fr;
     gap: 30px;
   }
 
   .maternity-hero-content h1 {
-    font-size: 65px;
+    font-size: clamp(48px, 5.5vw, 64px);
+    letter-spacing: -1.8px;
   }
 
-  .maternity-main-image {
-    width: 320px;
-    height: 420px;
+  .maternity-hero-content > p {
+    font-size: 17px;
+  }
+
+  .maternity-hero-visual {
+    height: 470px;
   }
 
   .maternity-hero-circle {
-    width: 390px;
-    height: 390px;
+    width: 360px;
+    height: 360px;
+  }
+
+  .maternity-main-image {
+    width: 260px;
+    height: 330px;
+  }
+
+  .maternity-main-image img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    object-position: center;
+  }
+
+  .maternity-floating-card {
+    left: -5px;
+    bottom: 35px;
+    min-width: 150px;
+    padding: 15px;
+  }
+
+  .maternity-floating-card strong {
+    font-size: 17px !important;
+  }
+
+  .maternity-round-badge {
+    right: 0 !important;
+    width: 90px;
+    height: 90px;
+  }
+
+  .maternity-benefits {
+    width: 92%;
+  }
+
+  .maternity-benefit {
+    grid-template-columns: 30px 1fr;
+    gap: 12px;
+    padding: 28px 18px;
+  }
+
+  .maternity-benefit h3 {
+    font-size: 20px;
+  }
+
+  .maternity-benefit p {
+    font-size: 15px;
+  }
+
+  .maternity-products-section {
+    width: 92%;
+    padding: 85px 0;
   }
 
   .maternity-products-grid {
-    grid-template-columns: repeat(2, 1fr);
-
-    gap: 30px 22px;
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    gap: 22px 18px;
   }
 
   .maternity-product-image {
-    height: 430px;
+    height: 320px;
+  }
+
+  .maternity-section-heading h2 {
+    font-size: 43px;
   }
 }
 
 /* =========================================================
-   TABLET / SMALL
+   MOBILE — 768px
 ========================================================= */
 
-@media (max-width: 780px) {
+@media (max-width: 768px) {
+  .maternity-page {
+    width: 100%;
+    overflow: hidden;
+  }
+
+  /* HERO */
   .maternity-hero {
     min-height: auto;
-
-    padding-bottom: 70px;
+    padding: 0 0 48px;
   }
 
   .maternity-hero-inner {
+    width: 100%;
     min-height: auto;
-
-    grid-template-columns: 1fr;
-
-    gap: 55px;
-
-    padding-top: 80px;
+    padding: 52px 22px 0;
+    margin: 0 auto;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 25px;
+    box-sizing: border-box;
   }
 
+  /* Hero content */
   .maternity-hero-content {
-    max-width: 650px;
-
+    width: 100%;
+    max-width: 560px;
     text-align: center;
-
-    margin: 0 auto;
   }
 
   .maternity-eyebrow {
     justify-content: center;
+    gap: 9px;
+    margin-bottom: 18px;
+    font-size: 11px;
+    letter-spacing: 2px;
+  }
+
+  .maternity-eyebrow > span {
+    width: 23px;
   }
 
   .maternity-hero-content h1 {
-    font-size: clamp(52px, 12vw, 75px);
+    font-size: clamp(43px, 9vw, 65px);
+    line-height: 1.04;
+    letter-spacing: -1.5px;
+  }
+
+  .maternity-hero-content h1 em {
+    margin-top: 7px;
   }
 
   .maternity-hero-content > p {
-    margin-left: auto;
-    margin-right: auto;
+    max-width: 440px;
+    margin: 19px auto 0;
+    font-size: 16px;
+    line-height: 1.8;
   }
 
+  /* Hero buttons */
   .maternity-hero-actions {
     justify-content: center;
+    gap: 14px;
+    margin-top: 25px;
   }
 
+  .maternity-primary-btn {
+    min-height: 48px;
+    padding: 14px 19px;
+    font-size: 14px;
+    border-radius: 5px;
+  }
+
+  .maternity-hero-note {
+    font-size: 10px;
+    letter-spacing: 1px;
+    line-height: 1.8;
+  }
+
+  /* Hero visual */
   .maternity-hero-visual {
-    height: 500px;
+    width: 100%;
+    max-width: 440px;
+    height: 420px;
+    margin: 0 auto;
   }
 
+  .maternity-hero-circle {
+    width: min(76vw, 340px);
+    height: min(76vw, 340px);
+  }
+
+  .maternity-hero-circle::before {
+    inset: 16px;
+  }
+
+  .maternity-hero-circle::after {
+    inset: 37px;
+  }
+
+  /* Main image */
+  .maternity-main-image {
+    width: min(58vw, 255px);
+    height: 320px;
+    max-height: 78%;
+    border-width: 6px;
+    border-radius: 150px 150px 10px 10px;
+  }
+
+  .maternity-main-image img {
+    display: block;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    object-position: center;
+  }
+
+  /* Floating card */
+  .maternity-floating-card {
+    left: 0;
+    bottom: 30px;
+    width: auto !important;
+    min-width: 0;
+    max-width: 190px !important;
+    padding: 13px;
+  }
+
+  .maternity-floating-card > span {
+    margin-bottom: 6px;
+    font-size: 8px;
+    letter-spacing: 1.1px;
+  }
+
+  .maternity-floating-card strong {
+    width: auto !important;
+    max-width: 100% !important;
+    white-space: normal !important;
+    overflow-wrap: anywhere !important;
+    font-size: 16px !important;
+    line-height: 1.35;
+  }
+
+  .floating-check {
+    gap: 5px;
+    margin-top: 9px;
+    font-size: 11px;
+  }
+
+  .floating-check svg {
+    width: 14px;
+    height: 14px;
+  }
+
+  /* Round badge */
+  .maternity-round-badge {
+    top: 15px;
+    right: 8px !important;
+    width: 78px;
+    height: 78px;
+  }
+
+  .maternity-round-badge span {
+    width: 57px;
+    font-size: 8px;
+    line-height: 1.5;
+    letter-spacing: 0.8px;
+  }
+
+  /* Background glows */
+  .maternity-glow-one {
+    width: 220px;
+    height: 220px;
+  }
+
+  .maternity-glow-two {
+    width: 230px;
+    height: 230px;
+  }
+
+  /* Hero bottom line */
+  .maternity-hero-bottom {
+    position: relative;
+    left: auto;
+    right: auto;
+    bottom: auto;
+    width: 90%;
+    margin: 18px auto 0;
+    grid-template-columns: auto 1fr auto;
+    gap: 10px;
+    font-size: 7px;
+    letter-spacing: 1px;
+    text-align: center;
+  }
+
+  /* Intro */
+  .maternity-intro {
+    width: 100%;
+    max-width: 620px;
+    padding: 70px 22px 55px;
+    box-sizing: border-box;
+  }
+
+  .maternity-intro-label {
+    margin-bottom: 13px;
+    font-size: 13px;
+    letter-spacing: 2px;
+  }
+
+  .maternity-intro h2 {
+    font-size: clamp(32px, 7vw, 44px);
+    line-height: 1.15;
+  }
+
+  .maternity-intro p {
+    margin-top: 19px;
+    font-size: 15px;
+    line-height: 1.85;
+  }
+
+  /* Intro image */
+  .maternity-hero-image {
+    width: 100%;
+    aspect-ratio: 1 / 0.85;
+    border-radius: 15px;
+    object-fit: cover;
+  }
+
+  /* Benefits */
   .maternity-benefits {
+    width: calc(100% - 36px);
     grid-template-columns: 1fr;
+    margin: 0 auto;
   }
 
   .maternity-benefit {
+    grid-template-columns: 34px minmax(0, 1fr);
+    gap: 13px;
+    padding: 23px 10px;
     border-right: none;
-
     border-bottom: 1px solid rgba(74, 48, 50, 0.09);
   }
 
@@ -1267,388 +1505,626 @@
     border-bottom: none;
   }
 
-  .maternity-section-heading {
-    align-items: flex-start;
+  .benefit-number {
+    font-size: 18px;
+  }
 
+  .maternity-benefit h3 {
+    margin-bottom: 6px;
+    font-size: 21px;
+  }
+
+  .maternity-benefit p {
+    font-size: 14px;
+    line-height: 1.75;
+  }
+
+  /* Products section */
+  .maternity-products-section {
+    width: calc(100% - 36px);
+    padding: 75px 0;
+  }
+
+  .maternity-section-heading {
     flex-direction: column;
+    align-items: flex-start;
+    gap: 13px;
+    margin-bottom: 28px;
+  }
+
+  .maternity-section-eyebrow {
+    margin-bottom: 10px;
+    font-size: 11px;
+    letter-spacing: 2px;
+  }
+
+  .maternity-section-eyebrow::before {
+    width: 22px;
+  }
+
+  .maternity-section-heading h2 {
+    font-size: clamp(34px, 7vw, 44px);
+    line-height: 1.15;
   }
 
   .maternity-section-heading > p {
-    text-align: left;
-
+    max-width: 450px;
     margin: 0;
+    font-size: 14px;
+    line-height: 1.8;
+    text-align: left;
   }
 
-  .maternity-products-section {
-    padding: 85px 0;
+  /* One product per row on mobile */
+  .maternity-products-grid {
+    display: grid;
+    grid-template-columns: minmax(0, 1fr);
+    justify-items: center;
+    gap: 28px;
+    width: 100%;
+  }
+
+  .maternity-product-card {
+    width: 100%;
+    max-width: 430px;
+    min-width: 0;
+    margin: 0 auto;
+  }
+
+  .maternity-product-card:hover {
+    transform: none;
+  }
+
+  /* Product image */
+  .maternity-product-image {
+    width: 100%;
+    height: auto;
+    aspect-ratio: 1 / 0.85;
+    border-radius: 10px;
+  }
+
+  .maternity-product-image img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    object-position: center;
+  }
+
+  .maternity-product-card:hover .maternity-product-image img {
+    transform: none;
+  }
+
+  /* Product tag */
+  .maternity-product-tag {
+    top: 12px;
+    left: 12px;
+    padding: 7px 9px;
+    font-size: 10px;
+    letter-spacing: 1px;
+  }
+
+  /* Wishlist */
+  .maternity-wishlist {
+    top: 10px;
+    right: 10px;
+    width: 39px;
+    height: 39px;
+  }
+
+  /* Always accessible on touch screens */
+  .maternity-product-overlay {
+    position: relative;
+    left: auto;
+    right: auto;
+    bottom: auto;
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+    padding: 12px;
+    background: #fff9f4;
+    transform: none;
+    opacity: 1;
+    visibility: visible;
+  }
+
+  .maternity-product-overlay button {
+    min-height: 43px;
+    padding: 12px 10px;
+    border: 1px solid rgba(189, 111, 124, 0.25);
+    border-radius: 5px;
+    font-size: 12px;
+    letter-spacing: 0.5px;
+    box-shadow: none;
+  }
+
+  .maternity-product-overlay button:active {
+    background: #bd6f7c;
+    color: #ffffff;
+  }
+
+  /* Product details */
+  .maternity-product-info {
+    padding: 15px 3px 0;
+  }
+
+  .maternity-rating {
+    flex-wrap: wrap;
+    gap: 5px;
+    margin-bottom: 7px;
+    font-size: 13px;
+  }
+
+  .maternity-product-info h3 {
+    font-size: 21px;
+    line-height: 1.4;
+  }
+
+  .maternity-price {
+    flex-wrap: wrap;
+    gap: 9px;
+    margin-top: 9px;
+  }
+
+  .maternity-price strong {
+    font-size: 19px;
+  }
+
+  .maternity-price span {
+    font-size: 15px;
+  }
+
+  /* Closing banner */
+  .maternity-closing-inner {
+    padding: 75px 22px;
+  }
+
+  .maternity-closing-inner > span {
+    margin-bottom: 14px;
+    font-size: 11px;
+    letter-spacing: 2px;
+  }
+
+  .maternity-closing-inner h2 {
+    font-size: clamp(35px, 8vw, 49px);
+    line-height: 1.12;
+    letter-spacing: -0.5px;
+  }
+
+  .maternity-closing-inner a {
+    min-height: 45px;
+    margin-top: 23px;
+    padding: 13px 18px;
+    font-size: 13px;
+  }
+
+  .maternity-closing::before {
+    width: 260px;
+    height: 260px;
+  }
+
+  .maternity-closing::after {
+    width: 200px;
+    height: 200px;
   }
 }
 
 /* =========================================================
-   MOBILE
+   SMALL PHONES — 480px
 ========================================================= */
 
-@media (max-width: 560px) {
+@media (max-width: 480px) {
   .maternity-hero-inner {
-    width: 90%;
+    padding: 43px 17px 0;
+    gap: 16px;
+  }
 
-    padding-top: 65px;
+  .maternity-eyebrow {
+    font-size: 10px;
+    letter-spacing: 1.5px;
   }
 
   .maternity-hero-content h1 {
-    font-size: 52px;
-
-    letter-spacing: -2px;
+    font-size: clamp(39px, 10vw, 49px);
+    letter-spacing: -1.2px;
   }
 
   .maternity-hero-content > p {
-    font-size: 12px;
-
+    margin-top: 16px;
+    font-size: 14px;
     line-height: 1.8;
   }
 
   .maternity-hero-actions {
     flex-direction: column;
-
-    gap: 17px;
+    align-items: center;
+    gap: 12px;
+    margin-top: 21px;
   }
 
   .maternity-primary-btn {
-    width: auto;
+    width: 100%;
+    max-width: 260px;
+    min-height: 47px;
+    padding: 13px 15px;
+    font-size: 13px;
+    box-sizing: border-box;
+  }
+
+  .maternity-hero-note {
+    text-align: center;
+    font-size: 9px;
   }
 
   .maternity-hero-visual {
-    height: 430px;
-  }
-
-  .maternity-main-image {
-    width: 270px;
     height: 350px;
-
-    border-radius: 145px 145px 10px 10px;
+    max-width: 370px;
   }
 
   .maternity-hero-circle {
-    width: 330px;
-    height: 330px;
+    width: min(76vw, 290px);
+    height: min(76vw, 290px);
+  }
+
+  .maternity-main-image {
+    width: min(58vw, 220px);
+    height: 275px;
+    border-width: 5px;
+    border-radius: 125px 125px 9px 9px;
   }
 
   .maternity-floating-card {
     left: 0;
-    bottom: 25px;
+    bottom: 21px;
+    max-width: 158px !important;
+    padding: 11px;
+  }
 
-    width: 150px;
-
-    padding: 15px;
+  .maternity-floating-card > span {
+    font-size: 7px;
+    letter-spacing: 0.8px;
   }
 
   .maternity-floating-card strong {
-    font-size: 17px;
+    font-size: 14px !important;
+  }
+
+  .floating-check {
+    font-size: 10px;
   }
 
   .maternity-round-badge {
-    width: 82px;
-    height: 82px;
-
-    top: 20px;
-    right: 0;
+    top: 12px;
+    right: 0 !important;
+    width: 68px;
+    height: 68px;
   }
 
   .maternity-round-badge span {
-    width: 52px;
-
-    font-size: 6px;
+    width: 50px;
+    font-size: 7px;
+    letter-spacing: 0.5px;
   }
 
   .maternity-hero-bottom {
-    display: none;
+    width: 92%;
+    gap: 7px;
+    font-size: 6px;
+    letter-spacing: 0.6px;
   }
 
   .maternity-intro {
-    padding: 80px 20px 60px;
+    padding: 58px 18px 45px;
+  }
+
+  .maternity-intro-label {
+    font-size: 11px;
   }
 
   .maternity-intro h2 {
-    font-size: 36px;
+    font-size: 33px;
   }
 
   .maternity-intro p {
-    font-size: 12px;
+    margin-top: 15px;
+    font-size: 14px;
   }
 
   .maternity-benefits {
-    width: 88%;
+    width: calc(100% - 30px);
   }
 
   .maternity-benefit {
-    padding: 28px 20px;
+    padding: 20px 5px;
+  }
+
+  .maternity-benefit h3 {
+    font-size: 19px;
+  }
+
+  .maternity-benefit p {
+    font-size: 13px;
   }
 
   .maternity-products-section {
-    width: 90%;
+    width: calc(100% - 30px);
+    padding: 58px 0;
+  }
 
-    padding: 75px 0;
+  .maternity-section-heading {
+    gap: 12px;
+    margin-bottom: 24px;
+  }
+
+  .maternity-section-eyebrow {
+    font-size: 10px;
+    letter-spacing: 1.5px;
   }
 
   .maternity-section-heading h2 {
-    font-size: 37px;
+    font-size: 34px;
+  }
+
+  .maternity-section-heading > p {
+    font-size: 13px;
   }
 
   .maternity-products-grid {
-    grid-template-columns: 1fr;
+    gap: 25px;
+  }
 
-    gap: 35px;
+  .maternity-product-card {
+    width: 100%;
+    max-width: 370px;
   }
 
   .maternity-product-image {
-    height: 420px;
+    aspect-ratio: 1 / 0.86;
+    border-radius: 8px;
+  }
+
+  .maternity-product-tag {
+    top: 9px;
+    left: 9px;
+    padding: 6px 8px;
+    font-size: 9px;
+  }
+
+  .maternity-wishlist {
+    width: 35px;
+    height: 35px;
+    top: 8px;
+    right: 8px;
   }
 
   .maternity-product-overlay {
-    transform: translateY(0);
+    padding: 9px;
+    gap: 7px;
   }
 
   .maternity-product-overlay button {
-    background: rgba(255, 255, 255, 0.94);
+    min-height: 41px;
+    padding: 10px 7px;
+    font-size: 11px;
+  }
+
+  .maternity-product-info {
+    padding-top: 13px;
+  }
+
+  .maternity-rating {
+    font-size: 12px;
+  }
+
+  .maternity-product-info h3 {
+    font-size: 19px;
+  }
+
+  .maternity-price strong {
+    font-size: 18px;
+  }
+
+  .maternity-price span {
+    font-size: 14px;
   }
 
   .maternity-closing-inner {
-    padding: 80px 20px;
+    padding: 60px 18px;
   }
 
-  .maternity-closing-inner h2 {
-    font-size: 42px;
-  }
-}
-
-/* =========================================================
-   VERY SMALL MOBILE
-========================================================= */
-
-@media (max-width: 380px) {
-  .maternity-hero-content h1 {
-    font-size: 45px;
-  }
-
-  .maternity-hero-visual {
-    height: 390px;
-  }
-
-  .maternity-main-image {
-    width: 245px;
-    height: 320px;
-  }
-
-  .maternity-hero-circle {
-    width: 295px;
-    height: 295px;
-  }
-
-  .maternity-floating-card {
-    width: 135px;
-    padding: 13px;
-  }
-
-  .maternity-round-badge {
-    width: 72px;
-    height: 72px;
-  }
-
-  .maternity-product-image {
-    height: 360px;
+  .maternity-closing-inner > span {
+    font-size: 10px;
+    letter-spacing: 1.5px;
   }
 
   .maternity-closing-inner h2 {
     font-size: 36px;
   }
+
+  .maternity-closing-inner a {
+    font-size: 12px;
+  }
 }
+
 /* =========================================================
-   MAMTA MATERNITY SCROLL REVEAL
+   EXTRA SMALL PHONES — 360px
 ========================================================= */
 
-.scroll-reveal {
-  opacity: 0;
-  will-change: transform, opacity;
+@media (max-width: 360px) {
+  .maternity-hero-inner {
+    padding-left: 14px;
+    padding-right: 14px;
+  }
 
-  transition:
-    opacity 0.9s cubic-bezier(0.16, 1, 0.3, 1),
-    transform 0.9s cubic-bezier(0.16, 1, 0.3, 1);
-}
+  .maternity-hero-content h1 {
+    font-size: 37px;
+  }
 
-/* BOTTOM → TOP */
+  .maternity-hero-content > p {
+    font-size: 13px;
+  }
 
-.reveal-up {
-  transform: translate3d(0, 70px, 0);
-}
+  .maternity-hero-visual {
+    height: 320px;
+  }
 
-.reveal-up.is-visible {
-  opacity: 1;
-  transform: translate3d(0, 0, 0);
-}
+  .maternity-main-image {
+    width: 190px;
+    height: 245px;
+  }
 
-/* TOP → BOTTOM */
+  .maternity-hero-circle {
+    width: 255px;
+    height: 255px;
+  }
 
-.reveal-down {
-  transform: translate3d(0, -70px, 0);
-}
+  .maternity-floating-card {
+    max-width: 140px !important;
+    padding: 9px;
+  }
 
-.reveal-down.is-visible {
-  opacity: 1;
-  transform: translate3d(0, 0, 0);
-}
+  .maternity-floating-card strong {
+    font-size: 13px !important;
+  }
 
-/* LEFT → RIGHT */
+  .maternity-round-badge {
+    width: 75px;
+    height: 75px;
+    margin-top: 20px;
+  }
 
-.reveal-left {
-  transform: translate3d(-70px, 0, 0);
-}
+  .maternity-round-badge span {
+    width: 45px;
+    font-size: 9px;
+  }
 
-.reveal-left.is-visible {
-  opacity: 1;
-  transform: translate3d(0, 0, 0);
-}
+  .maternity-hero-bottom {
+    font-size: 5px;
+    letter-spacing: 0.3px;
+  }
 
-/* RIGHT → LEFT */
+  .maternity-intro h2 {
+    font-size: 29px;
+  }
 
-.reveal-right {
-  transform: translate3d(70px, 0, 0);
-}
+  .maternity-products-section {
+    width: calc(100% - 24px);
+  }
 
-.reveal-right.is-visible {
-  opacity: 1;
-  transform: translate3d(0, 0, 0);
-}
+  .maternity-section-heading h2 {
+    font-size: 31px;
+  }
 
-/* =========================================================
-   STAGGER
-========================================================= */
+  .maternity-product-info h3 {
+    font-size: 18px;
+  }
 
-.scroll-reveal.stagger-1 {
-  transition-delay: 0.05s;
-}
-
-.scroll-reveal.stagger-2 {
-  transition-delay: 0.12s;
-}
-
-.scroll-reveal.stagger-3 {
-  transition-delay: 0.19s;
-}
-
-.scroll-reveal.stagger-4 {
-  transition-delay: 0.26s;
-}
-
-.scroll-reveal.stagger-5 {
-  transition-delay: 0.33s;
-}
-
-.scroll-reveal.stagger-6 {
-  transition-delay: 0.4s;
+  .maternity-closing-inner h2 {
+    font-size: 32px;
+  }
 }
 
 /* =========================================================
-   REDUCED MOTION
+   ACCESSIBILITY — REDUCED MOTION
 ========================================================= */
 
 @media (prefers-reduced-motion: reduce) {
-  .scroll-reveal {
-    opacity: 1 !important;
-    transform: none !important;
-    transition: none !important;
+  .maternity-page *,
+  .maternity-page *::before,
+  .maternity-page *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    scroll-behavior: auto !important;
+    transition-duration: 0.01ms !important;
   }
 }
-/* ========================================================= MAMTA — FLYING M TO CART Same animation as Shop.jsx ========================================================= */
-.mamta-flying-cart-item {
-  position: fixed;
-  width: 58px;
-  height: 58px;
-  left: 0;
-  top: 0;
-  z-index: 2147483647;
-  pointer-events: none;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  border-radius: 16px;
-  background: linear-gradient(145deg, #f7b8c4, #ed91a4);
-  border: 1px solid rgba(255, 255, 255, 0.8);
-  box-shadow:
-    0 18px 40px rgba(193, 91, 113, 0.28),
-    0 6px 16px rgba(193, 91, 113, 0.18),
-    inset 0 1px 0 rgba(255, 255, 255, 0.85);
-  overflow: hidden;
-  will-change: transform, opacity;
-  transform-origin: center center;
-} /* ========================================================= M LETTER ========================================================= */
-.mamta-flying-cart-item span {
-  position: relative;
-  z-index: 3;
-  display: flex;
-  width: 100%;
-  height: 100%;
-  align-items: center;
-  justify-content: center;
-  color: #ffffff;
-  font-family: Georgia, "Times New Roman", serif;
-  font-size: 27px;
-  font-weight: 700;
-  line-height: 1;
-  letter-spacing: -1px;
-  text-shadow: 0 2px 8px rgba(100, 40, 55, 0.18);
-} /* ========================================================= SOFT SHINE ========================================================= */
-.mamta-flying-cart-item::before {
-  content: "";
-  position: absolute;
-  width: 28px;
-  height: 28px;
-  top: -10px;
-  left: -10px;
-  border-radius: 50%;
-  background: rgba(255, 255, 255, 0.55);
-  filter: blur(7px);
-  pointer-events: none;
-} /* ========================================================= INNER GLOW ========================================================= */
-.mamta-flying-cart-item::after {
-  content: "";
-  position: absolute;
-  inset: 0;
-  border-radius: inherit;
-  background: radial-gradient(
-    circle at 30% 25%,
-    rgba(255, 255, 255, 0.42),
-    transparent 42%
-  );
-  pointer-events: none;
-} /* ========================================================= CART POP ========================================================= */
-.cart-flying-pop {
-  animation: mamta-cart-pop 450ms cubic-bezier(0.16, 1, 0.3, 1);
+
+@media (max-width: 768px) {
+  .maternity-product-image {
+    position: relative;
+    overflow: hidden;
+    isolation: isolate;
+  }
+
+  .maternity-product-overlay {
+    position: absolute !important;
+    z-index: 6;
+    left: 0;
+    right: 0;
+    bottom: 0;
+
+    display: flex !important;
+    flex-direction: row !important;
+    flex-wrap: nowrap !important;
+    align-items: center;
+    justify-content: space-between;
+    gap: 8px;
+
+    width: 100%;
+    padding: 10px;
+    box-sizing: border-box;
+
+    background: linear-gradient(
+      to top,
+      rgba(255, 249, 244, 0.65),
+      transparent
+    );
+
+    opacity: 1;
+    visibility: visible;
+    transform: translateY(0);
+    animation: mobileProductButtonsIn 0.7s ease-out both;
+  }
+
+  .maternity-product-overlay button {
+    display: flex !important;
+    flex: 1 1 0 !important;
+    width: 50% !important;
+    min-width: 0 !important;
+    max-width: 50%;
+    min-height: 36px;
+
+    align-items: center;
+    justify-content: center;
+
+    margin: 0;
+    padding: 8px 4px;
+    box-sizing: border-box;
+
+    white-space: nowrap;
+    font-size: 10px;
+    line-height: 1.2;
+
+    border: 1px solid rgba(189, 111, 124, 0.7);
+    border-radius: 5px;
+
+    background: rgba(255, 249, 244, 0.9);
+    color: #4a3032;
+
+    box-shadow: 0 2px 6px rgba(74, 48, 50, 0.07);
+    backdrop-filter: blur(2px);
+    -webkit-backdrop-filter: blur(2px);
+  }
+
+  .maternity-product-overlay button:active {
+    background: #bd6f7c;
+    color: #ffffff;
+  }
+
+  @keyframes mobileProductButtonsIn {
+    from {
+      opacity: 0;
+      transform: translateY(14px);
+    }
+
+    to {
+      opacity: 1;
+      transform: translateY(0);
+    }
+  }
 }
-@keyframes mamta-cart-pop {
-  0% {
-    transform: scale(1);
-  }
-  25% {
-    transform: scale(1.24) rotate(-5deg);
-  }
-  45% {
-    transform: scale(0.91) rotate(3deg);
-  }
-  65% {
-    transform: scale(1.1) rotate(-2deg);
-  }
-  82% {
-    transform: scale(0.98);
-  }
-  100% {
-    transform: scale(1);
-  }
-} /* ========================================================= REDUCED MOTION ========================================================= */
+
 @media (prefers-reduced-motion: reduce) {
-  .mamta-flying-cart-item {
-    animation: none !important;
-  }
-  .cart-flying-pop {
-    animation: none !important;
+  .maternity-product-overlay {
+    animation: none;
   }
 }

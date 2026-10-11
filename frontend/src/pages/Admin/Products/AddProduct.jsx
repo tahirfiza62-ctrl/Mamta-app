@@ -1,3 +1,4 @@
+
 import { useState } from "react";
 import axios from "axios";
 import {
@@ -11,6 +12,18 @@ import { useNavigate } from "react-router-dom";
 import "./AddProduct.css";
 
 const API_URL = "http://localhost:3000/api/admin/products";
+
+/* =========================================================
+   ALLOWED CATEGORIES
+========================================================= */
+
+const ALLOWED_CATEGORIES = [
+  "Maternity Pillows",
+  "Baby Pillows",
+  "Nursing Products",
+  "Elders Pillows",
+  "Accessories",
+];
 
 /* =========================================================
    AVAILABLE COLORS
@@ -145,16 +158,14 @@ const AddProduct = () => {
     setForm((prev) => {
       const alreadySelected =
         prev.colors.some(
-          (item) =>
-            item.value === color.value
+          (item) => item.value === color.value
         );
 
       if (alreadySelected) {
         return {
           ...prev,
           colors: prev.colors.filter(
-            (item) =>
-              item.value !== color.value
+            (item) => item.value !== color.value
           ),
         };
       }
@@ -176,15 +187,13 @@ const AddProduct = () => {
   const toggleUseMainImage = (colorValue) => {
     setForm((prev) => ({
       ...prev,
-      colors: prev.colors.map(
-        (color) =>
-          color.value === colorValue
-            ? {
-                ...color,
-                useMainImage:
-                  !color.useMainImage,
-              }
-            : color
+      colors: prev.colors.map((color) =>
+        color.value === colorValue
+          ? {
+              ...color,
+              useMainImage: !color.useMainImage,
+            }
+          : color
       ),
     }));
   };
@@ -193,21 +202,17 @@ const AddProduct = () => {
      UPDATE COLOR IMAGE
   ========================================================= */
 
-  const updateColorImage = (
-    colorValue,
-    imageValue
-  ) => {
+  const updateColorImage = (colorValue, imageValue) => {
     setForm((prev) => ({
       ...prev,
-      colors: prev.colors.map(
-        (color) =>
-          color.value === colorValue
-            ? {
-                ...color,
-                image: imageValue,
-                useMainImage: false,
-              }
-            : color
+      colors: prev.colors.map((color) =>
+        color.value === colorValue
+          ? {
+              ...color,
+              image: imageValue,
+              useMainImage: false,
+            }
+          : color
       ),
     }));
   };
@@ -220,8 +225,7 @@ const AddProduct = () => {
     setForm((prev) => ({
       ...prev,
       colors: prev.colors.filter(
-        (color) =>
-          color.value !== colorValue
+        (color) => color.value !== colorValue
       ),
     }));
   };
@@ -244,10 +248,7 @@ const AddProduct = () => {
 
     setForm((prev) => ({
       ...prev,
-      features: [
-        ...prev.features,
-        value,
-      ],
+      features: [...prev.features, value],
     }));
 
     setFeature("");
@@ -261,18 +262,12 @@ const AddProduct = () => {
   const removeFeature = (index) => {
     setForm((prev) => ({
       ...prev,
-      features: prev.features.filter(
-        (_, i) => i !== index
-      ),
+      features: prev.features.filter((_, i) => i !== index),
     }));
   };
 
   /* =========================================================
      ADD ADDITIONAL IMAGE
-     
-     Main image is separate.
-     These images become the automatic
-     product gallery on ProductDetails.
   ========================================================= */
 
   const addImage = () => {
@@ -284,25 +279,18 @@ const AddProduct = () => {
     }
 
     if (form.images.length >= 4) {
-      setError(
-        "You can add up to 4 additional images."
-      );
+      setError("You can add up to 4 additional images.");
       return;
     }
 
     if (form.images.includes(value)) {
-      setError(
-        "This image has already been added."
-      );
+      setError("This image has already been added.");
       return;
     }
 
     setForm((prev) => ({
       ...prev,
-      images: [
-        ...prev.images,
-        value,
-      ],
+      images: [...prev.images, value],
     }));
 
     setImageUrl("");
@@ -316,9 +304,7 @@ const AddProduct = () => {
   const removeImage = (index) => {
     setForm((prev) => ({
       ...prev,
-      images: prev.images.filter(
-        (_, i) => i !== index
-      ),
+      images: prev.images.filter((_, i) => i !== index),
     }));
   };
 
@@ -337,9 +323,7 @@ const AddProduct = () => {
     ----------------------------------------- */
 
     if (!form.name.trim()) {
-      setError(
-        "Product name is required."
-      );
+      setError("Product name is required.");
       return;
     }
 
@@ -347,10 +331,10 @@ const AddProduct = () => {
        CATEGORY
     ----------------------------------------- */
 
-    if (!form.category.trim()) {
-      setError(
-        "Category is required."
-      );
+    const normalizedCategory = form.category.trim();
+
+    if (!ALLOWED_CATEGORIES.includes(normalizedCategory)) {
+      setError("Please select a valid product category.");
       return;
     }
 
@@ -360,11 +344,10 @@ const AddProduct = () => {
 
     if (
       form.price === "" ||
+      !Number.isFinite(Number(form.price)) ||
       Number(form.price) < 0
     ) {
-      setError(
-        "Enter a valid price."
-      );
+      setError("Enter a valid price.");
       return;
     }
 
@@ -374,23 +357,32 @@ const AddProduct = () => {
 
     if (
       form.oldPrice !== "" &&
-      Number(form.oldPrice) < 0
+      (!Number.isFinite(Number(form.oldPrice)) ||
+        Number(form.oldPrice) < 0)
     ) {
-      setError(
-        "Old price cannot be negative."
-      );
+      setError("Old price cannot be negative.");
       return;
     }
 
     /* -----------------------------------------
-       MAIN IMAGE
+       STOCK
+    ----------------------------------------- */
+
+    if (
+      form.stock !== "" &&
+      (!Number.isFinite(Number(form.stock)) ||
+        Number(form.stock) < 0)
+    ) {
+      setError("Stock cannot be negative.");
+      return;
+    }
+
+    /* -----------------------------------------
+       MAIN IMAGE VALIDATION
     ----------------------------------------- */
 
     for (const color of form.colors) {
-      if (
-        color.useMainImage &&
-        !form.image.trim()
-      ) {
+      if (color.useMainImage && !form.image.trim()) {
         setError(
           `Please add a main product image for ${color.name}.`
         );
@@ -405,67 +397,38 @@ const AddProduct = () => {
     for (const color of form.colors) {
       if (
         !color.useMainImage &&
-        (!color.image ||
-          !color.image.trim())
+        (!color.image || !color.image.trim())
       ) {
-        setError(
-          `Please add an image for ${color.name}.`
-        );
+        setError(`Please add an image for ${color.name}.`);
         return;
       }
+    }
+
+    const token = localStorage.getItem("mamta_admin_token");
+
+    if (!token) {
+      setError("Your admin session has expired. Please log in again.");
+      return;
     }
 
     try {
       setLoading(true);
 
-      const token =
-        localStorage.getItem(
-          "mamta_admin_token"
-        );
-
       /* -----------------------------------------
          CLEAN COLORS
       ----------------------------------------- */
 
-      const cleanedColors =
-        form.colors.map((color) => ({
-          name: color.name,
-          value: color.value,
-          code: color.code,
-          image:
-            color.useMainImage
-              ? form.image.trim()
-              : color.image.trim(),
-        }));
-
-      /* -----------------------------------------
-         NORMALIZE CATEGORY
-      ----------------------------------------- */
-
-      let normalizedCategory =
-        form.category.trim();
-
-      if (
-        normalizedCategory ===
-          "Newborn & Kids" ||
-        normalizedCategory ===
-          "Nursing Product" ||
-        normalizedCategory ===
-          "Nursing Pillow" ||
-        normalizedCategory ===
-          "Nursing Pillows" ||
-        normalizedCategory.toLowerCase() ===
-          "nursing products"
-      ) {
-        normalizedCategory =
-          "Nursing Products";
-      }
+      const cleanedColors = form.colors.map((color) => ({
+        name: color.name,
+        value: color.value,
+        code: color.code,
+        image: color.useMainImage
+          ? form.image.trim()
+          : color.image.trim(),
+      }));
 
       /* -----------------------------------------
          CLEAN ADDITIONAL IMAGES
-         
-         Remove empty values and duplicates.
-         Maximum 4 gallery images.
       ----------------------------------------- */
 
       const cleanedImages = [
@@ -482,129 +445,57 @@ const AddProduct = () => {
 
       /* -----------------------------------------
          PRODUCT DATA
+
+         IMPORTANT:
+         Do not convert the selected category
+         to Nursing Products or Accessories.
       ----------------------------------------- */
 
       const productData = {
-        name:
-          form.name.trim(),
-
-        description:
-          form.description.trim(),
-
-        price:
-          Number(form.price),
-
+        name: form.name.trim(),
+        description: form.description.trim(),
+        price: Number(form.price),
         oldPrice:
           form.oldPrice === ""
             ? null
             : Number(form.oldPrice),
 
-        category:
-          normalizedCategory,
+        // Save the exact category selected in the dropdown.
+        category: normalizedCategory,
 
-        image:
-          form.image.trim(),
-
-        /*
-          IMPORTANT:
-          These are the additional images
-          used by ProductDetails automatic slider.
-        */
-        images:
-          cleanedImages,
-
-        stock:
-          form.stock === ""
-            ? 0
-            : Number(form.stock),
-
-        active:
-          form.active,
-
-        features:
-          form.features,
-
-        colors:
-          cleanedColors,
+        image: form.image.trim(),
+        images: cleanedImages,
+        stock: form.stock === "" ? 0 : Number(form.stock),
+        active: form.active,
+        features: form.features,
+        colors: cleanedColors,
       };
 
-      console.log(
-        "===================================="
-      );
-
-      console.log(
-        "ADDING PRODUCT:"
-      );
-
-      console.log(
-        productData
-      );
-
-      console.log(
-        "PRODUCT CATEGORY:",
-        productData.category
-      );
-
-      console.log(
-        "MAIN IMAGE:",
-        productData.image
-      );
-
-      console.log(
-        "ADDITIONAL IMAGES:",
-        productData.images
-      );
-
-      console.log(
-        "TOTAL GALLERY IMAGES:",
-        productData.images.length
-      );
-
-      console.log(
-        "COLORS:",
-        productData.colors
-      );
-
-      console.log(
-        "===================================="
-      );
+      console.log("ADDING PRODUCT:", productData);
+      console.log("PRODUCT CATEGORY:", productData.category);
 
       /* -----------------------------------------
          API REQUEST
       ----------------------------------------- */
 
-      await axios.post(
-        API_URL,
-        productData,
-        {
-          headers: {
-            Authorization:
-              `Bearer ${token}`,
-          },
-        }
-      );
+      await axios.post(API_URL, productData, {
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      });
 
-      setSuccess(
-        "Product added successfully."
-      );
+      setSuccess("Product added successfully.");
 
       setTimeout(() => {
-        navigate(
-          "/admin/products"
-        );
+        navigate("/admin/products");
       }, 800);
-
     } catch (err) {
-      console.error(
-        "ADD PRODUCT ERROR:",
-        err
-      );
+      console.error("ADD PRODUCT ERROR:", err);
 
       setError(
         err.response?.data?.message ||
           "Unable to add product."
       );
-
     } finally {
       setLoading(false);
     }
@@ -616,49 +507,28 @@ const AddProduct = () => {
 
   return (
     <section className="admin-add-product-page">
-
-      {/* =====================================================
-          TOP HEADER
-      ===================================================== */}
-
       <div className="admin-add-product-header">
-
         <button
           type="button"
           className="admin-back-button"
-          onClick={() =>
-            navigate(
-              "/admin/products"
-            )
-          }
+          onClick={() => navigate("/admin/products")}
         >
           <ArrowLeft size={18} />
-
           Back to Products
         </button>
 
         <div>
-
           <p className="admin-page-label">
             PRODUCT MANAGEMENT
           </p>
 
-          <h1>
-            Add New Product
-          </h1>
+          <h1>Add New Product</h1>
 
           <p className="admin-page-description">
-            Add a new product to the
-            MAMTA store.
+            Add a new product to the MAMTA store.
           </p>
-
         </div>
-
       </div>
-
-      {/* =====================================================
-          ERROR
-      ===================================================== */}
 
       {error && (
         <div className="admin-product-alert admin-product-error">
@@ -666,63 +536,37 @@ const AddProduct = () => {
         </div>
       )}
 
-      {/* =====================================================
-          SUCCESS
-      ===================================================== */}
-
       {success && (
         <div className="admin-product-alert admin-product-success">
-
           <Check size={18} />
-
           {success}
-
         </div>
       )}
-
-      {/* =====================================================
-          FORM
-      ===================================================== */}
 
       <form
         className="admin-add-product-form"
         onSubmit={handleSubmit}
       >
-
-        {/* ===================================================
-            BASIC INFORMATION
-        =================================================== */}
+        {/* BASIC INFORMATION */}
 
         <div className="admin-product-card">
-
           <div className="admin-card-heading">
-
             <div>
-
               <span className="admin-card-eyebrow">
                 BASIC INFORMATION
               </span>
 
-              <h2>
-                Product Details
-              </h2>
+              <h2>Product Details</h2>
 
               <p>
-                Enter the main information
-                about your product.
+                Enter the main information about your product.
               </p>
-
             </div>
-
           </div>
 
-          {/* PRODUCT NAME */}
-
           <div className="admin-form-group">
-
             <label>
-              Product Name
-              <span>*</span>
+              Product Name <span>*</span>
             </label>
 
             <input
@@ -731,17 +575,12 @@ const AddProduct = () => {
               value={form.name}
               onChange={handleChange}
               placeholder="Enter product name"
+              required
             />
-
           </div>
 
-          {/* DESCRIPTION */}
-
           <div className="admin-form-group">
-
-            <label>
-              Description
-            </label>
+            <label>Description</label>
 
             <textarea
               name="description"
@@ -750,18 +589,12 @@ const AddProduct = () => {
               placeholder="Enter product description"
               rows="5"
             />
-
           </div>
 
-          {/* PRICE ROW */}
-
           <div className="admin-form-grid">
-
             <div className="admin-form-group">
-
               <label>
-                Price
-                <span>*</span>
+                Price <span>*</span>
               </label>
 
               <input
@@ -771,15 +604,12 @@ const AddProduct = () => {
                 onChange={handleChange}
                 placeholder="0"
                 min="0"
+                required
               />
-
             </div>
 
             <div className="admin-form-group">
-
-              <label>
-                Old Price
-              </label>
+              <label>Old Price</label>
 
               <input
                 type="number"
@@ -789,63 +619,34 @@ const AddProduct = () => {
                 placeholder="Optional"
                 min="0"
               />
-
             </div>
-
           </div>
 
-          {/* =================================================
-              CATEGORY
-          ================================================== */}
+          {/* CATEGORY DROPDOWN */}
 
           <div className="admin-form-group">
-
             <label>
-              Category
-              <span>*</span>
+              Category <span>*</span>
             </label>
 
             <select
               name="category"
               value={form.category}
               onChange={handleChange}
+              required
             >
+              <option value="">Select Category</option>
 
-              <option value="">
-                Select Category
-              </option>
-
-              <option value="Maternity Pillows">
-                Maternity Pillows
-              </option>
-
-              <option value="Baby Pillows">
-                Baby Pillows
-              </option>
-
-              <option value="Nursing Products">
-                Nursing Products
-              </option>
-
-              <option value="Elders Pillows">
-                Elders Pillows
-              </option>
-
-              <option value="Accessories">
-                Accessories
-              </option>
-
+              {ALLOWED_CATEGORIES.map((category) => (
+                <option key={category} value={category}>
+                  {category}
+                </option>
+              ))}
             </select>
-
           </div>
 
-          {/* STOCK */}
-
           <div className="admin-form-group">
-
-            <label>
-              Stock
-            </label>
+            <label>Stock</label>
 
             <input
               type="number"
@@ -855,15 +656,10 @@ const AddProduct = () => {
               placeholder="0"
               min="0"
             />
-
           </div>
 
-          {/* ACTIVE */}
-
           <div className="admin-active-row">
-
             <label className="admin-checkbox-label">
-
               <input
                 type="checkbox"
                 name="active"
@@ -872,55 +668,33 @@ const AddProduct = () => {
               />
 
               <span className="admin-custom-checkbox">
-
-                {form.active && (
-                  <Check size={14} />
-                )}
-
+                {form.active && <Check size={14} />}
               </span>
 
-              <span>
-                Product is active
-              </span>
-
+              <span>Product is active</span>
             </label>
-
           </div>
-
         </div>
 
-        {/* ===================================================
-            MAIN IMAGE
-        =================================================== */}
+        {/* MAIN IMAGE */}
 
         <div className="admin-product-card">
-
           <div className="admin-card-heading">
-
             <div>
-
               <span className="admin-card-eyebrow">
                 PRODUCT IMAGE
               </span>
 
-              <h2>
-                Main Product Image
-              </h2>
+              <h2>Main Product Image</h2>
 
               <p>
-                Add the primary image for
-                this product.
+                Add the primary image for this product.
               </p>
-
             </div>
-
           </div>
 
           <div className="admin-form-group">
-
-            <label>
-              Main Image URL
-            </label>
+            <label>Main Image URL</label>
 
             <input
               type="text"
@@ -929,202 +703,131 @@ const AddProduct = () => {
               onChange={handleChange}
               placeholder="https://example.com/product-image.jpg"
             />
-
           </div>
 
           {form.image && (
             <div className="admin-main-image-preview">
-
               <img
                 src={form.image}
-                alt={
-                  form.name ||
-                  "Product"
-                }
+                alt={form.name || "Product"}
                 onError={(e) => {
-                  e.currentTarget.style.display =
-                    "none";
+                  e.currentTarget.style.display = "none";
                 }}
               />
-
             </div>
           )}
-
         </div>
 
-        {/* ===================================================
-            ADDITIONAL IMAGES
-        =================================================== */}
+        {/* ADDITIONAL IMAGES */}
 
         <div className="admin-product-card">
-
           <div className="admin-card-heading">
-
             <div>
-
               <span className="admin-card-eyebrow">
                 PRODUCT GALLERY
               </span>
 
-              <h2>
-                Additional Images
-              </h2>
+              <h2>Additional Images</h2>
 
               <p>
-                Add up to 4 additional images.
-                These images will automatically
-                rotate in the main product image
-                slider.
+                Add up to 4 additional images. These images
+                become the automatic product gallery on
+                ProductDetails.
               </p>
-
             </div>
 
             <div className="admin-selected-count">
               {form.images.length} / 4
             </div>
-
           </div>
 
           <div className="admin-add-input-row">
-
             <input
               type="text"
               value={imageUrl}
-              onChange={(e) =>
-                setImageUrl(
-                  e.target.value
-                )
-              }
+              onChange={(e) => setImageUrl(e.target.value)}
               onKeyDown={(e) => {
-                if (
-                  e.key === "Enter"
-                ) {
+                if (e.key === "Enter") {
                   e.preventDefault();
                   addImage();
                 }
               }}
               placeholder="Paste image URL"
-              disabled={
-                form.images.length >= 4
-              }
+              disabled={form.images.length >= 4}
             />
 
             <button
               type="button"
               className="admin-add-small-button"
               onClick={addImage}
-              disabled={
-                form.images.length >= 4
-              }
+              disabled={form.images.length >= 4}
             >
-
               <Plus size={18} />
 
-              {form.images.length >= 4
-                ? "Maximum"
-                : "Add"}
-
+              {form.images.length >= 4 ? "Maximum" : "Add"}
             </button>
-
           </div>
 
           {form.images.length > 0 && (
             <div className="admin-image-list">
-
-              {form.images.map(
-                (image, index) => (
-                  <div
-                    className="admin-image-item"
-                    key={`${image}-${index}`}
-                  >
-
-                    <div className="admin-image-preview">
-
-                      <img
-                        src={image}
-                        alt={`Product ${
-                          index + 1
-                        }`}
-                        onError={(e) => {
-                          e.currentTarget.style.display =
-                            "none";
-                        }}
-                      />
-
-                    </div>
-
-                    <div className="admin-image-url">
-                      <span>
-                        Image {index + 1}
-                      </span>
-
-                      {image}
-                    </div>
-
-                    <button
-                      type="button"
-                      className="admin-remove-button"
-                      onClick={() =>
-                        removeImage(
-                          index
-                        )
-                      }
-                    >
-
-                      <X size={17} />
-
-                    </button>
-
+              {form.images.map((image, index) => (
+                <div
+                  className="admin-image-item"
+                  key={`${image}-${index}`}
+                >
+                  <div className="admin-image-preview">
+                    <img
+                      src={image}
+                      alt={`Product ${index + 1}`}
+                      onError={(e) => {
+                        e.currentTarget.style.display = "none";
+                      }}
+                    />
                   </div>
-                )
-              )}
 
+                  <div className="admin-image-url">
+                    <span>Image {index + 1}</span>
+                    {image}
+                  </div>
+
+                  <button
+                    type="button"
+                    className="admin-remove-button"
+                    onClick={() => removeImage(index)}
+                    aria-label={`Remove image ${index + 1}`}
+                  >
+                    <X size={17} />
+                  </button>
+                </div>
+              ))}
             </div>
           )}
-
         </div>
 
-        {/* ===================================================
-            FEATURES
-        =================================================== */}
+        {/* FEATURES */}
 
         <div className="admin-product-card">
-
           <div className="admin-card-heading">
-
             <div>
-
               <span className="admin-card-eyebrow">
                 PRODUCT FEATURES
               </span>
 
-              <h2>
-                Features
-              </h2>
+              <h2>Features</h2>
 
               <p>
-                Add important features of
-                this product.
+                Add important features of this product.
               </p>
-
             </div>
-
           </div>
 
           <div className="admin-add-input-row">
-
             <input
               type="text"
               value={feature}
-              onChange={(e) =>
-                setFeature(
-                  e.target.value
-                )
-              }
+              onChange={(e) => setFeature(e.target.value)}
               onKeyDown={(e) => {
-                if (
-                  e.key === "Enter"
-                ) {
+                if (e.key === "Enter") {
                   e.preventDefault();
                   addFeature();
                 }
@@ -1137,366 +840,220 @@ const AddProduct = () => {
               className="admin-add-small-button"
               onClick={addFeature}
             >
-
               <Plus size={18} />
-
               Add
-
             </button>
-
           </div>
 
           {form.features.length > 0 && (
             <div className="admin-feature-list">
-
-              {form.features.map(
-                (item, index) => (
-                  <div
-                    className="admin-feature-item"
-                    key={`${item}-${index}`}
-                  >
-
-                    <div className="admin-feature-check">
-
-                      <Check size={15} />
-
-                    </div>
-
-                    <span>
-                      {item}
-                    </span>
-
-                    <button
-                      type="button"
-                      className="admin-remove-button"
-                      onClick={() =>
-                        removeFeature(
-                          index
-                        )
-                      }
-                    >
-
-                      <X size={17} />
-
-                    </button>
-
+              {form.features.map((item, index) => (
+                <div
+                  className="admin-feature-item"
+                  key={`${item}-${index}`}
+                >
+                  <div className="admin-feature-check">
+                    <Check size={15} />
                   </div>
-                )
-              )}
 
+                  <span>{item}</span>
+
+                  <button
+                    type="button"
+                    className="admin-remove-button"
+                    onClick={() => removeFeature(index)}
+                    aria-label={`Remove ${item}`}
+                  >
+                    <X size={17} />
+                  </button>
+                </div>
+              ))}
             </div>
           )}
-
         </div>
 
-        {/* ===================================================
-            COLORS
-        =================================================== */}
+        {/* COLORS */}
 
         <div className="admin-product-card">
-
           <div className="admin-card-heading">
-
             <div>
-
               <span className="admin-card-eyebrow">
                 PRODUCT COLORS
               </span>
 
-              <h2>
-                Available Colors
-              </h2>
+              <h2>Available Colors</h2>
 
               <p>
-                Select the colors available
-                for this product. You can
-                use the main image or add
-                a separate image for each
-                color.
+                Select the colors available for this product.
+                Use the main image or add a separate image
+                for each color.
               </p>
-
             </div>
 
             <div className="admin-selected-count">
-
-              {form.colors.length}
-              {" "}
-              selected
-
+              {form.colors.length} selected
             </div>
-
           </div>
 
           <div className="admin-color-grid">
+            {AVAILABLE_COLORS.map((color) => {
+              const selected = form.colors.some(
+                (item) => item.value === color.value
+              );
 
-            {AVAILABLE_COLORS.map(
-              (color) => {
+              return (
+                <button
+                  type="button"
+                  key={color.value}
+                  className={`admin-color-option ${
+                    selected ? "selected" : ""
+                  }`}
+                  onClick={() => toggleColor(color)}
+                >
+                  <span
+                    className="admin-color-swatch"
+                    style={{ backgroundColor: color.hex }}
+                  />
 
-                const selected =
-                  form.colors.some(
-                    (item) =>
-                      item.value ===
-                      color.value
-                  );
+                  <span className="admin-color-name">
+                    {color.name}
+                  </span>
 
-                return (
-                  <button
-                    type="button"
-                    key={
-                      color.value
-                    }
-                    className={`admin-color-option ${
-                      selected
-                        ? "selected"
-                        : ""
-                    }`}
-                    onClick={() =>
-                      toggleColor(
-                        color
-                      )
-                    }
-                  >
-
-                    <span
-                      className="admin-color-swatch"
-                      style={{
-                        backgroundColor:
-                          color.hex,
-                      }}
-                    />
-
-                    <span className="admin-color-name">
-                      {color.name}
+                  {selected && (
+                    <span className="admin-color-check">
+                      <Check size={13} />
                     </span>
-
-                    {selected && (
-                      <span className="admin-color-check">
-
-                        <Check
-                          size={13}
-                        />
-
-                      </span>
-                    )}
-
-                  </button>
-                );
-              }
-            )}
-
+                  )}
+                </button>
+              );
+            })}
           </div>
 
           {form.colors.length > 0 && (
             <div className="admin-selected-colors">
-
               <div className="admin-selected-colors-title">
                 Selected Colors
               </div>
 
-              {form.colors.map(
-                (color) => (
-                  <div
-                    className="admin-selected-color-card"
-                    key={
-                      color.value
-                    }
-                  >
+              {form.colors.map((color) => (
+                <div
+                  className="admin-selected-color-card"
+                  key={color.value}
+                >
+                  <div className="admin-selected-color-header">
+                    <div className="admin-selected-color-info">
+                      <span
+                        className="admin-color-swatch"
+                        style={{ backgroundColor: color.code }}
+                      />
 
-                    <div className="admin-selected-color-header">
+                      <div>
+                        <strong>{color.name}</strong>
+                        <small>{color.value}</small>
+                      </div>
+                    </div>
 
-                      <div className="admin-selected-color-info">
+                    <button
+                      type="button"
+                      className="admin-remove-color"
+                      onClick={() => removeColor(color.value)}
+                      aria-label={`Remove ${color.name}`}
+                    >
+                      <X size={17} />
+                    </button>
+                  </div>
 
-                        <span
-                          className="admin-color-swatch"
-                          style={{
-                            backgroundColor:
-                              color.code,
+                  <div className="admin-color-image-section">
+                    <label>
+                      <ImagePlus size={17} />
+                      Image for {color.name}
+                      <span>*</span>
+                    </label>
+
+                    <label className="admin-use-main-image">
+                      <input
+                        type="checkbox"
+                        checked={color.useMainImage}
+                        onChange={() =>
+                          toggleUseMainImage(color.value)
+                        }
+                      />
+
+                      <span className="admin-custom-checkbox">
+                        {color.useMainImage && (
+                          <Check size={14} />
+                        )}
+                      </span>
+
+                      <span>Use Main Product Image</span>
+                    </label>
+
+                    {!color.useMainImage && (
+                      <>
+                        <input
+                          type="text"
+                          value={color.image}
+                          onChange={(e) =>
+                            updateColorImage(
+                              color.value,
+                              e.target.value
+                            )
+                          }
+                          placeholder={`Paste ${color.name} product image URL`}
+                        />
+
+                        {color.image && (
+                          <div className="admin-color-image-preview">
+                            <img
+                              src={color.image}
+                              alt={color.name}
+                              onError={(e) => {
+                                e.currentTarget.style.display = "none";
+                              }}
+                            />
+                          </div>
+                        )}
+                      </>
+                    )}
+
+                    {color.useMainImage && form.image && (
+                      <div className="admin-color-image-preview">
+                        <img
+                          src={form.image}
+                          alt={`${color.name} product`}
+                          onError={(e) => {
+                            e.currentTarget.style.display = "none";
                           }}
                         />
 
-                        <div>
-
-                          <strong>
-                            {color.name}
-                          </strong>
-
-                          <small>
-                            {
-                              color.value
-                            }
-                          </small>
-
-                        </div>
-
+                        <span className="admin-main-image-used">
+                          <Check size={14} />
+                          Using main product image
+                        </span>
                       </div>
+                    )}
 
-                      <button
-                        type="button"
-                        className="admin-remove-color"
-                        onClick={() =>
-                          removeColor(
-                            color.value
-                          )
-                        }
-                      >
-
-                        <X size={17} />
-
-                      </button>
-
-                    </div>
-
-                    <div className="admin-color-image-section">
-
-                      <label>
-                        <ImagePlus
-                          size={17}
-                        />
-
-                        Image for{" "}
-                        {color.name}
-
-                        <span>*</span>
-                      </label>
-
-                      <label className="admin-use-main-image">
-
-                        <input
-                          type="checkbox"
-                          checked={
-                            color.useMainImage
-                          }
-                          onChange={() =>
-                            toggleUseMainImage(
-                              color.value
-                            )
-                          }
-                        />
-
-                        <span className="admin-custom-checkbox">
-
-                          {color.useMainImage && (
-                            <Check
-                              size={14}
-                            />
-                          )}
-
-                        </span>
-
-                        <span>
-                          Use Main Product Image
-                        </span>
-
-                      </label>
-
-                      {!color.useMainImage && (
-                        <>
-
-                          <input
-                            type="text"
-                            value={
-                              color.image
-                            }
-                            onChange={(e) =>
-                              updateColorImage(
-                                color.value,
-                                e.target.value
-                              )
-                            }
-                            placeholder={`Paste ${color.name} product image URL`}
-                          />
-
-                          {color.image && (
-                            <div className="admin-color-image-preview">
-
-                              <img
-                                src={
-                                  color.image
-                                }
-                                alt={
-                                  color.name
-                                }
-                                onError={(e) => {
-                                  e.currentTarget.style.display =
-                                    "none";
-                                }}
-                              />
-
-                            </div>
-                          )}
-
-                        </>
-                      )}
-
-                      {color.useMainImage &&
-                        form.image && (
-                          <div className="admin-color-image-preview">
-
-                            <img
-                              src={
-                                form.image
-                              }
-                              alt={`${color.name} product`}
-                              onError={(e) => {
-                                e.currentTarget.style.display =
-                                  "none";
-                              }}
-                            />
-
-                            <span className="admin-main-image-used">
-
-                              <Check
-                                size={14}
-                              />
-
-                              Using main product
-                              image
-
-                            </span>
-
-                          </div>
-                        )}
-
-                      {color.useMainImage &&
-                        !form.image && (
-                          <div className="admin-color-image-warning">
-
-                            <ImagePlus
-                              size={16}
-                            />
-
-                            Add the main product
-                            image above to use
-                            it for this color.
-
-                          </div>
-                        )}
-
-                    </div>
-
+                    {color.useMainImage && !form.image && (
+                      <div className="admin-color-image-warning">
+                        <ImagePlus size={16} />
+                        Add the main product image above to use it
+                        for this color.
+                      </div>
+                    )}
                   </div>
-                )
-              )}
-
+                </div>
+              ))}
             </div>
           )}
-
         </div>
 
-        {/* ===================================================
-            FORM ACTIONS
-        =================================================== */}
+        {/* FORM ACTIONS */}
 
         <div className="admin-product-form-actions">
-
           <button
             type="button"
             className="admin-cancel-button"
-            onClick={() =>
-              navigate(
-                "/admin/products"
-              )
-            }
+            onClick={() => navigate("/admin/products")}
             disabled={loading}
           >
             Cancel
@@ -1507,27 +1064,20 @@ const AddProduct = () => {
             className="admin-save-product-button"
             disabled={loading}
           >
-
             {loading ? (
               <>
                 <span className="admin-button-spinner" />
-
                 Adding Product...
               </>
             ) : (
               <>
                 <Check size={18} />
-
                 Add Product
               </>
             )}
-
           </button>
-
         </div>
-
       </form>
-
     </section>
   );
 };
