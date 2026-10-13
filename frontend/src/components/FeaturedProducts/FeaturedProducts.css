@@ -781,6 +781,7 @@ font-size: 17px;
     transform: none;
     padding: 10px 15px;
     border-radius: 25px;
+    text-decoration: none!important;
     font-size: 12px;
   }
 

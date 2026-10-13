@@ -1,0 +1,935 @@
+
+/* =========================================================
+   MAMTA ADMIN — REVIEWS MANAGEMENT
+========================================================= */
+
+.mamta-admin-reviews {
+  --review-pink: #d98f9a;
+  --review-pink-dark: #bd6f7c;
+  --review-pink-light: #f9e9eb;
+  --review-pink-soft: #fff5f5;
+  --review-text: #4a3032;
+  --review-muted: #887579;
+  --review-border: #f0e2e3;
+  --review-bg: #fff9f4;
+  --review-white: #ffffff;
+
+  width: 100%;
+  min-width: 0;
+  padding: 30px;
+  box-sizing: border-box;
+  color: var(--review-text);
+  font-family: "Inter", "Segoe UI", Arial, sans-serif;
+  animation: mamta-review-page-enter 0.45s ease both;
+}
+
+.mamta-admin-reviews *,
+.mamta-review-modal-backdrop * {
+  box-sizing: border-box;
+}
+
+.mamta-admin-reviews button,
+.mamta-review-modal-backdrop button,
+.mamta-admin-reviews input,
+.mamta-admin-reviews select,
+.mamta-admin-reviews textarea,
+.mamta-review-modal-backdrop input,
+.mamta-review-modal-backdrop select,
+.mamta-review-modal-backdrop textarea {
+  font: inherit;
+}
+
+.mamta-admin-reviews button,
+.mamta-review-modal-backdrop button {
+  cursor: pointer;
+}
+
+.mamta-admin-reviews button:disabled,
+.mamta-review-modal-backdrop button:disabled {
+  opacity: 0.55;
+  cursor: not-allowed;
+}
+
+@keyframes mamta-review-page-enter {
+  from {
+    opacity: 0;
+    transform: translateY(12px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes mamta-review-card-enter {
+  from {
+    opacity: 0;
+    transform: translateY(15px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes mamta-review-modal-enter {
+  from {
+    opacity: 0;
+    transform: translateY(16px) scale(0.98);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0) scale(1);
+  }
+}
+
+@keyframes mamta-review-spin {
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+.mamta-spin {
+  animation: mamta-review-spin 0.9s linear infinite;
+}
+
+/* PAGE HEADER */
+
+.mamta-admin-reviews-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 22px;
+  margin-bottom: 30px;
+}
+
+.mamta-admin-reviews-eyebrow {
+  display: block;
+  margin-bottom: 9px;
+  color: var(--review-pink-dark);
+  font-size: 12px;
+  font-weight: 800;
+  letter-spacing: 2px;
+  line-height: 1.5;
+}
+
+.mamta-admin-reviews-header h1 {
+  margin: 0;
+  color: var(--review-text);
+  font-size: clamp(25px, 3vw, 34px);
+  font-weight: 750;
+  letter-spacing: -1px;
+  line-height: 1.2;
+}
+
+.mamta-admin-reviews-header p {
+  margin: 10px 0 0;
+  color: var(--review-muted);
+  font-size: 15px;
+  line-height: 1.7;
+}
+
+.mamta-admin-refresh {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 9px;
+  min-height: 44px;
+  padding: 11px 17px;
+  border: 1px solid #ebc9ce;
+  border-radius: 12px;
+  background: #fff;
+  color: var(--review-pink-dark);
+  font-size: 14px;
+  font-weight: 700;
+  transition:
+    background 0.2s ease,
+    color 0.2s ease,
+    border-color 0.2s ease,
+    transform 0.2s ease;
+}
+
+.mamta-admin-refresh:hover:not(:disabled) {
+  background: var(--review-pink-dark);
+  color: #fff;
+  border-color: var(--review-pink-dark);
+  transform: translateY(-2px);
+}
+
+/* STATISTICS */
+
+.mamta-admin-review-stats {
+  display: grid;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  gap: 17px;
+  margin-bottom: 28px;
+}
+
+.mamta-admin-stat-card {
+  display: flex;
+  align-items: center;
+  gap: 15px;
+  min-width: 0;
+  padding: 23px 19px;
+  border: 1px solid var(--review-border);
+  border-radius: 18px;
+  background: #fff;
+  box-shadow: 0 5px 20px rgba(90, 47, 55, 0.035);
+  transition:
+    transform 0.25s ease,
+    box-shadow 0.25s ease;
+}
+
+.mamta-admin-stat-card:hover {
+  transform: translateY(-4px);
+  box-shadow: 0 12px 28px rgba(90, 47, 55, 0.075);
+}
+
+.mamta-admin-stat-icon {
+  display: grid;
+  flex: 0 0 47px;
+  width: 47px;
+  height: 47px;
+  place-items: center;
+  border-radius: 15px;
+  background: var(--review-pink-light);
+  color: var(--review-pink-dark);
+}
+
+.mamta-admin-stat-card > div {
+  display: flex;
+  flex-direction: column;
+  gap: 7px;
+  min-width: 0;
+}
+
+.mamta-admin-stat-card > div > span {
+  color: var(--review-muted);
+  font-size: 13px;
+  line-height: 1.4;
+}
+
+.mamta-admin-stat-card strong {
+  color: var(--review-text);
+  font-size: 27px;
+  font-weight: 800;
+  line-height: 1;
+}
+
+.mamta-admin-stat-card strong small {
+  color: var(--review-muted);
+  font-size: 13px;
+  font-weight: 600;
+}
+
+/* FILTER TOOLBAR */
+
+.mamta-admin-review-toolbar {
+  display: grid;
+  grid-template-columns: minmax(220px, 1fr) repeat(3, minmax(135px, 175px));
+  gap: 12px;
+  margin-bottom: 17px;
+  padding: 18px;
+  border: 1px solid var(--review-border);
+  border-radius: 17px;
+  background: #fff;
+}
+
+.mamta-admin-review-search {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  min-width: 0;
+  min-height: 46px;
+  padding: 0 13px;
+  border: 1px solid var(--review-border);
+  border-radius: 11px;
+  background: #fffdfd;
+  color: var(--review-pink-dark);
+  transition: border-color 0.2s ease, box-shadow 0.2s ease;
+}
+
+.mamta-admin-review-search:focus-within {
+  border-color: var(--review-pink);
+  box-shadow: 0 0 0 3px rgba(217, 143, 154, 0.13);
+}
+
+.mamta-admin-review-search input {
+  width: 100%;
+  min-width: 0;
+  padding: 11px 0;
+  border: 0;
+  outline: 0;
+  background: transparent;
+  color: var(--review-text);
+  font-size: 14px;
+}
+
+.mamta-admin-review-search input::placeholder {
+  color: #aa9699;
+}
+
+.mamta-admin-review-toolbar select {
+  width: 100%;
+  min-width: 0;
+  min-height: 46px;
+  padding: 10px 30px 10px 12px;
+  border: 1px solid var(--review-border);
+  border-radius: 11px;
+  outline: 0;
+  background-color: #fffdfd;
+  color: var(--review-text);
+  font-size: 13px;
+  cursor: pointer;
+}
+
+.mamta-admin-review-toolbar select:focus {
+  border-color: var(--review-pink);
+}
+
+/* RESULTS COUNT */
+
+.mamta-admin-review-results {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin: 20px 2px 16px;
+  color: var(--review-muted);
+  font-size: 14px;
+}
+
+.mamta-admin-review-results strong {
+  color: var(--review-text);
+}
+
+/* REVIEW LIST */
+
+.mamta-admin-review-list {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 19px;
+}
+
+.mamta-admin-review-card {
+  min-width: 0;
+  padding: 23px;
+  overflow: hidden;
+  border: 1px solid var(--review-border);
+  border-radius: 18px;
+  background: #fff;
+  box-shadow: 0 4px 18px rgba(90, 47, 55, 0.035);
+  animation: mamta-review-card-enter 0.4s ease both;
+  transition:
+    border-color 0.25s ease,
+    box-shadow 0.25s ease,
+    transform 0.25s ease;
+}
+
+.mamta-admin-review-card:hover {
+  border-color: #e7c2c8;
+  box-shadow: 0 12px 30px rgba(90, 47, 55, 0.07);
+  transform: translateY(-3px);
+}
+
+.mamta-admin-review-card-top {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: 12px;
+  margin-bottom: 17px;
+}
+
+.mamta-admin-review-person {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  min-width: 0;
+}
+
+.mamta-admin-review-avatar {
+  display: grid;
+  flex: 0 0 47px;
+  width: 47px;
+  height: 47px;
+  place-items: center;
+  border: 1px solid #f0d6da;
+  border-radius: 50%;
+  background: linear-gradient(140deg, #fcebed, #f4d9dc);
+  color: var(--review-pink-dark);
+  font-size: 20px;
+  font-weight: 800;
+}
+
+.mamta-admin-review-person > div:last-child {
+  min-width: 0;
+}
+
+.mamta-admin-review-person h3 {
+  margin: 0 0 5px;
+  overflow-wrap: anywhere;
+  color: var(--review-text);
+  font-size: 16px;
+  font-weight: 750;
+}
+
+.mamta-admin-review-person p {
+  margin: 0;
+  overflow-wrap: anywhere;
+  color: var(--review-muted);
+  font-size: 13px;
+  line-height: 1.6;
+}
+
+.mamta-admin-review-status {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+  padding: 7px 10px;
+  border-radius: 30px;
+  font-size: 11px;
+  font-weight: 750;
+}
+
+.mamta-admin-review-status.is-approved {
+  background: #eaf7ef;
+  color: #26764a;
+}
+
+.mamta-admin-review-status.is-hidden {
+  background: #fff0e8;
+  color: #a75528;
+}
+
+/* STARS */
+
+.mamta-admin-review-stars {
+  display: flex;
+  align-items: center;
+  gap: 4px;
+  margin-bottom: 13px;
+  color: #c18a37;
+}
+
+.mamta-admin-review-stars span {
+  margin-left: 5px;
+  color: var(--review-muted);
+  font-size: 12px;
+  font-weight: 700;
+}
+
+/* MESSAGE */
+
+.mamta-admin-review-message {
+  margin: 0 0 20px;
+  color: #70585c;
+  font-size: 14px;
+  line-height: 1.85;
+  overflow-wrap: anywhere;
+  white-space: pre-wrap;
+}
+
+.mamta-admin-review-meta {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  gap: 10px;
+  padding: 13px 0;
+  border-top: 1px solid #f5e9ea;
+  border-bottom: 1px solid #f5e9ea;
+  color: var(--review-muted);
+  font-size: 12px;
+}
+
+.mamta-admin-review-meta span {
+  display: inline-flex;
+  align-items: center;
+  gap: 7px;
+  min-width: 0;
+}
+
+.mamta-admin-review-meta span:first-child {
+  color: var(--review-pink-dark);
+  font-weight: 650;
+}
+
+/* ACTIONS */
+
+.mamta-admin-review-actions {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  gap: 12px;
+  padding-top: 17px;
+}
+
+.mamta-admin-action-group {
+  display: flex;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 9px;
+}
+
+.mamta-admin-action-approval,
+.mamta-admin-action-edit,
+.mamta-admin-action-delete {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 7px;
+  min-height: 37px;
+  padding: 9px 12px;
+  border: 1px solid transparent;
+  border-radius: 10px;
+  font-size: 12px;
+  font-weight: 750;
+  transition:
+    background 0.2s ease,
+    color 0.2s ease,
+    border-color 0.2s ease,
+    transform 0.2s ease;
+}
+
+.mamta-admin-action-approval {
+  border-color: #efd8dc;
+  background: var(--review-pink-soft);
+  color: var(--review-pink-dark);
+}
+
+.mamta-admin-action-approval:hover {
+  background: #f5dfe3;
+}
+
+.mamta-admin-action-edit {
+  border-color: #e7e1f6;
+  background: #f6f3ff;
+  color: #6c56a3;
+}
+
+.mamta-admin-action-edit:hover {
+  background: #ebe5ff;
+}
+
+.mamta-admin-action-delete {
+  border-color: #f1dada;
+  background: #fff5f5;
+  color: #b44e56;
+}
+
+.mamta-admin-action-delete:hover:not(:disabled) {
+  background: #fde7e8;
+  border-color: #eab9bc;
+}
+
+.mamta-admin-action-approval:hover,
+.mamta-admin-action-edit:hover,
+.mamta-admin-action-delete:hover:not(:disabled) {
+  transform: translateY(-1px);
+}
+
+/* EMPTY AND LOADING STATES */
+
+.mamta-admin-review-state {
+  display: flex;
+  min-height: 260px;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 13px;
+  padding: 30px;
+  border: 1px dashed #e7c9ce;
+  border-radius: 18px;
+  background: #fffdfd;
+  color: var(--review-pink-dark);
+  text-align: center;
+}
+
+.mamta-admin-review-state h3 {
+  margin: 0;
+  color: var(--review-text);
+  font-size: 19px;
+}
+
+.mamta-admin-review-state p {
+  margin: 0 0 7px;
+  color: var(--review-muted);
+  font-size: 14px;
+  line-height: 1.7;
+}
+
+/* EDIT MODAL */
+
+.mamta-review-modal-backdrop {
+  position: fixed;
+  z-index: 9999;
+  inset: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 22px;
+  overflow-y: auto;
+  background: rgba(47, 28, 31, 0.48);
+  backdrop-filter: blur(5px);
+  animation: mamta-review-page-enter 0.2s ease both;
+}
+
+.mamta-review-edit-modal {
+  width: 100%;
+  max-width: 600px;
+  max-height: calc(100dvh - 44px);
+  padding: 27px;
+  overflow-y: auto;
+  border: 1px solid #f0dadd;
+  border-radius: 22px;
+  background: #fff;
+  box-shadow: 0 25px 80px rgba(45, 25, 30, 0.2);
+  animation: mamta-review-modal-enter 0.28s ease both;
+}
+
+.mamta-review-modal-heading {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: 20px;
+  margin-bottom: 25px;
+}
+
+.mamta-review-modal-heading h2 {
+  margin: 0;
+  color: var(--review-text);
+  font-size: 25px;
+  font-weight: 800;
+}
+
+.mamta-review-modal-heading > button {
+  display: grid;
+  flex: 0 0 39px;
+  width: 39px;
+  height: 39px;
+  place-items: center;
+  border: 1px solid var(--review-border);
+  border-radius: 12px;
+  background: #fff7f7;
+  color: var(--review-text);
+}
+
+.mamta-review-modal-heading > button:hover {
+  background: var(--review-pink-light);
+}
+
+.mamta-review-edit-form {
+  display: flex;
+  flex-direction: column;
+  gap: 19px;
+}
+
+.mamta-review-edit-form > label,
+.mamta-review-edit-grid > label {
+  display: flex;
+  flex-direction: column;
+  gap: 9px;
+  min-width: 0;
+  color: var(--review-text);
+  font-size: 13px;
+  font-weight: 750;
+}
+
+.mamta-review-edit-grid {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 15px;
+}
+
+.mamta-review-edit-form input:not([type="checkbox"]),
+.mamta-review-edit-form select,
+.mamta-review-edit-form textarea {
+  width: 100%;
+  min-width: 0;
+  padding: 12px 13px;
+  border: 1px solid #eadbdd;
+  border-radius: 11px;
+  outline: none;
+  background: #fffdfd;
+  color: var(--review-text);
+  font-size: 14px;
+  font-weight: 400;
+  transition:
+    border-color 0.2s ease,
+    box-shadow 0.2s ease;
+}
+
+.mamta-review-edit-form input:focus,
+.mamta-review-edit-form select:focus,
+.mamta-review-edit-form textarea:focus {
+  border-color: var(--review-pink);
+  box-shadow: 0 0 0 3px rgba(217, 143, 154, 0.13);
+}
+
+.mamta-review-edit-form textarea {
+  resize: vertical;
+  line-height: 1.75;
+}
+
+.mamta-review-edit-form small {
+  color: var(--review-muted);
+  font-size: 12px;
+  font-weight: 400;
+}
+
+.mamta-review-approval-checkbox {
+  display: flex;
+  align-items: center;
+  gap: 11px;
+  padding: 14px;
+  border: 1px solid var(--review-border);
+  border-radius: 12px;
+  background: var(--review-pink-soft);
+  color: var(--review-text);
+  font-size: 13px;
+  font-weight: 650;
+  cursor: pointer;
+}
+
+.mamta-review-approval-checkbox input {
+  width: 17px;
+  height: 17px;
+  accent-color: var(--review-pink-dark);
+  cursor: pointer;
+}
+
+.mamta-review-modal-actions {
+  display: flex;
+  justify-content: flex-end;
+  flex-wrap: wrap;
+  gap: 11px;
+  margin-top: 4px;
+}
+
+.mamta-review-cancel,
+.mamta-review-save {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 9px;
+  min-height: 44px;
+  padding: 12px 18px;
+  border-radius: 11px;
+  font-size: 13px;
+  font-weight: 750;
+  transition:
+    background 0.2s ease,
+    transform 0.2s ease;
+}
+
+.mamta-review-cancel {
+  border: 1px solid var(--review-border);
+  background: #fff;
+  color: var(--review-text);
+}
+
+.mamta-review-cancel:hover:not(:disabled) {
+  background: #fff3f4;
+}
+
+.mamta-review-save {
+  border: 1px solid var(--review-pink-dark);
+  background: var(--review-pink-dark);
+  color: #fff;
+}
+
+.mamta-review-save:hover:not(:disabled) {
+  background: #a95765;
+  transform: translateY(-1px);
+}
+
+/* RESPONSIVE — LAPTOPS */
+
+@media (max-width: 1250px) {
+  .mamta-admin-review-stats {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+
+  .mamta-admin-review-toolbar {
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+  }
+
+  .mamta-admin-review-search {
+    grid-column: 1 / -1;
+  }
+}
+
+@media (max-width: 950px) {
+  .mamta-admin-reviews {
+    padding: 24px;
+  }
+
+  .mamta-admin-review-list {
+    grid-template-columns: 1fr;
+  }
+}
+
+/* RESPONSIVE — MOBILE */
+
+@media (max-width: 600px) {
+  .mamta-admin-reviews {
+    padding: 16px;
+  }
+
+  .mamta-admin-reviews-header {
+    align-items: flex-start;
+    flex-direction: column;
+    gap: 16px;
+    margin-bottom: 23px;
+  }
+
+  .mamta-admin-reviews-header h1 {
+    font-size: 26px;
+  }
+
+  .mamta-admin-reviews-header p {
+    font-size: 14px;
+  }
+
+  .mamta-admin-refresh {
+    min-height: 42px;
+  }
+
+  .mamta-admin-review-stats {
+    gap: 11px;
+    margin-bottom: 20px;
+  }
+
+  .mamta-admin-stat-card {
+    align-items: flex-start;
+    gap: 10px;
+    padding: 15px 12px;
+    border-radius: 14px;
+  }
+
+  .mamta-admin-stat-icon {
+    flex-basis: 36px;
+    width: 36px;
+    height: 36px;
+    border-radius: 11px;
+  }
+
+  .mamta-admin-stat-icon svg {
+    width: 18px;
+    height: 18px;
+  }
+
+  .mamta-admin-stat-card > div > span {
+    font-size: 12px;
+  }
+
+  .mamta-admin-stat-card strong {
+    font-size: 24px;
+  }
+
+  .mamta-admin-review-toolbar {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 10px;
+    padding: 13px;
+  }
+
+  .mamta-admin-review-search {
+    grid-column: 1 / -1;
+  }
+
+  .mamta-admin-review-toolbar select {
+    font-size: 12px;
+  }
+
+  .mamta-admin-review-card {
+    padding: 17px;
+    border-radius: 15px;
+  }
+
+  .mamta-admin-review-person {
+    gap: 9px;
+  }
+
+  .mamta-admin-review-avatar {
+    flex-basis: 39px;
+    width: 39px;
+    height: 39px;
+    font-size: 17px;
+  }
+
+  .mamta-admin-review-person h3 {
+    font-size: 14px;
+  }
+
+  .mamta-admin-review-person p {
+    font-size: 12px;
+  }
+
+  .mamta-admin-review-status {
+    padding: 6px 8px;
+    font-size: 10px;
+  }
+
+  .mamta-admin-review-message {
+    font-size: 14px;
+  }
+
+  .mamta-admin-review-actions {
+    align-items: stretch;
+    flex-direction: column;
+  }
+
+  .mamta-admin-action-approval {
+    align-self: flex-start;
+  }
+
+  .mamta-admin-action-group {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+
+  .mamta-admin-action-group button {
+    width: 100%;
+  }
+
+  .mamta-review-modal-backdrop {
+    align-items: flex-start;
+    padding: 12px;
+  }
+
+  .mamta-review-edit-modal {
+    max-height: calc(100dvh - 24px);
+    margin: auto 0;
+    padding: 20px 16px;
+    border-radius: 17px;
+  }
+
+  .mamta-review-modal-heading h2 {
+    font-size: 22px;
+  }
+
+  .mamta-review-edit-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .mamta-review-modal-actions {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+  }
+
+  .mamta-review-cancel,
+  .mamta-review-save {
+    padding: 11px 9px;
+    font-size: 12px;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .mamta-admin-reviews *,
+  .mamta-review-modal-backdrop * {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+  }
+}

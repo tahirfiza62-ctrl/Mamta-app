@@ -1,3 +1,4 @@
+
 import {
   BrowserRouter,
   Routes,
@@ -5,10 +6,15 @@ import {
   useLocation,
 } from "react-router-dom";
 
+/* =========================================================
+   CUSTOMER COMPONENTS
+========================================================= */
+
 import Header from "./components/Header/Header";
 import Footer from "./components/Footer/Footer";
 import MoveToTop from "./components/MoveToTop/MoveToTop";
 import WhatsAppButton from "./components/WhatsAppButton/WhatsAppButton";
+
 /* =========================================================
    CUSTOMER PAGES
 ========================================================= */
@@ -27,7 +33,6 @@ import Login from "./pages/Login/Login";
 import Register from "./pages/Register/Register";
 import EmailSent from "./pages/EmailSent/EmailSent";
 import VerifyEmail from "./pages/VerifyEmail/VerifyEmail";
-
 import ProductDetails from "./pages/ProductDetails/ProductDetails";
 import Account from "./pages/Account/Account";
 import Cart from "./pages/Cart/Cart";
@@ -40,10 +45,15 @@ import Wishlist from "./pages/Wishlist/Wishlist";
 import Search from "./pages/Search/Search";
 
 /* =========================================================
-   ADMIN
+   ADMIN COMPONENTS
 ========================================================= */
 
 import AdminLayout from "./components/Admin/AdminLayout";
+
+/* =========================================================
+   ADMIN PAGES
+========================================================= */
+
 import AdminDashboard from "./pages/Admin/AdminDashboard";
 import AdminLogin from "./pages/Admin/AdminLogin";
 
@@ -54,6 +64,11 @@ import AdminLogin from "./pages/Admin/AdminLogin";
 import AdminProducts from "./pages/Admin/Products/AdminProducts";
 import AddProduct from "./pages/Admin/Products/AddProduct";
 import EditProduct from "./pages/Admin/Products/EditProduct";
+
+/* =========================================================
+   ADMIN CONTACTS
+========================================================= */
+
 import AdminContacts from "./pages/Admin/AdminContacts/AdminContacts";
 
 /* =========================================================
@@ -63,12 +78,24 @@ import AdminContacts from "./pages/Admin/AdminContacts/AdminContacts";
 import AdminOrders from "./pages/Admin/Orders/AdminOrders";
 import AdminOrderDetails from "./pages/Admin/Orders/AdminOrderDetails";
 import OrderStatusPage from "./pages/Admin/Orders/OrderStatusPage";
+
+/* =========================================================
+   ADMIN CUSTOMERS AND PAYMENTS
+========================================================= */
+
 import AdminCustomers from "./pages/Admin/Customers/AdminCustomers";
 import AdminCustomerDetails from "./pages/Admin/Customers/AdminCustomerDetails";
 import AdminPayments from "./pages/Admin/AdminPayments";
-import AdminReviews from "./pages/Admin/Reviews/AdminReviews";
+
 /* =========================================================
-   APP CONTENT
+   ADMIN REVIEWS
+========================================================= */
+
+import AdminProductReviews from "./pages/Admin/ProductReviews";
+import AdminReviews from "./pages/Admin/Reviews/AdminReviews";
+
+/* =========================================================
+   POLICIES
 ========================================================= */
 
 import ReturnPolicy from "./pages/ReturnPolicy/ReturnPolicy";
@@ -77,190 +104,118 @@ import TermsOfSale from "./pages/TermsOfSale/TermsOfSale";
 import PrivacyPolicy from "./pages/PrivacyPolicy/PrivacyPolicy";
 import FAQ from "./pages/FAQ/FAQ";
 
-function AppContent() {
+/* =========================================================
+   APP CONTENT
+========================================================= */
 
-  const location =
-    useLocation();
+function AppContent() {
+  const location = useLocation();
 
   /* =======================================================
      ADMIN ROUTES
   ======================================================= */
 
-  if (
-    location.pathname.startsWith(
-      "/admin"
-    )
-  ) {
-
+  if (location.pathname.startsWith("/admin")) {
     return (
-
       <Routes>
+        {/* ADMIN LOGIN */}
+        <Route path="/admin" element={<AdminLogin />} />
 
-        {/* =================================================
-            ADMIN LOGIN
-        ================================================= */}
-
-        <Route
-          path="/admin"
-          element={
-            <AdminLogin />
-          }
-        />
-
-        {/* =================================================
-            ADMIN LAYOUT
-        ================================================= */}
-
-        <Route
-          element={
-            <AdminLayout />
-          }
-        >
-
-          {/* =================================================
-              DASHBOARD
-          ================================================= */}
-
+        {/* ADMIN LAYOUT */}
+        <Route element={<AdminLayout />}>
+          {/* DASHBOARD */}
           <Route
             path="/admin/dashboard"
-            element={
-              <AdminDashboard />
-            }
+            element={<AdminDashboard />}
           />
 
-          {/* =================================================
-              PRODUCTS
-          ================================================= */}
-
+          {/* PRODUCTS */}
           <Route
             path="/admin/products"
-            element={
-              <AdminProducts />
-            }
+            element={<AdminProducts />}
           />
 
           <Route
             path="/admin/products/add"
-            element={
-              <AddProduct />
-            }
+            element={<AddProduct />}
           />
 
           <Route
             path="/admin/products/edit/:id"
-            element={
-              <EditProduct />
-            }
+            element={<EditProduct />}
           />
 
-          {/* =================================================
-              ORDERS
-          ================================================= */}
-
+          {/* ORDERS */}
           <Route
             path="/admin/orders"
-            element={
-              <AdminOrders />
-            }
+            element={<AdminOrders />}
           />
 
           <Route
             path="/admin/orders/pending"
-            element={
-              <OrderStatusPage
-                status="Pending"
-              />
-            }
+            element={<OrderStatusPage status="Pending" />}
           />
 
           <Route
             path="/admin/orders/processing"
-            element={
-              <OrderStatusPage
-                status="Processing"
-              />
-            }
+            element={<OrderStatusPage status="Processing" />}
           />
 
           <Route
             path="/admin/orders/shipped"
-            element={
-              <OrderStatusPage
-                status="Shipped"
-              />
-            }
+            element={<OrderStatusPage status="Shipped" />}
           />
 
           <Route
             path="/admin/orders/delivered"
-            element={
-              <OrderStatusPage
-                status="Delivered"
-              />
-            }
+            element={<OrderStatusPage status="Delivered" />}
           />
 
           <Route
             path="/admin/orders/cancelled"
-            element={
-              <OrderStatusPage
-                status="Cancelled"
-              />
-            }
+            element={<OrderStatusPage status="Cancelled" />}
           />
 
           <Route
             path="/admin/orders/:id"
-            element={
-              <AdminOrderDetails />
-            }
+            element={<AdminOrderDetails />}
           />
 
-          {/* =================================================
-              CONTACTS
-          ================================================= */}
-
+          {/* CONTACTS */}
           <Route
             path="/admin/contacts"
-            element={
-              <AdminContacts />
-            }
+            element={<AdminContacts />}
           />
 
-          {/* =================================================
-              CUSTOMERS
-          ================================================= */}
-
+          {/* CUSTOMERS */}
           <Route
             path="/admin/customers"
-            element={
-              <AdminCustomers />
-            }
+            element={<AdminCustomers />}
           />
 
           <Route
             path="/admin/customers/:id"
-            element={
-              <AdminCustomerDetails />
-            }
+            element={<AdminCustomerDetails />}
           />
 
-          {/* =================================================
-              PAYMENTS
-          ================================================= */}
-
+          {/* PAYMENTS */}
           <Route
             path="/admin/payments"
-            element={
-              <AdminPayments />
-            }
+            element={<AdminPayments />}
           />
-<Route
-  path="/admin/reviews"
-  element={<AdminReviews />}
-/>
-        </Route>
 
+          {/* ADMIN PRODUCT REVIEWS */}
+          <Route
+            path="/admin/reviews"
+            element={<AdminProductReviews />}
+          />
+
+          {/* SEPARATE ADMIN REVIEWS PAGE */}
+          <Route
+            path="/admin/reviews-management"
+            element={<AdminReviews />}
+          />
+        </Route>
       </Routes>
     );
   }
@@ -270,322 +225,131 @@ function AppContent() {
   ======================================================= */
 
   return (
-
     <>
-
-      {/* =====================================================
-          HEADER
-      ===================================================== */}
-
       <Header />
-
-      {/* =====================================================
-          MOVE TO TOP
-      ===================================================== */}
 
       <MoveToTop />
 
-      {/* =====================================================
-          CUSTOMER ROUTES
-      ===================================================== */}
-
       <Routes>
+        {/* HOME */}
+        <Route path="/" element={<Home />} />
 
-        {/* =================================================
-            HOME
-        ================================================= */}
+        {/* SHOP */}
+        <Route path="/shop" element={<Shop />} />
 
-        <Route
-          path="/"
-          element={
-            <Home />
-          }
-        />
+        {/* CATEGORIES */}
+        <Route path="/categories" element={<Categories />} />
 
-        {/* =================================================
-            SHOP
-        ================================================= */}
-
-        <Route
-          path="/shop"
-          element={
-            <Shop />
-          }
-        />
-
-        {/* =================================================
-            CATEGORIES
-        ================================================= */}
-
-        <Route
-          path="/categories"
-          element={
-            <Categories />
-          }
-        />
-
-        {/* =================================================
-            MATERNITY PILLOWS
-        ================================================= */}
-
+        {/* PRODUCT CATEGORIES */}
         <Route
           path="/maternity-pillows"
-          element={
-            <MaternityPillows />
-          }
+          element={<MaternityPillows />}
         />
-
-        {/* =================================================
-            BABY PILLOWS
-        ================================================= */}
 
         <Route
           path="/baby-pillows"
-          element={
-            <BabyPillows />
-          }
+          element={<BabyPillows />}
         />
-<Route
-  path="/nursing-pillows"
-  element={<NursingPillows />}
-/>
-
-<Route
-  path="/elder-pillows"
-  element={<ElderPillows />}
-/>
-<Route path="/accessories" element={<Accessories />} />
-        {/* =================================================
-            ABOUT
-        ================================================= */}
 
         <Route
-          path="/about"
-          element={
-            <About />
-          }
+          path="/nursing-pillows"
+          element={<NursingPillows />}
         />
-
-        {/* =================================================
-            CONTACT
-        ================================================= */}
 
         <Route
-          path="/contact"
-          element={
-            <Contact />
-          }
+          path="/elder-pillows"
+          element={<ElderPillows />}
         />
-
-        {/* =================================================
-            LOGIN
-        ================================================= */}
 
         <Route
-          path="/login"
-          element={
-            <Login />
-          }
+          path="/accessories"
+          element={<Accessories />}
         />
 
-        {/* =================================================
-            REGISTER
-        ================================================= */}
+        {/* ABOUT */}
+        <Route path="/about" element={<About />} />
 
-        <Route
-          path="/register"
-          element={
-            <Register />
-          }
-        />
+        {/* CONTACT */}
+        <Route path="/contact" element={<Contact />} />
 
-        {/* =================================================
-            EMAIL SENT
-        ================================================= */}
+        {/* AUTHENTICATION */}
+        <Route path="/login" element={<Login />} />
 
-        <Route
-          path="/email-sent"
-          element={
-            <EmailSent />
-          }
-        />
+        <Route path="/register" element={<Register />} />
 
-        {/* =================================================
-            VERIFY EMAIL
-        ================================================= */}
+        <Route path="/email-sent" element={<EmailSent />} />
 
-        <Route
-          path="/verify-email"
-          element={
-            <VerifyEmail />
-          }
-        />
+        <Route path="/verify-email" element={<VerifyEmail />} />
 
-        {/* =================================================
-            VERIFY PHONE
-        ================================================= */}
+        {/* ACCOUNT */}
+        <Route path="/profile" element={<Account />} />
 
-      
+        {/* SEARCH */}
+        <Route path="/search" element={<Search />} />
 
-        {/* =================================================
-            PROFILE / ACCOUNT
-        ================================================= */}
+        {/* WISHLIST */}
+        <Route path="/wishlist" element={<Wishlist />} />
 
-        <Route
-          path="/profile"
-          element={
-            <Account />
-          }
-        />
+        {/* CART */}
+        <Route path="/cart" element={<Cart />} />
 
-        {/* =================================================
-            SEARCH
-        ================================================= */}
-
-        <Route
-          path="/search"
-          element={
-            <Search />
-          }
-        />
-
-        {/* =================================================
-            WISHLIST
-        ================================================= */}
-
-        <Route
-          path="/wishlist"
-          element={
-            <Wishlist />
-          }
-        />
-
-        {/* =================================================
-            CART
-        ================================================= */}
-
-        <Route
-          path="/cart"
-          element={
-            <Cart />
-          }
-        />
-
-        {/* =================================================
-            PRODUCT DETAILS
-        ================================================= */}
-
+        {/* PRODUCT DETAILS */}
         <Route
           path="/product/:id"
-          element={
-            <ProductDetails />
-          }
+          element={<ProductDetails />}
         />
 
-        {/* =================================================
-            CHECKOUT
-        ================================================= */}
+        {/* CHECKOUT */}
+        <Route path="/checkout" element={<Checkout />} />
 
-        <Route
-          path="/checkout"
-          element={
-            <Checkout />
-          }
-        />
-
-        {/* =================================================
-            ORDER SUCCESS
-        ================================================= */}
-
+        {/* ORDER SUCCESS */}
         <Route
           path="/order-success/:id"
-          element={
-            <OrderSuccess />
-          }
+          element={<OrderSuccess />}
         />
 
-        {/* =================================================
-            MY ORDERS
-        ================================================= */}
-
-        <Route
-          path="/orders"
-          element={
-            <MyOrders />
-          }
-        />
-
-        {/* =================================================
-            CUSTOMER ORDER DETAILS
-        ================================================= */}
+        {/* CUSTOMER ORDERS */}
+        <Route path="/orders" element={<MyOrders />} />
 
         <Route
           path="/orders/:id"
-          element={
-            <OrderDetails />
-          }
+          element={<OrderDetails />}
         />
 
-        {/* =================================================
-            PAYMENT SUCCESS
-        ================================================= */}
-
+        {/* PAYMENT SUCCESS */}
         <Route
           path="/payment-success"
-          element={
-            <PaymentSuccess />
-          }
+          element={<PaymentSuccess />}
         />
 
-        {/* =================================================
-            POLICIES
-        ================================================= */}
-
+        {/* POLICIES */}
         <Route
           path="/return-policy"
-          element={
-            <ReturnPolicy />
-          }
+          element={<ReturnPolicy />}
         />
 
         <Route
           path="/shipping-policy"
-          element={
-            <ShippingPolicy />
-          }
+          element={<ShippingPolicy />}
         />
 
         <Route
           path="/terms-of-sale"
-          element={
-            <TermsOfSale />
-          }
+          element={<TermsOfSale />}
         />
 
         <Route
           path="/privacy-policy"
-          element={
-            <PrivacyPolicy />
-          }
+          element={<PrivacyPolicy />}
         />
 
-        <Route
-          path="/faq"
-          element={
-            <FAQ />
-          }
-        />
-
+        <Route path="/faq" element={<FAQ />} />
       </Routes>
-<WhatsAppButton />
-      {/* =====================================================
-          FOOTER
-      ===================================================== */}
+
+      <WhatsAppButton />
 
       <Footer />
-
     </>
-
   );
 }
 
@@ -594,17 +358,11 @@ function AppContent() {
 ========================================================= */
 
 function App() {
-
   return (
-
     <BrowserRouter>
-
       <AppContent />
-
     </BrowserRouter>
-
   );
-
 }
 
 export default App;

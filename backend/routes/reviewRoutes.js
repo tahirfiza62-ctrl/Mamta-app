@@ -14,7 +14,7 @@ const adminOnly = (req, res, next) => {
   try {
     const authorization = req.headers.authorization;
 
-    if (!authorization || !authorization.startsWith("Bearer ")) {
+    if (!authorization?.startsWith("Bearer ")) {
       return res.status(401).json({
         success: false,
         message: "Please sign in to the admin panel.",
@@ -23,16 +23,15 @@ const adminOnly = (req, res, next) => {
 
     const token = authorization.split(" ")[1];
 
-    if (!token) {
+    if (!token || !process.env.JWT_SECRET) {
       return res.status(401).json({
         success: false,
-        message: "Admin token is missing.",
+        message: "Admin authentication is unavailable.",
       });
     }
 
     const decoded = jwt.verify(token, process.env.JWT_SECRET);
 
-    // Match these checks to the claims used by your admin login.
     const isAdmin =
       decoded.role === "admin" ||
       decoded.isAdmin === true ||
@@ -56,7 +55,7 @@ const adminOnly = (req, res, next) => {
 };
 
 /* =========================================================
-   NORMALIZE REVIEW RESPONSE
+   FORMAT REVIEW
 ========================================================= */
 
 const formatReview = (review) => {
@@ -74,20 +73,45 @@ const formatReview = (review) => {
 };
 
 /* =========================================================
-   GET ALL REVIEWS
+   PUBLIC: GET APPROVED REVIEWS
    GET /api/reviews
+   GET /api/reviews?productId=...
 ========================================================= */
 
 router.get("/", async (req, res) => {
   try {
-    const reviews = await Review.find().sort({ createdAt: -1 });
+    const { productId } = req.query;
 
-    return res.status(200).json({
-      success: true,
-      reviews: reviews.map(formatReview),
-    });
+    const filter = {
+      // Also includes older reviews created before the
+      // approved field was added to the schema.
+      approved: { $ne: false },
+    };
+
+    if (productId) {
+      if (!mongoose.Types.ObjectId.isValid(productId)) {
+        return res.status(400).json({
+          success: false,
+          message: "Invalid product ID.",
+        });
+      }
+
+      filter.productId = new mongoose.Types.ObjectId(productId);
+    } else {
+      // Homepage testimonials are general reviews only.
+      filter.productId = null;
+    }
+const reviews = await Review.find()
+  .populate("productId", "name")
+  .sort({ createdAt: -1 })
+  .lean();
+
+return res.json({
+  success: true,
+  reviews,
+});
   } catch (error) {
-    console.error("GET REVIEWS ERROR:", error);
+    console.error("GET PUBLIC REVIEWS ERROR:", error);
 
     return res.status(500).json({
       success: false,
@@ -97,17 +121,50 @@ router.get("/", async (req, res) => {
 });
 
 /* =========================================================
+   ADMIN: GET ALL REVIEWS
+   GET /api/reviews/admin/all
+========================================================= */
+
+router.get("/admin/all", adminOnly, async (req, res) => {
+  try {
+    const reviews = await Review.find()
+      .sort({ createdAt: -1 })
+      .lean();
+
+    return res.status(200).json({
+      success: true,
+      reviews: reviews.map(formatReview),
+    });
+  } catch (error) {
+    console.error("GET ADMIN REVIEWS ERROR:", error);
+
+    return res.status(500).json({
+      success: false,
+      message: "Unable to load admin reviews.",
+    });
+  }
+});
+
+/* =========================================================
    CREATE REVIEW
    POST /api/reviews
 
-   Email is optional. If supplied, validate it.
+   productId is optional for homepage testimonials.
 ========================================================= */
 
 router.post("/", async (req, res) => {
   try {
-    const { name, city, email, rating, message, text } = req.body;
+    const {
+      name,
+      city,
+      email,
+      rating,
+      message,
+      text,
+      productId,
+    } = req.body;
 
-    const reviewMessage = message || text;
+    const reviewMessage = message ?? text;
 
     if (
       typeof name !== "string" ||
@@ -131,9 +188,12 @@ router.post("/", async (req, res) => {
       });
     }
 
+    const cleanEmail =
+      typeof email === "string" ? email.trim().toLowerCase() : "";
+
     if (
-      email &&
-      !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email.trim())
+      cleanEmail &&
+      !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(cleanEmail)
     ) {
       return res.status(400).json({
         success: false,
@@ -165,17 +225,32 @@ router.post("/", async (req, res) => {
       });
     }
 
+    let cleanProductId = null;
+
+    if (productId) {
+      if (!mongoose.Types.ObjectId.isValid(productId)) {
+        return res.status(400).json({
+          success: false,
+          message: "Invalid product ID.",
+        });
+      }
+
+      cleanProductId = new mongoose.Types.ObjectId(productId);
+    }
+
     const review = await Review.create({
       name: name.trim(),
       city: city.trim(),
-      ...(email ? { email: email.trim() } : {}),
+      email: cleanEmail,
       rating: numericRating,
       message: reviewMessage.trim(),
+      productId: cleanProductId,
+      approved: true,
     });
 
     return res.status(201).json({
       success: true,
-      message: "Review submitted successfully.",
+      message: "Thank you! Your review has been submitted.",
       review: formatReview(review),
     });
   } catch (error) {
@@ -183,22 +258,20 @@ router.post("/", async (req, res) => {
 
     return res.status(500).json({
       success: false,
-      message: "Unable to submit review.",
+      message: "Unable to submit review. Please try again.",
     });
   }
 });
 
 /* =========================================================
-   UPDATE REVIEW
+   ADMIN: UPDATE REVIEW
    PUT /api/reviews/:id
-
-   Does not validate, change, or require email.
 ========================================================= */
 
 router.put("/:id", adminOnly, async (req, res) => {
   try {
     const { id } = req.params;
-    const { name, city, rating, message, text } = req.body;
+    const { name, city, rating, message, text, approved } = req.body;
 
     if (!mongoose.Types.ObjectId.isValid(id)) {
       return res.status(400).json({
@@ -208,6 +281,7 @@ router.put("/:id", adminOnly, async (req, res) => {
     }
 
     const reviewMessage = message ?? text;
+    const numericRating = Number(rating);
 
     if (
       typeof name !== "string" ||
@@ -230,8 +304,6 @@ router.put("/:id", adminOnly, async (req, res) => {
         message: "City must contain 2–50 characters.",
       });
     }
-
-    const numericRating = Number(rating);
 
     if (
       !Number.isInteger(numericRating) ||
@@ -264,11 +336,14 @@ router.put("/:id", adminOnly, async (req, res) => {
       });
     }
 
-    // Update only these fields. Preserve the existing email.
     review.name = name.trim();
     review.city = city.trim();
     review.rating = numericRating;
     review.message = reviewMessage.trim();
+
+    if (typeof approved === "boolean") {
+      review.approved = approved;
+    }
 
     await review.save();
 
@@ -288,7 +363,7 @@ router.put("/:id", adminOnly, async (req, res) => {
 });
 
 /* =========================================================
-   DELETE REVIEW
+   ADMIN: DELETE REVIEW
    DELETE /api/reviews/:id
 ========================================================= */
 
@@ -322,6 +397,39 @@ router.delete("/:id", adminOnly, async (req, res) => {
     return res.status(500).json({
       success: false,
       message: "Unable to delete review.",
+    });
+  }
+});
+
+router.get("/", async (req, res) => {
+  try {
+    const { productId } = req.query;
+
+    if (
+      !productId ||
+      !mongoose.Types.ObjectId.isValid(productId)
+    ) {
+      return res.status(400).json({
+        success: false,
+        message: "A valid product ID is required.",
+      });
+    }
+
+    const reviews = await Review.find({
+      productId,
+      approved: true,
+    }).sort({ createdAt: -1 });
+
+    return res.json({
+      success: true,
+      reviews,
+    });
+  } catch (error) {
+    console.error("GET PRODUCT REVIEWS ERROR:", error);
+
+    return res.status(500).json({
+      success: false,
+      message: "Unable to fetch reviews.",
     });
   }
 });

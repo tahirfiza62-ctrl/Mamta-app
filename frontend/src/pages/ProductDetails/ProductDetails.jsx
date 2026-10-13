@@ -6,7 +6,7 @@ import {
   useNavigate,
   useParams,
 } from "react-router-dom";
-
+import ProductReviews from "../../components/ProductReviews";
 import axios from "axios";
 import toast from "react-hot-toast";
 
@@ -1656,26 +1656,17 @@ I would like to know more about this product.`
               RATING
           ================================================== */}
 
-          <div className="product-rating">
+       <div className="product-rating">
+  <span className="rating-divider">
+    MAMTA COLLECTION
+  </span>
 
-            <span className="stars">
-              ★★★★★
-            </span>
+  <span className="rating-divider">|</span>
 
-            <span>
-              4.9
-            </span>
-
-            <span className="rating-divider">
-              |
-            </span>
-
-            <span>
-              MAMTA COLLECTION
-            </span>
-
-          </div>
-
+  <a href="#product-reviews">
+    Read customer reviews
+  </a>
+</div>
 
           {/* =================================================
               PRICE
@@ -2109,7 +2100,12 @@ I would like to know more about this product.`
           PRODUCT FEATURES
       ==================================================== */}
 
-      <section className="product-features-section">
+      
+<ProductReviews
+  key={product?._id || product?.id || id}
+  productId={product?._id || product?.id || id}
+/>
+<section className="product-features-section">
 
         <div className="product-features-inner">
 
@@ -2170,8 +2166,6 @@ I would like to know more about this product.`
         </div>
 
       </section>
-
-
       {/* ===================================================
           BACK TO SHOP
       ==================================================== */}
