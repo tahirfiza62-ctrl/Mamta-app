@@ -563,7 +563,7 @@ const BabyPillows = () => {
             <div className="baby-hero-content">
 
               <span className="baby-eyebrow">
-                MAMTA · BABY COLLECTION
+                MAAMTA · BABY COLLECTION
               </span>
 
               <h1>
@@ -620,7 +620,7 @@ const BabyPillows = () => {
 
                 <img
                   src="https://res.cloudinary.com/iysbraru/image/upload/v1790508192/baby.jpg"
-                  alt="MAMTA baby pillow collection"
+                  alt="MAAMTA baby pillow collection"
                 />
 
               </div>
@@ -628,7 +628,7 @@ const BabyPillows = () => {
               <div className="maternity-floating-card">
 
                 <span>
-                  MAMTA COMFORT
+                  MAAMTA COMFORT
                 </span>
 
                 <strong>
@@ -654,7 +654,7 @@ const BabyPillows = () => {
               <div className="ma-round-badge">
 
                 <span>
-                  COMFORT   <br />. CARE .  MAMTA 
+                  COMFORT   <br />. CARE .  MAAMTA 
                 </span>
 
               </div>
@@ -706,7 +706,7 @@ const BabyPillows = () => {
               </p>
 
               <p className="baby-intro-secondary">
-                From peaceful rest to quiet cuddles, MAMTA
+                From peaceful rest to quiet cuddles, MAAMTA
                 brings together soft essentials made with
                 care for mothers and their little ones.
               </p>
@@ -1110,7 +1110,7 @@ const BabyPillows = () => {
           <div className="baby-final-content">
 
             <span className="baby-final-label">
-              MAMTA
+              MAAMTA
             </span>
 
             <h2>

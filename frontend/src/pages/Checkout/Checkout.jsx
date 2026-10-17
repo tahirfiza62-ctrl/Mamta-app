@@ -442,7 +442,7 @@ const Checkout = () => {
             <ShoppingBag size={32} />
           </div>
 
-          <span>MAMTA CHECKOUT</span>
+          <span>MAAMTA CHECKOUT</span>
 
           <h1>Your cart is empty</h1>
 
@@ -470,7 +470,7 @@ const Checkout = () => {
 
       <div className="checkout-header">
         <div>
-          <span className="checkout-eyebrow">MAMTA</span>
+          <span className="checkout-eyebrow">MAAMTA</span>
           <h1>Checkout</h1>
           <p>Complete your details to place your order.</p>
         </div>

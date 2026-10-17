@@ -108,7 +108,7 @@ const elderProducts = allProducts.filter((product) => {
         <div className="elder-hero-content">
 
           <span className="elder-eyebrow">
-            MAMTA • EVERY GENERATION
+            MAAMTA • EVERY GENERATION
           </span>
 
           <h1>
@@ -169,7 +169,7 @@ const elderProducts = allProducts.filter((product) => {
         </div>
 
         <p>
-          MAMTA elder pillows are created with comfort
+          MAAMTA elder pillows are created with comfort
           and everyday support in mind, bringing softness
           and relaxation into your daily routine.
         </p>
@@ -432,7 +432,7 @@ const elderProducts = allProducts.filter((product) => {
         <div>
 
           <span className="elder-section-label">
-            MAMTA
+            MAAMTA
           </span>
 
           <h2>

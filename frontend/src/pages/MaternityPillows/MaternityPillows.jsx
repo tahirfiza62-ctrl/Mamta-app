@@ -657,7 +657,7 @@ const MaternityPillows = () => {
 
                 <span></span>
 
-                MAMTA MATERNITY COLLECTION
+                MAAMTA MATERNITY COLLECTION
 
               </span>
 
@@ -758,7 +758,7 @@ const MaternityPillows = () => {
               <div className="maternity-round-badge">
 
                 <span>
-                  COMFORT • CARE • MAMTA •
+                  COMFORT • CARE • MAAMTA •
                 </span>
 
               </div>
@@ -786,7 +786,7 @@ const MaternityPillows = () => {
         <section className="maternity-intro">
 
           <div className="maternity-intro-label">
-            WHY MAMTA
+            WHY MAAMTA
           </div>
 
           <h2>

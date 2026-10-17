@@ -38,7 +38,7 @@ const MotherBabyBanner = () => {
             </h2>
 
             <p className="mother-baby-main-text">
-              From quiet mornings to precious cuddles, MAMTA is
+              From quiet mornings to precious cuddles, MAAMTA is
               designed to bring a little more comfort into the
               moments that matter most.
             </p>

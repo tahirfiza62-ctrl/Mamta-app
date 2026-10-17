@@ -1,3 +1,4 @@
+
 import { useEffect, useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import axios from "axios";
@@ -26,10 +27,24 @@ const Account = () => {
   // STATES
   // =====================================================
 
-  const [user, setUser] = useState(null);
+  // Read the saved user when the component initializes.
+  // This avoids calling setState synchronously in useEffect.
+  const [user] = useState(() => {
+    const storedUser = localStorage.getItem("mamta_user");
 
-  const [activeSection, setActiveSection] =
-    useState("overview");
+    if (!storedUser) {
+      return null;
+    }
+
+    try {
+      return JSON.parse(storedUser);
+    } catch (error) {
+      console.error("USER DATA ERROR:", error);
+      return null;
+    }
+  });
+
+  const [activeSection, setActiveSection] = useState("overview");
 
   const [passwordData, setPasswordData] = useState({
     currentPassword: "",
@@ -49,22 +64,13 @@ const Account = () => {
     const token = localStorage.getItem("mamta_user_token");
     const storedUser = localStorage.getItem("mamta_user");
 
-    if (!token || !storedUser) {
-      navigate("/login");
-      return;
-    }
-
-    try {
-      setUser(JSON.parse(storedUser));
-    } catch (error) {
-      console.error("USER DATA ERROR:", error);
-
+    if (!token || !storedUser || !user) {
       localStorage.removeItem("mamta_user");
       localStorage.removeItem("mamta_user_token");
 
-      navigate("/login");
+      navigate("/login", { replace: true });
     }
-  }, [navigate]);
+  }, [navigate, user]);
 
   // =====================================================
   // LOGOUT
@@ -79,7 +85,7 @@ const Account = () => {
 
     window.dispatchEvent(new Event("authChanged"));
 
-    navigate("/login");
+    navigate("/login", { replace: true });
   };
 
   // =====================================================
@@ -87,10 +93,12 @@ const Account = () => {
   // =====================================================
 
   const handlePasswordChange = (e) => {
-    setPasswordData({
-      ...passwordData,
-      [e.target.name]: e.target.value,
-    });
+    const { name, value } = e.target;
+
+    setPasswordData((previousData) => ({
+      ...previousData,
+      [name]: value,
+    }));
 
     setPasswordError("");
     setPasswordMessage("");
@@ -111,9 +119,7 @@ const Account = () => {
       !passwordData.newPassword ||
       !passwordData.confirmPassword
     ) {
-      setPasswordError(
-        "Please fill in all password fields."
-      );
+      setPasswordError("Please fill in all password fields.");
       return;
     }
 
@@ -125,29 +131,22 @@ const Account = () => {
     }
 
     if (
-      passwordData.newPassword !==
-      passwordData.confirmPassword
+      passwordData.newPassword !== passwordData.confirmPassword
     ) {
-      setPasswordError(
-        "New passwords do not match."
-      );
+      setPasswordError("New passwords do not match.");
       return;
     }
 
     try {
       setLoading(true);
 
-      const token =
-        localStorage.getItem("mamta_user_token");
+      const token = localStorage.getItem("mamta_user_token");
 
       await axios.put(
         `${API_URL}/auth/change-password`,
         {
-          currentPassword:
-            passwordData.currentPassword,
-
-          newPassword:
-            passwordData.newPassword,
+          currentPassword: passwordData.currentPassword,
+          newPassword: passwordData.newPassword,
         },
         {
           headers: {
@@ -156,9 +155,7 @@ const Account = () => {
         }
       );
 
-      setPasswordMessage(
-        "Password changed successfully."
-      );
+      setPasswordMessage("Password changed successfully.");
 
       setPasswordData({
         currentPassword: "",
@@ -166,20 +163,15 @@ const Account = () => {
         confirmPassword: "",
       });
     } catch (error) {
-      console.error(
-        "CHANGE PASSWORD ERROR:",
-        error
-      );
+      console.error("CHANGE PASSWORD ERROR:", error);
 
       if (error.response?.status === 401) {
         localStorage.removeItem("mamta_user_token");
         localStorage.removeItem("mamta_user");
 
-        window.dispatchEvent(
-          new Event("authChanged")
-        );
+        window.dispatchEvent(new Event("authChanged"));
 
-        navigate("/login");
+        navigate("/login", { replace: true });
         return;
       }
 
@@ -210,17 +202,12 @@ const Account = () => {
 
   return (
     <main className="account-page">
-
-      {/* =================================================
-          HERO
-      ================================================= */}
+      {/* HERO */}
 
       <section className="account-hero">
-
         <div className="account-hero-content">
-
           <span className="account-eyebrow">
-            MY MAMTA
+            MY MAAMTA
           </span>
 
           <h1>
@@ -232,51 +219,31 @@ const Account = () => {
             Manage your personal information, orders,
             security and account settings in one place.
           </p>
-
         </div>
-
       </section>
 
-
-      {/* =================================================
-          ACCOUNT CONTAINER
-      ================================================= */}
+      {/* ACCOUNT CONTAINER */}
 
       <section className="account-container">
-
-        {/* =================================================
-            SIDEBAR
-        ================================================= */}
+        {/* SIDEBAR */}
 
         <aside className="account-sidebar">
-
           {/* USER */}
 
           <div className="account-user-mini">
-
             <div className="account-avatar">
               <UserRound size={25} />
             </div>
 
             <div className="account-user-info">
-
-              <strong>
-                {user.name}
-              </strong>
-
-              <span>
-                {user.email}
-              </span>
-
+              <strong>{user.name}</strong>
+              <span>{user.email}</span>
             </div>
-
           </div>
-
 
           {/* MENU */}
 
           <div className="account-menu">
-
             {/* OVERVIEW */}
 
             <button
@@ -286,21 +253,14 @@ const Account = () => {
                   ? "account-menu-item active"
                   : "account-menu-item"
               }
-              onClick={() =>
-                setActiveSection("overview")
-              }
+              onClick={() => setActiveSection("overview")}
             >
-
               <UserRound size={18} />
 
-              <span>
-                Account Overview
-              </span>
+              <span>Account Overview</span>
 
               <ChevronRight size={16} />
-
             </button>
-
 
             {/* MY ORDERS */}
 
@@ -311,21 +271,14 @@ const Account = () => {
                   ? "account-menu-item active"
                   : "account-menu-item"
               }
-              onClick={() =>
-                setActiveSection("orders")
-              }
+              onClick={() => setActiveSection("orders")}
             >
-
               <Package size={18} />
 
-              <span>
-                My Orders
-              </span>
+              <span>My Orders</span>
 
               <ChevronRight size={16} />
-
             </button>
-
 
             {/* PASSWORD */}
 
@@ -336,207 +289,124 @@ const Account = () => {
                   ? "account-menu-item active"
                   : "account-menu-item"
               }
-              onClick={() =>
-                setActiveSection("password")
-              }
+              onClick={() => setActiveSection("password")}
             >
-
               <LockKeyhole size={18} />
 
-              <span>
-                Change Password
-              </span>
+              <span>Change Password</span>
 
               <ChevronRight size={16} />
-
             </button>
-
           </div>
-
 
           {/* SIDEBAR BOTTOM */}
 
           <div className="account-sidebar-bottom">
-
-            <Link
-              to="/shop"
-              className="continue-shopping"
-            >
-
+            <Link to="/shop" className="continue-shopping">
               <ShoppingBag size={17} />
 
-              <span>
-                Continue Shopping
-              </span>
-
+              <span>Continue Shopping</span>
             </Link>
-
 
             <button
               type="button"
               className="logout-button"
               onClick={handleLogout}
             >
-
               <LogOut size={17} />
 
-              <span>
-                Logout
-              </span>
-
+              <span>Logout</span>
             </button>
-
           </div>
-
         </aside>
 
-
-        {/* =================================================
-            MAIN CONTENT
-        ================================================= */}
+        {/* MAIN CONTENT */}
 
         <div className="account-content">
-
-
-          {/* =================================================
-              OVERVIEW
-          ================================================= */}
+          {/* OVERVIEW */}
 
           {activeSection === "overview" && (
-
             <div className="account-section">
-
               <div className="section-heading">
-
                 <div>
-
-                  <span>
-                    ACCOUNT
-                  </span>
-
-                  <h2>
-                    Personal Details
-                  </h2>
-
+                  <span>ACCOUNT</span>
+                  <h2>Personal Details</h2>
                 </div>
 
                 <ShieldCheck size={25} />
-
               </div>
-
 
               {/* DETAILS */}
 
               <div className="details-grid">
-
                 {/* NAME */}
 
                 <div className="detail-card">
-
                   <div className="detail-icon">
                     <UserRound size={20} />
                   </div>
 
                   <div>
-
-                    <span>
-                      FULL NAME
-                    </span>
-
-                    <strong>
-                      {user.name}
-                    </strong>
-
+                    <span>FULL NAME</span>
+                    <strong>{user.name}</strong>
                   </div>
-
                 </div>
-
 
                 {/* EMAIL */}
 
                 <div className="detail-card">
-
                   <div className="detail-icon">
                     <Mail size={20} />
                   </div>
 
                   <div>
-
-                    <span>
-                      EMAIL ADDRESS
-                    </span>
-
-                    <strong>
-                      {user.email}
-                    </strong>
-
+                    <span>EMAIL ADDRESS</span>
+                    <strong>{user.email}</strong>
                   </div>
-
                 </div>
-
 
                 {/* PASSWORD */}
 
                 <div className="detail-card">
-
                   <div className="detail-icon">
                     <LockKeyhole size={20} />
                   </div>
 
                   <div>
-
-                    <span>
-                      PASSWORD
-                    </span>
+                    <span>PASSWORD</span>
 
                     <strong className="protected-password">
-
                       <EyeOff size={15} />
-
                       Protected
-
                     </strong>
-
                   </div>
-
                 </div>
-
 
                 {/* STATUS */}
 
                 <div className="detail-card">
-
                   <div className="detail-icon">
                     <ShieldCheck size={20} />
                   </div>
 
                   <div>
-
-                    <span>
-                      ACCOUNT STATUS
-                    </span>
+                    <span>ACCOUNT STATUS</span>
 
                     <strong className="account-status">
                       Active
                     </strong>
-
                   </div>
-
                 </div>
-
               </div>
-
 
               {/* SECURITY NOTE */}
 
               <div className="security-note">
-
                 <div className="security-note-icon">
                   <ShieldCheck size={20} />
                 </div>
 
                 <div>
-
                   <strong>
                     Your information is protected
                   </strong>
@@ -546,193 +416,115 @@ const Account = () => {
                     and is never displayed in your
                     account. You can change it anytime.
                   </p>
-
                 </div>
-
               </div>
-
 
               {/* QUICK ACCESS */}
 
               <div className="quick-section">
-
                 <span className="quick-label">
                   QUICK ACCESS
                 </span>
 
                 <div className="quick-grid">
-
                   {/* ORDERS */}
 
                   <button
                     type="button"
                     className="quick-card"
-                    onClick={() =>
-                      setActiveSection("orders")
-                    }
+                    onClick={() => setActiveSection("orders")}
                   >
-
                     <Package size={22} />
 
                     <div>
-
-                      <strong>
-                        My Orders
-                      </strong>
-
-                      <span>
-                        View your purchases
-                      </span>
-
+                      <strong>My Orders</strong>
+                      <span>View your purchases</span>
                     </div>
 
                     <ChevronRight size={17} />
-
                   </button>
-
 
                   {/* SECURITY */}
 
                   <button
                     type="button"
                     className="quick-card"
-                    onClick={() =>
-                      setActiveSection("password")
-                    }
+                    onClick={() => setActiveSection("password")}
                   >
-
                     <KeyRound size={22} />
 
                     <div>
-
-                      <strong>
-                        Security
-                      </strong>
-
-                      <span>
-                        Change your password
-                      </span>
-
+                      <strong>Security</strong>
+                      <span>Change your password</span>
                     </div>
 
                     <ChevronRight size={17} />
-
                   </button>
-
                 </div>
-
               </div>
-
             </div>
-
           )}
 
-
-          {/* =================================================
-              MY ORDERS
-          ================================================= */}
+          {/* MY ORDERS */}
 
           {activeSection === "orders" && (
-
             <div className="account-section">
-
               <div className="section-heading">
-
                 <div>
-
-                  <span>
-                    SHOPPING
-                  </span>
-
-                  <h2>
-                    My Orders
-                  </h2>
+                  <span>SHOPPING</span>
+                  <h2>My Orders</h2>
 
                   <p className="section-description">
                     View your order history and track
                     your purchases.
                   </p>
-
                 </div>
 
                 <Package size={25} />
-
               </div>
 
-
-              {/* ORDERS PREVIEW */}
-
               <div className="orders-preview-card">
-
                 <div className="orders-preview-icon">
                   <ShoppingBag size={30} />
                 </div>
 
-
                 <div className="orders-preview-content">
-
-                  <h3>
-                    View All Your Orders
-                  </h3>
+                  <h3>View All Your Orders</h3>
 
                   <p>
                     See your complete order history,
                     order status, products, quantities
                     and total amounts in one place.
                   </p>
-
                 </div>
-
 
                 <Link
                   to="/orders"
                   className="view-orders-button"
                 >
-
                   VIEW MY ORDERS
-
                   <ChevronRight size={17} />
-
                 </Link>
-
               </div>
-
             </div>
-
           )}
 
-
-          {/* =================================================
-              CHANGE PASSWORD
-          ================================================= */}
+          {/* CHANGE PASSWORD */}
 
           {activeSection === "password" && (
-
             <div className="account-section">
-
               <div className="section-heading">
-
                 <div>
-
-                  <span>
-                    SECURITY
-                  </span>
-
-                  <h2>
-                    Change Password
-                  </h2>
-
+                  <span>SECURITY</span>
+                  <h2>Change Password</h2>
                 </div>
 
                 <LockKeyhole size={25} />
-
               </div>
-
 
               {/* INTRO */}
 
               <div className="password-intro">
-
                 <ShieldCheck size={20} />
 
                 <p>
@@ -740,27 +532,23 @@ const Account = () => {
                   displayed. Enter it below and
                   choose a new password.
                 </p>
-
               </div>
-
 
               {/* ERROR */}
 
               {passwordError && (
-                <div className="password-error">
+                <div className="password-error" role="alert">
                   {passwordError}
                 </div>
               )}
 
-
               {/* SUCCESS */}
 
               {passwordMessage && (
-                <div className="password-success">
+                <div className="password-success" role="status">
                   {passwordMessage}
                 </div>
               )}
-
 
               {/* FORM */}
 
@@ -768,90 +556,76 @@ const Account = () => {
                 className="change-password-form"
                 onSubmit={handleChangePassword}
               >
-
                 {/* CURRENT */}
 
                 <div className="password-field">
-
                   <label htmlFor="currentPassword">
                     CURRENT PASSWORD
                   </label>
 
                   <div className="password-input">
-
                     <LockKeyhole size={18} />
 
                     <input
                       id="currentPassword"
                       type="password"
                       name="currentPassword"
-                      value={
-                        passwordData.currentPassword
-                      }
+                      autoComplete="current-password"
+                      value={passwordData.currentPassword}
                       onChange={handlePasswordChange}
                       placeholder="Enter current password"
+                      required
                     />
-
                   </div>
-
                 </div>
-
 
                 {/* NEW */}
 
                 <div className="password-field">
-
                   <label htmlFor="newPassword">
                     NEW PASSWORD
                   </label>
 
                   <div className="password-input">
-
                     <KeyRound size={18} />
 
                     <input
                       id="newPassword"
                       type="password"
                       name="newPassword"
-                      value={
-                        passwordData.newPassword
-                      }
+                      autoComplete="new-password"
+                      value={passwordData.newPassword}
                       onChange={handlePasswordChange}
                       placeholder="Enter new password"
+                      minLength={6}
+                      required
                     />
-
                   </div>
-
                 </div>
-
 
                 {/* CONFIRM */}
 
                 <div className="password-field">
-
                   <label htmlFor="confirmPassword">
                     CONFIRM NEW PASSWORD
                   </label>
 
                   <div className="password-input">
-
                     <KeyRound size={18} />
 
                     <input
                       id="confirmPassword"
                       type="password"
                       name="confirmPassword"
-                      value={
-                        passwordData.confirmPassword
-                      }
+                      autoComplete="new-password"
+                      value={passwordData.confirmPassword}
                       onChange={handlePasswordChange}
                       placeholder="Confirm new password"
+                      minLength={6}
+                      required
                     />
-
                   </div>
-
                 </div>
-
 
                 {/* BUTTON */}
 
@@ -860,27 +634,17 @@ const Account = () => {
                   className="change-password-button"
                   disabled={loading}
                 >
-
                   {loading
                     ? "UPDATING..."
                     : "CHANGE PASSWORD"}
 
-                  {!loading && (
-                    <ChevronRight size={18} />
-                  )}
-
+                  {!loading && <ChevronRight size={18} />}
                 </button>
-
               </form>
-
             </div>
-
           )}
-
         </div>
-
       </section>
-
     </main>
   );
 };

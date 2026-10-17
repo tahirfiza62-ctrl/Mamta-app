@@ -13,7 +13,7 @@ const features = [
     number: "01",
     icon: Heart,
     title: "Made with Love",
-    text: "Every MAMTA piece is thoughtfully designed with mothers and little ones in mind.",
+    text: "Every MAAMTA piece is thoughtfully designed with mothers and little ones in mind.",
   },
   {
     number: "02",
@@ -48,7 +48,7 @@ const WhyChooseMamta = () => {
           <div className="why-mamta-heading">
 
             <span className="why-mamta-eyebrow">
-              THE MAMTA PROMISE
+              THE MAAMTA PROMISE
             </span>
 
             <h2>
@@ -57,7 +57,7 @@ const WhyChooseMamta = () => {
             </h2>
 
             <p>
-              At MAMTA, we believe comfort is more than softness.
+              At MAAMTA, we believe comfort is more than softness.
               It is about creating little moments of care, warmth
               and happiness for mothers and their little ones.
             </p>

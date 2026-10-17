@@ -12,8 +12,8 @@
 
  padding-left: 90px;
 padding-right: 90px;
-padding-top: 30px;
-padding-bottom: 30px;
+padding-top: 15px;
+padding-bottom: 15px;
   display: grid;
 
   grid-template-columns:
@@ -941,7 +941,7 @@ font-family: 'Times New Roman', Times, serif;
 .hero-side-text {
   position: absolute;
 
-  right: -65px;
+  right: -105px;
   top: 50%;
 
   transform:
@@ -954,7 +954,7 @@ font-family: 'Times New Roman', Times, serif;
     "Poppins",
     sans-serif;
 
-  font-size: 8px;
+  font-size: 11px;
 
   font-weight: 500;
 

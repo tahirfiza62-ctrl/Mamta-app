@@ -429,3 +429,21 @@
     font-size: 12px;
   }
 }
+.policy-link {
+  color: #bd6f7c;
+  font-weight: 600;
+  text-decoration: none;
+  border-bottom: 1px solid transparent;
+  transition: color 0.3s ease, border-color 0.3s ease;
+}
+
+.policy-link:hover {
+  color: #a65362;
+  border-bottom-color: #a65362;
+}
+
+.policy-link:focus-visible {
+  outline: 2px solid #bd6f7c;
+  outline-offset: 3px;
+  border-radius: 2px;
+}

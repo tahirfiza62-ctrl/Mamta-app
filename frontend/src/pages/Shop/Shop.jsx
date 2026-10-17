@@ -986,7 +986,7 @@ const Shop = () => {
           <div className="shop-loading-spinner"></div>
 
           <p>
-            Loading MAMTA collection...
+            Loading MAAMTA collection...
           </p>
 
         </section>
@@ -1022,7 +1022,7 @@ const Shop = () => {
 
                 <span></span>
 
-                THE MAMTA COLLECTION
+                THE MAAMTA COLLECTION
 
               </div>
 
@@ -1081,7 +1081,7 @@ const Shop = () => {
               <div className="hero-floating-card">
 
                 <span className="floating-card-small">
-                  MAMTA
+                  MAAMTA
                 </span>
 
                 <strong>
@@ -1095,7 +1095,7 @@ const Shop = () => {
               <div className="hero-round-text">
 
                 <span>
-                  COMFORT • CARE • MAMTA •
+                  COMFORT • CARE • MAAMTA •
                 </span>
 
               </div>
@@ -1469,7 +1469,7 @@ const Shop = () => {
                           <div className="product-title-area">
 
                             <span className="product-small-label">
-                              MAMTA
+                              MAAMTA
                             </span>
 
                             <h3>

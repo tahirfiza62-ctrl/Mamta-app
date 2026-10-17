@@ -9,7 +9,7 @@ const ShippingPolicy = () => {
       <div className="policy-container">
 
         <span className="policy-eyebrow">
-          MAMTA DELIVERY
+          MAAMTA DELIVERY
         </span>
 
         <h1>
@@ -17,7 +17,7 @@ const ShippingPolicy = () => {
         </h1>
 
         <p className="policy-intro">
-          We carefully prepare every Mamta order and work to make
+          We carefully prepare every Maamta order and work to make
           your delivery experience simple and reliable.
         </p>
 
@@ -39,13 +39,7 @@ const ShippingPolicy = () => {
           </p>
         </section>
 
-        <section>
-          <h2>Shipping Charges</h2>
-          <p>
-            Shipping charges, if applicable, will be displayed during
-            checkout before you complete your order.
-          </p>
-        </section>
+
 
         <section>
           <h2>Delivery Delays</h2>
@@ -65,13 +59,43 @@ const ShippingPolicy = () => {
           </p>
         </section>
 
-        <section>
-          <h2>Need Help?</h2>
-          <p>
-            If you have questions about your shipment or delivery,
-            please contact Mamta customer support.
-          </p>
-        </section>
+    <section>
+  <h2>Contact Us</h2>
+
+  <p>
+    If you have questions or concerns about this Privacy Policy,
+    please contact us using the details below:
+  </p>
+
+  <p>
+    <strong>Email: </strong>
+    <a
+      href="mailto:maamtacircle@gmail.com"
+      className="privacy-email-link"
+    >
+      maamtacircle@gmail.com
+    </a>
+  </p>
+
+  <p>
+    <strong>Phone: </strong>
+    <a href="tel:+923431516875" className="privacy-email-link">
+      +92 343 1516875
+    </a>
+  </p>
+
+  <p>
+    <strong>WhatsApp: </strong>
+    <a
+      href="https://wa.me/923431516875"
+      target="_blank"
+      rel="noopener noreferrer"
+      className="privacy-email-link"
+    >
+      Chat with us on WhatsApp
+    </a>
+  </p>
+</section>
 
         <Link to="/shop" className="policy-back">
           Continue Shopping

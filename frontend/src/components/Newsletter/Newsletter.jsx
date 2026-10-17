@@ -52,7 +52,7 @@ const Newsletter = () => {
 
         setMessage(
           response.data.message ||
-            "You have successfully joined the MAMTA Circle!"
+            "You have successfully joined the MAAMTA Circle!"
         );
       }
     } catch (err) {
@@ -105,7 +105,7 @@ const Newsletter = () => {
 
               <Sparkles size={14} />
 
-              <span>THE MAMTA CIRCLE</span>
+              <span>THE MAAMTA CIRCLE</span>
 
               <span className="newsletter-line"></span>
 
@@ -120,7 +120,7 @@ const Newsletter = () => {
             <p>
               Join our little circle for new collections,
               thoughtful offers, motherhood essentials and
-              beautiful moments from MAMTA.
+              beautiful moments from MAAMTA.
             </p>
 
           </div>
@@ -152,7 +152,7 @@ const Newsletter = () => {
                 </div>
 
                 <span className="newsletter-success-label">
-                  WELCOME TO THE MAMTA CIRCLE
+                  WELCOME TO THE MAAMTA CIRCLE
                 </span>
 
                 <h3>
@@ -162,7 +162,7 @@ const Newsletter = () => {
                 </h3>
 
                 <p>
-                  Thank you for joining MAMTA. We'll send you
+                  Thank you for joining MAAMTA. We'll send you
                   thoughtful updates, new collections and
                   special moments straight to your inbox.
                 </p>
@@ -195,7 +195,7 @@ const Newsletter = () => {
                     <span>STAY CONNECTED</span>
 
                     <p>
-                      Receive MAMTA in your inbox.
+                      Receive MAAMTA in your inbox.
                     </p>
                   </div>
 
@@ -268,7 +268,7 @@ const Newsletter = () => {
 
                 {!error && !message && (
                   <p className="newsletter-note">
-                    No clutter. Just thoughtful updates from MAMTA.
+                    No clutter. Just thoughtful updates from MAAMTA.
                   </p>
                 )}
 

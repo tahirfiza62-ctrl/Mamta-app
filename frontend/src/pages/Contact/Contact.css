@@ -2108,3 +2108,311 @@ html {
     scroll-behavior: auto !important;
   }
 }
+
+/* =========================================================
+   MAMTA FAQ SECTION
+========================================================= */
+
+.mamta-faq-section {
+  padding: 90px 24px;
+  background: #fff9f4;
+  color: #4a3032;
+}
+
+.mamta-faq-container {
+  width: 100%;
+  max-width: 900px;
+  margin: 0 auto;
+}
+
+.mamta-faq-heading {
+  max-width: 680px;
+  margin: 0 auto 42px;
+  text-align: center;
+}
+
+.mamta-faq-heading .contact-label {
+  display: inline-block;
+  margin-bottom: 14px;
+  color: #bd6f7c;
+  font-size: 13px;
+  font-weight: 700;
+  letter-spacing: 2px;
+}
+
+.mamta-faq-heading h2 {
+  margin: 0 0 16px;
+  color: #4a3032;
+  font-size: clamp(30px, 4vw, 42px);
+  font-weight: 700;
+  line-height: 1.25;
+}
+
+.mamta-faq-heading h2 span {
+  color: #bd6f7c;
+}
+
+.mamta-faq-heading > p {
+  max-width: 590px;
+  margin: 0 auto;
+  color: #80696a;
+  font-size: 15px;
+  line-height: 1.9;
+}
+
+.mamta-faq-list {
+  display: flex;
+  flex-direction: column;
+  gap: 13px;
+}
+
+.mamta-faq-item {
+  overflow: hidden;
+  border: 1px solid #f0dfe0;
+  border-radius: 14px;
+  background: #ffffff;
+  transition:
+    border-color 0.25s ease,
+    box-shadow 0.25s ease;
+}
+
+.mamta-faq-item.active {
+  border-color: #e5bdc3;
+  box-shadow: 0 6px 20px rgba(189, 111, 124, 0.08);
+}
+
+.mamta-faq-question {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 20px;
+  width: 100%;
+  padding: 21px 23px;
+  border: none;
+  background: transparent;
+  color: #4a3032;
+  text-align: left;
+  font-family: inherit;
+  font-size: 16px;
+  font-weight: 600;
+  line-height: 1.6;
+  cursor: pointer;
+  transition: color 0.25s ease;
+}
+
+.mamta-faq-question:hover {
+  color: #bd6f7c;
+}
+
+.mamta-faq-question:focus-visible {
+  outline: 2px solid #bd6f7c;
+  outline-offset: -4px;
+  border-radius: 12px;
+}
+
+.mamta-faq-icon {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+  width: 34px;
+  height: 34px;
+  border-radius: 50%;
+  background: #fff0f2;
+  color: #bd6f7c;
+}
+
+.mamta-faq-answer {
+  padding: 0 23px 22px;
+  animation: mamta-faq-reveal 0.2s ease;
+}
+
+.mamta-faq-answer p {
+  margin: 0;
+  color: #80696a;
+  font-size: 15px;
+  line-height: 1.9;
+}
+
+.mamta-faq-policy-link {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  margin-top: 13px;
+  color: #bd6f7c;
+  font-size: 14px;
+  font-weight: 600;
+  text-decoration: none;
+  border-bottom: 1px solid transparent;
+  transition:
+    color 0.25s ease,
+    border-color 0.25s ease;
+}
+
+.mamta-faq-policy-link:hover {
+  color: #a65362;
+  border-bottom-color: #a65362;
+}
+
+.mamta-faq-policy-link:focus-visible,
+.mamta-faq-contact-button:focus-visible {
+  outline: 2px solid #bd6f7c;
+  outline-offset: 4px;
+}
+
+.mamta-faq-contact {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 25px;
+  margin-top: 35px;
+  padding: 30px;
+  border: 1px solid #f0d7db;
+  border-radius: 18px;
+  background: #f9e9eb;
+}
+
+.mamta-faq-contact-content > span {
+  display: block;
+  margin-bottom: 9px;
+  color: #bd6f7c;
+  font-size: 11px;
+  font-weight: 700;
+  letter-spacing: 1.5px;
+}
+
+.mamta-faq-contact-content h3 {
+  margin: 0 0 9px;
+  color: #4a3032;
+  font-size: 22px;
+  line-height: 1.4;
+}
+
+.mamta-faq-contact-content p {
+  margin: 0;
+  color: #80696a;
+  font-size: 14px;
+  line-height: 1.8;
+}
+
+.mamta-faq-contact-button {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+  gap: 9px;
+  padding: 13px 19px;
+  border: 1px solid #bd6f7c;
+  border-radius: 50px;
+  background: #bd6f7c;
+  color: #ffffff;
+  font-family: inherit;
+  font-size: 14px;
+  font-weight: 600;
+  text-decoration: none;
+  transition:
+    background 0.25s ease,
+    border-color 0.25s ease,
+    transform 0.25s ease,
+    box-shadow 0.25s ease;
+}
+
+.mamta-faq-contact-button:hover {
+  transform: translateY(-2px);
+  border-color: #a65362;
+  background: #a65362;
+  box-shadow: 0 6px 16px rgba(189, 111, 124, 0.2);
+}
+
+@keyframes mamta-faq-reveal {
+  from {
+    opacity: 0;
+    transform: translateY(-4px);
+  }
+
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@media (max-width: 650px) {
+  .mamta-faq-section {
+    padding: 60px 17px;
+  }
+
+  .mamta-faq-heading {
+    margin-bottom: 30px;
+  }
+
+  .mamta-faq-question {
+    gap: 12px;
+    padding: 17px;
+    font-size: 15px;
+  }
+
+  .mamta-faq-icon {
+    width: 31px;
+    height: 31px;
+  }
+
+  .mamta-faq-answer {
+    padding: 0 17px 19px;
+  }
+
+  .mamta-faq-answer p {
+    font-size: 15px;
+  }
+
+  .mamta-faq-contact {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 20px;
+    padding: 24px 20px;
+  }
+
+  .mamta-faq-contact-content h3 {
+    font-size: 20px;
+  }
+
+  .mamta-faq-contact-button {
+    width: 100%;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .mamta-faq-item,
+  .mamta-faq-question,
+  .mamta-faq-policy-link,
+  .mamta-faq-contact-button {
+    transition: none;
+  }
+
+  .mamta-faq-answer {
+    animation: none;
+  }
+
+  .mamta-faq-contact-button:hover {
+    transform: none;
+  }
+}
+/* WhatsApp Link */
+.whatsapp-link {
+  display: inline-block;
+  color: #25D366 !important;
+  font-weight: 600;
+  text-decoration: none !important;
+  overflow-wrap: anywhere;
+  transition: color 0.3s ease;
+}
+
+.whatsapp-link:hover {
+  color: #128C7E !important;
+  text-decoration: underline !important;
+}
+
+.whatsapp-link:focus-visible {
+  outline: 2px solid #25D366;
+  outline-offset: 3px;
+  border-radius: 4px;
+}

@@ -361,7 +361,7 @@ const Cart = () => {
           <div className="cart-hero-content">
 
             <span>
-              YOUR MAMTA BAG
+              YOUR MAAMTA BAG
             </span>
 
             <h1>
@@ -423,7 +423,7 @@ const Cart = () => {
         <div className="cart-hero-content">
 
           <span>
-            YOUR MAMTA BAG
+            YOUR MAAMTA BAG
           </span>
 
           <h1>
@@ -512,7 +512,7 @@ const Cart = () => {
                           src={item.image}
                           alt={
                             item.name ||
-                            "MAMTA Product"
+                            "MAAMTA Product"
                           }
                         />
                       ) : (
@@ -530,7 +530,7 @@ const Cart = () => {
                     <div className="cart-item-details">
 
                       <span className="cart-item-label">
-                        MAMTA COLLECTION
+                        MAAMTA COLLECTION
                       </span>
 
                       <h3>
@@ -813,7 +813,7 @@ const Cart = () => {
 
             <span>
               Free shipping · Secure checkout ·
-              Carefully packed by MAMTA
+              Carefully packed by MAAMTA
             </span>
 
           </div>

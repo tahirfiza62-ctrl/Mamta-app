@@ -80,7 +80,7 @@
     "Segoe UI",
     sans-serif;
 
-  font-size: 14px;
+  font-size: 15px!important;
   font-weight: 500;
 
   letter-spacing: 0.5px;
@@ -96,7 +96,7 @@
 ========================================================= */
 
 .top-line-content .top-line-divider {
-  font-size: 13px;
+  font-size: 15px;
 
   opacity: 0.7;
 

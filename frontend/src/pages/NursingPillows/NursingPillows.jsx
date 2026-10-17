@@ -113,7 +113,7 @@ const nursingProducts = allProducts.filter((product) => {
         <div className="nursing-hero-content">
 
           <span className="nursing-eyebrow">
-            MAMTA • MOTHER & BABY
+            MAAMTA • MOTHER & BABY
           </span>
 
           <h1>
@@ -540,7 +540,7 @@ const nursingProducts = allProducts.filter((product) => {
         <div>
 
           <span className="nursing-section-label">
-            MAMTA
+            MAAMTA
           </span>
 
           <h2>

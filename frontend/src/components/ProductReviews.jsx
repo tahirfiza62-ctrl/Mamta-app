@@ -18,296 +18,14 @@ import "./ProductReviews.css";
 const API_URL = "http://localhost:3000/api";
 
 /* =========================================================
-   PRODUCT REVIEW HELPERS
+   PRODUCT HELPERS
 ========================================================= */
 
 const getProductId = (product) =>
   String(product?._id || product?.id || "");
 
 const getProductName = (product) =>
-  product?.name || product?.title || "MAMTA Product";
-
-const getCategory = (product) =>
-  String(product?.category || "").toLowerCase();
-
-/*
-  These are SAMPLE / DEMO reviews.
-  They are displayed separately from real reviews fetched
-  from MongoDB. Replace these samples with real customer
-  testimonials before presenting them as genuine reviews.
-*/
-
-const reviewTemplates = {
-  maternity: [
-    {
-      name: "Ayesha Khan",
-      city: "Islamabad",
-      rating: 5,
-      message:
-        "The pillow feels soft and supportive. I really like how comfortably it fits around me while I rest.",
-    },
-    {
-      name: "Fatima Ahmed",
-      city: "Rawalpindi",
-      rating: 5,
-      message:
-        "The fabric feels gentle, and the cushioning is lovely. It has become a comfortable part of my resting routine.",
-    },
-    {
-      name: "Sana Malik",
-      city: "Lahore",
-      rating: 4,
-      message:
-        "I like the shape and softness of this pillow. It is comfortable to use and looks beautiful too.",
-    },
-    {
-      name: "Hira Sheikh",
-      city: "Karachi",
-      rating: 5,
-      message:
-        "The overall finish is neat, and the pillow feels cozy. I am happy with the quality and presentation.",
-    },
-  ],
-
-  baby: [
-    {
-      name: "Maryam Ali",
-      city: "Islamabad",
-      rating: 5,
-      message:
-        "The material feels soft and lovely. I especially appreciate the neat stitching and gentle fabric.",
-    },
-    {
-      name: "Noor Fatima",
-      city: "Faisalabad",
-      rating: 4,
-      message:
-        "The design is adorable, and the fabric feels pleasant to touch. It is a sweet addition to our nursery.",
-    },
-    {
-      name: "Zainab Tariq",
-      city: "Multan",
-      rating: 5,
-      message:
-        "The product looks just as lovely as I expected. The finishing and color make it feel thoughtfully made.",
-    },
-    {
-      name: "Iqra Hussain",
-      city: "Peshawar",
-      rating: 5,
-      message:
-        "I love the simple design and soft feel. The quality looks good, and the product arrived looking lovely.",
-    },
-  ],
-
-  nursing: [
-    {
-      name: "Amna Raza",
-      city: "Rawalpindi",
-      rating: 5,
-      message:
-        "I like the practical design and comfortable cushioning. It makes setting up my feeding space easier.",
-    },
-    {
-      name: "Eman Shah",
-      city: "Lahore",
-      rating: 4,
-      message:
-        "The shape is useful, and the fabric feels soft. It is a thoughtful product for a mother's daily routine.",
-    },
-    {
-      name: "Laiba Noor",
-      city: "Islamabad",
-      rating: 5,
-      message:
-        "The design is convenient, and the stitching looks tidy. I appreciate the attention to the small details.",
-    },
-    {
-      name: "Rabia Aslam",
-      city: "Sialkot",
-      rating: 5,
-      message:
-        "A lovely and practical product. I like its appearance, soft texture, and the way it fits into my routine.",
-    },
-  ],
-
-  elders: [
-    {
-      name: "Samina Begum",
-      city: "Islamabad",
-      rating: 5,
-      message:
-        "The pillow feels comfortable and has a neat finish. I appreciate the softness and simple design.",
-    },
-    {
-      name: "Nadia Iqbal",
-      city: "Gujranwala",
-      rating: 4,
-      message:
-        "The material feels pleasant, and the pillow looks well made. It is a nice addition to our home.",
-    },
-    {
-      name: "Shazia Ahmed",
-      city: "Rawalpindi",
-      rating: 5,
-      message:
-        "I like the comfortable feel and clean stitching. The overall quality and presentation are lovely.",
-    },
-    {
-      name: "Kiran Mahmood",
-      city: "Sargodha",
-      rating: 5,
-      message:
-        "The design is simple and practical. The fabric feels soft, and the product has a nice, tidy finish.",
-    },
-  ],
-
-  accessories: [
-    {
-      name: "Mehak Asif",
-      city: "Islamabad",
-      rating: 5,
-      message:
-        "The finishing is neat, and the design is lovely. It is a thoughtful little addition to my collection.",
-    },
-    {
-      name: "Anum Khalid",
-      city: "Karachi",
-      rating: 4,
-      message:
-        "I like the simple design and overall presentation. The quality feels nice, and the product is easy to use.",
-    },
-    {
-      name: "Mishal Arif",
-      city: "Lahore",
-      rating: 5,
-      message:
-        "The product looks lovely in person. I appreciate the neat details and the care put into its presentation.",
-    },
-    {
-      name: "Sidra Younis",
-      city: "Peshawar",
-      rating: 5,
-      message:
-        "A beautiful little product with a clean finish. I like its appearance and the attention to detail.",
-    },
-  ],
-
-  general: [
-    {
-      name: "Areeba Khan",
-      city: "Islamabad",
-      rating: 5,
-      message:
-        "The product has a lovely finish and thoughtful design. I appreciate the attention to detail.",
-    },
-    {
-      name: "Maham Ali",
-      city: "Rawalpindi",
-      rating: 4,
-      message:
-        "The overall presentation is lovely, and the material feels nice. It is a pleasant addition to our home.",
-    },
-    {
-      name: "Dua Ahmed",
-      city: "Lahore",
-      rating: 5,
-      message:
-        "I like the design and finishing. The product feels thoughtfully made and looks beautiful.",
-    },
-    {
-      name: "Alina Shah",
-      city: "Multan",
-      rating: 5,
-      message:
-        "The quality looks good, and the details are neat. I am pleased with the overall look and feel.",
-    },
-  ],
-};
-
-/* Determine which demo set matches the product. */
-function getReviewGroup(product) {
-  const category = getCategory(product);
-  const name = getProductName(product).toLowerCase();
-  const text = `${category} ${name}`;
-
-  if (
-    text.includes("maternity") ||
-    text.includes("pregnancy") ||
-    text.includes("pregnant")
-  ) {
-    return "maternity";
-  }
-
-  if (
-    text.includes("baby") ||
-    text.includes("newborn") ||
-    text.includes("kid") ||
-    text.includes("infant")
-  ) {
-    return "baby";
-  }
-
-  if (
-    text.includes("nursing") ||
-    text.includes("feeding") ||
-    text.includes("breastfeeding")
-  ) {
-    return "nursing";
-  }
-
-  if (
-    text.includes("elder") ||
-    text.includes("senior") ||
-    text.includes("orthopedic")
-  ) {
-    return "elders";
-  }
-
-  if (
-    text.includes("accessor") ||
-    text.includes("cover") ||
-    text.includes("case")
-  ) {
-    return "accessories";
-  }
-
-  return "general";
-}
-
-/*
-  Generate a product-specific set of four sample reviews.
-  A stable hash selects variations using the product name
-  and ID, so products in the same category need not show
-  identical demo comments.
-
-  These remain demo content, not verified purchases.
-*/
-function getDemoReviews(product) {
-  const name = getProductName(product);
-  const id = getProductId(product);
-  const group = reviewTemplates[getReviewGroup(product)];
-
-  let hash = 0;
-  const seed = `${name}-${id}`;
-
-  for (let i = 0; i < seed.length; i += 1) {
-    hash = (hash * 31 + seed.charCodeAt(i)) >>> 0;
-  }
-
-  const shift = hash % group.length;
-
-  return group.map((review, index) => {
-    const selected = group[(index + shift) % group.length];
-
-    return {
-      ...selected,
-      _id: `demo-${id || name}-${index}`,
-      isDemo: true,
-      date: null,
-    };
-  });
-}
+  product?.name || product?.title || "MAAMTA Product";
 
 /* =========================================================
    STAR RATING
@@ -348,7 +66,9 @@ function StarRating({
           <Star
             key={star}
             size={size}
-            className={star <= rating ? "pr-star-filled" : "pr-star-empty"}
+            className={
+              star <= rating ? "pr-star-filled" : "pr-star-empty"
+            }
             fill={star <= rating ? "currentColor" : "none"}
             strokeWidth={1.8}
           />
@@ -362,15 +82,15 @@ function StarRating({
    MAIN PRODUCT REVIEWS COMPONENT
 ========================================================= */
 
-export default function ProductReviews({ product, productId: suppliedId }) {
+export default function ProductReviews({
+  product,
+  productId: suppliedId,
+}) {
   const resolvedProductId = String(
     suppliedId || getProductId(product) || ""
   );
 
-  const demoReviews = useMemo(
-    () => getDemoReviews(product),
-    [product]
-  );
+  const productName = getProductName(product);
 
   const [customerReviews, setCustomerReviews] = useState([]);
   const [loading, setLoading] = useState(true);
@@ -384,78 +104,118 @@ export default function ProductReviews({ product, productId: suppliedId }) {
     message: "",
   });
 
-  /*
-    Load only reviews belonging to the current product.
-    Clear old product reviews immediately when switching
-    from one product detail page to another.
-  */
+  /* =======================================================
+     FETCH REVIEWS FOR CURRENT PRODUCT ONLY
+  ======================================================= */
 
-const loadReviews = useCallback(async () => {
-  // Defer state updates so they don't run synchronously
-  // when this function is called from useEffect.
-  await Promise.resolve();
+  const loadReviews = useCallback(async () => {
+    if (!resolvedProductId) {
+      setCustomerReviews([]);
+      setLoading(false);
+      return;
+    }
 
-  if (!resolvedProductId) {
-    setCustomerReviews([]);
-    setLoading(false);
-    return;
-  }
+    setLoading(true);
 
-  try {
-    const response = await axios.get(`${API_URL}/reviews`, {
-      params: { productId: resolvedProductId },
-    });
+    try {
+      const response = await axios.get(`${API_URL}/reviews`, {
+        params: {
+          productId: resolvedProductId,
+        },
+      });
 
-    const data = Array.isArray(response.data)
-      ? response.data
-      : response.data?.reviews || [];
+      const data = Array.isArray(response.data)
+        ? response.data
+        : response.data?.reviews || [];
 
-    const currentProductReviews = data.filter(
-      (review) =>
-        String(
+      const currentProductReviews = data.filter((review) => {
+        const reviewProductId = String(
           review.productId?._id ||
             review.productId?.id ||
             review.productId ||
             ""
-        ) === resolvedProductId
-    );
+        );
 
-    setCustomerReviews(currentProductReviews);
-  } catch (error) {
-    console.error("Unable to load product reviews:", error);
-    setCustomerReviews([]);
-    toast.error("Could not load customer reviews.");
-  } finally {
-    setLoading(false);
-  }
-}, [resolvedProductId]);
+        return reviewProductId === resolvedProductId;
+      });
 
-useEffect(() => {
-  let cancelled = false;
+      setCustomerReviews(currentProductReviews);
+    } catch (error) {
+      console.error("Unable to load product reviews:", error);
 
-  const fetchReviews = async () => {
-    await Promise.resolve();
+      setCustomerReviews([]);
+      toast.error("Could not load customer reviews.");
+    } finally {
+      setLoading(false);
+    }
+  }, [resolvedProductId]);
 
-    if (cancelled) return;
+  useEffect(() => {
+    let cancelled = false;
 
-    setLoading(true);
-    await loadReviews();
-  };
+    const fetchReviews = async () => {
+      if (!resolvedProductId) {
+        setCustomerReviews([]);
+        setLoading(false);
+        return;
+      }
 
-  fetchReviews();
+      try {
+        const response = await axios.get(`${API_URL}/reviews`, {
+          params: {
+            productId: resolvedProductId,
+          },
+        });
 
-  return () => {
-    cancelled = true;
-  };
-}, [loadReviews]);
+        if (cancelled) return;
+
+        const data = Array.isArray(response.data)
+          ? response.data
+          : response.data?.reviews || [];
+
+        const currentProductReviews = data.filter((review) => {
+          const reviewProductId = String(
+            review.productId?._id ||
+              review.productId?.id ||
+              review.productId ||
+              ""
+          );
+
+          return reviewProductId === resolvedProductId;
+        });
+
+        setCustomerReviews(currentProductReviews);
+      } catch (error) {
+        if (!cancelled) {
+          console.error("Unable to load product reviews:", error);
+          setCustomerReviews([]);
+          toast.error("Could not load customer reviews.");
+        }
+      } finally {
+        if (!cancelled) {
+          setLoading(false);
+        }
+      }
+    };
+
+    fetchReviews();
+
+    return () => {
+      cancelled = true;
+    };
+  }, [resolvedProductId]);
+
+  /* =======================================================
+     REVIEW STATISTICS
+  ======================================================= */
 
   const allReviews = useMemo(
-    () => [...customerReviews, ...demoReviews],
-    [customerReviews, demoReviews]
+    () => customerReviews,
+    [customerReviews]
   );
 
   const averageRating = useMemo(() => {
-    if (!allReviews.length) return 0;
+    if (allReviews.length === 0) return 0;
 
     const total = allReviews.reduce(
       (sum, review) => sum + Number(review.rating || 0),
@@ -466,10 +226,17 @@ useEffect(() => {
   }, [allReviews]);
 
   const ratingCounts = useMemo(() => {
-    const counts = { 1: 0, 2: 0, 3: 0, 4: 0, 5: 0 };
+    const counts = {
+      1: 0,
+      2: 0,
+      3: 0,
+      4: 0,
+      5: 0,
+    };
 
     allReviews.forEach((review) => {
       const rating = Number(review.rating);
+
       if (rating >= 1 && rating <= 5) {
         counts[rating] += 1;
       }
@@ -477,6 +244,10 @@ useEffect(() => {
 
     return counts;
   }, [allReviews]);
+
+  /* =======================================================
+     FORM HANDLERS
+  ======================================================= */
 
   const handleInputChange = (event) => {
     const { name, value } = event.target;
@@ -488,7 +259,10 @@ useEffect(() => {
   };
 
   const handleRatingChange = (rating) => {
-    setForm((previous) => ({ ...previous, rating }));
+    setForm((previous) => ({
+      ...previous,
+      rating,
+    }));
   };
 
   const handleSubmit = async (event) => {
@@ -533,26 +307,22 @@ useEffect(() => {
 
       const savedReview = response.data?.review || response.data;
 
-      /*
-        Add the saved review immediately when the API returns
-        a review object. The database remains the source of truth.
-      */
-      if (
-        savedReview &&
-        savedReview._id &&
-        String(
+      if (savedReview?._id) {
+        const savedProductId = String(
           savedReview.productId?._id ||
             savedReview.productId?.id ||
             savedReview.productId ||
             resolvedProductId
-        ) === resolvedProductId
-      ) {
-        setCustomerReviews((previous) => [
-          savedReview,
-          ...previous.filter(
-            (item) => String(item._id) !== String(savedReview._id)
-          ),
-        ]);
+        );
+
+        if (savedProductId === resolvedProductId) {
+          setCustomerReviews((previous) => [
+            savedReview,
+            ...previous.filter(
+              (item) => String(item._id) !== String(savedReview._id)
+            ),
+          ]);
+        }
       }
 
       setForm({
@@ -563,14 +333,8 @@ useEffect(() => {
         message: "",
       });
 
-      toast.success(
-        "Thank you! Your review has been submitted."
-      );
+      toast.success("Thank you! Your review has been submitted.");
 
-      /*
-        Re-fetch to synchronize with MongoDB.
-        Demo reviews remain because they are maintained separately.
-      */
       await loadReviews();
     } catch (error) {
       console.error(
@@ -587,19 +351,15 @@ useEffect(() => {
     }
   };
 
-  const formatDate = (date) => {
-    if (!date) return "Sample review";
+  /* =======================================================
+     DATE FORMATTER
+  ======================================================= */
 
-    const parsedDate = new Date(date);
 
-    if (Number.isNaN(parsedDate.getTime())) return "Customer review";
 
-    return parsedDate.toLocaleDateString("en-PK", {
-      day: "numeric",
-      month: "short",
-      year: "numeric",
-    });
-  };
+  /* =======================================================
+     UI
+  ======================================================= */
 
   return (
     <section
@@ -607,7 +367,9 @@ useEffect(() => {
       aria-labelledby="product-reviews-heading"
     >
       <div className="pr-container">
+
         {/* HEADER */}
+
         <div className="pr-heading">
           <div className="pr-heading-icon">
             <Heart size={22} />
@@ -623,8 +385,7 @@ useEffect(() => {
 
           <p>
             Every little detail matters. Explore feedback for{" "}
-            <strong>{getProductName(product)}</strong> and share
-            your own experience.
+            <strong>{productName}</strong> and share your own experience.
           </p>
 
           <div className="pr-heading-decoration">
@@ -635,15 +396,20 @@ useEffect(() => {
         </div>
 
         {/* RATING SUMMARY */}
+
         <div className="pr-summary">
           <div className="pr-summary-main">
             <div className="pr-average">
               {averageRating.toFixed(1)}
             </div>
 
-            <StarRating rating={Math.round(averageRating)} size={20} />
+            <StarRating
+              rating={Math.round(averageRating)}
+              size={20}
+            />
 
             <p>Overall rating</p>
+
             <span>
               {allReviews.length}{" "}
               {allReviews.length === 1 ? "review" : "reviews"}
@@ -653,6 +419,7 @@ useEffect(() => {
           <div className="pr-rating-breakdown">
             {[5, 4, 3, 2, 1].map((rating) => {
               const count = ratingCounts[rating];
+
               const percentage = allReviews.length
                 ? (count / allReviews.length) * 100
                 : 0;
@@ -660,7 +427,8 @@ useEffect(() => {
               return (
                 <div className="pr-rating-row" key={rating}>
                   <span className="pr-rating-label">
-                    {rating} <Star size={13} fill="currentColor" />
+                    {rating}{" "}
+                    <Star size={13} fill="currentColor" />
                   </span>
 
                   <div
@@ -674,7 +442,9 @@ useEffect(() => {
                     <span style={{ width: `${percentage}%` }} />
                   </div>
 
-                  <span className="pr-rating-count">{count}</span>
+                  <span className="pr-rating-count">
+                    {count}
+                  </span>
                 </div>
               );
             })}
@@ -682,19 +452,24 @@ useEffect(() => {
 
           <div className="pr-summary-note">
             <ShieldCheck size={25} />
+
             <div>
               <strong>Made with care</strong>
               <p>
-                Your feedback helps us improve the MAMTA experience.
+                Your feedback helps us improve the MAAMTA experience.
               </p>
             </div>
           </div>
         </div>
 
-        {/* REVIEW LIST */}
+        {/* REVIEW LIST HEADING */}
+
         <div className="pr-list-heading">
           <div>
-            <span className="pr-eyebrow">CUSTOMER EXPERIENCES</span>
+            <span className="pr-eyebrow">
+              CUSTOMER EXPERIENCES
+            </span>
+
             <h3>Reviews & Kind Words</h3>
           </div>
 
@@ -703,21 +478,33 @@ useEffect(() => {
           </span>
         </div>
 
+        {/* CUSTOMER REVIEWS ONLY */}
+
         {loading ? (
           <div className="pr-loading">
             <LoaderCircle className="pr-spinner" size={30} />
             <p>Loading reviews...</p>
           </div>
+        ) : allReviews.length === 0 ? (
+          <div className="pr-loading pr-empty-reviews">
+            <MessageCircle size={30} />
+
+            <h3>No reviews yet</h3>
+
+            <p>
+              Be the first to share your experience with this product.
+            </p>
+          </div>
         ) : (
           <div className="pr-review-grid">
             {allReviews.map((review, index) => {
-              const displayName = review.name || "MAMTA Customer";
+              const displayName = review.name || "MAAMTA Customer";
               const initial = displayName.trim().charAt(0).toUpperCase();
 
               return (
                 <article
                   className="pr-review-card"
-                  key={`${review.isDemo ? "demo" : "customer"}-${review._id}`}
+                  key={review._id || `review-${index}`}
                   style={{ "--review-index": index % 8 }}
                 >
                   <div className="pr-card-top">
@@ -727,9 +514,7 @@ useEffect(() => {
 
                     <div className="pr-review-author">
                       <h4>{displayName}</h4>
-                      <p>
-                        {review.city || "MAMTA Community"}
-                      </p>
+                      <p>{review.city || "MAAMTA Community"}</p>
                     </div>
 
                     <Quote
@@ -748,16 +533,9 @@ useEffect(() => {
                     {review.message}
                   </p>
 
-         
-
-<div className="pr-card-footer">
-  {!review.isDemo && (review.createdAt || review.date) && (
-    <span className="pr-review-date">
-      {formatDate(review.createdAt || review.date)}
-    </span>
-  )}
-</div>
-
+                  <div className="pr-card-footer">
+                   
+                  </div>
                 </article>
               );
             })}
@@ -765,19 +543,22 @@ useEffect(() => {
         )}
 
         {/* WRITE A REVIEW */}
+
         <div className="pr-form-section">
           <div className="pr-form-intro">
             <div className="pr-form-icon">
               <MessageCircle size={25} />
             </div>
 
-            <span className="pr-eyebrow">YOUR VOICE MATTERS</span>
+            <span className="pr-eyebrow">
+              YOUR VOICE MATTERS
+            </span>
 
             <h3>Share Your Experience</h3>
 
             <p>
-              Tried this product? Tell us what you think. Your
-              review will be connected to this product only.
+              Tried this product? Tell us what you think. Your review
+              will be connected to this product only.
             </p>
           </div>
 
@@ -809,7 +590,10 @@ useEffect(() => {
 
             <div className="pr-form-grid">
               <div className="pr-field">
-                <label htmlFor="pr-review-name">Your name *</label>
+                <label htmlFor="pr-review-name">
+                  Your name *
+                </label>
+
                 <input
                   id="pr-review-name"
                   name="name"
@@ -823,7 +607,10 @@ useEffect(() => {
               </div>
 
               <div className="pr-field">
-                <label htmlFor="pr-review-city">Your city *</label>
+                <label htmlFor="pr-review-city">
+                  Your city *
+                </label>
+
                 <input
                   id="pr-review-city"
                   name="city"
@@ -888,7 +675,10 @@ useEffect(() => {
               >
                 {submitting ? (
                   <>
-                    <LoaderCircle className="pr-spinner" size={18} />
+                    <LoaderCircle
+                      className="pr-spinner"
+                      size={18}
+                    />
                     Submitting...
                   </>
                 ) : (
@@ -903,10 +693,12 @@ useEffect(() => {
         </div>
 
         {/* FOOTER */}
+
         <div className="pr-footer-note">
           <Sparkles size={17} />
+
           <p>
-            <strong>MAMTA</strong> — Comfort, care, and love in
+            <strong>MAAMTA</strong> — Comfort, care, and love in
             every little detail.
           </p>
         </div>

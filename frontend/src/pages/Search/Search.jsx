@@ -270,7 +270,7 @@ const Search = () => {
         <div className="search-hero-inner">
 
           <span className="search-eyebrow">
-            MAMTA COLLECTION
+            MAAMTA COLLECTION
           </span>
 
           <h1>

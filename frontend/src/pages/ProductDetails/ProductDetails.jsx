@@ -772,7 +772,7 @@ const ProductDetails = () => {
 
     const message =
       encodeURIComponent(
-        `Hello MAMTA,
+        `Hello MAAMTA,
 
 I am interested in this product:
 
@@ -807,7 +807,7 @@ I would like to know more about this product.`
           </div>
 
           <span>
-            MAMTA COLLECTION
+            MAAMTA COLLECTION
           </span>
 
           <h1>
@@ -840,7 +840,7 @@ I would like to know more about this product.`
           </div>
 
           <span>
-            MAMTA COLLECTION
+            MAAMTA COLLECTION
           </span>
 
           <h1>
@@ -1531,7 +1531,7 @@ I would like to know more about this product.`
                 }
                 alt={
                   product.name ||
-                  "MAMTA product"
+                  "MAAMTA product"
                 }
                 onError={(e) => {
                   e.currentTarget.src =
@@ -1658,14 +1658,11 @@ I would like to know more about this product.`
 
        <div className="product-rating">
   <span className="rating-divider">
-    MAMTA COLLECTION
+    MAAMTA COLLECTION
   </span>
 
-  <span className="rating-divider">|</span>
+  
 
-  <a href="#product-reviews">
-    Read customer reviews
-  </a>
 </div>
 
           {/* =================================================
@@ -1907,7 +1904,7 @@ I would like to know more about this product.`
             onClick={
               handleWhatsApp
             }
-            aria-label="Chat with MAMTA on WhatsApp"
+            aria-label="Chat with MAAMTA on WhatsApp"
           >
 
             <svg
@@ -2057,7 +2054,7 @@ I would like to know more about this product.`
               <div>
 
                 <strong>
-                  MAMTA Quality
+                  MAAMTA Quality
                 </strong>
 
                 <span>
@@ -2112,7 +2109,7 @@ I would like to know more about this product.`
           <div className="features-heading">
 
             <span>
-              WHY MAMTA
+              WHY MAAMTA
             </span>
 
             <h2>
@@ -2128,7 +2125,7 @@ I would like to know more about this product.`
           <div className="features-content">
 
             <p>
-              Every MAMTA product is thoughtfully
+              Every MAAMTA product is thoughtfully
               selected with comfort, softness and
               everyday care in mind.
             </p>

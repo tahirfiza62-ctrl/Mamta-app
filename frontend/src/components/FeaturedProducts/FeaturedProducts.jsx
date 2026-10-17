@@ -1,6 +1,8 @@
+
 import { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 import axios from "axios";
+import toast from "react-hot-toast";
 
 import {
   Heart,
@@ -11,13 +13,12 @@ import {
 import ScrollReveal from "../ScrollReveal/ScrollReveal";
 import "./FeaturedProducts.css";
 
-
 /* =========================================================
    API
 ========================================================= */
 
 const API_URL = "http://localhost:3000/api";
-
+const WISHLIST_KEY = "mamta_wishlist";
 
 /* =========================================================
    FORMAT PRICE
@@ -27,713 +28,410 @@ const formatPrice = (price) => {
   return `Rs. ${Number(price || 0).toLocaleString()}`;
 };
 
+/* =========================================================
+   PRODUCT HELPERS
+========================================================= */
+
+const getProductId = (product) => {
+  return String(product?._id || product?.id || "");
+};
+
+const getProductImage = (product) => {
+  return (
+    product?.image ||
+    product?.images?.[0] ||
+    "/products/maternity-pillow-1.jpg"
+  );
+};
+
+const getProductCategory = (product) => {
+  return product?.category || "MAMTA COLLECTION";
+};
+
+/* =========================================================
+   READ WISHLIST
+========================================================= */
+
+const readWishlist = () => {
+  try {
+    const savedWishlist = JSON.parse(
+      localStorage.getItem(WISHLIST_KEY) || "[]"
+    );
+
+    return Array.isArray(savedWishlist) ? savedWishlist : [];
+  } catch (error) {
+    console.error("Unable to read wishlist:", error);
+    return [];
+  }
+};
 
 /* =========================================================
    FEATURED PRODUCTS
 ========================================================= */
 
 const FeaturedProducts = () => {
-
   const [products, setProducts] = useState([]);
-
-  const [wishlist, setWishlist] =
-    useState([]);
-
-  const [loading, setLoading] =
-    useState(true);
-
+  const [wishlist, setWishlist] = useState(readWishlist);
+  const [loading, setLoading] = useState(true);
 
   /* =======================================================
      LOAD PRODUCTS FROM BACKEND
-  ======================================================== */
+  ======================================================= */
 
   useEffect(() => {
+    let cancelled = false;
 
     const loadProducts = async () => {
-
       try {
-
         setLoading(true);
 
-        const response =
-          await axios.get(
-            `${API_URL}/products`
-          );
-
-        console.log(
-          "FEATURED PRODUCTS:",
-          response.data
+        const response = await axios.get(
+          `${API_URL}/products`
         );
 
+        const backendProducts = Array.isArray(
+          response.data?.products
+        )
+          ? response.data.products
+          : Array.isArray(response.data)
+          ? response.data
+          : [];
 
-        /*
-         * Depending on your backend response,
-         * products may be inside:
-         *
-         * response.data.products
-         *
-         * or directly response.data
-         */
-
-        const backendProducts =
-          Array.isArray(
-            response.data?.products
-          )
-            ? response.data.products
-            : Array.isArray(
-                response.data
-              )
-            ? response.data
-            : [];
-
-
-        /*
-         * Only show first 4 products
-         * in Featured Products.
-         */
-
-        setProducts(
-          backendProducts.slice(0, 4)
-        );
-
+        if (!cancelled) {
+          setProducts(backendProducts.slice(0, 4));
+        }
       } catch (error) {
-
         console.error(
           "FEATURED PRODUCTS LOAD ERROR:",
           error
         );
 
-        setProducts([]);
-
+        if (!cancelled) {
+          setProducts([]);
+        }
       } finally {
-
-        setLoading(false);
-
+        if (!cancelled) {
+          setLoading(false);
+        }
       }
-
     };
-
 
     loadProducts();
 
+    return () => {
+      cancelled = true;
+    };
   }, []);
 
-
   /* =======================================================
-     LOAD USER-SPECIFIC WISHLIST
-  ======================================================== */
+     SYNCHRONIZE WISHLIST
+  ======================================================= */
 
   useEffect(() => {
-
     const loadWishlist = () => {
-
-      try {
-
-        const user =
-          JSON.parse(
-            localStorage.getItem(
-              "mamta_user"
-            )
-          );
-
-
-        const userId =
-          user?._id ||
-          user?.id ||
-          user?.email;
-
-
-        const wishlistKey =
-          userId
-            ? `mamta_wishlist_${userId}`
-            : null;
-
-
-        if (!wishlistKey) {
-
-          setWishlist([]);
-
-          return;
-
-        }
-
-
-        const savedWishlist =
-          JSON.parse(
-            localStorage.getItem(
-              wishlistKey
-            )
-          ) || [];
-
-
-        setWishlist(
-          Array.isArray(
-            savedWishlist
-          )
-            ? savedWishlist
-            : []
-        );
-
-      } catch (error) {
-
-        console.error(
-          "FEATURED WISHLIST LOAD ERROR:",
-          error
-        );
-
-        setWishlist([]);
-
-      }
-
+      setWishlist(readWishlist());
     };
 
-
     loadWishlist();
-
 
     window.addEventListener(
       "wishlistUpdated",
       loadWishlist
     );
 
+    // Synchronize if another browser tab updates the wishlist.
+    const handleStorage = (event) => {
+      if (event.key === WISHLIST_KEY) {
+        loadWishlist();
+      }
+    };
+
+    window.addEventListener("storage", handleStorage);
 
     return () => {
-
       window.removeEventListener(
         "wishlistUpdated",
         loadWishlist
       );
 
+      window.removeEventListener(
+        "storage",
+        handleStorage
+      );
     };
-
   }, []);
-
-
-  /* =======================================================
-     GET PRODUCT ID
-  ======================================================== */
-
-  const getProductId = (product) => {
-
-    return (
-      product?._id ||
-      product?.id
-    );
-
-  };
-
-
-  /* =======================================================
-     GET PRODUCT IMAGE
-  ======================================================== */
-
-  const getProductImage = (product) => {
-
-    return (
-      product?.image ||
-      product?.images?.[0] ||
-      "/products/maternity-pillow-1.jpg"
-    );
-
-  };
-
-
-  /* =======================================================
-     GET PRODUCT CATEGORY
-  ======================================================== */
-
-  const getProductCategory = (
-    product
-  ) => {
-
-    return (
-      product?.category ||
-      "MAMTA COLLECTION"
-    );
-
-  };
-
 
   /* =======================================================
      CHECK WISHLIST
-  ======================================================== */
+  ======================================================= */
 
-  const isInWishlist = (
-    productId
-  ) => {
+  const isInWishlist = (productId) => {
+    if (!productId) return false;
 
     return wishlist.some(
       (item) =>
-        String(
-          item?._id ||
-          item?.id
-        ) ===
-        String(productId)
+        getProductId(item) === String(productId)
     );
-
   };
-
 
   /* =======================================================
      TOGGLE WISHLIST
-  ======================================================== */
+  ======================================================= */
 
-  const toggleWishlist = (
-    product
-  ) => {
-
+  const toggleWishlist = (product) => {
     try {
+      const productId = getProductId(product);
 
-      const user =
-        JSON.parse(
-          localStorage.getItem(
-            "mamta_user"
-          )
-        );
-
-
-      const userId =
-        user?._id ||
-        user?.id ||
-        user?.email;
-
-
-      if (!userId) {
-
+      if (!productId) {
+        toast.error("Unable to identify this product.");
         return;
-
       }
 
+      const currentWishlist = readWishlist();
 
-      const wishlistKey =
-        `mamta_wishlist_${userId}`;
+      const exists = currentWishlist.some(
+        (item) =>
+          getProductId(item) === String(productId)
+      );
 
-
-      const currentWishlist =
-        JSON.parse(
-          localStorage.getItem(
-            wishlistKey
-          )
-        ) || [];
-
-
-      const productId =
-        getProductId(product);
-
-
-      const exists =
-        currentWishlist.some(
-          (item) =>
-            String(
-              item?._id ||
-              item?.id
-            ) ===
-            String(productId)
-        );
-
-
-      let updatedWishlist;
-
-
-      if (exists) {
-
-        updatedWishlist =
-          currentWishlist.filter(
+      const updatedWishlist = exists
+        ? currentWishlist.filter(
             (item) =>
-              String(
-                item?._id ||
-                item?.id
-              ) !==
-              String(productId)
-          );
-
-      } else {
-
-        updatedWishlist = [
-          ...currentWishlist,
-          product,
-        ];
-
-      }
-
+              getProductId(item) !== String(productId)
+          )
+        : [...currentWishlist, product];
 
       localStorage.setItem(
-        wishlistKey,
-        JSON.stringify(
-          updatedWishlist
-        )
+        WISHLIST_KEY,
+        JSON.stringify(updatedWishlist)
       );
 
-
-      setWishlist(
-        updatedWishlist
-      );
-
+      setWishlist(updatedWishlist);
 
       window.dispatchEvent(
-        new Event(
-          "wishlistUpdated"
-        )
+        new Event("wishlistUpdated")
       );
 
+      toast.success(
+        exists
+          ? "Product removed from wishlist."
+          : "Product added to wishlist!"
+      );
     } catch (error) {
-
       console.error(
         "FEATURED WISHLIST UPDATE ERROR:",
         error
       );
 
+      toast.error("Could not update your wishlist.");
     }
-
   };
-
 
   /* =======================================================
      LOADING
-  ======================================================== */
+  ======================================================= */
 
   if (loading) {
-
     return (
       <section className="featured-products">
-
         <div className="featured-container">
-
           <div className="featured-heading">
-
             <div className="featured-title">
-
               <span className="featured-eyebrow">
-                MAMTA COLLECTION
+                MAAMTA COLLECTION
               </span>
 
               <h2>
                 Loved for
                 <span> Comfort</span>
               </h2>
-
             </div>
-
           </div>
-
         </div>
-
       </section>
     );
-
   }
-
 
   /* =======================================================
      RETURN
-  ======================================================== */
+  ======================================================= */
 
   return (
-
     <section className="featured-products">
-
       <div className="featured-container">
-
-
-        {/* =================================================
-            HEADING
-        ================================================= */}
+        {/* HEADING */}
 
         <ScrollReveal direction="down">
-
           <div className="featured-heading">
-
             <div className="featured-title">
-
               <span className="featured-eyebrow">
-                MAMTA COLLECTION
+                MAAMTA COLLECTION
               </span>
 
               <h2>
                 Loved for
                 <span> Comfort</span>
               </h2>
-
             </div>
 
-
             <div className="featured-intro">
-
               <p>
-                Discover thoughtfully designed
-                pillows made to bring softness,
-                comfort and care into everyday
-                moments.
+                Discover thoughtfully designed pillows
+                made to bring softness, comfort and care
+                into everyday moments.
               </p>
-
 
               <Link
                 to="/shop"
                 className="view-all-products"
               >
-
-                <span>
-                  View All Products
-                </span>
+                <span>View All Products</span>
 
                 <ArrowUpRight
                   size={17}
                   strokeWidth={1.6}
                 />
-
               </Link>
-
             </div>
-
           </div>
-
         </ScrollReveal>
 
-
-        {/* =================================================
-            PRODUCTS GRID
-        ================================================= */}
+        {/* PRODUCTS GRID */}
 
         <div className="products-grid">
+          {products.map((product, index) => {
+            const productId = getProductId(product);
 
-          {products.map(
-            (product, index) => {
+            const productInWishlist =
+              isInWishlist(productId);
 
-              const productId =
-                getProductId(
-                  product
-                );
+            return (
+              <ScrollReveal
+                key={productId || index}
+                direction="up"
+                className={`stagger-${index + 1}`}
+              >
+                <article className="product-card">
+                  {/* PRODUCT IMAGE */}
 
+                  <div className="product-image">
+                    <img
+                      src={getProductImage(product)}
+                      alt={product.name || "MAMTA product"}
+                      onError={(event) => {
+                        event.currentTarget.onerror = null;
+                        event.currentTarget.src =
+                          "https://placehold.co/900x900/F4D9DC/4A3032?text=MAMTA";
+                      }}
+                    />
 
-              const productInWishlist =
-                isInWishlist(
-                  productId
-                );
+                    {/* CATEGORY */}
 
+                    <span className="product-badge">
+                      {getProductCategory(product)}
+                    </span>
 
-              return (
+                    {/* WISHLIST */}
 
-                <ScrollReveal
-                  key={productId}
-                  direction="up"
-                  className={`stagger-${
-                    index + 1
-                  }`}
-                >
-
-                  <article
-                    className="product-card"
-                  >
-
-
-                    {/* =================================================
-                        PRODUCT IMAGE
-                    ================================================= */}
-
-                    <div className="product-image">
-
-                      <img
-                        src={
-                          getProductImage(
-                            product
-                          )
+                    <button
+                      type="button"
+                      className={`wishlist-button ${
+                        productInWishlist ? "active" : ""
+                      }`}
+                      aria-label={
+                        productInWishlist
+                          ? `Remove ${
+                              product.name || "product"
+                            } from wishlist`
+                          : `Add ${
+                              product.name || "product"
+                            } to wishlist`
+                      }
+                      aria-pressed={productInWishlist}
+                      onClick={(event) => {
+                        event.preventDefault();
+                        event.stopPropagation();
+                        toggleWishlist(product);
+                      }}
+                    >
+                      <Heart
+                        size={18}
+                        strokeWidth={1.6}
+                        fill={
+                          productInWishlist
+                            ? "currentColor"
+                            : "none"
                         }
-                        alt={
-                          product.name
-                        }
-
-                        onError={(e) => {
-
-                          e.currentTarget.src =
-                            "https://placehold.co/900x900/F4D9DC/4A3032?text=MAMTA";
-
-                        }}
-
                       />
+                    </button>
 
+                    {/* QUICK VIEW */}
 
-                      {/* CATEGORY */}
+                    <Link
+                      to={`/product/${productId}`}
+                      className="quick-view"
+                    >
+                      <span>Quick View</span>
 
-                      <span className="product-badge">
+                      <ArrowUpRight
+                        size={15}
+                        strokeWidth={1.7}
+                      />
+                    </Link>
+                  </div>
 
-                        {
-                          getProductCategory(
-                            product
-                          )
-                        }
+                  {/* PRODUCT INFORMATION */}
 
+                  <div className="product-info">
+                    <h3>{product.name}</h3>
+
+                    {/* RATING */}
+
+                    <div className="product-rating">
+                      <div className="stars">
+                        {[1, 2, 3, 4, 5].map((star) => (
+                          <Star
+                            key={star}
+                            size={12}
+                            strokeWidth={1.5}
+                            fill="currentColor"
+                          />
+                        ))}
+                      </div>
+
+                      <span>
+                        {product.rating || "4.9"}
                       </span>
-
-
-                      {/* WISHLIST */}
-
-                      <button
-                        type="button"
-
-                        className={`wishlist-button ${
-                          productInWishlist
-                            ? "active"
-                            : ""
-                        }`}
-
-                        aria-label={
-                          productInWishlist
-                            ? `Remove ${product.name} from wishlist`
-                            : `Add ${product.name} to wishlist`
-                        }
-
-                        onClick={() =>
-                          toggleWishlist(
-                            product
-                          )
-                        }
-                      >
-
-                        <Heart
-                          size={18}
-                          strokeWidth={1.6}
-
-                          fill={
-                            productInWishlist
-                              ? "currentColor"
-                              : "none"
-                          }
-
-                        />
-
-                      </button>
-
-
-                      {/* =================================================
-                          QUICK VIEW
-                      ================================================= */}
-
-                      <Link
-                        to={`/product/${productId}`}
-                        className="quick-view"
-                      >
-
-                        <span>
-                          Quick View
-                        </span>
-
-                        <ArrowUpRight
-                          size={15}
-                          strokeWidth={1.7}
-                        />
-
-                      </Link>
-
                     </div>
 
+                    {/* PRICE */}
 
-                    {/* =================================================
-                        PRODUCT INFORMATION
-                    ================================================= */}
+                    <div className="product-price">
+                      <strong>
+                        {formatPrice(product.price)}
+                      </strong>
 
-                    <div className="product-info">
-
-
-                      {/* NAME */}
-
-                      <h3>
-                        {
-                          product.name
-                        }
-                      </h3>
-
-
-                      {/* RATING */}
-
-                      <div className="product-rating">
-
-                        <div className="stars">
-
-                          {[1, 2, 3, 4, 5].map(
-                            (star) => (
-
-                              <Star
-                                key={star}
-                                size={12}
-                                strokeWidth={1.5}
-                                fill="currentColor"
-                              />
-
-                            )
-                          )}
-
-                        </div>
-
-
-                        <span>
-                          {
-                            product.rating ||
-                            "4.9"
-                          }
-                        </span>
-
-                      </div>
-
-
-                      {/* PRICE */}
-
-                      <div className="product-price">
-
-                        <strong>
-                          {
-                            formatPrice(
-                              product.price
-                            )
-                          }
-                        </strong>
-
-
-                        {
-                          product.oldPrice && (
-
-                            <del>
-                              {
-                                formatPrice(
-                                  product.oldPrice
-                                )
-                              }
-                            </del>
-
-                          )
-                        }
-
-                      </div>
-
+                      {product.oldPrice && (
+                        <del>
+                          {formatPrice(product.oldPrice)}
+                        </del>
+                      )}
                     </div>
-
-                  </article>
-
-                </ScrollReveal>
-
-              );
-
-            }
-          )}
-
+                  </div>
+                </article>
+              </ScrollReveal>
+            );
+          })}
         </div>
 
-
-        {/* =================================================
-            BOTTOM SHOP CTA
-        ================================================= */}
+        {/* BOTTOM SHOP CTA */}
 
         <ScrollReveal direction="up">
-
+          {/* Add a bottom CTA here if needed. */}
         </ScrollReveal>
-
-
       </div>
-
     </section>
-
   );
-
 };
-
 
 export default FeaturedProducts;

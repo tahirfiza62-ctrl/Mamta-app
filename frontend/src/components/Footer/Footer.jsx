@@ -43,7 +43,7 @@ const Footer = () => {
 
           <p className="brand-description">
             Thoughtfully designed for mothers, babies, and little ones.
-            Mamta brings comfort, softness, and care into every product,
+            Maamta brings comfort, softness, and care into every product,
             creating a beautiful experience for every family.
           </p>
 
@@ -164,9 +164,9 @@ const Footer = () => {
               CUSTOMER CARE
             </span>
 
-            <Link to="/faq">
-              FAQ
-            </Link>
+          <Link to="/contact#faq">
+  FAQ
+</Link>
 
             <Link to="/return-policy">
               Return Policy
@@ -256,7 +256,7 @@ const Footer = () => {
           </span>
 
           <span>
-            {new Date().getFullYear()} Mamta. All rights reserved.
+            {new Date().getFullYear()} Maamta. All rights reserved.
           </span>
 
         </div>

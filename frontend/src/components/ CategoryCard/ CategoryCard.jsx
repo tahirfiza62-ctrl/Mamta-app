@@ -55,7 +55,7 @@ const CategoryCard = () => {
           <div className="category-heading">
             <div>
               <span className="category-eyebrow">
-                EXPLORE MAMTA
+                EXPLORE MAAMTA
               </span>
 
               <h2>

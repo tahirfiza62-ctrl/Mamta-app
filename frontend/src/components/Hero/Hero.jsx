@@ -633,7 +633,7 @@ const Hero = () => {
           ================================================= */}
 
           <div className="hero-side-text">
-            MAMTA — THOUGHTFUL COMFORT
+            MAAMTA — THOUGHTFUL COMFORT
           </div>
 
         </div>

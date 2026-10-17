@@ -995,3 +995,90 @@ font-size: 17px;
     transition: none;
   }
 }
+
+/* QUICK VIEW BUTTON */
+.quick-view {
+  position: absolute;
+  bottom: 16px;
+  left: 16px;
+  right: 16px;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 9px;
+
+  padding: 13px 18px;
+
+  background: #fff9f4;
+  color: #4a3032;
+
+  font-size: 15px;
+  font-weight: 600;
+  letter-spacing: 0.3px;
+  text-decoration: none !important;
+
+  border: 1px solid rgba(74, 48, 50, 0.12);
+  border-radius: 8px;
+
+  opacity: 0;
+  visibility: hidden;
+  transform: translateY(10px);
+
+  transition:
+    opacity 0.3s ease,
+    visibility 0.3s ease,
+    transform 0.3s ease,
+    background 0.3s ease,
+    color 0.3s ease;
+
+  z-index: 3;
+}
+
+/* REMOVE UNDERLINE IN EVERY LINK STATE */
+.quick-view:link,
+.quick-view:visited,
+.quick-view:hover,
+.quick-view:active {
+  text-decoration: none !important;
+}
+
+/* SHOW ON PRODUCT CARD HOVER */
+.product-card:hover .quick-view {
+  opacity: 1;
+  visibility: visible;
+  transform: translateY(0);
+}
+
+/* PREMIUM HOVER EFFECT */
+.quick-view:hover {
+  background: #d98f9a;
+  color: #ffffff;
+  border-color: #d98f9a;
+}
+
+/* ICON ANIMATION */
+.quick-view svg {
+  flex-shrink: 0;
+  transition: transform 0.3s ease;
+}
+
+.quick-view:hover svg {
+  transform: translate(2px, -2px);
+}
+
+/* MOBILE: KEEP QUICK VIEW VISIBLE */
+@media (max-width: 768px) {
+  .quick-view {
+    bottom: 12px;
+    left: 12px;
+    right: 12px;
+
+    padding: 11px 14px;
+    font-size: 15px;
+
+    opacity: 1;
+    visibility: visible;
+    transform: translateY(0);
+  }
+}

@@ -26,7 +26,7 @@ const About= () => {
             <div className="about-hero-content">
 
               <span className="about-eyebrow">
-                THE STORY OF MAMTA
+                THE STORY OF MAAMTA
               </span>
 
               <h1>
@@ -35,7 +35,7 @@ const About= () => {
               </h1>
 
               <p>
-                MAMTA was created around a simple idea —
+                MAAMTA was created around a simple idea —
                 that comfort should feel thoughtful, beautiful
                 and full of care.
               </p>
@@ -60,7 +60,7 @@ const About= () => {
               <div className="about-main-image">
                 <img
                   src="https://res.cloudinary.com/iysbraru/image/upload/v1790508893/cush.jpg"
-                  alt="MAMTA comfort collection"
+                  alt="MAAMTA comfort collection"
                 />
               </div>
 
@@ -113,7 +113,7 @@ const About= () => {
             <div className="about-intro-text">
 
               <p className="about-intro-main">
-                MAMTA is a comfort-focused brand created for
+                MAAMTA is a comfort-focused brand created for
                 the beautiful, busy and deeply meaningful
                 journey of motherhood.
               </p>
@@ -169,7 +169,7 @@ const About= () => {
             <div className="about-story-content">
 
               <span className="about-section-label">
-                WHY MAMTA
+                WHY MAAMTA
               </span>
 
               <h2>
@@ -185,7 +185,7 @@ const About= () => {
               </p>
 
               <p>
-                MAMTA exists to bring comfort into those
+                MAAMTA exists to bring comfort into those
                 moments through thoughtfully selected
                 essentials that feel soft, simple and special.
               </p>
@@ -193,7 +193,7 @@ const About= () => {
               <div className="about-story-line"></div>
 
               <span className="about-signature">
-                MAMTA
+                MAAMTA
               </span>
 
             </div>
@@ -338,7 +338,7 @@ const About= () => {
             </div>
 
             <span className="about-philosophy-label">
-              THE MAMTA PHILOSOPHY
+              THE MAAMTA PHILOSOPHY
             </span>
 
             <h2>
@@ -380,7 +380,7 @@ const About= () => {
               </h2>
 
               <p>
-                MAMTA is more than pillows and soft essentials.
+                MAAMTA is more than pillows and soft essentials.
                 It is about creating small moments of comfort
                 throughout a journey that changes everything.
               </p>
@@ -388,7 +388,7 @@ const About= () => {
               <p>
                 Whether it is a mother finding a comfortable
                 moment to rest or a little one settling into
-                a peaceful sleep, we want MAMTA to be part
+                a peaceful sleep, we want MAAMTA to be part
                 of those moments.
               </p>
 
@@ -396,7 +396,7 @@ const About= () => {
                 to="/shop"
                 className="about-motherhood-button"
               >
-                <span>Discover MAMTA</span>
+                <span>Discover MAAMTA</span>
                 <ArrowUpRight size={17} />
               </Link>
 
@@ -410,7 +410,7 @@ const About= () => {
               <div className="motherhood-image-main">
                 <img
                   src="https://res.cloudinary.com/iysbraru/image/upload/v1790504967/Screenshot_2026-09-27_at_3.28.57_PM.png"
-                  alt="MAMTA maternity comfort"
+                  alt="MAAMTA maternity comfort"
                 />
               </div>
 
@@ -448,7 +448,7 @@ const About= () => {
           <div className="about-final-content">
 
             <span className="about-final-label">
-              MAMTA
+              MAAMTA
             </span>
 
             <h2>

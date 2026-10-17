@@ -104,7 +104,7 @@
 
   color: #d6b77e;
 
-  font-size: 10px;
+  font-size: 17px;
   font-weight: 700;
 
   letter-spacing: 3px;
@@ -154,7 +154,7 @@ font-style: normal;
 
   color: #c8b7b8;
 
-  font-size: 14px;
+  font-size: 17px;
 
   line-height: 1.9;
 }
@@ -226,7 +226,7 @@ font-style: normal;
 
   color: #d6b77e;
 
-  font-size: 9px;
+  font-size: 15px;
   font-weight: 700;
 
   letter-spacing: 2.2px;
@@ -237,7 +237,7 @@ font-style: normal;
 
   color: #c8b7b8;
 
-  font-size: 13px;
+  font-size: 17px;
 }
 
 
@@ -295,7 +295,7 @@ font-style: normal;
 
   font-family: "DM Sans", sans-serif;
 
-  font-size: 13px;
+  font-size: 16px;
 }
 
 .newsletter-input-wrapper input::placeholder {
@@ -326,7 +326,7 @@ font-style: normal;
 
   font-family: "DM Sans", sans-serif;
 
-  font-size: 12px;
+  font-size: 15px;
   font-weight: 700;
 
   cursor: pointer;
@@ -364,7 +364,7 @@ font-style: normal;
 
   color: #907c7e;
 
-  font-size: 10px;
+  font-size: 15px;
 
   letter-spacing: 0.2px;
 }
