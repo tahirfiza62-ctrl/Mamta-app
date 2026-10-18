@@ -16,7 +16,10 @@ const connectDB = async () => {
     const conn = await mongoose.connect(
       process.env.MONGO_URI
     );
-
+console.log("MongoDB database:", conn.connection.name);
+console.log("MongoDB collection for products:", 
+  mongoose.model("Product").collection.name
+);
     console.log(
       `MongoDB connected: ${conn.connection.host}`
     );
