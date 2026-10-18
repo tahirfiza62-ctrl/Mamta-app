@@ -2,32 +2,25 @@
 const mongoose = require("mongoose");
 
 const connectDB = async () => {
+  const uri = process.env.MONGO_URI;
+
+  if (!uri) {
+    throw new Error("MONGO_URI is missing from environment variables");
+  }
+
+  // Log only safe information; never log the URI or credentials.
+  console.log("MongoDB URI check:", {
+    length: uri.length,
+    startsWithMongoDBSRV: uri.startsWith("mongodb+srv://"),
+    startsWithMongoDB: uri.startsWith("mongodb://"),
+  });
+
   try {
-    const uri = process.env.MONGO_URI || "";
-
-    // Diagnose the URI format without logging credentials.
-    console.log("MongoDB URI diagnostics:", {
-      exists: Boolean(uri),
-      length: uri.length,
-      validPrefix:
-        uri.startsWith("mongodb://") ||
-        uri.startsWith("mongodb+srv://"),
-      hasWhitespace: /\s/.test(uri),
-      hasQuotes: /["']/.test(uri),
-      hasAngleBracketPlaceholder: /[<>]/.test(uri),
-      hasEnvAssignmentPrefix: /^MONGO_URI\s*=/.test(uri),
-      hasAtSign: uri.includes("@"),
-      hasDatabasePath: /^mongodb(\+srv)?:\/\/[^/]+\/[^?]+/.test(uri),
-    });
-
-    if (!uri) {
-      throw new Error("MONGO_URI is missing");
-    }
-
     const conn = await mongoose.connect(uri);
 
-    console.log("MongoDB database:", conn.connection.name);
-    console.log("MongoDB connected:", conn.connection.host);
+    console.log("MongoDB connected successfully");
+    console.log("Database:", conn.connection.name);
+    console.log("Host:", conn.connection.host);
 
     return conn;
   } catch (error) {
