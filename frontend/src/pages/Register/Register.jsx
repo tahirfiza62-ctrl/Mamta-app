@@ -13,8 +13,9 @@ import {
 
 import axios from "axios";
 import "./Register.css";
-
-const API_URL = "http://localhost:3000/api";
+const API_URL =
+  import.meta.env.VITE_API_URL ||
+  "http://localhost:3000/api";
 
 const Register = () => {
   const navigate = useNavigate();

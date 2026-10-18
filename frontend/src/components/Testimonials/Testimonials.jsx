@@ -6,7 +6,9 @@ import axios from "axios";
 import ScrollReveal from "../ScrollReveal/ScrollReveal";
 import "./Testimonials.css";
 
-const API_URL = "http://localhost:3000/api";
+const API_URL =
+  import.meta.env.VITE_API_URL ||
+  "http://localhost:3000/api";
 
 const defaultTestimonials = [
   {

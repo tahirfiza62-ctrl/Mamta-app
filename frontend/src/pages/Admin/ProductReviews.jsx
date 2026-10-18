@@ -17,7 +17,9 @@ import {
 } from "lucide-react";
 import "./ProductReviews.css";
 
-const API_URL = "http://localhost:3000/api";
+const API_URL =
+  import.meta.env.VITE_API_URL ||
+  "http://localhost:3000/api";
 
 const getAdminHeaders = () => {
   const token = localStorage.getItem("mamta_admin_token");
@@ -98,53 +100,7 @@ export default function Reviews() {
   const [saving, setSaving] = useState(false);
   const [deletingId, setDeletingId] = useState(null);
 
-  const fetchReviews = useCallback(async (isRefresh = false) => {
-    if (isRefresh) {
-      setRefreshing(true);
-    } else {
-      setLoading(true);
-    }
-
-    try {
-      const response = await axios.get(
-        `${API_URL}/reviews/admin/all`,
-        {
-          headers: getAdminHeaders(),
-          timeout: 15000,
-        }
-      );
-
-      if (response.data?.success === false) {
-        throw new Error(
-          response.data.message || "Unable to load reviews."
-        );
-      }
-
-      setReviews(getReviews(response.data));
-    } catch (error) {
-      console.error(
-        "ADMIN REVIEWS ERROR:",
-        error.response?.data || error.message
-      );
-
-      toast.error(
-        error.response?.status === 401 ||
-        error.response?.status === 403
-          ? "Admin authentication failed. Please sign in again."
-          : error.response?.data?.message ||
-              error.message ||
-              "Unable to load reviews."
-      );
-    } finally {
-      setLoading(false);
-      setRefreshing(false);
-    }
-  }, []);
-
-  useEffect(() => {
-    fetchReviews();
-  }, [fetchReviews]);
-
+  
   const stats = useMemo(() => {
     const total = reviews.length;
     const approved = reviews.filter(

@@ -19,7 +19,8 @@ import {
 import "./AdminPayments.css";
 
 const API_URL =
-  "http://localhost:3000/api/admin/payments";
+  import.meta.env.VITE_API_URL ||
+  "http://localhost:3000/api";
 
 const AdminPayments = () => {
   const navigate = useNavigate();
