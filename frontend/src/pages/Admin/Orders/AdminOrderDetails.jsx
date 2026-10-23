@@ -19,7 +19,7 @@ import {
 import "./AdminOrderDetails.css";
 
 const API_URL =
-  "http://localhost:3000/api/admin/orders";
+  "https://mamta-app-8.onrender.com/api/admin/orders";
 
 const FALLBACK_IMAGE =
   "https://placehold.co/100x100/F4D9DC/4A3032?text=MAMTA";

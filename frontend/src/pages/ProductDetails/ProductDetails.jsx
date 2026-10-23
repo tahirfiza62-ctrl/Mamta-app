@@ -33,7 +33,7 @@ console.log("🔥 CUSTOMER PRODUCT DETAILS FILE LOADED");
 
 const API_URL =
   import.meta.env.VITE_API_URL ||
-  "http://localhost:3000/api";
+  "https://mamta-app-8.onrender.com/api";
 
 const PLACEHOLDER_IMAGE =
   "https://placehold.co/900x900/F4D9DC/4A3032?text=MAMTA";

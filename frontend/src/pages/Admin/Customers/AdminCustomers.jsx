@@ -19,7 +19,7 @@ import {
 import "./AdminCustomers.css";
 
 const API_URL =
-  "http://localhost:3000/api/admin/customers";
+  "https://mamta-app-8.onrender.com/api/admin/customers";
 
 const AdminCustomers = () => {
   const navigate = useNavigate();

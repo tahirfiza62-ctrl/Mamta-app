@@ -18,7 +18,7 @@ import "./AdminLogin.css";
 
 
 const ADMIN_LOGIN_URL =
-  "http://localhost:3000/api/auth/admin";
+  "https://mamta-app-8.onrender.com/api/auth/admin";
 
 const AdminLogin = () => {
   const navigate = useNavigate();

@@ -11,7 +11,7 @@ import {
 import { useNavigate } from "react-router-dom";
 import "./AddProduct.css";
 
-const API_URL = "http://localhost:3000/api/admin/products";
+const API_URL = "https://mamta-app-8.onrender.com/api/admin/products";
 
 /* =========================================================
    ALLOWED CATEGORIES

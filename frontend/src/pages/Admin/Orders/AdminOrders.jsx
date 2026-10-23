@@ -10,7 +10,7 @@ import {
 import { useNavigate } from "react-router-dom";
 import "./AdminOrders.css";
 
-const API_URL = "http://localhost:3000/api/admin/orders";
+const API_URL = "https://mamta-app-8.onrender.com/api/admin/orders";
 
 const AdminOrders = () => {
   const navigate = useNavigate();

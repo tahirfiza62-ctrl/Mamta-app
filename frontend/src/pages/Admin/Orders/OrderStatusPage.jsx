@@ -15,7 +15,7 @@ import {
 import "./OrderStatusPage.css";
 
 const API_URL =
-  "http://localhost:3000/api/admin/orders";
+  "https://mamta-app-8.onrender.com/api/admin/orders";
 
 
 /* =========================================================
